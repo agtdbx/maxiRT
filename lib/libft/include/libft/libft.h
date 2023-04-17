@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:35:07 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/07 14:46:29 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:35:10 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,22 @@
 //**** LIBFT: SIMPLE SELFMADE LIBC *******************************************//
 
 //----------------------------------------------------------------------------//
-//---- CONFIGURATION ---------------------------------------------------------//
+//---- GET NEXT LINE ---------------------------------------------------------//
 
 # ifndef GNL_BUFFER_SIZE
 #  define GNL_BUFFER_SIZE 64
 # endif//GNL_BUFFER_SIZE
+
+# define GNL_STATIC_INITIALIZER ""
+
+typedef char	t_gnl_buffer[GNL_BUFFER_SIZE];
+
+char	*ft_gnl_r(
+			int fd,
+			t_gnl_buffer save_buf);
+
+void	ft_gnl_init_buffer(
+			t_gnl_buffer save_buf);
 
 //----------------------------------------------------------------------------//
 //---- IO OPERATIONS ---------------------------------------------------------//
@@ -39,10 +50,6 @@ ssize_t	ft_putstr(
 
 ssize_t	ft_puterr(
 			char const *str);
-
-char	*ft_gnl_r(
-			int fd,
-			char save_buf[GNL_BUFFER_SIZE]);
 
 //----------------------------------------------------------------------------//
 //---- CHAR TESTS ------------------------------------------------------------//

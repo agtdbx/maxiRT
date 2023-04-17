@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/14 01:25:33 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/17 10:32:09 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ typedef struct s_scene
 	t_light		*ambient_lightning;
 	t_camera	*camera;
 }	t_scene;
+
+void	scene_del(
+			t_scene *scene);
 
 #endif//SCENE_H

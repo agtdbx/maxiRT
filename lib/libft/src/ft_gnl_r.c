@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:06:50 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/06 18:08:17 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:16:24 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,68 +18,68 @@
 
 char		*ft_gnl_r(
 				int fd,
-				char save_buf[GNL_BUFFER_SIZE]);
+				t_gnl_buffer save_buf);
 
 static char	*ft_gnl_r_rec(
 				int fd,
-				char save_buf[GNL_BUFFER_SIZE],
+				t_gnl_buffer save_buf,
 				size_t len);
 
 ////////////////////////////////////////////////////////////////////////////////
 
 char	*ft_gnl_r(
 			int fd,
-			char save_buffer[GNL_BUFFER_SIZE])
+			t_gnl_buffer save_buf)
 {
-	char	head_buffer[GNL_BUFFER_SIZE];
-	char	*line;
-	int		line_len;
+	t_gnl_buffer	head_buf;
+	char			*line;
+	int				line_len;
 
-	ft_strlcpy(head_buffer, save_buffer, GNL_BUFFER_SIZE);
-	line_len = ft_strcspn(head_buffer, "\n");
-	if (head_buffer[line_len] == '\n')
+	ft_strlcpy(head_buf, save_buf, sizeof(t_gnl_buffer));
+	line_len = ft_strcspn(head_buf, "\n");
+	if (head_buf[line_len] == '\n')
 	{
-		line = ft_substr(head_buffer, 0, line_len + 1);
+		line = ft_substr(head_buf, 0, line_len + 1);
 		if (line == NULL)
 			return (NULL);
-		ft_strlcpy(save_buffer, head_buffer + line_len + 1, GNL_BUFFER_SIZE);
+		ft_strlcpy(save_buf, head_buf + line_len + 1, sizeof(t_gnl_buffer));
 		return (line);
 	}
-	line = ft_gnl_r_rec(fd, save_buffer, line_len);
+	line = ft_gnl_r_rec(fd, save_buf, line_len);
 	if (line == NULL)
 		return (NULL);
-	ft_memcpy(line, head_buffer, line_len);
+	ft_memcpy(line, head_buf, line_len);
 	return (line);
 }
 
 static char	*ft_gnl_r_rec(
 				int fd,
-				char save_buffer[GNL_BUFFER_SIZE],
+				t_gnl_buffer save_buf,
 				size_t line_len)
 {
-	char	read_buffer[GNL_BUFFER_SIZE];
+	t_gnl_buffer	read_buf;
 	char	*line;
 	int		read_ret;
 
-	read_ret = read(fd, read_buffer, GNL_BUFFER_SIZE - 1);
+	read_ret = read(fd, read_buf, sizeof(t_gnl_buffer) - 1);
 	if (read_ret == -1)
 		return (NULL);
-	read_buffer[read_ret] = '\0';
+	read_buf[read_ret] = '\0';
 	if (read_ret == 0 && line_len == 0)
 		return (NULL);
-	read_ret = ft_strcspn(read_buffer, "\n");
-	read_ret += (read_buffer[read_ret] == '\n');
-	if (read_ret != GNL_BUFFER_SIZE || read_buffer[read_ret - 1] == '\n')
+	read_ret = ft_strcspn(read_buf, "\n");
+	read_ret += (read_buf[read_ret] == '\n');
+	if (read_ret != sizeof(t_gnl_buffer) || read_buf[read_ret - 1] == '\n')
 	{
 		line = malloc(line_len + read_ret + 1);
 		if (line != NULL)
 			line[line_len + read_ret] = '\0';
-		ft_strlcpy(save_buffer, read_buffer + read_ret, GNL_BUFFER_SIZE);
+		ft_strlcpy(save_buf, read_buf + read_ret, sizeof(t_gnl_buffer));
 	}
 	else
-		line = ft_gnl_r_rec(fd, save_buffer, line_len + GNL_BUFFER_SIZE);
+		line = ft_gnl_r_rec(fd, save_buf, line_len + sizeof(t_gnl_buffer));
 	if (line == NULL)
 		return (NULL);
-	ft_memcpy(line + line_len, read_buffer, read_ret);
+	ft_memcpy(line + line_len, read_buf, read_ret);
 	return (line);
 }
