@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 16:17:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/17 17:42:08 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/18 16:51:50 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ t_parsing_error	parse_fields(
 					t_field const *fields);
 
 t_parsing_error	parse_brightness(
+					t_line_info const *line_info,
+					char const *field_name,
+					char *field,
+					void *ret_ptr);
+
+t_parsing_error	parse_color(
+					t_line_info const *line_info,
+					char const *field_name,
+					char *field,
+					void *ret_ptr);
+
+t_parsing_error	parse_position(
 					t_line_info const *line_info,
 					char const *field_name,
 					char *field,

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:24:10 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/17 15:56:45 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/18 17:12:12 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ static t_parsing_error	_use_associated_directive_parser(
 	while (g_directive_parsers[i].identifier != NULL)
 	{
 		if (ft_strcmp(g_directive_parsers[i].identifier, identifier) == 0)
-			return (g_directive_parsers[i].parser(line_info, saveptr, ret_scene));
+			return (
+				g_directive_parsers[i].parser(line_info, saveptr, ret_scene));
 		i++;
 	}
-	printf(g_unknown_directive_identifier_error_msg, 
+	printf(g_unknown_directive_identifier_error_msg,
 		line_info->basename, line_info->line_nbr, line_info->line, identifier);
 	return (PARSING_FAILURE);
 }

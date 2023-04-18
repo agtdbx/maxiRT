@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:34:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/17 11:37:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/18 17:04:47 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static t_parsing_error	loc_read_line(
 	{
 		return (PARSING_FILE_END_ERR);
 	}
-	*ret_line[ft_strcspn(*ret_line, "\n")] = '\0';
+	(*ret_line)[ft_strcspn(*ret_line, "\n")] = '\0';
 	return (PARSING_SUCCESS);
 }
 

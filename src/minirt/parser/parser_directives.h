@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:40:07 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/17 16:14:23 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/18 14:45:12 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ t_parsing_error	parse_ambient_light(
 					t_scene *ret_scene);
 
 t_parsing_error	parse_spotlight(
-					char const *basename,
-					char const *line,
-					int line_nbr,
+					t_line_info const *line_info,
+					char *line,
 					t_scene *ret_scene);
 
 #endif//PARSER_DIRECTIVES_H

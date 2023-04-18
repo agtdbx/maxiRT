@@ -6,13 +6,15 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:08:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/17 10:29:35 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/18 15:29:06 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/parser/parser.h>
 #include <libft/libft.h>
 #include <unistd.h>
+#include <string.h>
+#include <errno.h>
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -87,13 +89,12 @@ static t_parsing_error	loc_open_file(
 	*ret_fd = open(path_to_file, O_RDONLY);
 	if (*ret_fd == -1)
 	{
-		printf(g_file_opening_error_msg, path_to_file);
-		perror(NULL);
+		printf(g_file_opening_error_msg, path_to_file, strerror(errno));
 		return (PARSING_FAILURE);
 	}
 	if (read(*ret_fd, NULL, 0) == -1)
 	{
-		printf(g_file_opening_error_msg, path_to_file);
+		printf(g_file_opening_error_msg, path_to_file, strerror(errno));
 		perror(NULL);
 		close (*ret_fd);
 		return (PARSING_FAILURE);

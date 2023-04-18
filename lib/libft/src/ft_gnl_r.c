@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:06:50 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/17 11:16:24 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/18 13:19:17 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static char	*ft_gnl_r_rec(
 				size_t line_len)
 {
 	t_gnl_buffer	read_buf;
-	char	*line;
-	int		read_ret;
+	char			*line;
+	int				read_ret;
 
 	read_ret = read(fd, read_buf, sizeof(t_gnl_buffer) - 1);
 	if (read_ret == -1)
