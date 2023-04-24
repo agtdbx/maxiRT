@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/18 16:59:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/24 10:39:45 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int argc, char *argv[])
 	mlx_errno_t	err;
 	t_scene		scene;
 
-	(void) argv;
 	if (argc != 2)
 	{
 		printf(g_argc_error_msg);
