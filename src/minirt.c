@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/24 10:39:45 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/24 10:53:06 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char *argv[])
 		printf(g_argc_error_msg);
 		return (EXIT_FAILURE);
 	}
-	if (parse_scene_file(argv[1], &scene) == PARSING_FAILURE)
+	if (parse_file(argv[1], &scene) == PARSING_FAILURE)
 		return (EXIT_FAILURE);
 	err = app_start();//pass scene that has been parsed out
 	//destroy scene
