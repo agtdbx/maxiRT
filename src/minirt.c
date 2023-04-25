@@ -6,21 +6,21 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/24 10:53:06 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/25 12:12:19 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
-#include <minirt/scene/scene.h>
-#include <minirt/parser/parser.h>
-#include <MLX42/MLX42.h>
+#include "minirt/app/app.h"
+#include "minirt/scene/scene.h"
+#include "minirt/parser/parser.h"
+
+#include "MLX42/MLX42.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 static const char	g_argc_error_msg[] = \
 	"Error"								"\n"
-	""									"\n"
 	"Expected one argument"				"\n"
 	"Usage: minirt <path/to/scene.rt>"	"\n";
 
