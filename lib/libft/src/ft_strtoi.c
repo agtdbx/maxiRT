@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 14:43:12 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/07 14:45:51 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/26 09:13:32 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+/**
+ * Parses int from string representation
+ *
+ * @param[in] nptr String represention formated as /\s*(+|-)?\d+/
+ * @param[out] endptr Pointer toward end of the representation.
+ * @returns Parsed int
+ */
 int	ft_strtoi(
 		char const *restrict nptr,
 		char **restrict endptr)
@@ -27,7 +34,7 @@ int	ft_strtoi(
 
 	nptr += ft_strspn(nptr, " \f\n\r\t\v");
 	is_neg = (*nptr == '-');
-	nptr += (ft_strspn(nptr, "+-") > 0);
+	nptr += (ft_strchr("+-", nptr[0]) != 0);
 	n = 0;
 	while (ft_isdigit(*nptr))
 	{
@@ -43,7 +50,6 @@ int	ft_strtoi(
 		n = n * 10 + (1 - 2 * is_neg) * digit;
 		nptr++;
 	}
-	if (endptr != NULL)
-		*endptr = (char *) nptr;
+	*endptr = (char *) nptr;
 	return (n);
 }

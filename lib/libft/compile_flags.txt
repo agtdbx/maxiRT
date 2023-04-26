@@ -1,6 +1,0 @@
--Wall
--Wextra
--Werror
--std=c99
--Wunreachable-code
--Iinclude
