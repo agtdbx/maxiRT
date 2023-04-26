@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/24 17:30:26 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:46:49 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@
 
 //**** PARSER DIRECTIVES *****************************************************//
 
-static const t_directive	directives[] = {
+static const t_directive	g_directives[] = {
 {
 	.identifier = "C",
 	.usage = "C <position> <orientation vector> <fov>"
-	
 },
 };
 
@@ -29,7 +28,7 @@ static const t_directive	directives[] = {
 
 //---- filename errors -------------------------------------------------------//
 
-static const char	g_file_err[] = \
+static const char			g_file_err[] = \
 	"Error"																"\n"
 	"<%s>: %s"															"\n";
 

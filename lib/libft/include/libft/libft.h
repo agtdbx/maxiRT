@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:35:07 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/26 09:30:05 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/26 17:38:17 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,21 @@
 //****************************************************************************//
 //**** LIBFT: SIMPLE SELFMADE LIBC *******************************************//
 
+typedef enum e_error
+{
+	SUCCESS = 0,
+	FAILURE = 1
+}	t_error;
+
 //----------------------------------------------------------------------------//
 //---- GET NEXT LINE ---------------------------------------------------------//
 
 # define GNL_STATIC_INITIALIZER ""
 
 typedef char	t_gnl_buffer[128];
+
+char	*ft_gnl(
+			int fd);
 
 char	*ft_gnl_r(
 			int fd,
@@ -112,6 +121,10 @@ char	*ft_substr(
 //----------------------------------------------------------------------------//
 //---- STRING TOKENIZATION ---------------------------------------------------//
 
+char	*ft_strtok(
+			char *restrict str,
+			char const *restrict sep);
+
 char	*ft_strtok_r(
 			char *restrict str,
 			char const *restrict sep,
@@ -147,5 +160,14 @@ void	*ft_memcpy(
 void	*ft_memdup(
 			void const *buf,
 			size_t buf_size);
+
+void	*ft_memset(
+			void *s,
+			int c,
+			size_t n);
+
+void	*ft_bzero(
+			void *s,
+			size_t n);
 
 #endif//LIBFT_H
