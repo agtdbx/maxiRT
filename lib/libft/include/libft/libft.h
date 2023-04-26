@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:35:07 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/18 13:24:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/26 09:30:05 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,9 @@
 //----------------------------------------------------------------------------//
 //---- GET NEXT LINE ---------------------------------------------------------//
 
-# ifndef GNL_BUFFER_SIZE
-#  define GNL_BUFFER_SIZE 64
-# endif//GNL_BUFFER_SIZE
-
 # define GNL_STATIC_INITIALIZER ""
 
-typedef char	t_gnl_buffer[GNL_BUFFER_SIZE];
+typedef char	t_gnl_buffer[128];
 
 char	*ft_gnl_r(
 			int fd,
