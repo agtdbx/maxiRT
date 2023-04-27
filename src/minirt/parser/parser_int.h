@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/26 17:55:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:29:55 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stddef.h>
 
 typedef struct s_directive	t_directive;
+typedef struct s_field		t_field;
 
 //**** PARSER STATE **********************************************************//
 
@@ -32,24 +33,39 @@ typedef struct s_parser_state
 	char const			*line_cpy;
 	t_directive const	*directive;
 
+	t_field const		*field;
+	char				*tok;
+
 	t_scene		*scene;
 }	t_parser_state;
 
 //**** PARSER FIELDS *********************************************************//
 
-typedef t_error	(*t_field_cb)(t_parser_state *state);
+typedef t_error	(*t_field_cb)(t_parser_state *state, void *data);
 
-typedef struct s_field
+struct s_field
 {
 	char const		*identifier;
 	char const		*usage;
 
 	t_field_cb		callback;
-}	t_field;
+};
 
 t_error	parse_field(
 			t_parser_state *state,
 			t_field const *field,
+			void *data);
+
+t_error	parse_vec3(
+			t_parser_state *state,
+			void *data);
+
+t_error	parse_float(
+			t_parser_state *state,
+			void *data);
+
+t_error	parse_brightness(
+			t_parser_state *state,
 			void *data);
 
 //**** PARSER DIRECTIVES *****************************************************//
@@ -68,6 +84,9 @@ t_error	parse_lines(
 			int fd,
 			char const *filename,
 			t_scene *scene);
+
+t_error	parse_camera(
+			t_parser_state *state);
 
 //**** PARSER ERROR LOGGING **************************************************//
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_ambient_light.c                              :+:      :+:    :+:   */
+/*   parse_camera.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/27 15:21:12 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/27 15:37:48 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@
 
 #include <stdio.h>
 
-t_error	parse_ambient_light(
+t_error	parse_camera(
 			t_parser_state *state)
 {
-	t_light	light;
+	t_camera	camera;
 
-	if (state->scene->ambient_lightning != NULL)
+	if (state->scene->camera != NULL)
 	{
-		put_directive_error(state, NULL, "More than one A directive");
+		put_directive_error(state, NULL, "More than one C directive");
 		return (FAILURE);
 	}
-	ft_bzero(&light, sizeof(light));
-	if (parse_field(state, &g_brightness, &light.brightness) == FAILURE
-		// || parse_field(state, &g_color, &light.color) == FAILURE
-		)
-		return (FAILURE);
-	state->scene->ambient_lightning = ft_memdup(&light, sizeof(t_light));
-	if (state->scene->ambient_lightning == NULL)
+	ft_bzero(&camera, sizeof(camera));
+	if (parse_field(state, &g_position, &camera.pos) == FAILURE
+		|| parse_field(state, &g_direction, &camera.direction) == FAILURE
+		|| parse_field(state, &g_fov, &camera.fov) == FAILURE)
+			return (FAILURE);
+	state->scene->camera = ft_memdup(&camera, sizeof(t_camera));
+	if (state->scene->camera == NULL)
 	{
 		perror("Error\nFatal");
 		return (FAILURE);

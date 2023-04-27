@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:39:37 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/26 16:34:14 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/27 15:25:49 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minirt/parser/parser_int.h"
 
 #include <stdio.h>
+#include <stdbool.h>
 
 //############################################################################//
 //#### DECLARATIONS ##########################################################//
@@ -24,6 +25,9 @@ t_error			parse_directive(
 static t_error	_use_associated_parser(
 					t_parser_state *state,
 					char const *identifier);
+
+static bool		_has_any_field_left(
+					t_parser_state *state);
 
 //############################################################################//
 //#### DEFINITIONS ###########################################################//
@@ -60,10 +64,27 @@ static t_error	_use_associated_parser(
 		if (ft_strcmp(g_directives[i].identifier, identifier) == 0)
 		{
 			state->directive = &g_directives[i];
-			return (g_directives[i].callback(state));
+			if (g_directives[i].callback(state) == FAILURE)
+				return (FAILURE);
+			if (_has_any_field_left(state))
+				return (FAILURE);
+			return (SUCCESS);
 		}
 		i++;
 	}
 	put_directive_error(state, identifier, "Unknown directive");
 	return (FAILURE);
+}
+
+static bool	_has_any_field_left(
+				t_parser_state *state)
+{
+	char *const	tok = ft_strtok(NULL, " ");
+
+	if (tok != NULL)
+	{
+		put_directive_error(state, tok, "Unexpected field");
+		return (true);
+	}
+	return (false);
 }
