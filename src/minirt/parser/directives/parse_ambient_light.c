@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 15:04:14 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:26:14 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ t_error	parse_ambient_light(
 	}
 	ft_bzero(&light, sizeof(light));
 	if (parse_field(state, &g_brightness, &light.brightness) == FAILURE
-		// || parse_field(state, &g_color, &light.color) == FAILURE
-		)
+		|| parse_field(state, &g_color, &light.color) == FAILURE)
 		return (FAILURE);
 	state->scene->ambient_lightning = ft_memdup(&light, sizeof(t_light));
 	if (state->scene->ambient_lightning == NULL)

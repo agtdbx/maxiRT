@@ -1,76 +1,79 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_vec3.c                                       :+:      :+:    :+:   */
+/*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 16:26:44 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 16:43:54 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/parser/parser.h"
-#include "minirt/parser/parser_int.h"
-#include "minirt/utils/geometry.h"
 
 #include <stdbool.h>
 
 //############################################################################//
 //#### DECLARATIONS ##########################################################//
 
-t_error			parse_vec3(
+t_error			parse_color(
 					t_parser_state *state,
 					void *data);
 
-static t_error	_parse_one_coord(
+static t_error	_parse_one_channel(
 					t_parser_state *state,
-					float *ret);
+					int *ret);
 
-static bool		_has_more_coords(
+static bool		_has_more_channels(
 					t_parser_state *state);
 
 //############################################################################//
 //#### DEFINITIONS ###########################################################//
 
-t_error	parse_vec3(
+t_error	parse_color(
 			t_parser_state *state,
 			void *data)
 {
-	t_vec3 *const	vec = data;
+	t_color *const	color = data;
 
-	if (_parse_one_coord(state, &vec->x) == FAILURE
-		|| _parse_one_coord(state, &vec->y) == FAILURE
-		|| _parse_one_coord(state, &vec->z) == FAILURE
-		|| _has_more_coords(state))
+	if (_parse_one_channel(state, &color->r) == FAILURE
+		|| _parse_one_channel(state, &color->g) == FAILURE
+		|| _parse_one_channel(state, &color->b) == FAILURE
+		|| _has_more_channels(state))
 		return (FAILURE);
 	return (SUCCESS);
 }
 
-static t_error	_parse_one_coord(
+static t_error	_parse_one_channel(
 					t_parser_state *state,
-					float *ret)
+					int *ret)
 {
-	char *const	coord = ft_strsep(&state->tok, ",");
+	char *const	channel = ft_strsep(&state->tok, ",");
 	char		*endptr;
 
-	if (coord == NULL || coord[ft_strspn(coord, " ")] == '\0')
+	if (channel == NULL || channel[ft_strspn(channel, " ")] == '\0')
 	{
-		put_field_error(state, coord, "Missing coordinate");
+		put_field_error(state, channel, "Missing color channel");
 		return (FAILURE);
 	}
-	*ret = ft_strtof(coord, &endptr);
+	*ret = ft_strtoi(channel, &endptr);
 	if (endptr[0] != '\0')
 	{
 		put_field_error(state, endptr, "Unexpected chars");
 		return (FAILURE);
 	}
+	if (*ret < 0 || 255 < *ret)
+	{
+		put_field_error(state, channel, "Invalid range");
+		return (FAILURE);
+	}
 	if (state->tok != NULL)
-		coord[ft_strlen(coord)] = ',';
+		channel[ft_strlen(channel)] = ',';
 	return (SUCCESS);
 }
 
-static bool	_has_more_coords(
+static bool	_has_more_channels(
 				t_parser_state *state)
 {
 	if (state->tok != NULL)

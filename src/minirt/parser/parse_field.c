@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 12:37:40 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 15:20:15 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 16:25:21 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ t_error	parse_field(
 	}
 	state->field = field;
 	state->tok = tok;
+	state->tok_start = tok;
 	return (field->callback(state, data));
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:43:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 15:19:28 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 16:27:57 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_error	parse_lines(
 	t_parser_state	state;
 	t_error			err;
 
-	state.line_number = 0;
+	state.line_number = 1;
 	state.scene = scene;
 	state.filename = filename;
 	err = SUCCESS;

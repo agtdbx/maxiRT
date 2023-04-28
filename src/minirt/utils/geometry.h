@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/14 01:31:07 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 16:30:06 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ typedef struct s_vec3
 	float	y;
 	float	z;
 }	t_vec3;
+
+extern float	vec3_norm(
+					t_vec3 const *vec);
 
 #endif//GEOMETRY_H

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 15:17:08 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 16:48:14 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_parser_state
 
 	t_field const		*field;
 	char				*tok;
+	char				*tok_start;
 
 	t_scene				*scene;
 }	t_parser_state;
@@ -64,6 +65,14 @@ t_error	parse_field(
 			void *data);
 
 t_error	parse_vec3(
+			t_parser_state *state,
+			void *data);
+
+t_error	parse_direction(
+			t_parser_state *state,
+			void *data);
+
+t_error	parse_color(
 			t_parser_state *state,
 			void *data);
 
@@ -97,6 +106,12 @@ t_error	parse_lines(
 			t_scene *scene);
 
 t_error	parse_camera(
+			t_parser_state *state);
+
+t_error	parse_ambient_light(
+			t_parser_state *state);
+
+t_error	parse_spotlight(
 			t_parser_state *state);
 
 //**** PARSER ERROR LOGGING **************************************************//
