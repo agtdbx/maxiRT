@@ -6,12 +6,11 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:39:37 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/27 15:25:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 15:16:45 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/parser/parser.h"
-#include "minirt/parser/parser_int.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -70,9 +69,9 @@ static t_error	_use_associated_parser(
 				return (FAILURE);
 			return (SUCCESS);
 		}
-		i++;
+		++i;
 	}
-	put_directive_error(state, identifier, "Unknown directive");
+	put_unknown_directive_error(state, identifier);
 	return (FAILURE);
 }
 

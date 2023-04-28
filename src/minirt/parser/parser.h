@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/27 15:47:27 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 14:01:41 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static const t_field		g_position = {
 };
 
 static const t_field		g_direction = {
-	.identifier = "direction",
+	.identifier = "orientation vector",
 	.usage = "3d normalized vector x,y,z",
 	.callback = parse_vec3
 };

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/27 16:23:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 15:03:28 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ t_error	parse_vec3(
 			t_parser_state *state,
 			void *data)
 {
-	t_vec3	*const	vec = data;
+	t_vec3 *const	vec = data;
 
 	if (_parse_one_coord(state, &vec->x) == FAILURE
 		|| _parse_one_coord(state, &vec->y) == FAILURE
 		|| _parse_one_coord(state, &vec->z) == FAILURE
 		|| _has_more_coords(state))
-			return (FAILURE);
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -73,6 +73,8 @@ static bool	_has_more_coords(
 {
 	if (state->tok != NULL)
 	{
+		--state->tok;
+		state->tok[0] = ',';
 		put_field_error(state, state->tok, "Unexpected chars");
 		return (true);
 	}

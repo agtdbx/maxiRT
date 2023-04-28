@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:43:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/26 13:36:14 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 15:19:28 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ t_error	parse_lines(
 	{
 		err = _get_line(fd, &state);
 		if (err == FAILURE || state.line == NULL)
-			break;
+			break ;
 		if (!_is_blank(state.line))
 			err = parse_directive(&state);
 		ft_memdel(&state.line);
 		++state.line_number;
 	}
-	return (SUCCESS);
+	return (err);
 }
 
 /**

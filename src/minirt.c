@@ -6,15 +6,15 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/25 12:12:19 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 13:24:16 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/app.h"
-#include "minirt/scene/scene.h"
-#include "minirt/parser/parser.h"
+#include <minirt/app/app.h>
+#include <minirt/scene/scene.h>
+#include <minirt/parser/parser.h>
 
-#include "MLX42/MLX42.h"
+#include <MLX42/MLX42.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,9 +34,10 @@ int	main(int argc, char *argv[])
 		printf(g_argc_error_msg);
 		return (EXIT_FAILURE);
 	}
-	if (parse_file(argv[1], &scene) == PARSING_FAILURE)
+	if (parse_file(argv[1], &scene) == FAILURE)
 		return (EXIT_FAILURE);
-	err = app_start();//pass scene that has been parsed out
-	//destroy scene
+	err = 0;
+	// err = app_start();//pass scene that has been parsed out
+	scene_del(&scene);
 	return (err);
 }

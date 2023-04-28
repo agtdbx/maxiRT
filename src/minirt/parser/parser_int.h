@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/27 16:29:55 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/04/28 15:17:08 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,19 @@ typedef struct s_parser_state
 	t_field const		*field;
 	char				*tok;
 
-	t_scene		*scene;
+	t_scene				*scene;
 }	t_parser_state;
+
+t_error	parse_file(
+			char const *path_to_file,
+			t_scene *scene);
+
+t_error	parse_directive(
+			t_parser_state *state);
 
 //**** PARSER FIELDS *********************************************************//
 
-typedef t_error	(*t_field_cb)(t_parser_state *state, void *data);
+typedef t_error				(*t_field_cb)(t_parser_state *state, void *data);
 
 struct s_field
 {
@@ -68,9 +75,13 @@ t_error	parse_brightness(
 			t_parser_state *state,
 			void *data);
 
+t_error	parse_fov(
+			t_parser_state *state,
+			void *data);
+
 //**** PARSER DIRECTIVES *****************************************************//
 
-typedef t_error	(*t_directive_cb)(t_parser_state *state);
+typedef t_error				(*t_directive_cb)(t_parser_state *state);
 
 struct s_directive
 {
@@ -91,13 +102,17 @@ t_error	parse_camera(
 //**** PARSER ERROR LOGGING **************************************************//
 
 void	put_directive_error(
-				t_parser_state *state,
-				char const *token,
-				char const *error);
+			t_parser_state *state,
+			char const *token,
+			char const *error);
+
+void	put_unknown_directive_error(
+			t_parser_state const *state,
+			char const *token);
 
 void	put_field_error(
-				t_parser_state *state,
-				char const *token,
-				char const *error);
+			t_parser_state *state,
+			char const *token,
+			char const *error);
 
 #endif//PARSER_INT_H
