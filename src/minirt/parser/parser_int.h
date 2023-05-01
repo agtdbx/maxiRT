@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 16:48:14 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/01 20:13:44 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ t_error	parse_fov(
 			t_parser_state *state,
 			void *data);
 
+t_error	parse_diameter(
+			t_parser_state *state,
+			void *data);
+
 //**** PARSER DIRECTIVES *****************************************************//
 
 typedef t_error				(*t_directive_cb)(t_parser_state *state);
@@ -112,6 +116,9 @@ t_error	parse_ambient_light(
 			t_parser_state *state);
 
 t_error	parse_spotlight(
+			t_parser_state *state);
+
+t_error	parse_sphere(
 			t_parser_state *state);
 
 //**** PARSER ERROR LOGGING **************************************************//

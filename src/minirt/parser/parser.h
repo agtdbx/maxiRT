@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 17:22:38 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/01 20:11:40 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ static const t_directive	g_directives[] = {
 	.usage = "L <position> <brightness> <color>",
 	.callback = parse_spotlight,
 },
+{
+	.identifier = "sp",
+	.usage = "sp <position> <diameter> <color>",
+	.callback = parse_sphere,
+},
 // {
 // 	.identifier = "Tr",
 // 	.usage = "Tr <position> <position> <position> <color>",
@@ -46,6 +51,12 @@ static const t_field		g_fov = {
 	.identifier = "fov",
 	.usage = "Horizontal field of view in degrees in range [0,180]",
 	.callback = parse_fov,
+};
+
+static const t_field		g_diameter = {
+	.identifier = "diameter",
+	.usage = "Object's diameter in range [0,+infty]",
+	.callback = parse_diameter,
 };
 
 static const t_field		g_brightness = {

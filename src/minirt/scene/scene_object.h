@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:12:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/14 01:32:19 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/01 20:15:57 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ typedef struct s_sphere
 {
 	t_vec3	pos;
 	t_color	color;
-	float	radius;
+	float	diameter;
 
+	float	radius;
 	float	radius2;
 }	t_sphere;
 
