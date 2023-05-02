@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 23:28:29 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/01 23:59:19 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/02 09:28:34 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_error	scene_add_object(
 {
 	t_object	*new_object;
 
-	new_object = malloc(sizeof(t_object_v));
+	new_object = malloc(sizeof(t_object));
 	if (new_object == NULL)
 	{
 		perror("Error\nFatal");

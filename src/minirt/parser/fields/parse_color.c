@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 16:43:54 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/02 09:13:13 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ static t_error	_parse_one_channel(
 	char *const	channel = ft_strsep(&state->tok, ",");
 	char		*endptr;
 
-	if (channel == NULL || channel[ft_strspn(channel, " ")] == '\0')
-	{
+	if (channel == NULL)
+		put_field_error(state,
+			ft_strchr(state->tok_start, '\0'), "Missing color channel");
+	if (channel != NULL && channel[0] == '\0')
 		put_field_error(state, channel, "Missing color channel");
+	if (channel == NULL || channel[0] == '\0')
 		return (FAILURE);
-	}
 	*ret = ft_strtoi(channel, &endptr);
 	if (endptr[0] != '\0')
 	{

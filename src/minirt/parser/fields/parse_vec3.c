@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 16:26:44 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/02 09:41:39 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ static t_error	_parse_one_coord(
 	char *const	coord = ft_strsep(&state->tok, ",");
 	char		*endptr;
 
-	if (coord == NULL || coord[ft_strspn(coord, " ")] == '\0')
-	{
+	if (coord == NULL)
+		put_field_error(state,
+			ft_strchr(state->tok_start, '\0'), "Missing coordinate");
+	if (coord != NULL && coord[0] == '\0')
 		put_field_error(state, coord, "Missing coordinate");
+	if (coord == NULL || coord[0] == '\0')
 		return (FAILURE);
-	}
 	*ret = ft_strtof(coord, &endptr);
 	if (endptr[0] != '\0')
 	{
