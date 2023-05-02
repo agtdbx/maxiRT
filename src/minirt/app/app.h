@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/14 01:44:06 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/02 17:51:50 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <minirt/menu/menu.h>
 # include <minirt/scene/scene.h>
-# include <minirt/canvas/canvas.h>
+// # include <minirt/canvas/canvas.h>
 
 # include <MLX42/MLX42.h>
 
@@ -48,13 +48,16 @@ typedef struct s_app
 	mlx_t		*mlx;
 	t_menu		menu;
 	t_scene		scene;
-	t_canvas	canvas;
+	// t_canvas	canvas;
+	double		dt;
 }	t_app;
 
 //****************************************************************************//
 //**** METHODS ***************************************************************//
 
-mlx_errno_t	app_start(void);
+mlx_errno_t	app_start(t_scene *scene);
 void		app_loop(void *const data);
+
+void		update_camera_position(mlx_t *mlx, t_camera *camera);
 
 #endif//APP_H

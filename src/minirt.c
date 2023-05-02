@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 13:24:16 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/02 10:37:07 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	main(int argc, char *argv[])
 	}
 	if (parse_file(argv[1], &scene) == FAILURE)
 		return (EXIT_FAILURE);
-	err = 0;
-	// err = app_start();//pass scene that has been parsed out
+	err = app_start(&scene);//pass scene that has been parsed out
 	scene_del(&scene);
 	return (err);
 }
