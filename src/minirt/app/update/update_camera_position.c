@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/03 01:05:25 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/03 13:12:49 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ bool	update_camera_position(
 		| _update_camera_position_z(mlx, camera, speed));
 }
 
+//TODO(tdubois): consider stricter condition than isfinite
 /**
  * Assign src to *dst if src is a finite float
  * @param[in] src The value to assign from

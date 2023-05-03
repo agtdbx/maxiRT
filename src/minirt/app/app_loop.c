@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/02 17:53:06 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/03 11:42:36 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void	app_loop(void *const data)
 		return ;
 	}
 	_log_fps(app);
+	// update_image_size(app->mlx)
 	update_camera_position(app->mlx, app->scene.camera);
-	// update_camera_direction(app);
+	update_camera_direction(app);
 	// _update_scene(app);
 	// _render_scene(app);
 }
