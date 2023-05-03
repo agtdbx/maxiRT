@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/03 11:12:40 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:31:18 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <minirt/menu/menu.h>
 # include <minirt/scene/scene.h>
-// # include <minirt/canvas/canvas.h>
+# include <minirt/canvas/canvas.h>
 
 # include <MLX42/MLX42.h>
 
@@ -48,7 +48,7 @@ typedef struct s_app
 	mlx_t		*mlx;
 	t_menu		menu;
 	t_scene		scene;
-	// t_canvas	canvas;
+	t_canvas	canvas;
 }	t_app;
 
 //****************************************************************************//

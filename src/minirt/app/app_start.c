@@ -6,70 +6,72 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/02 14:20:38 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:54:50 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/app/app.h>
+
 #include <minirt/scene/scene.h>
-
 #include <MLX42/MLX42.h>
+#include <libft/libft.h>
 
-#include <stdio.h>//TODO
 #include <stddef.h>
+#include <string.h>
+#include <stdio.h>
+#include <errno.h>
 
-//**** DECLARATIONS **********************************************************//
+static t_error	_app_init(
+					t_app *app,
+					t_scene *scene);
 
-mlx_errno_t			app_start(t_scene *scene);
-static mlx_errno_t	_create_mlx_images(t_app *const app);
-
-//**** DEFINITIONS ***********************************************************//
-
-mlx_errno_t	app_start(t_scene *scene)
+t_error	app_start(t_scene *scene)
 {
 	t_app	app;
 
-	app.scene = *scene;
-	app.mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, false);
-	if (app.mlx == NULL)
+	errno = 0;
+	mlx_errno = 0;
+	if (_app_init(&app, scene) == SUCCESS)
 	{
-		fprintf(stderr, "%s\n", mlx_strerror(mlx_errno));
-		return (mlx_errno);
+		mlx_loop(app.mlx);
+		//cleanup
+		return (SUCCESS);
 	}
-	if (_create_mlx_images(&app) != MLX_SUCCESS)
-	{
-		mlx_terminate(app.mlx);
-		fprintf(stderr, "%s\n", mlx_strerror(mlx_errno));
-		return (mlx_errno);
-	}
-	if (mlx_loop_hook(app.mlx, app_loop, &app) == false)
-	{
-		mlx_terminate(app.mlx);
-		fprintf(stderr, "%s\n", mlx_strerror(mlx_errno));
-		return (mlx_errno);
-	}
-	mlx_loop(app.mlx);
-	mlx_terminate(app.mlx);
-	return (MLX_SUCCESS);
+	if (mlx_errno != MLX_SUCCESS)
+		printf("Error\n%s\n", mlx_strerror(mlx_errno));
+	else if (errno != 0)
+		printf("Error\n%s\n", strerror(errno));
+	else
+		printf("Error\nFatal, unknown error\n");
+	return (FAILURE);
 }
 
-static mlx_errno_t	_create_mlx_images(t_app *const app)
+static t_error	_app_init(
+					t_app *app,
+					t_scene *scene)
 {
-	(void) app;
-	// app->canvas.front = mlx_new_image(
-	// 		app->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	// if (app->canvas.front == NULL)
-	// 	return (mlx_errno);
-	// if (mlx_image_to_window(app->mlx, app->canvas.front, 0, 0) == -1)
-	// 	return (mlx_errno);
-	// app->canvas.front->instances->z = 1;
-	// app->canvas.back = mlx_new_image(
-	// 		app->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	// if (app->canvas.back == NULL)
-	// 	return (mlx_errno);
-	// if (mlx_image_to_window(app->mlx, app->canvas.back, 0, 0) == -1)
-	// 	return (mlx_errno);
-	//create second rendering_canvas
-	//create_menu
-	return (MLX_SUCCESS);
+	app->scene = *scene;
+	mlx_set_setting(MLX_MAXIMIZED, true);
+	app->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, true);
+	if (app->mlx == NULL)
+		return (FAILURE);
+	if (canvas_init(app) == FAILURE)
+	{
+		mlx_terminate(app->mlx);
+		return (FAILURE);
+	}
+	// if (menu_init(app) == FAILURE)
+	{
+		// mlx_terminate(app->mlx);
+		// canvas_del();
+		// return (FAILURE);
+	}
+	if (mlx_loop_hook(app->mlx, app_loop, app) == false)
+	{
+		// mlx_terminate(app->mlx);
+		// canvas_del();
+		// menu_del();
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }
