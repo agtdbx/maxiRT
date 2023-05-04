@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/03 13:10:59 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 17:01:08 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,46 @@ typedef struct s_vec3
 	float	z;
 }	t_vec3;
 
+typedef struct s_vec2
+{
+	float	x;
+	float	y;
+}	t_vec2;
+
+typedef struct s_ray
+{
+	t_vec3	pos;
+	t_vec3	vec;
+}	t_ray;
+
 extern float	vec3_norm(
 					t_vec3 const *vec);
-
 extern float	vec3_dot_xyz(
-						float x,
-						float y,
-						float z,
-						t_vec3 const *vec);
+					float x,
+					float y,
+					float z,
+					t_vec3 const *vec);
+extern void		vec3_scale(
+					t_vec3 *vec,
+					float scaling_factor);
+extern void		vec3_add(
+					t_vec3 *restrict vec1,
+					t_vec3 const *restrict vec2);
+extern void		vec3_sub(
+					t_vec3 *restrict vec1,
+					t_vec3 const *restrict vec2);
+extern void		vec3_linear_transform(
+					t_vec3 *restrict vec1,
+					float scaling_factor,
+					t_vec3 const *restrict vec2);
+
+extern t_vec2	vec2(
+					float x,
+					float y);
+
+extern t_vec3	vec3(
+					float x,
+					float y,
+					float z);
 
 #endif//GEOMETRY_H

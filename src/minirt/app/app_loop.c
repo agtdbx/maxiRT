@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:50:58 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 17:57:44 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	app_loop(void *const data)
 	should_render |= update_camera_position(app->mlx, app->scene.camera);
 	should_render |= update_camera_direction(app->mlx, app->scene.camera);
 	// should_render |= update_scene(app);
-	render(app, should_render);
+	render(app->mlx, &app->canvas, &app->scene, should_render);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:37:08 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 17:56:02 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <minirt/canvas/canvas.h>
 
 # include <MLX42/MLX42.h>
+# include <stdbool.h>
 
 //****************************************************************************//
 //**** WINDOW CONFIGURATION CONSTANTS ****************************************//
@@ -65,7 +66,9 @@ bool		update_camera_direction(
 				t_camera *camera);
 
 void		render(
-				t_app *app,
+				mlx_t *mlx,
+				t_canvas *canvas,
+				t_scene *scene,
 				bool should_render);
 
 #endif//APP_H
