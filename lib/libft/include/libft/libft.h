@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:35:07 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 13:37:19 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:49:50 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,9 @@ void	*ft_memset(
 void	*ft_bzero(
 			void *s,
 			size_t n);
+
+void	ft_swap(
+			void *pptr1,
+			void *pptr2);
 
 #endif//LIBFT_H

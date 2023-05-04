@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/03 13:11:08 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 11:31:30 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ static inline void	_absolute_rotate_around_oy(
  * @param[out] camera The camera to be updated
  * @returns true or false wether scene should be rendered or not
  */
-bool	update_camera_direction(mlx_t *mlx, t_camera *camera)
+bool	update_camera_direction(
+			mlx_t *mlx,
+			t_camera *camera)
 {
 	float const	rads = mlx->delta_time * 20.0f * PI_DIV_180;
 

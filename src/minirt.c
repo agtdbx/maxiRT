@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/02 10:37:07 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 11:33:57 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static const char	g_argc_error_msg[] = \
 
 int	main(int argc, char *argv[])
 {
-	mlx_errno_t	err;
-	t_scene		scene;
+	t_scene	scene;
 
 	if (argc != 2)
 	{
@@ -35,8 +34,14 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 	if (parse_file(argv[1], &scene) == FAILURE)
+	{
 		return (EXIT_FAILURE);
-	err = app_start(&scene);//pass scene that has been parsed out
+	}
+	if (app_start(&scene) == FAILURE)
+	{
+		scene_del(&scene);
+		return (EXIT_FAILURE);
+	}
 	scene_del(&scene);
-	return (err);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/03 16:31:18 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:37:08 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define WINDOW_WIDTH_DIV_2 960
-# define WINDOW_HEIGHT_DIV_2 540
 
 //****************************************************************************//
 //**** RENDERING CONFIGURATION CONSTANTS *************************************//
 
 // cap game loop at 64 or 32 ticks per second
-# define MAX_TPS_64 0.017
-# define MAX_TPS_32 0.032
-# define MAX_TPS_16 0.063
-# define MINIMUM_RENDERING_TIMESTEP_IN_SECONDS MAX_TPS_16
+// # define MAX_TPS_64 0.017
+// # define MAX_TPS_32 0.032
+// # define MAX_TPS_16 0.063
+// # define MINIMUM_RENDERING_TIMESTEP_IN_SECONDS MAX_TPS_16
 
 //****************************************************************************//
 //**** APP MODEL *************************************************************//
@@ -54,7 +52,7 @@ typedef struct s_app
 //****************************************************************************//
 //**** METHODS ***************************************************************//
 
-mlx_errno_t	app_start(
+t_error		app_start(
 				t_scene *scene);
 void		app_loop(
 				void *const data);
@@ -62,5 +60,12 @@ void		app_loop(
 bool		update_camera_position(
 				mlx_t *mlx,
 				t_camera *camera);
+bool		update_camera_direction(
+				mlx_t *mlx,
+				t_camera *camera);
+
+void		render(
+				t_app *app,
+				bool should_render);
 
 #endif//APP_H

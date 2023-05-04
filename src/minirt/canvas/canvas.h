@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:36:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/03 16:08:50 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 11:27:09 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 //>  - and one for background rendering across frames
 
 # include <MLX42/MLX42.h>
+# include <libft/libft.h>
 
 typedef struct s_canvas
 {
@@ -28,7 +29,9 @@ typedef struct s_canvas
 	mlx_image_t	*back;
 }	t_canvas;
 
-//canvas_create
+t_error	canvas_init(
+			mlx_t *mlx,
+			t_canvas *canvas);
 //canvas_swap
 
 #endif//CANVAS_H

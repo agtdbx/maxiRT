@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/03 17:54:50 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:39:56 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static t_error	_app_init(
 					t_app *app,
 					t_scene *scene);
 
-t_error	app_start(t_scene *scene)
+t_error	app_start(
+			t_scene *scene)
 {
 	t_app	app;
 
@@ -55,7 +56,7 @@ static t_error	_app_init(
 	app->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
-	if (canvas_init(app) == FAILURE)
+	if (canvas_init(app->mlx, &app->canvas) == FAILURE)
 	{
 		mlx_terminate(app->mlx);
 		return (FAILURE);
@@ -63,13 +64,11 @@ static t_error	_app_init(
 	// if (menu_init(app) == FAILURE)
 	{
 		// mlx_terminate(app->mlx);
-		// canvas_del();
 		// return (FAILURE);
 	}
 	if (mlx_loop_hook(app->mlx, app_loop, app) == false)
 	{
-		// mlx_terminate(app->mlx);
-		// canvas_del();
+		mlx_terminate(app->mlx);
 		// menu_del();
 		return (FAILURE);
 	}
