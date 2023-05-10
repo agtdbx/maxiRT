@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 17:56:02 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/10 17:10:11 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,10 @@ void		render(
 				t_canvas *canvas,
 				t_scene *scene,
 				bool should_render);
+
+extern t_object const	*fetch_closest_intersection(
+							t_ray const *ray,
+							t_object const *objects,
+							float *distance);
 
 #endif//APP_H

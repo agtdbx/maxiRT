@@ -6,12 +6,14 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 17:01:08 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/10 17:40:05 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GEOMETRY_H
 # define GEOMETRY_H
+
+#include <stdbool.h>
 
 //> GEOMETRY SUB LIBRARY
 //>
@@ -46,6 +48,9 @@ typedef struct s_ray
 
 extern float	vec3_norm(
 					t_vec3 const *vec);
+extern float	vec3_dot(
+					t_vec3 const *u,
+					t_vec3 const *v);
 extern float	vec3_dot_xyz(
 					float x,
 					float y,
@@ -73,5 +78,11 @@ extern t_vec3	vec3(
 					float x,
 					float y,
 					float z);
+
+extern bool		solve_quadratic(
+					float a,
+					float b,
+					float c,
+					float solutions[2]);
 
 #endif//GEOMETRY_H

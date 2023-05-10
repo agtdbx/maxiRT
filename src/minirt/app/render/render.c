@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 17:56:55 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/10 08:20:25 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static inline void	_fast_render(
 						mlx_t *mlx,
 						mlx_image_t *img,
 						t_scene *scene);
-// static inline void	_fill_square(
-// 						mlx_image_t *img,
-// 						int x,
-// 						int y,
-// 						int color);
+static inline void	_fill_square(
+						mlx_image_t *img,
+						int x,
+						int y,
+						int color);
 
 void	render(
 			mlx_t *mlx,
@@ -59,7 +59,7 @@ void	render(
 			return ;
 	}
 	is_rendering = false;
-	// canvas_swap(&app->canvas);
+	canvas_swap(canvas);
 }
 
 #define PPR 4
@@ -83,7 +83,7 @@ static inline void	_fast_render(
 		while (x < mlx->width)
 		{
 			(void) img;
-			// _fill_square(img, x, y, render_pixel(scene, &casted_ray));
+			_fill_square(img, x, y, render_ray(scene, &casted_ray));
 			vec3_linear_transform(&casted_ray.vec, -PPR, &scene->camera->o_x);
 			x += PPR;
 		}
@@ -110,24 +110,24 @@ static inline t_ray	_get_top_left_ray(
 	return (top_left);
 }
 
-// static inline void	_fill_square(
-// 						mlx_image_t *img,
-// 						int x,
-// 						int y,
-// 						int color)
-// {
-// 	int const initial_x = x;
-// 	int const max_x = x + PPR;
-// 	int const max_y = y + PPR;
-//
-// 	while (y < max_y)
-// 	{
-// 		x = initial_x;
-// 		while (x < max_x)
-// 		{
-// 			mlx_put_pixel(img, x, y, color);
-// 			++x;
-// 		}
-// 		++y;
-// 	}
-// }
+static inline void	_fill_square(
+						mlx_image_t *img,
+						int x,
+						int y,
+						int color)
+{
+	int const initial_x = x;
+	int const max_x = x + PPR;
+	int const max_y = y + PPR;
+
+	while (y < max_y)
+	{
+		x = initial_x;
+		while (x < max_x)
+		{
+			mlx_put_pixel(img, x, y, color);
+			++x;
+		}
+		++y;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:36:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 11:27:09 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/10 08:06:07 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_canvas
 t_error	canvas_init(
 			mlx_t *mlx,
 			t_canvas *canvas);
-//canvas_swap
+void	canvas_swap(
+			t_canvas *canvas);
 
 #endif//CANVAS_H
