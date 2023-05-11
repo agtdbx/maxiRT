@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/10 08:20:25 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/11 17:43:20 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-static inline t_ray	_get_top_left_ray(
-						mlx_t *mlx,
-						t_camera *camera);
+static inline void	_get_top_left_ray(
+						mlx_t const *mlx,
+						t_camera const *camera,
+						t_ray *top_left);
 static inline void	_fast_render(
 						mlx_t *mlx,
 						mlx_image_t *img,
@@ -71,43 +72,45 @@ static inline void	_fast_render(
 {
 	t_ray	left_ray;
 	t_ray	casted_ray;
+	t_ray	normalized_casted_ray;
 	int		x;
 	int		y;
 
-	left_ray = _get_top_left_ray(mlx, scene->camera);
-	casted_ray = left_ray;
+	_get_top_left_ray(mlx, scene->camera, &left_ray);
 	y = 0;
 	while (y < mlx->height)
 	{
+		casted_ray.vec = left_ray.vec;
 		x = 0;
 		while (x < mlx->width)
 		{
-			(void) img;
-			_fill_square(img, x, y, render_ray(scene, &casted_ray));
+			vec3_normalize_into(&normalized_casted_ray.vec, &casted_ray.vec);
+			_fill_square(img, x, y, render_ray(scene, &normalized_casted_ray));
 			vec3_linear_transform(&casted_ray.vec, -PPR, &scene->camera->o_x);
 			x += PPR;
 		}
-		vec3_linear_transform(&casted_ray.vec, -PPR, &scene->camera->o_y);
+		vec3_linear_transform(&left_ray.vec, -PPR, &scene->camera->o_y);
 		y += PPR;
 	}
 }
 
-static inline t_ray	_get_top_left_ray(
-						mlx_t *mlx,
-						t_camera *camera)
+/**
+ *  Compute the ray associated with the topleft corner pixel.
+ *  @param[in] mlx The mlx harness
+ *  @param[in] camera The camera instance
+ *  @param[out] top_left The un-normalized computed ray
+ */
+static inline void	_get_top_left_ray(
+						mlx_t const *mlx,
+						t_camera const *camera,
+						t_ray *top_left)
 {
-	t_vec3	focal_pos;
-	t_ray	top_left;
-
-	focal_pos = camera->direction;
-	vec3_scale(&focal_pos, -camera->focal);
-	vec3_add(&focal_pos, &camera->pos);
-	top_left.pos = camera->pos;
-	vec3_linear_transform(&top_left.pos, (float)mlx->width / 2, &camera->o_x);
-	vec3_linear_transform(&top_left.pos, (float)mlx->height / 2, &camera->o_y);
-	top_left.vec = top_left.pos;
-	vec3_sub(&top_left.vec, &focal_pos);
-	return (top_left);
+	top_left->pos = camera->pos;
+	vec3_linear_transform(&top_left->pos, mlx->width / 2.0f, &camera->o_x);
+	vec3_linear_transform(&top_left->pos, mlx->height / 2.0f, &camera->o_y);
+	top_left->vec = top_left->pos;
+	vec3_sub(&top_left->vec, &camera->pos);
+	vec3_linear_transform(&top_left->vec, camera->focal, &camera->direction);
 }
 
 static inline void	_fill_square(
@@ -116,9 +119,9 @@ static inline void	_fill_square(
 						int y,
 						int color)
 {
-	int const initial_x = x;
-	int const max_x = x + PPR;
-	int const max_y = y + PPR;
+	register int const initial_x = x;
+	register int const max_x = x + PPR;
+	register int const max_y = y + PPR;
 
 	while (y < max_y)
 	{

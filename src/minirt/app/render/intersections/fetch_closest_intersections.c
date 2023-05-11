@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 15:56:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/10 17:10:58 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/11 17:50:32 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ extern inline t_object const	*fetch_closest_intersection(
 	while (objects != NULL)
 	{
 		if (_test_intersection(ray, objects, &actual_distance)
-			&& actual_distance < *distance)
+			&& !(0 <= *distance && *distance <= actual_distance))
 		{
 			*distance = actual_distance;
 			intersected_object = objects;

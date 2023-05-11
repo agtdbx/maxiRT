@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/11 01:40:52 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/11 17:51:32 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	test_intersection_with_sphere(
 	float	dot;
 	float	nabla;
 
-	vec3_substract(&vec, &ray->pos, &sphere->pos);
+	vec3_substract_into(&vec, &ray->pos, &sphere->pos);
 	dot = vec3_dot(&ray->vec, &vec);
 	nabla = dot * dot - vec3_dot(&vec, &vec) + sphere->radius2;
 	if (nabla < 0)
@@ -45,15 +45,9 @@ bool	test_intersection_with_sphere(
 	nabla = sqrtf(nabla);
 	*distance = -dot - nabla;
 	if (*distance > 0)
-	{
-		*distance /= vec3_dot(&ray->vec, &ray->vec);
 		return (true);
-	}
 	*distance = -dot + nabla;
 	if (*distance > 0)
-	{
-		*distance /= vec3_dot(&ray->vec, &ray->vec);
 		return (true);
-	}
 	return (false);
 }
