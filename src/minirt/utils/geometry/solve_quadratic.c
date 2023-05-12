@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 17:29:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/10 17:42:12 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/12 12:02:27 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include <math.h>
 #include <stdbool.h>
+
+//TODO(tdubois): should be removed
 
 /**
  * Solve quadratic equation (E) a*X^2 + bX + c = 0

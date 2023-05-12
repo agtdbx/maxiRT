@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 16:10:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 16:31:19 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:36:19 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <math.h>
 
 extern inline float	vec3_norm(
-					t_vec3 const *vec)
+						t_vec3 const *vec)
 {
 	return (sqrtf(
 			vec->x * vec->x

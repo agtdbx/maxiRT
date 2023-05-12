@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/11 17:51:32 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/12 12:09:42 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <stdbool.h>
 #include <math.h>
 
-//TODO: normalize thrown rays
 //TODO: create vec3_substract
 
 /**

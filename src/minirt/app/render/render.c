@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/11 17:43:20 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/12 12:10:17 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static inline void	_get_top_left_ray(
 	vec3_linear_transform(&top_left->pos, mlx->width / 2.0f, &camera->o_x);
 	vec3_linear_transform(&top_left->pos, mlx->height / 2.0f, &camera->o_y);
 	top_left->vec = top_left->pos;
-	vec3_sub(&top_left->vec, &camera->pos);
+	vec3_substract(&top_left->vec, &camera->pos);
 	vec3_linear_transform(&top_left->vec, camera->focal, &camera->direction);
 }
 

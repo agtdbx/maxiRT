@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 15:56:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/11 17:50:32 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/12 11:51:19 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,18 @@ static inline bool	_test_intersection(
 						t_object const *object,
 						float *distance);
 
-extern inline t_object const	*fetch_closest_intersection(
-									t_ray const *ray,
-									t_object const *objects,
-									float *distance)
+/**
+ * Fetch closest object intersected by ray
+ * @param[in] ray
+ * @param[in] objects
+ * @param[out] distance The distance to the closest object
+ * @returns A pointer to the closest object
+ * or NULL if ray did not intercept any object.
+ */
+t_object const	*fetch_closest_intersection(
+					t_ray const *ray,
+					t_object const *objects,
+					float *distance)
 {
 	float			actual_distance;
 	t_object const	*intersected_object;

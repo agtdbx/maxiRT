@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:20:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 15:43:41 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/12 12:15:19 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_camera
 {
 	float	fov;
 	t_vec3	pos;
-
 	t_vec3	direction;
+
 	t_vec3	o_x;
 	t_vec3	o_y;
 	float	focal;

@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_normalize_into.c                              :+:      :+:    :+:   */
+/*   vec3_substract_into.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 16:38:08 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/12 17:41:20 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/12 12:03:03 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/12 12:09:12 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/utils/geometry.h>
 
-#include <math.h>
-
-extern inline void	vec3_normalize_into(
+/**
+ * Stores result of lhs - rhs into dst.
+ * @param[out] dst
+ * @param[in] lhs
+ * @param[in] rhs
+ */
+extern inline void	vec3_substract_into(
 						t_vec3 *restrict dst,
-						t_vec3 const *restrict src)
+						t_vec3 const *restrict lhs,
+						t_vec3 const *restrict rhs)
 {
-	float	norm; 
-
-	if (src->x == 0.0f && src->y == 0.0f && src->z == 0.0f)
-		return ;
-	norm = vec3_norm(src);
-	dst->x = src->x / norm;
-	dst->y = src->y / norm;
-	dst->z = src->z / norm;
+	dst->x = lhs->x - rhs->x;
+	dst->y = lhs->y - rhs->y;
+	dst->z = lhs->z - rhs->z;
 }

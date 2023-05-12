@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_normalize_into.c                              :+:      :+:    :+:   */
+/*   vec3_normalize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 16:38:08 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/12 17:41:20 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:41:40 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/utils/geometry.h>
 
-#include <math.h>
-
-extern inline void	vec3_normalize_into(
-						t_vec3 *restrict dst,
-						t_vec3 const *restrict src)
+extern inline void	vec3_normalize(
+						t_vec3 *src)
 {
 	float	norm; 
 
 	if (src->x == 0.0f && src->y == 0.0f && src->z == 0.0f)
 		return ;
 	norm = vec3_norm(src);
-	dst->x = src->x / norm;
-	dst->y = src->y / norm;
-	dst->z = src->z / norm;
+	src->x /= norm;
+	src->y /= norm;
+	src->z /= norm;
 }
