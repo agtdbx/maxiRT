@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 10:13:11 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/15 22:54:21 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ t_error		app_start(
 void		app_loop(
 				void *const data);
 
+bool		update_canvas_size(
+				mlx_t const *mlx,
+				t_canvas *canvas);
 bool		update_camera_position(
 				mlx_t *mlx,
 				t_camera *camera);
