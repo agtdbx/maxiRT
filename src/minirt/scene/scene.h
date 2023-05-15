@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/01 23:59:41 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/15 09:14:51 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 //> whose name has been given in parameters.
 
 # include <libft/libft.h>
+# include <MLX42/MLX42.h>
 
 # include <minirt/scene/scene_light.h>
 # include <minirt/scene/scene_object.h>
@@ -40,5 +41,11 @@ t_error	scene_add_object(
 
 void	scene_del(
 			t_scene *scene);
+
+void	camera_compute_constants(
+			mlx_t const *mlx,
+			t_camera *camera);
+void	sphere_compute_constants(
+			t_sphere *sphere);
 
 #endif//SCENE_H

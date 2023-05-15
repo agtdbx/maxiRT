@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 08:17:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/10 17:10:27 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/15 16:40:46 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <minirt/scene/scene.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 typedef struct s_intersection
 {
@@ -23,7 +24,6 @@ typedef struct s_intersection
 	t_vec3			pos;
 	t_vec3			normal;
 }	t_intersection;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -40,8 +40,10 @@ int	render_ray(
 		fetch_closest_intersection(ray, scene->objects, &distance);
 	if (intersected_object == NULL)
 		return (RGB_BLACK);
+	// printf("distance: %f\n", distance);
 	if (intersected_object->type == OBJ_SPHERE)
-		return (render_ray_on_sphere(intersected_object, distance));
+		return (render_ray_on_sphere(
+			(t_sphere*)&intersected_object->value, ray, distance));
 	//other object types...
 	return (RGB_BLACK);
 }

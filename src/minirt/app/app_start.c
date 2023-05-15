@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:39:56 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/15 10:17:00 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 static t_error	_app_init(
 					t_app *app,
 					t_scene *scene);
+static void		_compute_constants(
+					mlx_t *mlx,
+					t_scene *scene);
 
 t_error	app_start(
 			t_scene *scene)
@@ -34,6 +37,7 @@ t_error	app_start(
 	mlx_errno = 0;
 	if (_app_init(&app, scene) == SUCCESS)
 	{
+		render(app.mlx, &app.canvas, &app.scene, true);
 		mlx_loop(app.mlx);
 		//cleanup
 		return (SUCCESS);
@@ -72,5 +76,22 @@ static t_error	_app_init(
 		// menu_del();
 		return (FAILURE);
 	}
+	_compute_constants(app->mlx, &app->scene);
 	return (SUCCESS);
+}
+
+static void	_compute_constants(
+				mlx_t *mlx,
+				t_scene *scene)
+{
+	t_object	*object_iterator;
+
+	camera_compute_constants(mlx, scene->camera);
+	object_iterator = scene->objects;
+	while (object_iterator != NULL)
+	{
+		if (object_iterator->type == OBJ_SPHERE)
+			sphere_compute_constants((t_sphere*)&object_iterator->value);
+		object_iterator = object_iterator->next;
+	}
 }

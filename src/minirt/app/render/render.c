@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/12 12:10:17 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/15 17:30:16 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include <MLX42/MLX42.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>//TODO
+#include <math.h>//TODO
+#include <stdlib.h>//TODO
 
 static inline void	_get_top_left_ray(
 						mlx_t const *mlx,
@@ -60,8 +63,11 @@ void	render(
 			return ;
 	}
 	is_rendering = false;
-	canvas_swap(canvas);
+	// canvas_swap(canvas);
 }
+
+#define PRINT_VEC(VEC)\
+	printf("(%s) x: %f | y: %f | z: %f\n", #VEC, VEC.x , VEC.y, VEC.z);
 
 #define PPR 4
 
@@ -75,21 +81,37 @@ static inline void	_fast_render(
 	t_ray	normalized_casted_ray;
 	int		x;
 	int		y;
+	int	DEBUG_i = 0;
 
+	// PRINT_VEC(scene->camera->o_x)
+	// PRINT_VEC(scene->camera->o_y)
 	_get_top_left_ray(mlx, scene->camera, &left_ray);
 	y = 0;
 	while (y < mlx->height)
 	{
 		casted_ray.vec = left_ray.vec;
+		normalized_casted_ray.pos = left_ray.pos;
 		x = 0;
 		while (x < mlx->width)
 		{
 			vec3_normalize_into(&normalized_casted_ray.vec, &casted_ray.vec);
-			_fill_square(img, x, y, render_ray(scene, &normalized_casted_ray));
+			if (abs(x - mlx->width/ 2) < 20 && abs(y - mlx->height/2) < 20)
+			{
+				// PRINT_VEC(normalized_casted_ray.pos)
+				// PRINT_VEC(casted_ray.vec)
+			}
+			if (DEBUG_i == 60210)
+				_fill_square(img, x, y, 0xFF0000FF);
+			else
+				_fill_square(img, x, y, render_ray(scene, &normalized_casted_ray));
 			vec3_linear_transform(&casted_ray.vec, -PPR, &scene->camera->o_x);
+			vec3_linear_transform(&normalized_casted_ray.pos, -PPR, &scene->camera->o_x);
 			x += PPR;
+
+			++DEBUG_i;
 		}
 		vec3_linear_transform(&left_ray.vec, -PPR, &scene->camera->o_y);
+		vec3_linear_transform(&left_ray.pos, -PPR, &scene->camera->o_y);
 		y += PPR;
 	}
 }
@@ -106,8 +128,8 @@ static inline void	_get_top_left_ray(
 						t_ray *top_left)
 {
 	top_left->pos = camera->pos;
-	vec3_linear_transform(&top_left->pos, mlx->width / 2.0f, &camera->o_x);
-	vec3_linear_transform(&top_left->pos, mlx->height / 2.0f, &camera->o_y);
+	vec3_linear_transform(&top_left->pos, mlx->width / (2.0f), &camera->o_x);
+	vec3_linear_transform(&top_left->pos, mlx->height / (2.0f), &camera->o_y);
 	top_left->vec = top_left->pos;
 	vec3_substract(&top_left->vec, &camera->pos);
 	vec3_linear_transform(&top_left->vec, camera->focal, &camera->direction);

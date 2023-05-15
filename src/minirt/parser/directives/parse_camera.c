@@ -6,14 +6,14 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 17:26:01 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/15 09:17:17 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/parser/parser.h"
+#include <minirt/parser/parser.h>
 
-#include "libft/libft.h"
-
+#include <minirt/scene/scene.h>
+#include <libft/libft.h>
 #include <stdio.h>
 
 t_error	parse_camera(

@@ -6,11 +6,11 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:09:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/12 17:31:55 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/15 09:14:28 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/scene/scene_camera.h>
+#include <minirt/scene/scene.h>
 
 #include <minirt/utils/geometry.h>
 #include <MLX42/MLX42.h>

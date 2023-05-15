@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_normalize_into.c                              :+:      :+:    :+:   */
+/*   render_ray_on_sphere.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 16:38:08 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 17:01:29 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/15 10:06:32 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/15 10:12:54 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/utils/geometry.h>
+#include <minirt/app/app.h>
 
-#include <math.h>
-
-extern inline void	vec3_normalize_into(
-						t_vec3 *restrict dst,
-						t_vec3 const *restrict src)
+int	render_ray_on_sphere(
+		t_sphere const *sphere,
+		t_ray const *ray,
+		float distance)
 {
-	float	norm; 
-
-	if (src->x == 0.0f && src->y == 0.0f && src->z == 0.0f)
-		return ;
-	norm = vec3_norm(src);
-	dst->x = src->x / norm;
-	dst->y = src->y / norm;
-	dst->z = src->z / norm;
+	(void) sphere;
+	(void) ray;
+	(void) distance;
+	return (0xFFFFFFFF);
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/12 11:51:53 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/15 10:13:11 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ void		render(
 int			render_ray(
 				t_scene const *scene,
 				t_ray const *ray);
+int			render_ray_on_sphere(
+				t_sphere const *sphere,
+				t_ray const *ray,
+				float distance);
 
 t_object const	*fetch_closest_intersection(
 					t_ray const *ray,
@@ -82,7 +86,7 @@ t_object const	*fetch_closest_intersection(
 
 bool	test_intersection_with_sphere(
 			t_ray const *ray,
-			t_sphere *const sphere,
+			t_sphere const *sphere,
 			float *distance);
 
 #endif//APP_H

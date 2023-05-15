@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_normalize_into.c                              :+:      :+:    :+:   */
+/*   sphere_compute_constants.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 16:38:08 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 17:01:29 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/15 09:05:15 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/15 09:15:04 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/utils/geometry.h>
+#include <minirt/scene/scene.h>
 
+#include <minirt/utils/geometry.h>
 #include <math.h>
 
-extern inline void	vec3_normalize_into(
-						t_vec3 *restrict dst,
-						t_vec3 const *restrict src)
+/**
+ * Compute constants from sphere properties to facilitate further calculations
+ * @param[out] sphere
+ */
+void	sphere_compute_constants(
+			t_sphere *sphere)
 {
-	float	norm; 
-
-	if (src->x == 0.0f && src->y == 0.0f && src->z == 0.0f)
-		return ;
-	norm = vec3_norm(src);
-	dst->x = src->x / norm;
-	dst->y = src->y / norm;
-	dst->z = src->z / norm;
+	sphere->radius = sphere->diameter / 2.0f;
+	sphere->radius2 = powf(sphere->radius, 2.0f);
 }
