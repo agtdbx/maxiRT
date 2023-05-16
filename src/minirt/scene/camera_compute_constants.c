@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:09:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 09:14:28 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 12:01:58 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	camera_compute_constants(
 			mlx_t const *mlx,
 			t_camera *camera)
 {
+	vec3_normalize(&camera->direction);
 	camera->o_x = vec3(
 			- camera->direction.z,
 			0.0f,

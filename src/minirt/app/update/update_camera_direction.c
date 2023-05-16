@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 11:31:30 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:06:54 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,15 @@ bool	update_camera_direction(
 			mlx_t *mlx,
 			t_camera *camera)
 {
-	float const	rads = mlx->delta_time * 20.0f * PI_DIV_180;
+	float const	rads = -mlx->delta_time * 40.0f * PI_DIV_180;
+	bool		should_render;
 
-	return (false
-		| _rotate_around_ox(mlx, camera, rads)
-		| _rotate_around_oy(mlx, camera, rads));
+	should_render = false;
+	should_render |= _rotate_around_ox(mlx, camera, rads);
+	should_render |= _rotate_around_oy(mlx, camera, rads);
+	if (should_render)
+		camera_compute_constants(mlx, camera);
+	return (should_render);
 }
 
 static inline bool	_rotate_around_ox(

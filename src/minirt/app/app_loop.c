@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 22:55:00 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 11:42:00 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <MLX42/MLX42.h>
 #include <stdio.h>
+#include <math.h>
 
 static void	_log_fps(
 				mlx_t *mlx);
@@ -29,6 +30,7 @@ void	app_loop(void *const data)
 		return ;
 	}
 	_log_fps(app->mlx);
+	app->mlx->delta_time = fmin(app->mlx->delta_time, 1.0f / 8);
 	should_render = false;
 	should_render |= update_canvas_size(app->mlx, &app->canvas);
 	should_render |= update_camera_position(app->mlx, app->scene.camera);

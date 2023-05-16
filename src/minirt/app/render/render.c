@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 22:42:57 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 13:54:52 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static inline void	_render_one_pixel(
 						t_scene *scene,
 						int32_t pixel_rendered);
 
-#define PPR 4 // pixel_per_ray (during fast rendering)
+#define PPR 8 // pixel_per_ray (during fast rendering)
 
 void	render(
 			mlx_t *mlx,
@@ -93,8 +93,8 @@ static inline void	_render_one_pixel(
 
 	casted_ray.pos = scene->camera->pos;
 	casted_ray.vec = scene->camera->pos;
-	vec3_linear_transform(&casted_ray.vec, x - mlx->width / 2.0f, &scene->camera->o_x);
-	vec3_linear_transform(&casted_ray.vec, y - mlx->height / 2.0f, &scene->camera->o_y);
+	vec3_linear_transform(&casted_ray.vec, mlx->width / 2.0f - x, &scene->camera->o_x);
+	vec3_linear_transform(&casted_ray.vec, mlx->height / 2.0f - y, &scene->camera->o_y);
 	vec3_linear_transform(&casted_ray.vec, scene->camera->focal, &scene->camera->direction);
 	vec3_substract(&casted_ray.vec, &casted_ray.pos);
 	vec3_normalize(&casted_ray.vec);

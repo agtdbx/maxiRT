@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/03 13:12:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 13:47:54 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	update_camera_position(
 			mlx_t *mlx,
 			t_camera *camera)
 {
-	float const	speed = mlx->delta_time * 5.0f;
+	float const	speed = mlx->delta_time * 3.0f;
 
 	return (false
 		| _update_camera_position_x(mlx, camera, speed)
@@ -74,15 +74,15 @@ static inline bool	_update_camera_position_x(
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_D))
 		{
-			_safe_assign(&position->x, position->x - o_x->x * speed);
-			_safe_assign(&position->z, position->z - o_x->z * speed);
+			_safe_assign(&position->x, position->x + o_x->x * speed);
+			_safe_assign(&position->z, position->z + o_x->z * speed);
 			return (true);
 		}
 	}
 	else if (mlx_is_key_down(mlx, MLX_KEY_D))
 	{
-		_safe_assign(&position->x, position->x + o_x->x * speed);
-		_safe_assign(&position->z, position->z + o_x->z * speed);
+		_safe_assign(&position->x, position->x - o_x->x * speed);
+		_safe_assign(&position->z, position->z - o_x->z * speed);
 		return (true);
 	}
 	return (false);
@@ -99,13 +99,13 @@ static inline bool	_update_camera_position_y(
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_LEFT_SHIFT))
 		{
-			_safe_assign(&position->y, position->y + speed);
+			_safe_assign(&position->y, position->y - speed);
 			return (true);
 		}
 	}
 	else if (mlx_is_key_down(mlx, MLX_KEY_LEFT_SHIFT))
 	{
-		_safe_assign(&position->y, position->y - speed);
+		_safe_assign(&position->y, position->y + speed);
 		return (true);
 	}
 	return (false);
