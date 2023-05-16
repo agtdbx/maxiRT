@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 13:54:52 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:41:34 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <minirt/scene/scene.h>
 #include <minirt/utils/geometry.h>
 
+#include <libft/libft.h>
 #include <MLX42/MLX42.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -98,7 +99,8 @@ static inline void	_render_one_pixel(
 	vec3_linear_transform(&casted_ray.vec, scene->camera->focal, &scene->camera->direction);
 	vec3_substract(&casted_ray.vec, &casted_ray.pos);
 	vec3_normalize(&casted_ray.vec);
-	mlx_put_pixel(img, x, y, render_ray(scene, &casted_ray));
+	if ((uint32_t)x < img->width && (uint32_t)y < img->height)
+		mlx_put_pixel(img, x, y, render_ray(scene, &casted_ray));
 }
 
 static inline void	_fast_render(
@@ -156,8 +158,8 @@ static inline void	_fill_square(
 						int color)
 {
 	register int const	initial_x = x;
-	register int const	max_x = x + PPR;
-	register int const	max_y = y + PPR;
+	register int const	max_x = ft_min(x + PPR, img->width);
+	register int const	max_y = ft_min(y + PPR, img->height);
 
 	while (y < max_y)
 	{

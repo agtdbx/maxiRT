@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:36:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/10 08:06:07 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:38:30 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,18 @@
 
 # include <MLX42/MLX42.h>
 # include <libft/libft.h>
+# include <stdint.h>
 
 typedef struct s_canvas
 {
 	mlx_image_t	*front;
 	mlx_image_t	*back;
+
+	int32_t	width;
+	int32_t	width_div_2;
+
+	int32_t	height;
+	int32_t	height_div_2;
 }	t_canvas;
 
 t_error	canvas_init(

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 22:54:21 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:46:54 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define WINDOW_TITLE "maxiRT"
 
 # define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 1080
+# define WINDOW_HEIGHT 995
 
 //****************************************************************************//
 //**** RENDERING CONFIGURATION CONSTANTS *************************************//
@@ -60,7 +60,8 @@ void		app_loop(
 
 bool		update_canvas_size(
 				mlx_t const *mlx,
-				t_canvas *canvas);
+				t_canvas *canvas,
+				t_camera *camera);
 bool		update_camera_position(
 				mlx_t *mlx,
 				t_camera *camera);

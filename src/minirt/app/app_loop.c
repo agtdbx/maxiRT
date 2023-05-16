@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 11:42:00 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:26:38 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <math.h>
 
 static void	_log_fps(
-				mlx_t *mlx);
+				mlx_t const *mlx);
 
 void	app_loop(void *const data)
 {
@@ -31,10 +31,10 @@ void	app_loop(void *const data)
 	}
 	_log_fps(app->mlx);
 	app->mlx->delta_time = fmin(app->mlx->delta_time, 1.0f / 8);
-	should_render = false;
-	should_render |= update_canvas_size(app->mlx, &app->canvas);
-	should_render |= update_camera_position(app->mlx, app->scene.camera);
-	should_render |= update_camera_direction(app->mlx, app->scene.camera);
+	should_render = (false
+		| update_canvas_size(app->mlx, &app->canvas, app->scene.camera)
+		| update_camera_position(app->mlx, app->scene.camera)
+		| update_camera_direction(app->mlx, app->scene.camera));
 	// should_render |= update_scene(app);
 	render(app->mlx, &app->canvas, &app->scene, should_render);
 }
@@ -44,7 +44,7 @@ void	app_loop(void *const data)
  * @param[in] app App handle.
  */
 static void	_log_fps(
-				mlx_t *mlx)
+				mlx_t const *mlx)
 {
 	static double	elapsed_seconds = 0.0;
 	static double	number_of_frames = 0;

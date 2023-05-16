@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 16:20:42 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 13:42:40 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:34:55 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ t_error	canvas_init(
 	canvas->back->enabled = false;
 	if (mlx_image_to_window(mlx, canvas->back, 0 , 0) == -1)
 		return (FAILURE);
+	canvas->width = 0;
+	canvas->height = 0;
 	return (SUCCESS);
 }

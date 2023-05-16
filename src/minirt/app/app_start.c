@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 10:17:00 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:43:05 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static t_error	_app_init(
 					t_scene *scene);
 static void		_compute_constants(
 					mlx_t *mlx,
+					t_canvas *canvas,
 					t_scene *scene);
 
 t_error	app_start(
@@ -56,7 +57,7 @@ static t_error	_app_init(
 					t_scene *scene)
 {
 	app->scene = *scene;
-	mlx_set_setting(MLX_MAXIMIZED, true);
+	// mlx_set_setting(MLX_MAXIMIZED, true);
 	app->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
@@ -76,17 +77,18 @@ static t_error	_app_init(
 		// menu_del();
 		return (FAILURE);
 	}
-	_compute_constants(app->mlx, &app->scene);
+	_compute_constants(app->mlx, &app->canvas, &app->scene);
 	return (SUCCESS);
 }
 
 static void	_compute_constants(
 				mlx_t *mlx,
+				t_canvas *canvas,
 				t_scene *scene)
 {
 	t_object	*object_iterator;
 
-	camera_compute_constants(mlx, scene->camera);
+	// camera_compute_constants(mlx, scene->camera);
 	object_iterator = scene->objects;
 	while (object_iterator != NULL)
 	{
@@ -94,4 +96,5 @@ static void	_compute_constants(
 			sphere_compute_constants((t_sphere*)&object_iterator->value);
 		object_iterator = object_iterator->next;
 	}
+	update_canvas_size(mlx, canvas, scene->camera);
 }
