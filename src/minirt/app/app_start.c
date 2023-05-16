@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 15:43:05 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:52:34 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_error	_app_init(
 					t_scene *scene)
 {
 	app->scene = *scene;
-	// mlx_set_setting(MLX_MAXIMIZED, true);
+	mlx_set_setting(MLX_MAXIMIZED, true);
 	app->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, true);
 	if (app->mlx == NULL)
 		return (FAILURE);

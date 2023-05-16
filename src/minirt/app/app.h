@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 15:46:54 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:52:29 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 995
+
+//TODO(tdubois)
+// # define WINDOW_WIDTH 240
+// # define WINDOW_HEIGHT 180
 
 //****************************************************************************//
 //**** RENDERING CONFIGURATION CONSTANTS *************************************//
