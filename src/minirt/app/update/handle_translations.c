@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 13:47:54 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/17 17:07:25 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static inline bool	_update_camera_position_z(
  * @param[out] camera The camera to be updated
  * @returns true or false wether scene should be rendered or not
  */
-bool	update_camera_position(
+bool	handle_translations(
 			mlx_t *mlx,
 			t_camera *camera)
 {

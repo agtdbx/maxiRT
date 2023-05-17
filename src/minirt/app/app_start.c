@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 15:52:34 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/17 16:58:55 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ static t_error	_app_init(
 					t_app *app,
 					t_scene *scene);
 static void		_compute_constants(
-					mlx_t *mlx,
+					mlx_t const *mlx,
 					t_canvas *canvas,
-					t_scene *scene);
+					t_scene *scene,
+					t_menu *menu);
 
 t_error	app_start(
 			t_scene *scene)
@@ -66,10 +67,10 @@ static t_error	_app_init(
 		mlx_terminate(app->mlx);
 		return (FAILURE);
 	}
-	// if (menu_init(app) == FAILURE)
+	if (menu_init(app->mlx, &app->menu) == FAILURE)
 	{
-		// mlx_terminate(app->mlx);
-		// return (FAILURE);
+		mlx_terminate(app->mlx);
+		return (FAILURE);
 	}
 	if (mlx_loop_hook(app->mlx, app_loop, app) == false)
 	{
@@ -77,18 +78,19 @@ static t_error	_app_init(
 		// menu_del();
 		return (FAILURE);
 	}
-	_compute_constants(app->mlx, &app->canvas, &app->scene);
+	_compute_constants(app->mlx, &app->canvas, &app->scene, &app->menu);
 	return (SUCCESS);
 }
 
 static void	_compute_constants(
-				mlx_t *mlx,
+				mlx_t const *mlx,
 				t_canvas *canvas,
-				t_scene *scene)
+				t_scene *scene,
+				t_menu *menu)
 {
 	t_object	*object_iterator;
 
-	// camera_compute_constants(mlx, scene->camera);
+	// camera_compute_constants(mlx, scene->camera);//TODO(tdubois)
 	object_iterator = scene->objects;
 	while (object_iterator != NULL)
 	{
@@ -96,5 +98,5 @@ static void	_compute_constants(
 			sphere_compute_constants((t_sphere*)&object_iterator->value);
 		object_iterator = object_iterator->next;
 	}
-	update_canvas_size(mlx, canvas, scene->camera);
+	handle_window_resizing(mlx, canvas, scene->camera, menu);
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 14:06:54 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/17 17:08:22 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ static inline void	_absolute_rotate_around_oy(
 						float rads);
 
 /**
- * Updates camera position based on keyboard input.
+ * Updates camera direction based on keyboard input.
  * @param[in] mlx The mlx handle
  * @param[out] camera The camera to be updated
  * @returns true or false wether scene should be rendered or not
  */
-bool	update_camera_direction(
+bool	handle_rotations(
 			mlx_t *mlx,
+			t_canvas const *canvas,
 			t_camera *camera)
 {
 	float const	rads = -mlx->delta_time * 40.0f * PI_DIV_180;
@@ -49,7 +50,7 @@ bool	update_camera_direction(
 	should_render |= _rotate_around_ox(mlx, camera, rads);
 	should_render |= _rotate_around_oy(mlx, camera, rads);
 	if (should_render)
-		camera_compute_constants(mlx, camera);
+		camera_compute_constants(canvas, camera);
 	return (should_render);
 }
 

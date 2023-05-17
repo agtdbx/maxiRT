@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu.h                                             :+:      :+:    :+:   */
+/*   handle_menu_toggling.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/17 15:36:36 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/17 17:12:04 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/17 17:37:56 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MENU_H
-# define MENU_H
+#include <minirt/app/app.h>
 
-//> MENU MODEL
+#include <minirt/menu/menu.h>
+#include <MLX42/MLX42.h>
+#include <stdbool.h>
 
-# include <libft/libft.h>
-# include <MLX42/MLX42.h>
-# include <stdbool.h>
-
-# define MENU_WIDTH 400 // width of menu in pixels
-# define MENU_BACKGROUND_COLOR 0x333333FF
-
-typedef struct s_menu
-{
-	bool		is_visible;
-
-	mlx_image_t	*background;
-}	t_menu;
-
-t_error	menu_init(
+bool	handle_menu_toggling(
 			mlx_t *mlx,
-			t_menu *menu);
-void	menu_update_position(
-			mlx_t const *mlx,
-			t_menu *menu);
+			t_menu *menu)
+{
+	static bool		is_keypressed = false;
 
-#endif//MENU_H
+	if (!mlx_is_key_down(mlx, MLX_KEY_TAB))
+	{
+		if (is_keypressed)
+			is_keypressed = false;
+		return (false);
+	}
+	if (is_keypressed)
+		return (false);
+	is_keypressed = true;
+	menu_toggle(menu);
+	return (true);
+}

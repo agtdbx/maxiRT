@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 15:26:38 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/17 17:49:53 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	_log_fps(
 void	app_loop(void *const data)
 {
 	t_app *const	app = data;
+	t_camera *const	camera = app->scene.camera;
 	bool			should_render;
 
 	if (mlx_is_key_down(app->mlx, MLX_KEY_ESCAPE))
@@ -31,10 +32,21 @@ void	app_loop(void *const data)
 	}
 	_log_fps(app->mlx);
 	app->mlx->delta_time = fmin(app->mlx->delta_time, 1.0f / 8);
+
+	//TODO rearrange this shit
 	should_render = (false
-		| update_canvas_size(app->mlx, &app->canvas, app->scene.camera)
-		| update_camera_position(app->mlx, app->scene.camera)
-		| update_camera_direction(app->mlx, app->scene.camera));
+		|| handle_window_resizing(app->mlx, &app->canvas, camera, &app->menu)
+		|| handle_menu_toggling(app->mlx, &app->menu));
+	if (should_render)
+	{
+		camera_compute_constants(canvas, camera);
+		menu_update_position(mlx, menu);
+		render(app->mlx, &app->canvas, &app->scene, false);
+		return ;
+	}
+	should_render = (false
+		| handle_translations(app->mlx, camera)
+		| handle_rotations(app->mlx, &app->canvas, camera));
 	// should_render |= update_scene(app);
 	render(app->mlx, &app->canvas, &app->scene, should_render);
 }

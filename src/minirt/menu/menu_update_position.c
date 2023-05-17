@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu.h                                             :+:      :+:    :+:   */
+/*   menu_update_position.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/17 15:36:36 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/17 15:01:51 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/17 15:04:47 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MENU_H
-# define MENU_H
+#include <minirt/menu/menu.h>
 
-//> MENU MODEL
+#include <MLX42/MLX42.h>
 
-# include <libft/libft.h>
-# include <MLX42/MLX42.h>
-# include <stdbool.h>
-
-# define MENU_WIDTH 400 // width of menu in pixels
-# define MENU_BACKGROUND_COLOR 0x333333FF
-
-typedef struct s_menu
-{
-	bool		is_visible;
-
-	mlx_image_t	*background;
-}	t_menu;
-
-t_error	menu_init(
-			mlx_t *mlx,
-			t_menu *menu);
+/**
+ * sets menu's position based on window size
+ * @param[in] mlx
+ * @param[out] menu
+ */
 void	menu_update_position(
 			mlx_t const *mlx,
-			t_menu *menu);
-
-#endif//MENU_H
+			t_menu *menu)
+{
+	menu->background->instances->x = mlx->width - MENU_WIDTH;
+}

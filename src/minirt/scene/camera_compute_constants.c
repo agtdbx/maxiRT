@@ -6,13 +6,14 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:09:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 12:01:58 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/17 16:54:25 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/scene/scene.h>
 
 #include <minirt/utils/geometry.h>
+#include <minirt/canvas/canvas.h>
 #include <MLX42/MLX42.h>
 #include <math.h>
 
@@ -20,11 +21,11 @@
 
 /**
  * Compute constants from camera properties to facilitate further calculations
- * @param[in] mlx
+ * @param[in] canvas
  * @param[out] camera
  */
 void	camera_compute_constants(
-			mlx_t const *mlx,
+			t_canvas const *canvas,
 			t_camera *camera)
 {
 	vec3_normalize(&camera->direction);
@@ -38,5 +39,5 @@ void	camera_compute_constants(
 			- powf(camera->direction.x, 2.0f) - powf(camera->direction.z, 2.0f),
 			+ camera->direction.y * camera->direction.z);
 	vec3_normalize(&camera->o_y);
-	camera->focal = mlx->width / (2.0f * tanf(camera->fov * PI_DIV_360));
+	camera->focal = canvas->width_div_2 / tanf(camera->fov * PI_DIV_360);
 }

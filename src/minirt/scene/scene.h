@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 09:14:51 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/17 16:54:19 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <minirt/scene/scene_object.h>
 # include <minirt/scene/scene_camera.h>
 
+# include <minirt/canvas/canvas.h>
+
 typedef struct s_scene
 {
 	t_object	*objects;
@@ -43,7 +45,7 @@ void	scene_del(
 			t_scene *scene);
 
 void	camera_compute_constants(
-			mlx_t const *mlx,
+			t_canvas const *canvas,
 			t_camera *camera);
 void	sphere_compute_constants(
 			t_sphere *sphere);
