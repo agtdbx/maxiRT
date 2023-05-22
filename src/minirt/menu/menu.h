@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/17 15:36:36 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/22 08:53:12 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_error	menu_init(
 			t_menu *menu);
 void	menu_update_position(
 			mlx_t const *mlx,
+			t_menu *menu);
+void	menu_toggle(
 			t_menu *menu);
 
 #endif//MENU_H

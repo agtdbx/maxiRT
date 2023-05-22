@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 22:47:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/17 17:49:37 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/22 08:38:49 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 #include <stdint.h>
 
 /**
- * Resize canvas if smaller than window and update camera's focal accordingly
+ * Resize canvas if smaller than window, 
+ * then update camera's focal accordingly
+ * and reposition menu
  *
  * @param[in] mlx The mlx handle
  * @param[out] canvas The canvas to be resized
@@ -46,7 +48,6 @@ bool	handle_window_resizing(
 		canvas->height = viewport_height;
 		canvas->width_div_2 = viewport_width / 2.0f;
 		canvas->height_div_2 = viewport_height / 2.0f;
-		//TODO remove that
 		camera_compute_constants(canvas, camera);
 		menu_update_position(mlx, menu);
 		return (true);

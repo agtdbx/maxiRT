@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/16 15:41:34 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/22 09:23:15 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,20 @@
 //----------------------------------------------------------------------------//
 
 static inline void	_get_top_left_ray(
-						mlx_t const *mlx,
+						t_canvas const *canvas,
 						t_camera const *camera,
 						t_vec3 *top_left_vec);
 static inline void	_fast_render(
-						mlx_t *mlx,
-						mlx_image_t *img,
-						t_scene *scene);
+						t_canvas const *canvas,
+						t_scene const *scene);
 static inline void	_fill_square(
 						mlx_image_t *img,
 						int x,
 						int y,
 						int color);
 static inline void	_render_one_pixel(
-						mlx_t *mlx,
-						mlx_image_t *img,
-						t_scene *scene,
+						t_scene const *scene,
+						t_canvas const *canvas,
 						int32_t pixel_rendered);
 
 #define PPR 8 // pixel_per_ray (during fast rendering)
@@ -54,7 +52,7 @@ static inline void	_render_one_pixel(
 void	render(
 			mlx_t *mlx,
 			t_canvas *canvas,
-			t_scene *scene,
+			t_scene const *scene,
 			bool should_render)
 {
 	static bool		is_rendering = true;
@@ -65,7 +63,7 @@ void	render(
 	{
 		is_rendering = true;
 		pixel_rendered = 0;
-		_fast_render(mlx, canvas->front, scene);
+		_fast_render(canvas, scene);
 		return ;
 	}
 	if (!is_rendering)
@@ -73,7 +71,7 @@ void	render(
 	tmax = mlx_get_time() - mlx->delta_time + 0.25;
 	while (pixel_rendered < mlx->width * mlx->height)
 	{
-		_render_one_pixel(mlx, canvas->back, scene, pixel_rendered);
+		_render_one_pixel(scene, canvas, pixel_rendered);
 		++pixel_rendered;
 		if (mlx_get_time() > tmax)
 			return ;
@@ -83,52 +81,53 @@ void	render(
 }
 
 static inline void	_render_one_pixel(
-						mlx_t *mlx,
-						mlx_image_t *img,
-						t_scene *scene,
+						t_scene const *scene,
+						t_canvas const *canvas,
 						int32_t pixel_rendered)
 {
 	t_ray			casted_ray;
-	int32_t const	x = pixel_rendered % mlx->width;
-	int32_t const	y = pixel_rendered / mlx->width;
+	int32_t const	x = pixel_rendered % canvas->width;
+	int32_t const	y = pixel_rendered / canvas->width;
 
 	casted_ray.pos = scene->camera->pos;
 	casted_ray.vec = scene->camera->pos;
-	vec3_linear_transform(&casted_ray.vec, mlx->width / 2.0f - x, &scene->camera->o_x);
-	vec3_linear_transform(&casted_ray.vec, mlx->height / 2.0f - y, &scene->camera->o_y);
-	vec3_linear_transform(&casted_ray.vec, scene->camera->focal, &scene->camera->direction);
+	vec3_linear_transform(
+			&casted_ray.vec, canvas->width_div_2 - x, &scene->camera->o_x);
+	vec3_linear_transform(
+			&casted_ray.vec, canvas->height_div_2 - y, &scene->camera->o_y);
+	vec3_linear_transform(
+			&casted_ray.vec, scene->camera->focal, &scene->camera->direction);
 	vec3_substract(&casted_ray.vec, &casted_ray.pos);
 	vec3_normalize(&casted_ray.vec);
-	if ((uint32_t)x < img->width && (uint32_t)y < img->height)
-		mlx_put_pixel(img, x, y, render_ray(scene, &casted_ray));
+	if (x < canvas->width && y < canvas->height)
+		mlx_put_pixel(canvas->back, x, y, render_ray(scene, &casted_ray));
 }
 
 static inline void	_fast_render(
-						mlx_t *mlx,
-						mlx_image_t *img,
-						t_scene *scene)
+						t_canvas const *canvas,
+						t_scene const *scene)
 {
-	t_ray	left_ray;
+	t_vec3	y_ray;
+	t_vec3	x_ray;
 	t_ray	casted_ray;
-	t_ray	normalized_casted_ray;
 	int		x;
 	int		y;
 
-	_get_top_left_ray(mlx, scene->camera, &left_ray.vec);
-	normalized_casted_ray.pos = scene->camera->pos;
+	_get_top_left_ray(canvas, scene->camera, &y_ray);
+	casted_ray.pos = scene->camera->pos;
 	y = 0;
-	while (y < mlx->height)
+	while (y < canvas->height)
 	{
-		casted_ray.vec = left_ray.vec;
+		x_ray = y_ray;
 		x = 0;
-		while (x < mlx->width)
+		while (x < canvas->width)
 		{
-			vec3_normalize_into(&normalized_casted_ray.vec, &casted_ray.vec);
-			_fill_square(img, x, y, render_ray(scene, &normalized_casted_ray));
-			vec3_linear_transform(&casted_ray.vec, -PPR, &scene->camera->o_x);
+			vec3_normalize_into(&casted_ray.vec, &x_ray);
+			_fill_square(canvas->front, x, y, render_ray(scene, &casted_ray));
+			vec3_linear_transform(&x_ray, -PPR, &scene->camera->o_x);
 			x += PPR;
 		}
-		vec3_linear_transform(&left_ray.vec, -PPR, &scene->camera->o_y);
+		vec3_linear_transform(&y_ray, -PPR, &scene->camera->o_y);
 		y += PPR;
 	}
 }
@@ -140,13 +139,13 @@ static inline void	_fast_render(
  *  @param[out] top_left The un-normalized computed ray
  */
 static inline void	_get_top_left_ray(
-						mlx_t const *mlx,
+						t_canvas const *canvas,
 						t_camera const *camera,
 						t_vec3 *top_left_vec)
 {
 	*top_left_vec = camera->pos;
-	vec3_linear_transform(top_left_vec, mlx->width / 2.0f, &camera->o_x);
-	vec3_linear_transform(top_left_vec, mlx->height / 2.0f, &camera->o_y);
+	vec3_linear_transform(top_left_vec, canvas->width_div_2, &camera->o_x);
+	vec3_linear_transform(top_left_vec, canvas->height_div_2, &camera->o_y);
 	vec3_linear_transform(top_left_vec, camera->focal, &camera->direction);
 	vec3_substract(top_left_vec, &camera->pos);
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/17 17:08:24 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/22 09:50:19 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,14 @@ bool		handle_rotations(
 				mlx_t *mlx,
 				t_canvas const *canvas,
 				t_camera *camera);
+bool		handle_menu_toggling(
+				mlx_t *mlx,
+				t_menu *menu);
 
 void		render(
 				mlx_t *mlx,
 				t_canvas *canvas,
-				t_scene *scene,
+				t_scene const *scene,
 				bool should_render);
 
 int			render_ray(
