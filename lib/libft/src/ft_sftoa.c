@@ -6,25 +6,67 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:38:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/22 17:49:02 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/23 10:43:50 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft/libft.h>
 
+#include <math.h>
 #include <stddef.h>
+
+#define ERROR (-1)
+#define STR_NAN "NaN"
+#define STR_POS_INF "+inf"
+#define STR_NEG_INF "-inf"
+
+ssize_t	_handle_finite_float(
+			float x,
+			char *buf,
+			size_t buf_size);
 
 ssize_t	ft_sftoa(
 			float x,
 			char *buf,
 			size_t buf_size)
 {
-	int const	before_dot = (int)x;
-	ssize_t		before_dot_len;
-	float const	decimal_part = x - (float)before_dot;
-	int const	after_dot = (1.0f + decimal_part) * 10000.0f;
-	ssize_t		after_dot_len;
+	if (isnanf(x))
+	{
+		if (ft_strlcpy(buf, STR_NAN, buf_size) > buf_size - 1)
+			return (ERROR);
+		return (sizeof(STR_NAN));
+	}
+	if (isinff(x) == -1)
+	{
+		if (ft_strlcpy(buf, STR_NEG_INF, buf_size) > buf_size - 1)
+			return (ERROR);
+		return (sizeof(STR_NEG_INF));
+	}
+	if (isinff(x) == +1)
+	{
+		if (ft_strlcpy(buf, STR_POS_INF, buf_size) > buf_size - 1)
+			return (ERROR);
+		return (sizeof(STR_POS_INF));
+	}
+	return (_handle_finite_float(x, buf, buf_size));
+}
 
+ssize_t	_handle_finite_float(
+			float x,
+			char *buf,
+			size_t buf_size)
+{
+	int		exp;
+	float	before_dot;
+	float	after_dot;
+
+	if (x)
+	after_dot = modff(x, &before_dot);
+
+}
+
+
+{
 	before_dot_len = ft_sitoa(before_dot, buf, buf_size);
 	if (before_dot_len == -1)
 		return (-1);

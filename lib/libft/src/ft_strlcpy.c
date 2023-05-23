@@ -6,15 +6,15 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:07:11 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/06 18:07:30 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/23 10:01:38 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include <libft/libft.h>
 
 #include <stddef.h>
 
-void	ft_strlcpy(
+size_t	ft_strlcpy(
 			char *restrict dst,
 			char const *restrict src,
 			size_t dst_size)
@@ -25,7 +25,8 @@ void	ft_strlcpy(
 	while (i < dst_size && src[i] != '\0')
 	{
 		dst[i] = src[i];
-		i++;
+		++i;
 	}
 	dst[i] = '\0';
+	return (i);
 }

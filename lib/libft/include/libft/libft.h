@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:35:07 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/22 15:46:37 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/23 10:01:51 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ bool	ft_strendswith(
 //----------------------------------------------------------------------------//
 //---- STRING COPY -----------------------------------------------------------//
 
-void	ft_strlcpy(
+size_t	ft_strlcpy(
 			char *restrict dst,
 			char const *restrict src,
 			size_t dst_size);
