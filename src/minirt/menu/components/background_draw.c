@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drawings.h                                         :+:      :+:    :+:   */
+/*   background_draw.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 20:01:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 23:29:47 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/31 23:34:02 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/31 23:42:17 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAWINGS_H
-# define DRAWINGS_H
+#include <minirt/menu/menu.h>
 
-# include <MLX42/MLX42.h>
-# include <stdint.h>
+#include <minirt/utils/drawings.h>
 
-void	img_fill(
-			mlx_image_t *img,
-			int32_t color);
-
-void	img_draw_square(
-			mlx_image_t *img,
-			int32_t coords[2],
-			int32_t size,
-			int32_t color);
-
-void	img_draw_divider(
-			mlx_image_t *img,
-			uint32_t y,
-			int32_t color);
-
-#endif // DRAWINGS_H
+void	background_draw(
+			t_menu *menu)
+{
+	img_fill(menu->background, MENU_BACKGROUND_COLOR);
+	img_draw_divider(
+		menu->background, MENU_DIVIDER_1_Y, MENU_DIVIDERS_COLOR);
+}

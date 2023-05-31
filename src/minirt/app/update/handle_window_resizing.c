@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 22:47:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 23:11:22 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:43:40 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	handle_window_resizing(
 			mlx_resize_image(canvas->back, mlx->width, mlx->height);
 			mlx_resize_image(
 				menu->background, menu->background->width, mlx->height);
-			img_fill(menu->background, MENU_BACKGROUND_COLOR);
+			background_draw(menu);
 		}
 		canvas->width = viewport_width;
 		canvas->height = viewport_height;

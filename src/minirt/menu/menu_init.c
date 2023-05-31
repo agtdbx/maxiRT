@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:54:53 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 20:05:52 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:50:34 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ t_error	menu_init(
 		return (FAILURE);
 	menu_update_position(mlx, menu);
 	camera_label_init(mlx, menu, scene);
-	// menu_toggle(menu);
-	menu_show(menu);
+	menu_hide(menu);
 	return (SUCCESS);
 }
 
@@ -45,7 +44,7 @@ static t_error	_menu_init_background(
 	menu->background = mlx_new_image(mlx, MENU_WIDTH, mlx->height);
 	if (menu->background == NULL)
 		return (FAILURE);
-	img_fill(menu->background, MENU_BACKGROUND_COLOR);
+	background_draw(menu);
 	if (mlx_image_to_window(mlx, menu->background, 0, 0) == -1)
 		return (FAILURE);
 	mlx_set_instance_depth(&menu->background->instances[0], 2);

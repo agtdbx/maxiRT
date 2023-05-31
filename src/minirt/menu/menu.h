@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 21:26:32 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:44:16 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@
 # include <stdbool.h>
 
 # define MENU_WIDTH 400 // width of menu in pixels
+
 # define MENU_BACKGROUND_COLOR 0x333333FF
+
+# define MENU_DIVIDERS_COLOR 0x999999FF
+# define MENU_DIVIDER_1_Y 140
 
 typedef struct s_float_label
 {
@@ -79,6 +83,13 @@ void	menu_draw(
 			t_menu *menu);
 
 //---- COMPONENTS -------------------------------------------------------------#
+
+// background
+
+void	background_draw(
+			t_menu *menu);
+
+// camera label
 
 void	camera_label_init(
 			mlx_t *mlx,

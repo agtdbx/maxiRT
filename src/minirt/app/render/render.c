@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 21:16:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 23:15:51 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ static inline void	_fast_render(
 		while (pix[X] < canvas->width)
 		{
 			vec3_normalize_into(&casted_ray.vec, &ray[X]);
-			img_fill_square(canvas->front, pix, ppr, render_ray(scene, &casted_ray));
+			img_draw_square(canvas->front, pix, ppr, render_ray(scene, &casted_ray));
 			vec3_linear_transform(&ray[X], -ppr, &scene->camera->o_x);
 			pix[X] += ppr;
 		}
