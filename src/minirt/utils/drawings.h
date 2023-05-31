@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu_draw.c                                        :+:      :+:    :+:   */
+/*   drawings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:48:44 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 20:15:03 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/31 20:01:33 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/31 20:55:47 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/app.h"
-#include <minirt/menu/menu.h>
+#ifndef DRAWINGS_H
+# define DRAWINGS_H
 
-#include <MLX42/MLX42.h>
+# include <MLX42/MLX42.h>
+# include <stdint.h>
 
-void	menu_draw(
-			mlx_t *mlx,
-			t_menu *menu)
-{
-	static double	date_of_next_redraw = 0.0;
+void	img_fill(
+			mlx_image_t *img,
+			int32_t color);
 
-	if (!menu->is_visible || mlx_get_time() < date_of_next_redraw)
-		return ;
-	date_of_next_redraw = mlx_get_time() + 0.25;
-	camera_label_draw(mlx, menu);
-}
+void	img_fill_square(
+			mlx_image_t *img,
+			int32_t coords[2],
+			int32_t size,
+			int32_t color);
+
+#endif // DRAWINGS_H

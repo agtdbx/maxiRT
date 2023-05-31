@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 17:54:42 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 21:23:17 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,18 @@ void	app_loop(void *const data)
 		| handle_translations(app->mlx, camera)
 		| handle_rotations(app->mlx, &app->canvas, camera));
 		// | handle_menu_clicks(app->mlx, &app->menu)
-	// should_render |= update_scene(app);
 	menu_draw(app->mlx, &app->menu);
 	render(app->mlx, &app->canvas, &app->scene, should_render);
 }
 
+/**
+ * Ensure dt is less than 0.25s
+ * @param[out] mlx
+ */
 static inline void	_limit_delta_time(
 						mlx_t *mlx)
 {
-	mlx->delta_time = fmin(mlx->delta_time, 1.0f / 8);
+	mlx->delta_time = fmin(mlx->delta_time, 0.25);
 }
 
 /**

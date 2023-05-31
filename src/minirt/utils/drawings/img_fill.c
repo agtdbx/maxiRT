@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu_draw.c                                        :+:      :+:    :+:   */
+/*   img_fill.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:48:44 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 20:15:03 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/31 20:03:45 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/31 20:04:38 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/app.h"
-#include <minirt/menu/menu.h>
+#include <minirt/utils/drawings.h>
 
-#include <MLX42/MLX42.h>
-
-void	menu_draw(
-			mlx_t *mlx,
-			t_menu *menu)
+void	img_fill(
+			mlx_image_t *img,
+			int32_t color)
 {
-	static double	date_of_next_redraw = 0.0;
+	register uint32_t	x;
+	register uint32_t	y;
 
-	if (!menu->is_visible || mlx_get_time() < date_of_next_redraw)
-		return ;
-	date_of_next_redraw = mlx_get_time() + 0.25;
-	camera_label_draw(mlx, menu);
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			mlx_put_pixel(img, x, y, color);
+			++x;
+		}
+		++y;
+	}
 }
