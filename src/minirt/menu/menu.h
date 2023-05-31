@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 17:54:20 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 21:26:32 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_menu
 
 	mlx_image_t		*background;
 
+	mlx_image_t		*camera_label_title;
 	t_vec3_label	camera_pos_label;
 	t_vec3_label	camera_dir_label;
 
