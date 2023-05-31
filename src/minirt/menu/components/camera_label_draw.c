@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_menu_toggling.c                             :+:      :+:    :+:   */
+/*   camera_label_draw.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 17:12:04 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 17:47:57 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/31 17:51:24 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/31 17:53:56 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
-
 #include <minirt/menu/menu.h>
-#include <MLX42/MLX42.h>
-#include <stdbool.h>
 
-bool	handle_menu_toggling(
+void	camera_label_draw(
 			mlx_t *mlx,
 			t_menu *menu)
 {
-	static bool		is_keypressed = false;
-
-	if (!mlx_is_key_down(mlx, MLX_KEY_TAB))
-	{
-		if (is_keypressed)
-			is_keypressed = false;
-		return (false);
-	}
-	if (is_keypressed)
-		return (false);
-	is_keypressed = true;
-	if (menu->is_visible)
-		menu_hide(menu);
-	else
-		menu_show(menu);
-	return (true);
+	vec3_label_update_position(menu, &menu->camera_dir_label);
+	vec3_label_update_content(mlx, menu, &menu->camera_dir_label);
+	vec3_label_update_position(menu, &menu->camera_pos_label);
+	vec3_label_update_content(mlx, menu, &menu->camera_pos_label);
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/17 16:58:55 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 10:01:22 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_error	_app_init(
 		mlx_terminate(app->mlx);
 		return (FAILURE);
 	}
-	if (menu_init(app->mlx, &app->menu) == FAILURE)
+	if (menu_init(app->mlx, &app->menu, &app->scene) == FAILURE)
 	{
 		mlx_terminate(app->mlx);
 		return (FAILURE);

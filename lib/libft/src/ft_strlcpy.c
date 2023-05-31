@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:07:11 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/23 10:01:38 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 11:02:22 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ size_t	ft_strlcpy(
 		dst[i] = src[i];
 		++i;
 	}
-	dst[i] = '\0';
+	if (dst_size > 0)
+		dst[i] = '\0';
 	return (i);
 }

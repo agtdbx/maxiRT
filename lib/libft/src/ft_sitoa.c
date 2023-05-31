@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:56:32 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/22 17:45:34 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 11:45:13 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
  * @param[out] buf
  * @param[in] buf_size
  */
-ssize_t	ft_sitoa(
-		int n,
-		char *buf,
-		size_t buf_size)
+size_t	ft_sitoa(
+			int n,
+			char *buf,
+			size_t buf_size)
 {
 	register size_t	i;
 
+	if (buf_size == 0)
+		return (0);
 	i = 0;
 	if (n < 0 && i < buf_size - 1)
 	{
@@ -43,7 +45,5 @@ ssize_t	ft_sitoa(
 	}
 	buf[i] = '\0';
 	ft_strrev(buf + (buf[0] == '-'));
-	if (n != 0)
-		return (-1);
-	return (i + 1);
+	return (i);
 }

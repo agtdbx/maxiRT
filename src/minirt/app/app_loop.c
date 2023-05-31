@@ -6,10 +6,11 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/22 09:58:43 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 17:54:42 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minirt/menu/menu.h"
 #include <minirt/app/app.h>
 
 #include <MLX42/MLX42.h>
@@ -40,7 +41,9 @@ void	app_loop(void *const data)
 		| handle_menu_toggling(app->mlx, &app->menu)
 		| handle_translations(app->mlx, camera)
 		| handle_rotations(app->mlx, &app->canvas, camera));
+		// | handle_menu_clicks(app->mlx, &app->menu)
 	// should_render |= update_scene(app);
+	menu_draw(app->mlx, &app->menu);
 	render(app->mlx, &app->canvas, &app->scene, should_render);
 }
 

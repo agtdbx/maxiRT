@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:35:07 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/23 10:01:51 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/05/31 10:57:21 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,13 @@ float	ft_strtof(
 //----------------------------------------------------------------------------//
 //---- NUMERIC TO STRING TYPE CONVERSION -------------------------------------//
 
-ssize_t	ft_sitoa(
+size_t	ft_sitoa(
 			int n,
+			char *buf,
+			size_t buf_size);
+
+size_t	ft_sftoa(
+			float x,
 			char *buf,
 			size_t buf_size);
 
@@ -194,5 +199,9 @@ int		ft_abs(
 int		ft_min(
 			int a,
 			int b);
+
+int		ft_max(
+			int a,
+			int	b);
 
 #endif//LIBFT_H

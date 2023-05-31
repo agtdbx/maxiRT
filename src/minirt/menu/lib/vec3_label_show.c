@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_menu_toggling.c                             :+:      :+:    :+:   */
+/*   vec3_label_show.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 17:12:04 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 17:47:57 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/31 16:47:03 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/31 17:36:23 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
-
 #include <minirt/menu/menu.h>
-#include <MLX42/MLX42.h>
+
 #include <stdbool.h>
 
-bool	handle_menu_toggling(
-			mlx_t *mlx,
-			t_menu *menu)
+void	vec3_label_show(
+			t_vec3_label *label)
 {
-	static bool		is_keypressed = false;
-
-	if (!mlx_is_key_down(mlx, MLX_KEY_TAB))
-	{
-		if (is_keypressed)
-			is_keypressed = false;
-		return (false);
-	}
-	if (is_keypressed)
-		return (false);
-	is_keypressed = true;
-	if (menu->is_visible)
-		menu_hide(menu);
-	else
-		menu_show(menu);
-	return (true);
+	label->is_visible = true;
+	if (label->img_title != NULL)
+		label->img_title->enabled = true;
+	float_label_show(&label->label_x);
+	float_label_show(&label->label_y);
+	float_label_show(&label->label_z);
 }

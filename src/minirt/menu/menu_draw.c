@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_menu_toggling.c                             :+:      :+:    :+:   */
+/*   menu_draw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 17:12:04 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 17:47:57 by tdubois          ###   ########.fr       */
+/*   Created: 2023/05/31 17:48:44 by tdubois           #+#    #+#             */
+/*   Updated: 2023/05/31 17:55:20 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
-
+#include "minirt/app/app.h"
 #include <minirt/menu/menu.h>
-#include <MLX42/MLX42.h>
-#include <stdbool.h>
 
-bool	handle_menu_toggling(
+#include <MLX42/MLX42.h>
+
+void	menu_draw(
 			mlx_t *mlx,
 			t_menu *menu)
 {
-	static bool		is_keypressed = false;
-
-	if (!mlx_is_key_down(mlx, MLX_KEY_TAB))
-	{
-		if (is_keypressed)
-			is_keypressed = false;
-		return (false);
-	}
-	if (is_keypressed)
-		return (false);
-	is_keypressed = true;
-	if (menu->is_visible)
-		menu_hide(menu);
-	else
-		menu_show(menu);
-	return (true);
+	if (!menu->is_visible)
+		return ;
+	camera_label_draw(mlx, menu);
 }
