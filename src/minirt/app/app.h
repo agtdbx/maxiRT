@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/22 09:50:19 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 13:58:00 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,49 +57,53 @@ typedef struct s_app
 //****************************************************************************//
 //**** METHODS ***************************************************************//
 
-t_error		app_start(
-				t_scene *scene);
-void		app_loop(
-				void *const data);
+t_error			app_start(
+					t_scene *scene);
+void			app_loop(
+					void *const data);
 
-bool		handle_window_resizing(
-				mlx_t const *mlx,
-				t_canvas *canvas,
-				t_camera *camera,
-				t_menu *menu);
-bool		handle_translations(
-				mlx_t *mlx,
-				t_camera *camera);
-bool		handle_rotations(
-				mlx_t *mlx,
-				t_canvas const *canvas,
-				t_camera *camera);
-bool		handle_menu_toggling(
-				mlx_t *mlx,
-				t_menu *menu);
+bool			handle_window_resizing(
+					mlx_t const *mlx,
+					t_canvas *canvas,
+					t_camera *camera,
+					t_menu *menu);
+bool			handle_translations(
+					mlx_t *mlx,
+					t_camera *camera);
+bool			handle_rotations(
+					mlx_t *mlx,
+					t_canvas const *canvas,
+					t_camera *camera);
+bool			handle_menu_toggling(
+					mlx_t *mlx,
+					t_menu *menu);
 
-void		render(
-				mlx_t *mlx,
-				t_canvas *canvas,
-				t_scene const *scene,
-				bool should_render);
+void			render_canvas(
+					t_app *app,
+					bool should_render);
+int32_t			render_ray_from_camera(
+					t_scene const *scene,
+					t_ray const *ray,
+					bool show_spotlights);
 
-int			render_ray(
-				t_scene const *scene,
-				t_ray const *ray);
-int			render_ray_on_sphere(
-				t_sphere const *sphere,
-				t_ray const *ray,
-				float distance);
+int32_t			render_ray_on_object(
+					t_scene const *scene,
+					t_object const *intersected_object,
+					t_ray const *ray,
+					float distance);
+int32_t			render_ray_on_sphere(
+					t_scene const *scene,
+					t_sphere const *sphere,
+					t_ray const *ray,
+					float distance);
 
 t_object const	*fetch_closest_intersection(
 					t_ray const *ray,
 					t_object const *objects,
 					float *distance);
-
-bool	test_intersection_with_sphere(
-			t_ray const *ray,
-			t_sphere const *sphere,
-			float *distance);
+bool			test_intersection_with_sphere(
+					t_ray const *ray,
+					t_sphere const *sphere,
+					float *distance);
 
 #endif//APP_H

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 10:01:22 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 14:08:47 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_error	app_start(
 	mlx_errno = 0;
 	if (_app_init(&app, scene) == SUCCESS)
 	{
-		render(app.mlx, &app.canvas, &app.scene, true);
+		render_canvas(&app, true);
 		mlx_loop(app.mlx);
 		//cleanup
 		return (SUCCESS);
@@ -62,20 +62,11 @@ static t_error	_app_init(
 	app->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
-	if (canvas_init(app->mlx, &app->canvas) == FAILURE)
+	if (canvas_init(app->mlx, &app->canvas) == FAILURE
+		|| menu_init(app->mlx, &app->menu, &app->scene) == FAILURE
+		|| mlx_loop_hook(app->mlx, app_loop, app) == false)
 	{
 		mlx_terminate(app->mlx);
-		return (FAILURE);
-	}
-	if (menu_init(app->mlx, &app->menu, &app->scene) == FAILURE)
-	{
-		mlx_terminate(app->mlx);
-		return (FAILURE);
-	}
-	if (mlx_loop_hook(app->mlx, app_loop, app) == false)
-	{
-		mlx_terminate(app->mlx);
-		// menu_del();
 		return (FAILURE);
 	}
 	_compute_constants(app->mlx, &app->canvas, &app->scene, &app->menu);

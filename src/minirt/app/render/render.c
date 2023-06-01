@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 23:15:51 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 13:58:01 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+static inline void	_render_one_pixel(
+						t_scene const *scene,
+						t_canvas const *canvas,
+						int32_t pixel_rendered,
+						bool show_spotlights);
 static inline void	_get_top_left_ray(
 						t_canvas const *canvas,
 						t_camera const *camera,
@@ -28,18 +33,13 @@ static inline void	_get_top_left_ray(
 static inline void	_fast_render(
 						mlx_t *mlx,
 						t_canvas const *canvas,
-						t_scene const *scene);
-static inline void	_render_one_pixel(
 						t_scene const *scene,
-						t_canvas const *canvas,
-						int32_t pixel_rendered);
+						bool show_spotlights);
 
 #define PPR 8 // pixel_per_ray (during fast rendering)
 
-void	render(
-			mlx_t *mlx,
-			t_canvas *canvas,
-			t_scene const *scene,
+void	render_canvas(
+			t_app *app,
 			bool should_render)
 {
 	static bool		is_rendering = true;
@@ -50,27 +50,29 @@ void	render(
 	{
 		is_rendering = true;
 		pixel_rendered = 0;
-		_fast_render(mlx, canvas, scene);
+		_fast_render(app->mlx, &app->canvas, &app->scene, app->menu.is_visible);
 		return ;
 	}
 	if (!is_rendering)
 		return ;
-	tmax = mlx_get_time() - mlx->delta_time + 0.25;
-	while (pixel_rendered < mlx->width * mlx->height)
+	tmax = mlx_get_time() - app->mlx->delta_time + 0.25;
+	while (pixel_rendered < app->mlx->width * app->mlx->height)
 	{
-		_render_one_pixel(scene, canvas, pixel_rendered);
+		_render_one_pixel(
+			&app->scene, &app->canvas, pixel_rendered, app->menu.is_visible);
 		++pixel_rendered;
 		if (mlx_get_time() > tmax)
 			return ;
 	}
 	is_rendering = false;
-	canvas_swap(canvas);
+	canvas_swap(&app->canvas);
 }
 
 static inline void	_render_one_pixel(
 						t_scene const *scene,
 						t_canvas const *canvas,
-						int32_t pixel_rendered)
+						int32_t pixel_rendered,
+						bool show_spotlights)
 {
 	t_ray			casted_ray;
 	int32_t const	x = pixel_rendered % canvas->width;
@@ -87,7 +89,26 @@ static inline void	_render_one_pixel(
 	vec3_substract(&casted_ray.vec, &casted_ray.pos);
 	vec3_normalize(&casted_ray.vec);
 	if (x < canvas->width && y < canvas->height)
-		mlx_put_pixel(canvas->back, x, y, render_ray(scene, &casted_ray));
+		mlx_put_pixel(canvas->back, x, y, 
+			render_ray_from_camera(scene, &casted_ray, show_spotlights));
+}
+
+/**
+ *  Compute the direction of the ray associated with the topleft corner pixel.
+ *  @param[in] mlx The mlx harness
+ *  @param[in] camera The camera instance
+ *  @param[out] top_left The un-normalized computed ray
+ */
+static inline void	_get_top_left_ray(
+						t_canvas const *canvas,
+						t_camera const *camera,
+						t_vec3 *top_left_vec)
+{
+	*top_left_vec = camera->pos;
+	vec3_linear_transform(top_left_vec, canvas->width_div_2, &camera->o_x);
+	vec3_linear_transform(top_left_vec, canvas->height_div_2, &camera->o_y);
+	vec3_linear_transform(top_left_vec, camera->focal, &camera->direction);
+	vec3_substract(top_left_vec, &camera->pos);
 }
 
 #define X 0
@@ -114,7 +135,8 @@ static inline void	_update_ppr(
 static inline void	_fast_render(
 						mlx_t *mlx,
 						t_canvas const *canvas,
-						t_scene const *scene)
+						t_scene const *scene,
+						bool show_spotlights)
 {
 	static int32_t	ppr = 16;
 	t_vec3			ray[2];
@@ -132,29 +154,12 @@ static inline void	_fast_render(
 		while (pix[X] < canvas->width)
 		{
 			vec3_normalize_into(&casted_ray.vec, &ray[X]);
-			img_draw_square(canvas->front, pix, ppr, render_ray(scene, &casted_ray));
+			img_draw_square(canvas->front, pix, ppr,
+				render_ray_from_camera(scene, &casted_ray, show_spotlights));
 			vec3_linear_transform(&ray[X], -ppr, &scene->camera->o_x);
 			pix[X] += ppr;
 		}
 		vec3_linear_transform(&ray[Y], -ppr, &scene->camera->o_y);
 		pix[Y] += ppr;
 	}
-}
-
-/**
- *  Compute the direction of the ray associated with the topleft corner pixel.
- *  @param[in] mlx The mlx harness
- *  @param[in] camera The camera instance
- *  @param[out] top_left The un-normalized computed ray
- */
-static inline void	_get_top_left_ray(
-						t_canvas const *canvas,
-						t_camera const *camera,
-						t_vec3 *top_left_vec)
-{
-	*top_left_vec = camera->pos;
-	vec3_linear_transform(top_left_vec, canvas->width_div_2, &camera->o_x);
-	vec3_linear_transform(top_left_vec, canvas->height_div_2, &camera->o_y);
-	vec3_linear_transform(top_left_vec, camera->focal, &camera->direction);
-	vec3_substract(top_left_vec, &camera->pos);
 }

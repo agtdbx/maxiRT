@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   render_ray_on_object.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 01:27:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 13:50:38 by tdubois          ###   ########.fr       */
+/*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/01 13:51:02 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#include <minirt/app/app.h>
 
-#define RGB_BLACK 0x000000FF
+#include <minirt/utils/color.h>
 
-typedef struct s_color
+int32_t	render_ray_on_object(
+			t_scene const *scene,
+			t_object const	*intersected_object,
+			t_ray const *ray,
+			float distance)
 {
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
-
-#endif//COLOR_H
+	if (intersected_object->type == OBJ_SPHERE)
+		return (render_ray_on_sphere(
+			scene, (t_sphere*)&intersected_object->value, ray, distance));
+	//other object types...
+	return (RGB_BLACK);
+}
