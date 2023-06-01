@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu_hide.c                                        :+:      :+:    :+:   */
+/*   ambient_label_hide.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:42:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 09:04:25 by tdubois          ###   ########.fr       */
+/*   Created: 2023/06/01 09:03:12 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/01 10:14:07 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/menu/menu.h>
 
-void	menu_hide(
+void	ambient_label_hide(
 			t_menu *menu)
 {
-	menu->is_visible = false;
-	if (menu->background != NULL)
-		menu->background->enabled = false;
-	camera_label_hide(menu);
-	ambient_label_hide(menu);
+	menu->ambient_label_title->enabled = false;
+	color_label_hide(&menu->ambient_color_label);
+	float_label_hide(&menu->ambient_ratio_label);
 }

@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu_hide.c                                        :+:      :+:    :+:   */
+/*   ambient_label_draw.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:42:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 09:04:25 by tdubois          ###   ########.fr       */
+/*   Created: 2023/06/01 08:47:24 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/01 10:13:48 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/menu/menu.h>
 
-void	menu_hide(
+#include <MLX42/MLX42.h>
+
+void	ambient_label_draw(
+			mlx_t *mlx,
 			t_menu *menu)
 {
-	menu->is_visible = false;
-	if (menu->background != NULL)
-		menu->background->enabled = false;
-	camera_label_hide(menu);
-	ambient_label_hide(menu);
+	menu->ambient_label_title->instances->x =
+		menu->background->instances->x + 20;
+	color_label_draw(mlx, menu, &menu->ambient_color_label);
+	float_label_draw(mlx, menu, &menu->ambient_ratio_label);
 }

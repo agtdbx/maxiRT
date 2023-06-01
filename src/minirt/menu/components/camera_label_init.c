@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:47:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 21:35:25 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 09:45:54 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ static void	_camera_pos_label_init(
 	menu->camera_pos_label.label_z.y = menu->camera_pos_label.y + 60;
 	menu->camera_pos_label.label_z.f = &scene->camera->pos.z;
 	menu->camera_pos_label.label_z.img = NULL;
-	vec3_label_update_content(mlx, menu, &menu->camera_pos_label);
-	vec3_label_update_position(menu, &menu->camera_pos_label);
+	vec3_label_draw(mlx, menu, &menu->camera_pos_label);
 }
 
 static void	_camera_dir_label_init(
@@ -94,6 +93,5 @@ static void	_camera_dir_label_init(
 	menu->camera_dir_label.label_z.y = menu->camera_dir_label.y + 60;
 	menu->camera_dir_label.label_z.f = &scene->camera->direction.z;
 	menu->camera_dir_label.label_z.img = NULL;
-	vec3_label_update_content(mlx, menu, &menu->camera_dir_label);
-	vec3_label_update_position(menu, &menu->camera_dir_label);
+	vec3_label_draw(mlx, menu, &menu->camera_dir_label);
 }

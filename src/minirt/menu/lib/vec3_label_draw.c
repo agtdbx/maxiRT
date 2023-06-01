@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera_label_draw.c                                :+:      :+:    :+:   */
+/*   vec3_label_draw.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:51:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 09:44:10 by tdubois          ###   ########.fr       */
+/*   Created: 2023/06/01 09:32:22 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/01 09:42:35 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/menu/menu.h>
 
-void	camera_label_draw(
+#include <MLX42/MLX42.h>
+#include <stddef.h>
+
+void	vec3_label_draw(
 			mlx_t *mlx,
-			t_menu *menu)
+			t_menu *menu,
+			t_vec3_label *label)
 {
-	menu->camera_label_title->instances->x = 
-		menu->background->instances->x + 20;
-	vec3_label_draw(mlx, menu, &menu->camera_dir_label);
-	vec3_label_draw(mlx, menu, &menu->camera_pos_label);
+	float_label_draw(mlx, menu, &label->label_x);
+	float_label_draw(mlx, menu, &label->label_y);
+	float_label_draw(mlx, menu, &label->label_z);
+	if (label->img_title == NULL)
+		return ;
+	label->img_title->instances->x = menu->background->instances->x + label->x;
+	label->img_title->instances->y = menu->background->instances->y + label->y;
 }

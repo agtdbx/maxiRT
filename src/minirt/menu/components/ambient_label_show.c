@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3_label_update_content.c                        :+:      :+:    :+:   */
+/*   ambient_label_show.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 09:43:19 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 13:52:08 by tdubois          ###   ########.fr       */
+/*   Created: 2023/06/01 09:01:31 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/01 10:14:36 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/menu/menu.h>
 
-#include <MLX42/MLX42.h>
-#include <libft/libft.h>
-#include <stddef.h>
-
-void	vec3_label_update_content(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_vec3_label *label)
+void	ambient_label_show(
+			t_menu *menu)
 {
-	float_label_update_content(mlx, menu, &label->label_x);
-	float_label_update_content(mlx, menu, &label->label_y);
-	float_label_update_content(mlx, menu, &label->label_z);
+	menu->ambient_label_title->enabled = true;
+	color_label_show(&menu->ambient_color_label);
+	float_label_show(&menu->ambient_ratio_label);
 }

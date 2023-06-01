@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 17:46:20 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 09:04:36 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	menu_show(
 	if (menu->background != NULL)
 		menu->background->enabled = true;
 	camera_label_show(menu);
+	ambient_label_show(menu);
 }

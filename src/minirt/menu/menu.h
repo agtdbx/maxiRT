@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 23:44:16 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 10:25:06 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 //> MENU MODEL
 
-# include <stdint.h>
+# include <MLX42/MLX42.h>
+# include <libft/libft.h>
 # include <minirt/scene/scene.h>
 # include <minirt/utils/geometry.h>
-# include <libft/libft.h>
-# include <MLX42/MLX42.h>
 # include <stdbool.h>
+# include <stdint.h>
 
 # define MENU_WIDTH 400 // width of menu in pixels
 
@@ -28,6 +28,7 @@
 
 # define MENU_DIVIDERS_COLOR 0x999999FF
 # define MENU_DIVIDER_1_Y 140
+# define MENU_DIVIDER_2_Y 280
 
 typedef struct s_float_label
 {
@@ -55,6 +56,32 @@ typedef struct s_vec3_label
 	t_float_label	label_z;
 }	t_vec3_label;
 
+typedef struct s_int_label
+{
+	bool			is_visible;
+
+	int32_t			x;
+	int32_t			y;
+	char const		*prefix;
+	int32_t const	*i;
+
+	mlx_image_t		*img;
+}	t_int_label;
+
+typedef struct s_color_label
+{
+	bool		is_visible;
+
+	int32_t		x;
+	int32_t		y;
+	char const	*title;
+
+	mlx_image_t	*img_title;
+	t_int_label	label_r;
+	t_int_label	label_g;
+	t_int_label	label_b;
+}	t_color_label;
+
 typedef struct s_menu
 {
 	bool			is_visible;
@@ -64,6 +91,10 @@ typedef struct s_menu
 	mlx_image_t		*camera_label_title;
 	t_vec3_label	camera_pos_label;
 	t_vec3_label	camera_dir_label;
+
+	mlx_image_t		*ambient_label_title;
+	t_color_label	ambient_color_label;
+	t_float_label	ambient_ratio_label;
 
 }	t_menu;
 
@@ -84,12 +115,12 @@ void	menu_draw(
 
 //---- COMPONENTS -------------------------------------------------------------#
 
-// background
+/// background
 
 void	background_draw(
 			t_menu *menu);
 
-// camera label
+/// camera_label
 
 void	camera_label_init(
 			mlx_t *mlx,
@@ -103,34 +134,64 @@ void	camera_label_draw(
 			mlx_t *mlx,
 			t_menu *menu);
 
+/// ambient_label
+
+void	ambient_label_init(
+			mlx_t *mlx,
+			t_menu *menu,
+			t_scene const *scene);
+void	ambient_label_show(
+			t_menu *menu);
+void	ambient_label_hide(
+			t_menu *menu);
+void	ambient_label_draw(
+			mlx_t *mlx,
+			t_menu *menu);
+
 //---- LIB --------------------------------------------------------------------#
 
 /// float_label
 
-void	float_label_update_position(
-			t_menu *menu,
-			t_float_label *label);
-void	float_label_update_content(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_float_label *label);
 void	float_label_show(
 			t_float_label *label);
 void	float_label_hide(
 			t_float_label *label);
+void	float_label_draw(
+			mlx_t *mlx,
+			t_menu *menu,
+			t_float_label *label);
 
 /// vec3_label
 
-void	vec3_label_update_position(
-			t_menu *menu,
-			t_vec3_label *label);
-void	vec3_label_update_content(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_vec3_label *label);
 void	vec3_label_show(
 			t_vec3_label *label);
 void	vec3_label_hide(
 			t_vec3_label *label);
+void	vec3_label_draw(
+			mlx_t *mlx,
+			t_menu *menu,
+			t_vec3_label *label);
+
+/// int_label
+
+void	int_label_show(
+			t_int_label *label);
+void	int_label_hide(
+			t_int_label *label);
+void	int_label_draw(
+			mlx_t *mlx,
+			t_menu *menu,
+			t_int_label *label);
+
+/// color_label
+
+void	color_label_show(
+			t_color_label *label);
+void	color_label_hide(
+			t_color_label *label);
+void	color_label_draw(
+			mlx_t *mlx,
+			t_menu *menu,
+			t_color_label *label);
 
 #endif//MENU_H

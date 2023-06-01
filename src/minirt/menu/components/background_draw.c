@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 23:34:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 23:42:17 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 10:24:46 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,6 @@ void	background_draw(
 	img_fill(menu->background, MENU_BACKGROUND_COLOR);
 	img_draw_divider(
 		menu->background, MENU_DIVIDER_1_Y, MENU_DIVIDERS_COLOR);
+	img_draw_divider(
+		menu->background, MENU_DIVIDER_2_Y, MENU_DIVIDERS_COLOR);
 }

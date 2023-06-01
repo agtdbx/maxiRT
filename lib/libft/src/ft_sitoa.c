@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 10:56:32 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 11:45:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 10:19:22 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ size_t	ft_sitoa(
 		buf[0] = '-';
 		++i;
 	}
+	if (n == 0 && i < buf_size - 1)
+	{
+		buf[i] = '0';
+		++i;
+	}
 	while (n != 0 && i < buf_size - 1)
 	{
 		buf[i] = ft_abs(n % 10) + '0';
 		n /= 10;
-		++i;
-	}
-	if (n == 0 && i < buf_size - 1)
-	{
-		buf[i] = '0';
 		++i;
 	}
 	buf[i] = '\0';

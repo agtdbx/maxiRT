@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:48:44 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 20:15:03 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/01 08:57:47 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	menu_draw(
 		return ;
 	date_of_next_redraw = mlx_get_time() + 0.25;
 	camera_label_draw(mlx, menu);
+	ambient_label_draw(mlx, menu);
 }
