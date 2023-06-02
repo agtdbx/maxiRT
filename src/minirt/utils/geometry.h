@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 17:01:17 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/02 02:37:44 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ typedef struct s_ray
 
 extern float	vec3_norm(
 					t_vec3 const *vec);
-extern void		vec3_normalize(
+extern float	vec3_normalize(
 					t_vec3 *src);
-extern void		vec3_normalize_into(
+extern float	vec3_normalize_into(
 					t_vec3 *restrict dst,
 					t_vec3 const *restrict src);
 extern float	vec3_dot(

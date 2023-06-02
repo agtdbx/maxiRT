@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 13:58:00 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/02 03:03:36 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,14 @@ typedef struct s_app
 //****************************************************************************//
 //**** METHODS ***************************************************************//
 
+/// core
+
 t_error			app_start(
 					t_scene *scene);
 void			app_loop(
 					void *const data);
+
+/// inputs handlers
 
 bool			handle_window_resizing(
 					mlx_t const *mlx,
@@ -78,6 +82,8 @@ bool			handle_menu_toggling(
 					mlx_t *mlx,
 					t_menu *menu);
 
+/// rendering core
+
 void			render_canvas(
 					t_app *app,
 					bool should_render);
@@ -85,6 +91,8 @@ int32_t			render_ray_from_camera(
 					t_scene const *scene,
 					t_ray const *ray,
 					bool show_spotlights);
+
+/// raytracing
 
 int32_t			render_ray_on_object(
 					t_scene const *scene,
@@ -97,6 +105,8 @@ int32_t			render_ray_on_sphere(
 					t_ray const *ray,
 					float distance);
 
+/// intersections
+
 t_object const	*fetch_closest_intersection(
 					t_ray const *ray,
 					t_object const *objects,
@@ -105,5 +115,13 @@ bool			test_intersection_with_sphere(
 					t_ray const *ray,
 					t_sphere const *sphere,
 					float *distance);
+
+/// illumination
+
+void		compute_illumination(
+				t_scene const *scene,
+				t_ray const *ray,
+				t_ray const *normal,
+				t_color *illumination);
 
 #endif//APP_H
