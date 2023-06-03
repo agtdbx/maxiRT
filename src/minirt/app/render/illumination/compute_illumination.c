@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/03 01:00:01 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/03 04:04:27 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	compute_illumination(
 	float			illumination_from_spotlight;
 	float			Iambient;
 
-	Iambient = AMBIENT_REFLECTION_CONSTANT;
+	Iambient =
+		scene->ambient_lightning->brightness * AMBIENT_REFLECTION_CONSTANT;
 	illumination->r = scene->ambient_lightning->color.r * Iambient;
 	illumination->g = scene->ambient_lightning->color.g * Iambient;
 	illumination->b = scene->ambient_lightning->color.b * Iambient;
