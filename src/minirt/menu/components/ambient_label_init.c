@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:35:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 10:24:33 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/03 00:41:40 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ static void	_ambient_color_label_init(
 	menu->ambient_color_label.label_r.prefix = "r: ";
 	menu->ambient_color_label.label_r.x = menu->ambient_color_label.x;
 	menu->ambient_color_label.label_r.y = menu->ambient_color_label.y + 20;
-	menu->ambient_color_label.label_r.i = &scene->ambient_lightning->color.r;
+	menu->ambient_color_label.label_r.f = &scene->ambient_lightning->color.r;
 	menu->ambient_color_label.label_r.img = NULL;
 	menu->ambient_color_label.label_g.prefix = "g: ";
 	menu->ambient_color_label.label_g.x = menu->ambient_color_label.x;
 	menu->ambient_color_label.label_g.y = menu->ambient_color_label.y + 40;
-	menu->ambient_color_label.label_g.i = &scene->ambient_lightning->color.g;
+	menu->ambient_color_label.label_g.f = &scene->ambient_lightning->color.g;
 	menu->ambient_color_label.label_g.img = NULL;
 	menu->ambient_color_label.label_b.prefix = "b: ";
 	menu->ambient_color_label.label_b.x = menu->ambient_color_label.x;
 	menu->ambient_color_label.label_b.y = menu->ambient_color_label.y + 60;
-	menu->ambient_color_label.label_b.i = &scene->ambient_lightning->color.b;
+	menu->ambient_color_label.label_b.f = &scene->ambient_lightning->color.b;
 	menu->ambient_color_label.label_b.img = NULL;
 	color_label_draw(mlx, menu, &menu->ambient_color_label);
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/02 09:13:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/03 00:36:47 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_error			parse_color(
 
 static t_error	_parse_one_channel(
 					t_parser_state *state,
-					int *ret);
+					float *ret);
 
 static bool		_has_more_channels(
 					t_parser_state *state);
@@ -47,7 +47,7 @@ t_error	parse_color(
 
 static t_error	_parse_one_channel(
 					t_parser_state *state,
-					int *ret)
+					float *ret)
 {
 	char *const	channel = ft_strsep(&state->tok, ",");
 	char		*endptr;

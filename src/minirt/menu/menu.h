@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 10:25:06 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/03 00:41:09 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,7 @@ typedef struct s_vec3_label
 	t_float_label	label_z;
 }	t_vec3_label;
 
-typedef struct s_int_label
-{
-	bool			is_visible;
-
-	int32_t			x;
-	int32_t			y;
-	char const		*prefix;
-	int32_t const	*i;
-
-	mlx_image_t		*img;
-}	t_int_label;
+typedef	t_float_label	t_int_label;
 
 typedef struct s_color_label
 {

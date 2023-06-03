@@ -6,13 +6,14 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:06:32 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/02 04:24:01 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/03 02:51:08 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/app/app.h>
 
 #include <minirt/scene/scene.h>
+#include <minirt/utils/color.h>
 #include <minirt/utils/geometry.h>
 
 static void	_compute_normal_ray(
@@ -28,18 +29,15 @@ int32_t	render_ray_on_sphere(
 		float distance)
 {
 	t_ray	normal;
-	// float	intensity;
-	t_color	illumination;
+	t_color	color;
 
 	(void) scene;
 	_compute_normal_ray(sphere, ray, distance, &normal);
-	//TODO compute illumination
-	compute_illumination(scene, ray, &normal, &illumination);
-	// intensity = -vec3_dot(&normal.vec, &ray->vec);
-	return (255
-		| ((int32_t)(sphere->color.r * illumination.r / 255 ) << 24)
-		| ((int32_t)(sphere->color.g * illumination.g / 255 ) << 16)
-		| ((int32_t)(sphere->color.b * illumination.b / 255 ) << 8));
+	compute_illumination(scene, ray, &normal, &color);
+	color.r *= sphere->color.r / 255.0f;
+	color.g *= sphere->color.g / 255.0f;
+	color.b *= sphere->color.b / 255.0f;
+	return (color_to_int(&color));
 }
 
 static void	_compute_normal_ray(

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 08:17:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 13:58:01 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/03 02:56:13 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,21 +99,21 @@ static int32_t	_render_ray_on_spotlight(
 {
 	t_ray	normal;
 	float	intensity;
+	t_color	color;
 
 	normal.pos = ray->pos;
 	vec3_linear_transform(&normal.pos, distance, &ray->vec);
 	vec3_substract_into(&normal.vec, &normal.pos, &light->pos);
 	vec3_normalize(&normal.vec);
-
 	intensity = -vec3_dot(&normal.vec, &ray->vec);
 	if (intensity < 0.3)
 		return (0xFFFFFFFF);
 	else if (intensity < 0.6)
 		return (0xFF);
-	return (255
-		| ((int32_t)(light->color.r * light->brightness) << 24)
-		| ((int32_t)(light->color.g * light->brightness) << 16)
-		| ((int32_t)(light->color.b * light->brightness) << 8));
+	color.r = light->color.r * light->brightness;
+	color.g = light->color.g * light->brightness;
+	color.b = light->color.b * light->brightness;
+	return (color_to_int(&color));
 }
 
 static inline float	_apply_fish_eye_effect_correction(

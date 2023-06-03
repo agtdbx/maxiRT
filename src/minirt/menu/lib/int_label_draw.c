@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:47:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 09:54:43 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/03 00:42:39 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	_update_content(
 		mlx_delete_image(mlx, label->img);
 	len = ft_strlcpy(buf, label->prefix, sizeof(buf));
 	if (len < sizeof(buf))
-		ft_sitoa(*label->i, buf + len, sizeof(buf) - len);
+		ft_sitoa(*label->f, buf + len, sizeof(buf) - len);
 	label->img = mlx_put_string(mlx, buf, 
 			menu->background->instances->x + label->x,
 			label->y);
