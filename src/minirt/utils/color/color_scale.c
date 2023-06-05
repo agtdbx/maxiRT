@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   color_scale.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 01:27:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/05 14:50:22 by tdubois          ###   ########.fr       */
+/*   Created: 2023/06/05 14:47:51 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/05 14:50:12 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
-
-# include <stdint.h>
-
-# define RGB_BLACK 0x000000FF
-
-typedef struct s_color
-{
-	float	r;
-	float	g;
-	float	b;
-}	t_color;
-
-int32_t	color_to_int(
-			t_color const *color);
+#include <minirt/utils/color.h>
 
 void	color_scale(
 			t_color *color,
-			float scaling_factor);
-
-#endif//COLOR_H
+			float scaling_factor)
+{
+	color->r *= scaling_factor;
+	color->g *= scaling_factor;
+	color->b *= scaling_factor;
+}
