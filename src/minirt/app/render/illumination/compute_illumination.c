@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/05 15:29:42 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/05 17:46:15 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static void	_collect_illumination_from_spotlight(
 				t_scene const *scene,
 				t_phong_model const *model,
 				t_color *illumination);
-static bool		_is_spotlight_behind_object(
-					t_scene const *scene,
-					float dist_to_spotlight,
-					t_ray const *ray_toward_spotlight);
+// static bool	_test_intersection(
+// 				t_ray const *ray,
+// 				t_object const *object,
+// 				float *distance);
 
 /**
  * Compute illumination of point normal->pos
@@ -48,36 +48,6 @@ static bool		_is_spotlight_behind_object(
  * @param[in] normal
  * @param[out] illumination
  */
-// void	compute_illumination(
-// 			t_scene const *scene,
-// 			t_ray const *ray,
-// 			t_ray const *normal,
-// 			t_color *illumination)
-// {
-// 	t_light const	*spotlight;
-// 	float			illumination_from_spotlight;
-// 	float			Iambient;
-//
-// 	Iambient =
-// 		scene->ambient_lightning->brightness * AMBIENT_REFLECTION_CONSTANT;
-// 	illumination->r = scene->ambient_lightning->color.r * Iambient;
-// 	illumination->g = scene->ambient_lightning->color.g * Iambient;
-// 	illumination->b = scene->ambient_lightning->color.b * Iambient;
-// 	spotlight = scene->spotlights;
-// 	while (spotlight != NULL)
-// 	{
-// 		illumination_from_spotlight = _compute_illumination_from_spotlight(
-// 				scene, ray, normal, spotlight);
-// 		if (illumination_from_spotlight > 0.0f)
-// 		{
-// 			illumination->r += spotlight->color.r * illumination_from_spotlight;
-// 			illumination->g += spotlight->color.g * illumination_from_spotlight;
-// 			illumination->b += spotlight->color.b * illumination_from_spotlight;
-// 		}
-// 		spotlight = spotlight->next;
-// 	}
-// }
-
 void	compute_illumination(
 			t_scene const *scene,
 			t_ray const *ray,
@@ -163,10 +133,10 @@ static void	_collect_illumination_from_spotlight(
 	*illumination = (t_color){1.0f, 1.0f, 1.0f};
 	OL.pos = model->ray_normal->pos;
 	// _collect_objects_shades(scene, dist_to_spotlight, &OL, illumination);
-	// if (illumination->r == 0.0f
-	// 		&& illumination->g == 0.0f 
-	// 		&& illumination->b == 0.0f)
-	// 	return ;
+	if (illumination->r == 0.0f
+			&& illumination->g == 0.0f 
+			&& illumination->b == 0.0f)
+		return ;
 	vec3_linear_transform(&OS, 2.0f * Idiffuse, &model->ray_normal->vec);
 	vec3_substract(&OS, &OL.vec);
 	vec3_normalize(&OS);
@@ -177,32 +147,41 @@ static void	_collect_illumination_from_spotlight(
 		illumination, (Idiffuse + Ispecular) * model->spotlight->brightness);
 }
 
-static void	_collect_objects_shades(
-				t_scene const *scene,
-				float dist_to_spotlight,
-				t_ray const *ray_to_spotlight,
-				t_color *illumination)
-{
-	float	distance_to_object;
+// static void	_collect_objects_shades(
+// 				t_object const *objects,
+// 				float dist_to_spotlight,
+// 				t_ray const *ray_to_spotlight,
+// 				t_color *illumination)
+// {
+// 	float		distance_to_object;
+// 	t_object	*intersected_object;
+//
+// 	*illumination = (t_color){1.0f, 1.0f, 1.0f};
+// 	intersected_object = NULL;
+// 	while (objects != NULL)
+// 	{
+// 		if (_test_intersection(ray, objects, &distance_to_object)
+// 			&& (distance_to_object < dist_to_spotlight))
+// 		{
+// 			illumination->r *= objects->color->r * objects->opacity;
+// 			illumination->r *= objects->color->g * objects->opacity;
+// 			illumination->r *= objects->color->b * objects->opacity;
+// 		}
+// 		if (illumination->r == 0.0f
+// 				&& illumination->g == 0.0f 
+// 				&& illumination->b == 0.0f)
+// 			return ;
+// 		objects = objects->next;
+// 	}
+// }
 
-
-}
-
-static bool	_is_spotlight_behind_object(
-				t_scene const *scene,
-				float dist_to_spotlight,
-				t_ray const *ray_toward_spotlight)
-{
-	float	distance_to_object;
-	t_ray	ray;
-
-	ray.vec = ray_toward_spotlight->vec;
-	// ray.pos = ray_toward_spotlight->pos; // TODO: switch to case-specific function
-	vec3_linear_transform(&ray.pos, 0.000001f, &ray_toward_spotlight->vec);
-	vec3_add(&ray.pos, &ray_toward_spotlight->pos);
-	if (fetch_closest_intersection(
-			&ray, scene->objects, &distance_to_object) == NULL)
-		return (false);
-	printf("prout\n");
-	return (dist_to_spotlight >= distance_to_object);
-}
+// static bool	_test_intersection(
+// 				t_ray const *ray,
+// 				t_object const *object,
+// 				float *distance)
+// {
+// 	if (object->type == OBJ_SPHERE)
+// 		return (test_intersection_with_sphere(
+// 					ray, &object->value.as_sphere, distance));
+// 	return (false);
+// }
