@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:06:32 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/03 02:51:08 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/05 10:40:55 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <minirt/scene/scene.h>
 #include <minirt/utils/color.h>
+#include <minirt/debug/debug.h>//TODO debug
 #include <minirt/utils/geometry.h>
 
 static void	_compute_normal_ray(

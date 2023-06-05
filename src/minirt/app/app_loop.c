@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 13:57:47 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/05 09:39:03 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	app_loop(void *const data)
 		| handle_window_resizing(app->mlx, &app->canvas, camera, &app->menu)
 		| handle_menu_toggling(app->mlx, &app->menu)
 		| handle_translations(app->mlx, camera)
-		| handle_rotations(app->mlx, &app->canvas, camera));
-		// | handle_menu_clicks(app->mlx, &app->menu)
+		| handle_rotations(app->mlx, &app->canvas, camera)
+		| handle_mouse_clicks(app->mlx, &app->menu, &app->scene, &app->canvas));
 	menu_draw(app->mlx, &app->menu);
 	render_canvas(app, should_render);
 }

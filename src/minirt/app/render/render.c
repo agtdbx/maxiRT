@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/03 03:54:48 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/05 09:10:25 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ static void	_print_rendering_progress(
 				mlx_t *mlx,
 				bool is_rendering,
 				int32_t	pixel_rendered);
-static void	_render_one_pixel(
-				t_scene const *scene,
-				t_canvas const *canvas,
-				int32_t pixel_rendered,
-				bool show_spotlights);
 static void	_get_top_left_ray(
 				t_canvas const *canvas,
 				t_camera const *camera,
@@ -61,7 +56,7 @@ void	render_canvas(
 	tmax = mlx_get_time() - app->mlx->delta_time + 0.15;
 	while (pixel_rendered < app->mlx->width * app->mlx->height)
 	{
-		_render_one_pixel(
+		render_one_pixel(
 			&app->scene, &app->canvas, pixel_rendered, app->menu.is_visible);
 		++pixel_rendered;
 		if (mlx_get_time() > tmax)
@@ -94,31 +89,6 @@ static void	_print_rendering_progress(
 	ft_strlcpy(str + len, " %", sizeof(str) - len);
 	img = mlx_put_string(mlx, str, 10, 10);
 	mlx_set_instance_depth(img->instances, 3);
-}
-
-static void	_render_one_pixel(
-				t_scene const *scene,
-				t_canvas const *canvas,
-				int32_t pixel_rendered,
-				bool show_spotlights)
-{
-	t_ray			casted_ray;
-	int32_t const	x = pixel_rendered % canvas->width;
-	int32_t const	y = pixel_rendered / canvas->width;
-
-	casted_ray.pos = scene->camera->pos;
-	casted_ray.vec = scene->camera->pos;
-	vec3_linear_transform(
-			&casted_ray.vec, canvas->width_div_2 - x, &scene->camera->o_x);
-	vec3_linear_transform(
-			&casted_ray.vec, canvas->height_div_2 - y, &scene->camera->o_y);
-	vec3_linear_transform(
-			&casted_ray.vec, scene->camera->focal, &scene->camera->direction);
-	vec3_substract(&casted_ray.vec, &casted_ray.pos);
-	vec3_normalize(&casted_ray.vec);
-	if (x < canvas->width && y < canvas->height)
-		mlx_put_pixel(canvas->back, x, y, 
-			render_ray_from_camera(scene, &casted_ray, show_spotlights));
 }
 
 /**

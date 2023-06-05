@@ -6,12 +6,13 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/03 04:04:27 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/05 10:40:49 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/app/app.h>
 
+#include <minirt/debug/debug.h>//TODO debug
 #include <minirt/utils/geometry.h>
 #include <math.h>
 

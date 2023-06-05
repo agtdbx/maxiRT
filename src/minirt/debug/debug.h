@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color_to_int.c                                     :+:      :+:    :+:   */
+/*   debug.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/03 00:53:31 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/05 10:39:16 by tdubois          ###   ########.fr       */
+/*   Created: 2023/06/05 08:39:22 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/05 10:12:48 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/utils/color.h>
+#ifndef DEBUG_H
+# define DEBUG_H
 
-#include <libft/libft.h>
-#include <math.h>
-#include <stdint.h>
+# include <stdbool.h>
+# include <stdio.h>
 
-static	int32_t	_bound(
-					float f);
+extern bool	g_is_debugging;
 
-int32_t	color_to_int(
-			t_color const *color)
-{
-	return (255
-		| (_bound(color->r) << 24)
-		| (_bound(color->g) << 16)
-		| (_bound(color->b) << 8));
-}
+#define DEBUG(...) if (g_is_debugging) fprintf(stderr, __VA_ARGS__);
 
-static	int32_t	_bound(
-					float f)
-{
-	if (f < 0.0f)
-		return (0);
-	if (255.0f < f)
-		return (255);
-	return (f);
-}
+#define DEBUG_ON()  g_is_debugging = true;
+#define DEBUG_OFF() g_is_debugging = false;
+
+#endif//DEBUG_H
