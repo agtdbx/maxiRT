@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:17:45 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 17:41:19 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ typedef struct s_phong_model
 static void	_collect_illumination_from_spotlight(
 				t_scene const *scene,
 				t_phong_model const *model,
+				t_color *illumination);
+static void	_collect_objects_shades(
+				t_object const *objects,
+				float dist_to_spotlight,
+				t_ray const *ray_to_spotlight,
 				t_color *illumination);
 
 /**
@@ -126,7 +131,7 @@ static void	_collect_illumination_from_spotlight(
 		return ;
 	*illumination = (t_color){1.0f, 1.0f, 1.0f};
 	ol.pos = model->ray_normal->pos;
-	//TODO _collect_objects_shades(scene, dist_to_spotlight, &ol, illumination);
+	_collect_objects_shades(scene->objects, dist_to_spotlight, &ol, illumination);
 	if (illumination->r == 0.0f
 			&& illumination->g == 0.0f 
 			&& illumination->b == 0.0f)
@@ -141,41 +146,64 @@ static void	_collect_illumination_from_spotlight(
 		illumination, (idiffuse + ispecular) * model->spotlight->brightness);
 }
 
-// static void	_collect_objects_shades(
-// 				t_object const *objects,
-// 				float dist_to_spotlight,
-// 				t_ray const *ray_to_spotlight,
-// 				t_color *illumination)
-// {
-// 	float		distance_to_object;
-// 	t_object	*intersected_object;
-//
-// 	*illumination = (t_color){1.0f, 1.0f, 1.0f};
-// 	intersected_object = NULL;
-// 	while (objects != NULL)
-// 	{
-// 		if (_test_intersection(ray, objects, &distance_to_object)
-// 			&& (distance_to_object < dist_to_spotlight))
-// 		{
-// 			illumination->r *= objects->color->r * objects->opacity;
-// 			illumination->r *= objects->color->g * objects->opacity;
-// 			illumination->r *= objects->color->b * objects->opacity;
-// 		}
-// 		if (illumination->r == 0.0f
-// 				&& illumination->g == 0.0f 
-// 				&& illumination->b == 0.0f)
-// 			return ;
-// 		objects = objects->next;
-// 	}
-// }
+t_color const	*obj_get_color(
+					t_object const *object)
+{
+	if (object->type == OBJ_SPHERE)
+		return (&object->value.as_sphere.color);
+	return (NULL);
+}
 
-// static bool	_test_intersection(
-// 				t_ray const *ray,
-// 				t_object const *object,
-// 				float *distance)
-// {
-// 	if (object->type == OBJ_SPHERE)
-// 		return (test_intersection_with_sphere(
-// 					ray, &object->value.as_sphere, distance));
-// 	return (false);
-// }
+float	obj_get_opacity(
+			t_object const *object)
+{
+	if (object->type == OBJ_SPHERE)
+		return (object->value.as_sphere.opacity);
+	return (1.0f);
+}
+
+static bool	_test_intersection(
+				t_ray const *ray,
+				t_object const *object,
+				float *distance)
+{
+	if (object->type == OBJ_SPHERE)
+		return (test_intersection_with_sphere(
+					ray, &object->value.as_sphere, distance));
+	return (false);
+}
+
+static void	_collect_objects_shades(
+				t_object const *objects,
+				float dist_to_spotlight,
+				t_ray const *ray_to_spotlight,
+				t_color *illumination)
+{
+	float			distance_to_object;
+	t_color const	*obj_color;
+	float			obj_opacity;
+
+	while (objects != NULL)
+	{
+		if (_test_intersection(ray_to_spotlight, objects, &distance_to_object)
+			&& (distance_to_object < dist_to_spotlight))
+		{
+			obj_color = obj_get_color(objects);
+			obj_opacity = obj_get_opacity(objects);
+			illumination->r -= obj_opacity + obj_opacity * ((128 - obj_color->r) / 255.0f);
+			illumination->g -= obj_opacity + obj_opacity * ((128 - obj_color->g) / 255.0f);;
+			illumination->b -= obj_opacity + obj_opacity * ((128 - obj_color->b) / 255.0f);;
+			DEBUG_COLORP(illumination);
+		}
+		if (illumination->r == 0.0f
+				&& illumination->g == 0.0f 
+				&& illumination->b == 0.0f)
+			return ;
+		objects = objects->next;
+	}
+}
+
+			// illumination->r *= 1.0f - (obj_color->r / 255.0f) * obj_opacity;
+			// illumination->g *= 1.0f - (obj_color->g / 255.0f) * obj_opacity;
+			// illumination->b *= 1.0f - (obj_color->b / 255.0f) * obj_opacity;
+
