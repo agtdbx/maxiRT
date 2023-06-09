@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 10:55:50 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 10:57:05 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:46:29 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_max(
 		int a,
-		int	b)
+		int b)
 {
 	if (a >= b)
 		return (a);

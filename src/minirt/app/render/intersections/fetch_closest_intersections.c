@@ -6,15 +6,16 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 15:56:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 17:07:18 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:47:33 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
+#include "minirt/app/app.h"
 
-#include <minirt/scene/scene.h>
 #include <stddef.h>
 #include <stdbool.h>
+
+#include "minirt/app/scene/scene.h"
 
 static inline bool	_test_intersection(
 						t_ray const *ray,
@@ -59,6 +60,6 @@ static inline bool	_test_intersection(
 {
 	if (object->type == OBJ_SPHERE)
 		return (test_intersection_with_sphere(
-					ray, &object->value.as_sphere, distance));
+				ray, &object->value.as_sphere, distance));
 	return (false);
 }

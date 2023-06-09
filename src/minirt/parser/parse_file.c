@@ -6,35 +6,27 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:08:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 13:39:51 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:25:07 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/parser/parser.h"
-#include "libft/libft.h"
 
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>//TODO
+#include <stdio.h>
 
-//############################################################################//
-//#### DECLARATIONS ##########################################################//
+#include "libft/libft.h"
 
-t_error			parse_file(
-					char const *path_to_file,
-					t_scene *scene);
+#include "minirt/app/scene/scene.h"
 
 static t_error	_check_filename_format(
 					char const *basename);
-
 static t_error	_open_file(
 					char const *path_to_file,
 					int	*fd);
-
-//############################################################################//
-//#### DEFINITIONS ###########################################################//
 
 /**
  * Parses scene data structure from config file.

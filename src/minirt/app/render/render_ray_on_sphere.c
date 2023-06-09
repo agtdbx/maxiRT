@@ -6,16 +6,18 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:06:32 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/05 11:18:52 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 14:08:48 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
+#include "minirt/app/app.h"
 
-#include <minirt/scene/scene.h>
-#include <minirt/utils/color.h>
-#include <minirt/debug/debug.h>//TODO debug
-#include <minirt/utils/geometry.h>
+#include <stdint.h>
+
+#include "minirt/app/scene/scene.h"
+#include "minirt/app/utils/color/color.h"
+#include "minirt/app/utils/geometry/geometry.h"
+#include "minirt/debug/debug.h"//TODO debug
 
 static void	_compute_normal_ray(
 				t_sphere const *sphere,

@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_camera_direction.c                          :+:      :+:    :+:   */
+/*   handle_rotations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/17 17:08:22 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:39:00 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
-#include <MLX42/MLX42.h>
+#include "minirt/app/app.h"
 
 #include <stdbool.h>
 #include <math.h>
+
+#include "MLX42/MLX42.h"
+
+#include "minirt/app/app_config.h"
 
 static inline bool	_rotate_around_ox(
 						mlx_t *mlx,
@@ -43,7 +46,7 @@ bool	handle_rotations(
 			t_canvas const *canvas,
 			t_camera *camera)
 {
-	float const	rads = -mlx->delta_time * 40.0f * PI_DIV_180;
+	float const	rads = -mlx->delta_time * 40.0f * g_pi_div_180;
 	bool		should_render;
 
 	should_render = false;

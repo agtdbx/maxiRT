@@ -6,14 +6,17 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/27 16:23:51 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:35:05 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/parser/parser.h"
-#include "minirt/utils/geometry.h"
 
 #include <stdbool.h>
+
+#include "libft/libft.h"
+
+#include "minirt/app/utils/geometry/geometry.h"
 
 //############################################################################//
 //#### DECLARATIONS ##########################################################//

@@ -6,15 +6,18 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 17:26:30 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:28:30 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/parser/parser.h"
 
+#include <stdio.h>
+#include <stddef.h>
+
 #include "libft/libft.h"
 
-#include <stdio.h>
+#include "minirt/app/scene/scene.h"
 
 t_error	parse_spotlight(
 			t_parser_state *state)

@@ -6,17 +6,19 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 08:25:41 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/05 10:12:53 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 16:01:28 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
-
-#include <minirt/menu/menu.h>
-#include <minirt/debug/debug.h>//TODO debug
+#include "minirt/app/app.h"
 
 #include <stdint.h>
-#include <MLX42/MLX42.h>
+#include <stdbool.h>
+
+#include "MLX42/MLX42.h"
+
+#include "minirt/app/menu/menu.h"
+#include "minirt/debug/debug.h"//TODO
 
 bool	handle_mouse_clicks(
 			mlx_t *mlx,
@@ -27,7 +29,7 @@ bool	handle_mouse_clicks(
 	int32_t			pix[2];
 	static double	no_clicks_until = 0;
 
-	if (!menu->is_visible 
+	if (!menu->is_visible
 		|| !mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT)
 		|| mlx_get_time() < no_clicks_until)
 		return (false);
@@ -35,11 +37,9 @@ bool	handle_mouse_clicks(
 	mlx_get_mouse_pos(mlx, &pix[0], &pix[1]);
 	if (menu->background->instances->x < pix[0])
 		return (true);
-
 	DEBUG_ON(); //TODO for debugging
 	(void)render_one_pixel(
 			scene, canvas, canvas->width * pix[1] + pix[0], true);
 	DEBUG_OFF();
-
 	return (false);
 }

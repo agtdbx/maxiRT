@@ -6,18 +6,18 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/01 20:13:44 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:31:55 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_INT_H
 # define PARSER_INT_H
 
-# include "minirt/scene/scene.h"
+# include <stddef.h>
 
 # include "libft/libft.h"
 
-# include <stddef.h>
+# include "minirt/app/scene/scene.h"
 
 typedef struct s_directive	t_directive;
 typedef struct s_field		t_field;

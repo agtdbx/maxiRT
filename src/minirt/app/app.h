@@ -6,42 +6,22 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/05 09:13:20 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:44:11 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef APP_H
 # define APP_H
 
-# include <minirt/menu/menu.h>
-# include <minirt/scene/scene.h>
-# include <minirt/canvas/canvas.h>
-
-# include <MLX42/MLX42.h>
 # include <stdbool.h>
+# include <stdint.h>
 
-//****************************************************************************//
-//**** WINDOW CONFIGURATION CONSTANTS ****************************************//
+# include "MLX42/MLX42.h"
 
-# define WINDOW_TITLE "maxiRT"
+# include "minirt/app/canvas/canvas.h"
+# include "minirt/app/menu/menu.h"
+# include "minirt/app/scene/scene.h"
 
-# define WINDOW_WIDTH 1920
-# define WINDOW_HEIGHT 995
-
-//TODO(tdubois)
-// # define WINDOW_WIDTH 240
-// # define WINDOW_HEIGHT 180
-
-//****************************************************************************//
-//**** RENDERING CONFIGURATION CONSTANTS *************************************//
-
-// cap game loop at 64 or 32 ticks per second
-// # define MAX_TPS_64 0.017
-// # define MAX_TPS_32 0.032
-// # define MAX_TPS_16 0.063
-// # define MINIMUM_RENDERING_TIMESTEP_IN_SECONDS MAX_TPS_16
-
-//****************************************************************************//
 //**** APP MODEL *************************************************************//
 
 //> container for the context tpassed through app_loop
@@ -54,7 +34,6 @@ typedef struct s_app
 	t_canvas	canvas;
 }	t_app;
 
-//****************************************************************************//
 //**** METHODS ***************************************************************//
 
 /// core
@@ -67,10 +46,10 @@ void			app_loop(
 /// inputs handlers
 
 bool			handle_window_resizing(
-					mlx_t const *mlx,
-					t_canvas *canvas,
-					t_camera *camera,
-					t_menu *menu);
+					mlx_t *mlx,
+					t_menu *menu,
+					t_scene *scene,
+					t_canvas *canvas);
 bool			handle_translations(
 					mlx_t *mlx,
 					t_camera *camera);
@@ -128,10 +107,10 @@ bool			test_intersection_with_sphere(
 
 /// illumination
 
-void		compute_illumination(
-				t_scene const *scene,
-				t_ray const *ray,
-				t_ray const *normal,
-				t_color *illumination);
+void			compute_illumination(
+					t_scene const *scene,
+					t_ray const *ray,
+					t_ray const *normal,
+					t_color *illumination);
 
 #endif//APP_H

@@ -6,34 +6,24 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:43:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 16:27:57 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:26:49 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/parser/parser.h"
 
-#include "libft/libft.h"
-
 #include <errno.h>
 #include <stdio.h>
 
-//############################################################################//
-//#### DECLARATIONS ##########################################################//
+#include "libft/libft.h"
 
-t_error			parse_lines(
-					int fd,
-					char const *filename,
-					t_scene *scene);
+#include "minirt/app/scene/scene.h"
 
 static t_error	_get_line(
 					int fd,
 					t_parser_state *state);
-
 static bool		_is_blank(
 					char const *line);
-
-//############################################################################//
-//#### DEFINITIONS ###########################################################//
 
 /**
  * Parses each lines, one at a time.

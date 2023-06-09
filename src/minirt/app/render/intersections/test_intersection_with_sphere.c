@@ -6,17 +6,16 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/15 17:08:29 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 14:10:34 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
+#include "minirt/app/app.h"
 
-#include <minirt/utils/geometry.h>
 #include <stdbool.h>
 #include <math.h>
 
-//TODO: create vec3_substract
+#include "minirt/app/utils/geometry/geometry.h"
 
 /**
  * Test ray-sphere intersection. Algorithm is derived from

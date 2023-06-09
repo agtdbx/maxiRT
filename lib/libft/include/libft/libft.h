@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 02:35:07 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 10:57:21 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:47:13 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,6 @@ int		ft_min(
 
 int		ft_max(
 			int a,
-			int	b);
+			int b);
 
 #endif//LIBFT_H

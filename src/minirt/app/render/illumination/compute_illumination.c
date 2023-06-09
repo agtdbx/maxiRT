@@ -6,20 +6,18 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/05 17:46:15 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 14:17:45 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
+#include "minirt/app/app.h"
 
-#include <minirt/debug/debug.h>//TODO debug
-#include <minirt/utils/geometry.h>
 #include <math.h>
+#include <stddef.h>
 
-#define AMBIENT_REFLECTION_CONSTANT 0.3f
-#define DIFFUSE_REFLECTION_CONSTANT 0.3f
-#define SPECULAR_REFLECTION_CONSTANT 0.3f
-#define PHONG_EXPONENT 50.0f
+#include "minirt/app/app_config.h"
+#include "minirt/app/utils/geometry/geometry.h"
+#include "minirt/debug/debug.h"//TODO debug
 
 typedef struct s_phong_model
 {
@@ -32,10 +30,6 @@ static void	_collect_illumination_from_spotlight(
 				t_scene const *scene,
 				t_phong_model const *model,
 				t_color *illumination);
-// static bool	_test_intersection(
-// 				t_ray const *ray,
-// 				t_object const *object,
-// 				float *distance);
 
 /**
  * Compute illumination of point normal->pos
@@ -62,7 +56,7 @@ void	compute_illumination(
 	model.ray_from_camera = ray;
 	model.spotlight = scene->spotlights;
 	ambient_illumination = 
-		scene->ambient_lightning->brightness * AMBIENT_REFLECTION_CONSTANT;
+		scene->ambient_lightning->brightness * g_ambient_reflection_constant;
 	illumination->r = scene->ambient_lightning->color.r * ambient_illumination;
 	illumination->g = scene->ambient_lightning->color.g * ambient_illumination;
 	illumination->b = scene->ambient_lightning->color.b * ambient_illumination;
@@ -119,32 +113,32 @@ static void	_collect_illumination_from_spotlight(
 					t_color *illumination)
 {
 	float			dist_to_spotlight;
-	t_ray			OL;
-	t_vec3			OS;
-	float			Idiffuse;
-	float			Ispecular;
+	t_ray			ol;
+	t_vec3			os;
+	float			idiffuse;
+	float			ispecular;
 
-	vec3_substract_into(&OL.vec, &model->spotlight->pos, &model->ray_normal->pos);
-	dist_to_spotlight = vec3_normalize(&OL.vec);
-	Idiffuse = vec3_dot(&model->ray_normal->vec, &OL.vec);
+	vec3_substract_into(&ol.vec, &model->spotlight->pos, &model->ray_normal->pos);
+	dist_to_spotlight = vec3_normalize(&ol.vec);
+	idiffuse = vec3_dot(&model->ray_normal->vec, &ol.vec);
 	*illumination = (t_color){0};
-	if (Idiffuse <= 0.0f)
+	if (idiffuse <= 0.0f)
 		return ;
 	*illumination = (t_color){1.0f, 1.0f, 1.0f};
-	OL.pos = model->ray_normal->pos;
-	// _collect_objects_shades(scene, dist_to_spotlight, &OL, illumination);
+	ol.pos = model->ray_normal->pos;
+	//TODO _collect_objects_shades(scene, dist_to_spotlight, &ol, illumination);
 	if (illumination->r == 0.0f
 			&& illumination->g == 0.0f 
 			&& illumination->b == 0.0f)
 		return ;
-	vec3_linear_transform(&OS, 2.0f * Idiffuse, &model->ray_normal->vec);
-	vec3_substract(&OS, &OL.vec);
-	vec3_normalize(&OS);
-	Idiffuse *= DIFFUSE_REFLECTION_CONSTANT;
-	Ispecular = fmaxf(0.0f, -vec3_dot(&OS, &model->ray_from_camera->vec));
-	Ispecular = powf(Ispecular, PHONG_EXPONENT) * SPECULAR_REFLECTION_CONSTANT;
+	vec3_linear_transform(&os, 2.0f * idiffuse, &model->ray_normal->vec);
+	vec3_substract(&os, &ol.vec);
+	vec3_normalize(&os);
+	idiffuse *= g_diffuse_reflection_constant;
+	ispecular = fmaxf(0.0f, -vec3_dot(&os, &model->ray_from_camera->vec));
+	ispecular = powf(ispecular, g_phong_exponent) * g_specular_reflection_constant;
 	color_scale(
-		illumination, (Idiffuse + Ispecular) * model->spotlight->brightness);
+		illumination, (idiffuse + ispecular) * model->spotlight->brightness);
 }
 
 // static void	_collect_objects_shades(

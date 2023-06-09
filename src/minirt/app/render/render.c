@@ -6,20 +6,21 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/05 09:10:25 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:50:20 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
+#include "minirt/app/app.h"
 
-#include <minirt/scene/scene.h>
-#include <minirt/utils/drawings.h>
-#include <minirt/utils/geometry.h>
-
-#include <MLX42/MLX42.h>
-#include <libft/libft.h>
 #include <stdbool.h>
 #include <stdint.h>
+
+#include "MLX42/MLX42.h"
+#include "libft/libft.h"
+
+#include "minirt/app/scene/scene.h"
+#include "minirt/app/utils/drawings/drawings.h"
+#include "minirt/app/utils/geometry/geometry.h"
 
 static void	_print_rendering_progress(
 				mlx_t *mlx,

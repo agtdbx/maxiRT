@@ -6,28 +6,20 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 08:17:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/03 02:56:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:57:29 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
+#include "minirt/app/app.h"
 
-#include <minirt/scene/scene.h>
-#include <minirt/utils/color.h>
-#include <stdbool.h>
-#include <stdbool.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
 
-typedef struct s_intersection
-{
-	t_object const	*object;
-	float			distance;
-
-	t_vec3			pos;
-	t_vec3			normal;
-}	t_intersection;
-
-////////////////////////////////////////////////////////////////////////////////
+#include "minirt/app/app_config.h"
+#include "minirt/app/scene/scene.h"
+#include "minirt/app/utils/color/color.h"
 
 static t_light const	*_fetch_closer_spotlight(
 							t_ray const *ray,
@@ -37,7 +29,7 @@ static int32_t			_render_ray_on_spotlight(
 							t_light const *light,
 							t_ray const *ray,
 							float distance);
-static inline float		_apply_fish_eye_effect_correction(
+static float			_apply_fish_eye_effect_correction(
 							float initial_distance,
 							t_vec3 const *camera_direction,
 							t_vec3 const *ray_direction);
@@ -51,7 +43,7 @@ int32_t	render_ray_from_camera(
 	t_light const	*light;
 	float			distance;
 
-	intersected_object = 
+	intersected_object = \
 		fetch_closest_intersection(ray, scene->objects, &distance);
 	if (show_spotlights)
 	{
@@ -60,9 +52,9 @@ int32_t	render_ray_from_camera(
 			return (_render_ray_on_spotlight(light, ray, distance));
 	}
 	if (intersected_object == NULL)
-		return (RGB_BLACK);
+		return (g_color_black);
 	distance = _apply_fish_eye_effect_correction(
-		distance, &scene->camera->direction, &ray->vec);
+			distance, &scene->camera->direction, &ray->vec);
 	return (render_ray_on_object(scene, intersected_object, ray, distance));
 }
 

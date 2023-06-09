@@ -6,18 +6,18 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/04 11:33:57 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:22:48 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
-#include <minirt/scene/scene.h>
-#include <minirt/parser/parser.h>
-
-#include <MLX42/MLX42.h>
-
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "MLX42/MLX42.h"
+
+#include "minirt/app/app.h"
+#include "minirt/app/scene/scene.h"
+#include "minirt/parser/parser.h"
 
 static const char	g_argc_error_msg[] = \
 	"Error"								"\n"

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:38:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 13:33:36 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:46:07 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ size_t	ft_sftoa(
 	{
 		buf[0] = '-';
 		return (_handle_finite_float_with_exponent(
-					-x, buf + 1, ft_max(0, buf_size - 1)));
+				-x, buf + 1, ft_max(0, buf_size - 1)));
 	}
 	return (_handle_finite_float_with_exponent(x, buf, buf_size));
 }
@@ -70,17 +70,17 @@ static size_t	_handle_finite_float_with_exponent(
 {
 	size_t	len;
 	float	exp;
-	
+
 	exp = floorf(log10f(x));
 	if (isinff(exp) || isnanf(exp))
 	{
 		return (_handle_finite_float(
-					0.0f, buf, ft_min(buf_size, FLT_DIG + 2)));
+				0.0f, buf, ft_min(buf_size, FLT_DIG + 2)));
 	}
 	if (fabs(exp) < FLT_DIG - 1)
 	{
 		return (_handle_finite_float(
-					x, buf, ft_min(buf_size, FLT_DIG + 2)));
+				x, buf, ft_min(buf_size, FLT_DIG + 2)));
 	}
 	len = _handle_finite_float(
 			x / powf(10, exp), buf, ft_min(buf_size, FLT_DIG + 2));
@@ -117,7 +117,7 @@ static size_t	_handle_finite_float(
 		x -= digit;
 		++len;
 		if (isnanf(x) || isinf(x) || x == 0.0f)
-			break;
+			break ;
 	}
 	if (buf_size > 0)
 		buf[len] = '\0';

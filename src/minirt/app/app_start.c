@@ -6,29 +6,32 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/01 14:08:47 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:48:11 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
+#include "minirt/app/app.h"
 
-#include <minirt/scene/scene.h>
-#include <MLX42/MLX42.h>
-#include <libft/libft.h>
-
-#include <stddef.h>
-#include <string.h>
-#include <stdio.h>
 #include <errno.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "MLX42/MLX42.h"
+#include "libft/libft.h"
+
+#include "minirt/app/app_config.h"
+#include "minirt/app/scene/scene.h"
+
 
 static t_error	_app_init(
 					t_app *app,
 					t_scene *scene);
 static void		_compute_constants(
-					mlx_t const *mlx,
-					t_canvas *canvas,
+					mlx_t *mlx,
+					t_menu *menu,
 					t_scene *scene,
-					t_menu *menu);
+					t_canvas *canvas);
 
 t_error	app_start(
 			t_scene *scene)
@@ -41,7 +44,7 @@ t_error	app_start(
 	{
 		render_canvas(&app, true);
 		mlx_loop(app.mlx);
-		//cleanup
+		//TODO(tdubois): cleanup
 		return (SUCCESS);
 	}
 	if (mlx_errno != MLX_SUCCESS)
@@ -59,7 +62,7 @@ static t_error	_app_init(
 {
 	app->scene = *scene;
 	mlx_set_setting(MLX_MAXIMIZED, true);
-	app->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, true);
+	app->mlx = mlx_init(g_window_width, g_window_height, g_window_title, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
@@ -69,15 +72,15 @@ static t_error	_app_init(
 		mlx_terminate(app->mlx);
 		return (FAILURE);
 	}
-	_compute_constants(app->mlx, &app->canvas, &app->scene, &app->menu);
+	_compute_constants(app->mlx, &app->menu, &app->scene, &app->canvas);
 	return (SUCCESS);
 }
 
 static void	_compute_constants(
-				mlx_t const *mlx,
-				t_canvas *canvas,
+				mlx_t *mlx,
+				t_menu *menu,
 				t_scene *scene,
-				t_menu *menu)
+				t_canvas *canvas)
 {
 	t_object	*object_iterator;
 
@@ -89,5 +92,5 @@ static void	_compute_constants(
 			sphere_compute_constants((t_sphere*)&object_iterator->value);
 		object_iterator = object_iterator->next;
 	}
-	handle_window_resizing(mlx, canvas, scene->camera, menu);
+	handle_window_resizing(mlx, menu, scene, canvas);
 }

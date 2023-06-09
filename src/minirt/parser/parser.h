@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/01 20:11:40 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:45:04 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ static const t_directive	g_directives[] = {
 	.usage = "sp <position> <diameter> <color>",
 	.callback = parse_sphere,
 },
-// {
-// 	.identifier = "Tr",
-// 	.usage = "Tr <position> <position> <position> <color>",
-// 	.callback = parse_triangle,
-// },
 };
 
 //**** PARSER FIELDS *********************************************************//

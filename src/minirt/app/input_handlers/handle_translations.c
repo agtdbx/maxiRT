@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   update_camera_position.c                           :+:      :+:    :+:   */
+/*   handle_translations.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/17 17:07:25 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:22:34 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
-#include <MLX42/MLX42.h>
+#include "minirt/app/app.h"
+
 #include <math.h>
+#include <stdbool.h>
+
+#include "MLX42/MLX42.h"
+#include "minirt/app/scene/scene.h"
+#include "minirt/app/utils/geometry/geometry.h"
 
 static inline void	_safe_assign(
 						float *dst,

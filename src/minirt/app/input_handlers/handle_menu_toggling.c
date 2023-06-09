@@ -6,15 +6,17 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:12:04 by tdubois           #+#    #+#             */
-/*   Updated: 2023/05/31 17:47:57 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:30:42 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minirt/app/app.h>
+#include "minirt/app/app.h"
 
-#include <minirt/menu/menu.h>
-#include <MLX42/MLX42.h>
 #include <stdbool.h>
+
+#include "MLX42/MLX42.h"
+
+#include "minirt/app/menu/menu.h"
 
 bool	handle_menu_toggling(
 			mlx_t *mlx,
