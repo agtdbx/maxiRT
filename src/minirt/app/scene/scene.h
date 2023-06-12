@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:12:39 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:22:52 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ typedef struct s_object
 	struct s_object	*next;
 }	t_object;
 
+t_color const	*obj_get_color(
+					t_object const *object);
+float			obj_get_opacity(
+					t_object const *object);
+
 //---- LIGHT -----------------------------------------------------------------//
 
 typedef struct s_light
@@ -113,9 +118,9 @@ typedef struct s_camera
 	float	focal;
 }	t_camera;
 
-void	camera_compute_constants(
-			t_canvas const *canvas,
-			t_camera *camera);
+void		camera_compute_constants(
+				t_canvas const *canvas,
+				t_camera *camera);
 
 //---- SCENE -----------------------------------------------------------------//
 
@@ -127,12 +132,12 @@ typedef struct s_scene
 	t_camera	*camera;
 }	t_scene;
 
-t_error	scene_add_object(
-			t_scene *scene,
-			t_object_t type,
-			void const *value);
+t_error		scene_add_object(
+				t_scene *scene,
+				t_object_t type,
+				void const *value);
 
-void	scene_del(
-			t_scene *scene);
+void		scene_del(
+				t_scene *scene);
 
 #endif//SCENE_H

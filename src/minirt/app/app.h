@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 13:44:11 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 15:35:29 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,23 @@ t_object const	*fetch_closest_intersection(
 					t_ray const *ray,
 					t_object const *objects,
 					float *distance);
+bool			test_intersection_with_obj(
+					t_ray const *ray,
+					t_object const *object,
+					float *distance);
 bool			test_intersection_with_sphere(
 					t_ray const *ray,
 					t_sphere const *sphere,
 					float *distance);
 
 /// illumination
+
+typedef struct s_phong_model
+{
+	t_ray const		*from_camera;
+	t_ray const		*normal;
+	t_light const	*spotlight;
+}	t_phong_model;
 
 void			compute_illumination(
 					t_scene const *scene,
