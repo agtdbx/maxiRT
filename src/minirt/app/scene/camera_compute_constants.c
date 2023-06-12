@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:09:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:10:05 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 16:04:18 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 #include "MLX42/MLX42.h"
 
-#include "minirt/app/utils/geometry/geometry.h"
 #include "minirt/app/canvas/canvas.h"
+#include "minirt/app/utils/geometry/geometry.h"
 
 //TODO(tdubois): calculer tanf seulement quand la fov est modifiée
 
