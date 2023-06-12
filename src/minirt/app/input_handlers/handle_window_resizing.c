@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 22:47:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 13:36:29 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 14:15:40 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool	handle_window_resizing(
 		canvas->height_div_2 = height / 2.0f;
 		camera_compute_constants(canvas, scene->camera);
 		menu_update_position(mlx, menu);
-		// background_draw(menu); TODO: delete this line ?
+		background_draw(menu);
 		return (true);
 	}
 	return (false);

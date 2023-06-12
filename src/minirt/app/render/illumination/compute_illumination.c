@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 17:41:19 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 14:07:57 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,9 +190,9 @@ static void	_collect_objects_shades(
 		{
 			obj_color = obj_get_color(objects);
 			obj_opacity = obj_get_opacity(objects);
-			illumination->r -= obj_opacity + obj_opacity * ((128 - obj_color->r) / 255.0f);
-			illumination->g -= obj_opacity + obj_opacity * ((128 - obj_color->g) / 255.0f);;
-			illumination->b -= obj_opacity + obj_opacity * ((128 - obj_color->b) / 255.0f);;
+			illumination->r -= powf(obj_opacity, 1 + obj_color->r * 42 / 255.0f);
+			illumination->g -= powf(obj_opacity, 1 + obj_color->g * 42 / 255.0f);
+			illumination->b -= powf(obj_opacity, 1 + obj_color->b * 42 / 255.0f);
 			DEBUG_COLORP(illumination);
 		}
 		if (illumination->r == 0.0f

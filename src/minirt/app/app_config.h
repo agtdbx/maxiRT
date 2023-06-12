@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:56:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 14:18:31 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static const int32_t	g_window_height = 1080;
 
 static const int32_t	g_menu_width = 400;
 static const int32_t	g_menu_background_color = 0x333333FF;
-static const int32_t	g_menu_dividers_color = 0x333333FF;
+static const int32_t	g_menu_dividers_color = 0x666666FF;
 static const int32_t	g_menu_divider_1_y = 140;
 static const int32_t	g_menu_divider_2_y = 280;
 
@@ -35,6 +35,10 @@ static const float		g_ambient_reflection_constant = 0.3f;
 static const float		g_diffuse_reflection_constant = 0.3f;
 static const float		g_specular_reflection_constant = 0.3f;
 static const float		g_phong_exponent = 50.0f;
+
+//---- OBJECTS DEFAULTS ------------------------------------------------------//
+
+static const float		g_sphere_default_opacity = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 
