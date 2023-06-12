@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:35:29 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:45:58 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,14 @@ bool			test_intersection_with_sphere(
 					t_ray const *ray,
 					t_sphere const *sphere,
 					float *distance);
+
+/// normal rays
+
+void			compute_normal_ray(
+					t_object const *object,
+					t_ray const *ray,
+					float distance,
+					t_ray *normal);
 
 /// illumination
 

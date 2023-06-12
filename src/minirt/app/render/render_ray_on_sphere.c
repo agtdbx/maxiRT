@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:06:32 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 17:16:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:47:21 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int32_t	render_ray_on_sphere(
 	//TODO mirror here
 	// color = refracted_color;
 	color = illumination;
-	color.r *= sphere->color.r / 255.0f;
-	color.g *= sphere->color.g / 255.0f;
-	color.b *= sphere->color.b / 255.0f;
+	// color.r *= sphere->color.r / 255.0f;
+	// color.g *= sphere->color.g / 255.0f;
+	// color.b *= sphere->color.b / 255.0f;
 	return (color_to_int(&color));
 }
 

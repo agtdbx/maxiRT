@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 14:18:45 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:33:14 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@
 t_error	parse_sphere(
 			t_parser_state *state)
 {
-	t_sphere	sphere;
+	t_object	sphere;
+	t_sphere	*const geometry = &sphere.value.as_sphere;
 
 	ft_bzero(&sphere, sizeof(sphere));
-	if (parse_field(state, &g_position, &sphere.pos) == FAILURE
-		|| parse_field(state, &g_diameter, &sphere.diameter) == FAILURE
+	if (parse_field(state, &g_position, &geometry->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &geometry->diameter) == FAILURE
 		|| parse_field(state, &g_color, &sphere.color) == FAILURE)
 		return (FAILURE);
+	sphere.type = OBJ_SPHERE;
 	sphere.opacity = g_sphere_default_opacity;
-	return (scene_add_object(state->scene, OBJ_SPHERE, &sphere));
+	sphere.refraction_ratio = g_sphere_default_refraction_ratio;
+	sphere.reflection_ratio = g_sphere_default_reflection_ratio;
+	return (scene_add_object(state->scene, &sphere));
 }

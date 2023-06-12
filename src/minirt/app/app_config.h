@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:47:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:53:02 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ static const float		g_opacity_color_ratio = 42.0f / 255.0f;
 //---- scene -----------------------------------------------------------------//
 
 static const float		g_scene_radius = 1000.0f;
+
+// sphere
 static const float		g_sphere_default_opacity = 0.5f;
+static const float		g_sphere_default_refraction_ratio = 0.0f;
+static const float		g_sphere_default_reflection_ratio = 0.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 

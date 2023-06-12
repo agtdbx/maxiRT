@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:36:00 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:50:47 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,23 +144,19 @@ static void	_collect_objects_shades(
 				t_color *illumination)
 {
 	float			distance_to_object;
-	t_color const	*obj_color;
-	float			obj_opacity;
 
 	while (objects != NULL)
 	{
 		if (test_intersection_with_obj(
 				ray_to_spotlight, objects, &distance_to_object)
 			&& (distance_to_object < dist_to_spotlight))
-		{
-			obj_color = obj_get_color(objects);
-			obj_opacity = obj_get_opacity(objects);
+		{;
 			illumination->r -= powf(
-					obj_opacity, 1 + obj_color->r * g_opacity_color_ratio);
+					objects->opacity, 1 + objects->color.r * g_opacity_color_ratio);
 			illumination->g -= powf(
-					obj_opacity, 1 + obj_color->g * g_opacity_color_ratio);
+					objects->opacity, 1 + objects->color.g * g_opacity_color_ratio);
 			illumination->b -= powf(
-					obj_opacity, 1 + obj_color->b * g_opacity_color_ratio);
+					objects->opacity, 1 + objects->color.b * g_opacity_color_ratio);
 		}
 		if (illumination->r == 0.0f
 				&& illumination->g == 0.0f 

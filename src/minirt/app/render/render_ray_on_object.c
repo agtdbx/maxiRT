@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:58:51 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:37:32 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,20 @@ int32_t	render_ray_on_object(
 			t_ray const *ray,
 			float distance)
 {
-	if (intersected_object->type == OBJ_SPHERE)
-		return (render_ray_on_sphere(
-				scene, (t_sphere*)&intersected_object->value, ray, distance));
-	//other object types...
-	return (g_color_black);
+	t_ray	normal;
+	t_color	illumination;
+	// t_color	refracted_color;
+	t_color	color;
+
+	compute_normal_ray(intersected_object, ray, distance, &normal);
+	//TODO normal mapping here
+	compute_illumination(scene, ray, &normal, &illumination);
+	// compute_refracted_color(scene, ray, &normal, &refracted_color);
+	//TODO mirror here
+	// color = refracted_color;
+	color = illumination;
+	color.r *= intersected_object->color.r / 255.0f;
+	color.g *= intersected_object->color.g / 255.0f;
+	color.b *= intersected_object->color.b / 255.0f;
+	return (color_to_int(&color));
 }
