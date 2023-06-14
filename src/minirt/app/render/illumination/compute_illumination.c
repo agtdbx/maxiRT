@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 17:50:47 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/14 17:04:22 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ static void	_collect_illumination_from_spotlight(
 	idiffuse *= g_diffuse_light_ratio;
 	ispecular = fmaxf(0.0f, -vec3_dot(&os, &model->from_camera->vec));
 	ispecular = powf(ispecular, g_phong_exponent) * g_specular_light_ratio;
+	DEBUG("%f %f", idiffuse, ispecular);
 	color_scale(
 		illumination, (idiffuse + ispecular) * model->spotlight->brightness);
 }
@@ -150,7 +151,7 @@ static void	_collect_objects_shades(
 		if (test_intersection_with_obj(
 				ray_to_spotlight, objects, &distance_to_object)
 			&& (distance_to_object < dist_to_spotlight))
-		{;
+		{
 			illumination->r -= powf(
 					objects->opacity, 1 + objects->color.r * g_opacity_color_ratio);
 			illumination->g -= powf(

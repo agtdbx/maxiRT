@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 17:32:56 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:47:06 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_sphere
 	float	radius;
 	float	radius2;
 
-	float	opacity;
 }	t_sphere;
 
 void	sphere_compute_constants(
@@ -90,11 +89,6 @@ typedef struct s_object
 
 	struct s_object	*next;
 }	t_object;
-
-t_color const	*obj_get_color(
-					t_object const *object);
-float			obj_get_opacity(
-					t_object const *object);
 
 //---- LIGHT -----------------------------------------------------------------//
 
