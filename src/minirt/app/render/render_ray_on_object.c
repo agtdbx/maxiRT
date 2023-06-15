@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/15 13:22:59 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/15 17:09:04 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,9 @@
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/color/color.h"
 
-static void	_compute_normal_ray_on_sphere(
-				t_sphere const *sphere,
-				t_ray const *ray,
-				float distance,
-				t_ray *normal);
-
-
 int32_t	render_ray_on_object(
 			t_scene const *scene,
-			t_object const	*intersected_object,
+			t_object const *intersected_object,
 			t_ray const *ray,
 			float distance)
 {
@@ -35,10 +28,7 @@ int32_t	render_ray_on_object(
 	// t_color	refracted_color;
 	t_color	color;
 
-	if (intersected_object->type == OBJ_SPHERE)
-		_compute_normal_ray_on_sphere(&intersected_object->value.as_sphere, ray, distance, &normal);
-	else
-		return (g_color_black);
+	compute_normal_ray(intersected_object, ray, distance, &normal);
 	//TODO normal mapping here
 	compute_illumination(scene, ray, &normal, &illumination);
 	// compute_refracted_color(scene, ray, &normal, &refracted_color);
@@ -49,16 +39,4 @@ int32_t	render_ray_on_object(
 	color.g *= intersected_object->color.g / 255.0f;
 	color.b *= intersected_object->color.b / 255.0f;
 	return (color_to_int(&color));
-}
-
-static void	_compute_normal_ray_on_sphere(
-				t_sphere const *sphere,
-				t_ray const *ray,
-				float distance,
-				t_ray *normal)
-{
-	normal->pos = ray->pos;
-	vec3_linear_transform(&normal->pos, distance, &ray->vec);
-	vec3_substract_into(&normal->vec, &normal->pos, &sphere->pos);
-	vec3_normalize(&normal->vec);
 }
