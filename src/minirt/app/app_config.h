@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/15 13:24:15 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:19:54 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static const int32_t	g_menu_divider_2_y = 280;
 
 //---- REFLECTION_CONSTANTS --------------------------------------------------//
 
-static const float		g_ambient_light_ratio = 0.1f;
+static const float		g_ambient_light_ratio = 0.2f;
 static const float		g_diffuse_light_ratio = 0.5f;
 static const float		g_specular_light_ratio = 0.3f;
 static const float		g_phong_exponent = 42.0f;
@@ -46,6 +46,7 @@ static const float		g_scene_radius = 1000.0f;
 static const float		g_sphere_default_opacity = 0.5f;
 static const float		g_sphere_default_reflection = 0.0f;
 static const float		g_sphere_default_refraction = 0.0f;
+static const float		g_sphere_default_density = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 
