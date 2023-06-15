@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_illumination.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:36:00 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/15 13:12:54 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	_collect_objects_shades(
 /**
  * Compute illumination of point normal->pos
  * according to PHONG illumination model.
- * 
+ *
  * I(llumination) = Iambient + Sum( (Idiffuse + Ispecular) * brightness)
  *
  * @param[in] scene
@@ -55,7 +55,7 @@ void	compute_illumination(
 	model.normal = normal;
 	model.from_camera = ray;
 	model.spotlight = scene->spotlights;
-	ambient_illumination = 
+	ambient_illumination =
 		scene->ambient_lightning->brightness * g_ambient_light_ratio;
 	illumination->r = scene->ambient_lightning->color.r * ambient_illumination;
 	illumination->g = scene->ambient_lightning->color.g * ambient_illumination;
@@ -65,11 +65,11 @@ void	compute_illumination(
 		illumination_from_spotlight = (t_color){0.0f, 0.0f, 0.0f};
 		_collect_illumination_from_spotlight(
 				scene->objects, &model, &illumination_from_spotlight);
-		illumination->r += 
+		illumination->r +=
 			illumination_from_spotlight.r * model.spotlight->color.r;
-		illumination->g += 
+		illumination->g +=
 			illumination_from_spotlight.g * model.spotlight->color.g;
-		illumination->b += 
+		illumination->b +=
 			illumination_from_spotlight.b * model.spotlight->color.b;
 		model.spotlight = model.spotlight->next;
 	}
@@ -78,7 +78,7 @@ void	compute_illumination(
 /**
  * compute_illumination from a single spotlight
  *
- * C: camera 
+ * C: camera
  * L: light source
  * T: tangent plane
  * N: normal vector
@@ -95,7 +95,7 @@ void	compute_illumination(
  *
  * I(llumination) = Idiffuse + Ispecular
  *
- * OS = 2 * (ON.OL) * ON - OL 
+ * OS = 2 * (ON.OL) * ON - OL
  *
  * Idiffuse  = ON.OL
  * Ispecular = OS.OC
@@ -143,9 +143,7 @@ static void	_collect_objects_shades(
 				t_ray const *ray_to_spotlight,
 				t_color *illumination)
 {
-	float			distance_to_object;
-	t_color const	*obj_color;
-	float			obj_opacity;
+	float	distance_to_object;
 
 	while (objects != NULL)
 	{
@@ -153,17 +151,15 @@ static void	_collect_objects_shades(
 				ray_to_spotlight, objects, &distance_to_object)
 			&& (distance_to_object < dist_to_spotlight))
 		{
-			obj_color = obj_get_color(objects);
-			obj_opacity = obj_get_opacity(objects);
 			illumination->r -= powf(
-					obj_opacity, 1 + obj_color->r * g_opacity_color_ratio);
+					objects->opacity, 1 + objects->color.r * g_opacity_color_ratio);
 			illumination->g -= powf(
-					obj_opacity, 1 + obj_color->g * g_opacity_color_ratio);
+					objects->opacity, 1 + objects->color.g * g_opacity_color_ratio);
 			illumination->b -= powf(
-					obj_opacity, 1 + obj_color->b * g_opacity_color_ratio);
+					objects->opacity, 1 + objects->color.b * g_opacity_color_ratio);
 		}
 		if (illumination->r == 0.0f
-				&& illumination->g == 0.0f 
+				&& illumination->g == 0.0f
 				&& illumination->b == 0.0f)
 			return ;
 		objects = objects->next;

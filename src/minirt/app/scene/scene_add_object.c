@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_add_object.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 23:28:29 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:12:06 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/15 12:55:08 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,16 @@ static void	_object_add_back(
 
 t_error	scene_add_object(
 			t_scene *scene,
-			t_object_t type,
-			void const *value)
+			t_object *obj)
 {
 	t_object	*new_object;
 
-	new_object = malloc(sizeof(t_object));
+	new_object = ft_memdup(obj, sizeof(t_object));
 	if (new_object == NULL)
 	{
 		perror("Error\nFatal");
 		return (FAILURE);
 	}
-	new_object->type = type;
-	new_object->value = *((t_object_v *)value);
 	new_object->next = NULL;
 	_object_add_back(&scene->objects, new_object);
 	return (SUCCESS);

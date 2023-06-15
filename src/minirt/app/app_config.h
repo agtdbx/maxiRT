@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app_config.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:47:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/15 13:02:47 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ static const float		g_opacity_color_ratio = 42.0f / 255.0f;
 //---- scene -----------------------------------------------------------------//
 
 static const float		g_scene_radius = 1000.0f;
+
+// sphere
 static const float		g_sphere_default_opacity = 0.5f;
+static const float		g_sphere_default_reflection = 0.0f;
+static const float		g_sphere_default_refraction = 0.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 

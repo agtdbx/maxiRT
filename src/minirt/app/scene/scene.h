@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:22:52 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/15 13:04:16 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@
 typedef struct s_sphere
 {
 	t_vec3	pos;
-	t_color	color;
 	float	diameter;
 
 	float	radius;
 	float	radius2;
 
-	float	opacity;
 }	t_sphere;
 
 void	sphere_compute_constants(
@@ -42,7 +40,6 @@ void	sphere_compute_constants(
 typedef struct s_plane
 {
 	t_vec3	pos;
-	t_color	color;
 	t_vec3	normal;
 
 	t_vec3	rev_normal;
@@ -54,7 +51,6 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	t_vec3	pos;
-	t_color	color;
 	float	radius;
 	float	height;
 	t_vec3	axis;
@@ -85,6 +81,12 @@ typedef struct s_object
 {
 	t_object_t		type;
 	t_object_v		value;
+
+	t_color			color;
+
+	float			opacity;
+	float			reflection;
+	float			refraction;
 
 	struct s_object	*next;
 }	t_object;
@@ -134,8 +136,7 @@ typedef struct s_scene
 
 t_error		scene_add_object(
 				t_scene *scene,
-				t_object_t type,
-				void const *value);
+				t_object *obj);
 
 void		scene_del(
 				t_scene *scene);
