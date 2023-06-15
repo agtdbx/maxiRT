@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sphere.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 17:33:14 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/15 13:23:24 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@
 t_error	parse_sphere(
 			t_parser_state *state)
 {
-	t_object	sphere;
-	t_sphere	*const geometry = &sphere.value.as_sphere;
+	t_object	obj;
+	t_sphere	*const sphere = &obj.value.as_sphere;
 
-	ft_bzero(&sphere, sizeof(sphere));
-	if (parse_field(state, &g_position, &geometry->pos) == FAILURE
-		|| parse_field(state, &g_diameter, &geometry->diameter) == FAILURE
-		|| parse_field(state, &g_color, &sphere.color) == FAILURE)
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE
+		|| parse_field(state, &g_color, &obj.color) == FAILURE)
 		return (FAILURE);
-	sphere.type = OBJ_SPHERE;
-	sphere.opacity = g_sphere_default_opacity;
-	sphere.refraction_ratio = g_sphere_default_refraction_ratio;
-	sphere.reflection_ratio = g_sphere_default_reflection_ratio;
-	return (scene_add_object(state->scene, &sphere));
+	obj.opacity = g_sphere_default_opacity;
+	obj.reflection = g_sphere_default_reflection;
+	obj.refraction = g_sphere_default_refraction;
+	return (scene_add_object(state->scene, &obj));
 }

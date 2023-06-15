@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 17:45:58 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/15 13:23:28 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int32_t			render_ray_on_object(
 					t_object const *intersected_object,
 					t_ray const *ray,
 					float distance);
-int32_t			render_ray_on_sphere(
+int32_t			render_ray(
 					t_scene const *scene,
-					t_sphere const *sphere,
+					t_object const *obj,
 					t_ray const *ray,
 					float distance);
 

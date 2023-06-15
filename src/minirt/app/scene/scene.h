@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/14 16:47:06 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/15 13:23:16 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ typedef struct s_object
 	t_object_v		value;
 
 	t_color			color;
-	float			refraction_ratio;
-	float			reflection_ratio;
+
 	float			opacity;
+	float			reflection;
+	float			refraction;
 
 	struct s_object	*next;
 }	t_object;
@@ -130,7 +131,7 @@ typedef struct s_scene
 
 t_error		scene_add_object(
 				t_scene *scene,
-				t_object const *object);
+				t_object *obj);
 
 void		scene_del(
 				t_scene *scene);
