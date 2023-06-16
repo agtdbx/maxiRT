@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/15 18:19:03 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:45:51 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_error	parse_sphere(
 		return (FAILURE);
 	obj.opacity = g_sphere_default_opacity;
 	obj.reflection = g_sphere_default_reflection;
-	obj.refraction = g_sphere_default_refraction;
 	obj.density = g_sphere_default_density;
 	return (scene_add_object(state->scene, &obj));
 }

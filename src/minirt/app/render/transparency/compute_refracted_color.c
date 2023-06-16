@@ -6,13 +6,15 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/15 19:04:36 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:39:10 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
 
 #include <math.h>
+
+#include "minirt/app/utils/geometry/geometry.h"
 
 bool	get_refracted_ray(
 			float ni_over_nt,
@@ -26,9 +28,26 @@ t_color	reflection_outside_object(
 			t_ray const *ray,
 			t_ray const *normal);
 
+t_color	intersect_loop_without_param_obj(
+			t_object const *object,
+			t_scene const *scene,
+			t_ray const *ray);
+
 float	do_intern_intersection(
 			t_object const *object,
 			t_ray const *refracted_ray);
+
+bool	calculate_outside_ray(
+			t_object const *object,
+			t_ray *refraction_ray,
+			t_ray *inside_normal,
+			t_ray *outside_ray);
+
+static t_color	merge_color(
+					t_object const *object,
+					t_color const *illumination,
+					t_color const *refracted_color,
+					t_color const *reflected_color);
 /**
  * @param[in] scene
  * @param[in] ray
@@ -41,7 +60,6 @@ t_color	compute_refracted_color(
 			t_ray const *ray,
 			t_ray const *normal)
 {
-	t_color	refracted_color;
 	t_ray	refracted_ray;
 	t_ray	inside_normal;
 	t_ray	outside_ray;
@@ -49,7 +67,8 @@ t_color	compute_refracted_color(
 	float	density_factor;
 	float	dst;
 
-	refracted_color = (t_color){ 0 };
+	if (object->opacity == 1.0f)
+		return ((t_color){ 0 });
 	density_factor = 1.0f / object->density;
 	if (get_refracted_ray(density_factor, ray, normal, &refracted_ray) == false)
 	{
@@ -62,8 +81,10 @@ t_color	compute_refracted_color(
 	// On recupere la distance a laquelle se trouve la sortie de l'objet
 	dst = do_intern_intersection(object, &refracted_ray);
 	// Si l'intersection fail, on part parce que c'est pas normal
+
+	// TODO dst est parfois nan et tous le negatif
 	if (dst < 0.0f)
-		return (refracted_color);
+		return ((t_color){ 0 });
 
 	// On calcule la nouvelle normale
 	compute_normal_ray(object, &refracted_ray, dst, &inside_normal);
@@ -72,19 +93,16 @@ t_color	compute_refracted_color(
 
 	// techniquement c'est 'object->density / 1.0f' mais bon ^^
 	density_factor = object->density;
-	if (get_refracted_ray(density_factor, &refracted_ray, &inside_normal, &outside_ray) == false)
+	if (get_refracted_ray(density_factor, &refracted_ray, &inside_normal, &outside_ray) == false
+		&& calculate_outside_ray(object, &refracted_ray, &inside_normal, &outside_ray))
 	{
-		//TODO reflet interne aux objets
-		return (refracted_color);
+		return ((t_color){ 0 });
 	}
 	// On calcule le point de depart du rayon sortant de l'objet
 	outside_ray.pos = inside_normal.pos;
 
-	//TODO boucle d'intersection pour determine l'objet de plus proche
-	//     autre que l'objet de la refraction, puis renvoyer la couleur
-	//     pour la couleurm faut prendre en compte l'illuminations, la texture, les reflets / transparence...
-
-	return (refracted_color);
+	//TODO pour la couleur, prendre en compte l'illuminations, la texture, les reflets / transparence...
+	return (intersect_loop_without_param_obj(object, scene, &outside_ray));
 }
 
 /**
@@ -134,10 +152,6 @@ t_color	reflection_outside_object(
 {
 	t_vec3			tmp;
 	t_ray			transparency_ray;
-	t_object		*obj;
-	t_object		*closest_obj;
-	float			dst;
-	float			tmp_dst;
 
 	// Set l'origin du point là où y'a l'intersection avec la sphere
 	transparency_ray.pos = normal->pos;
@@ -149,6 +163,19 @@ t_color	reflection_outside_object(
 	transparency_ray.vec = ray->vec;
 	vec3_substract(&transparency_ray.vec, &tmp);
 
+	return (intersect_loop_without_param_obj(object, scene, &transparency_ray));
+}
+
+t_color	intersect_loop_without_param_obj(
+			t_object const *object,
+			t_scene const *scene,
+			t_ray const *ray)
+{
+	t_object		*obj;
+	t_object		*closest_obj;
+	float			dst;
+	float			tmp_dst;
+
 	// Boucle d'intersection
 	dst = -1.0f;
 	closest_obj = NULL;
@@ -158,7 +185,7 @@ t_color	reflection_outside_object(
 		if (obj != object)
 		{
 			tmp_dst = -1.0f;
-			test_intersection_with_obj(&transparency_ray, obj, &tmp_dst);
+			test_intersection_with_obj(ray, obj, &tmp_dst);
 			if (tmp_dst >= 0.0f && (dst < 0.0f || tmp_dst < dst))
 			{
 				dst = tmp_dst;
@@ -171,6 +198,9 @@ t_color	reflection_outside_object(
 	// Renvois de la couleur
 	if (closest_obj == NULL)
 		return ((t_color){0});
+
+	// TODO calculer la couleur en fonction de l'éclairage, des reflets...
+
 	return (closest_obj->color);
 }
 
@@ -183,6 +213,70 @@ float	do_intern_intersection(
 
 	dst = -1.0f;
 	if (object->type == OBJ_SPHERE)
-		test_intersection_with_sphere_from_inside(refracted_ray, &object->value.as_sphere, &dst);
+	{
+		test_intersection_with_sphere_from_inside(
+			refracted_ray, &object->value.as_sphere, &dst);
+		// dst *= -1.0f;
+	}
 	return (dst);
+}
+
+static void	intern_reflect(
+				t_ray *refracted_ray,
+				t_ray const *inside_normal)
+{
+	t_vec3	tmp;
+
+	refracted_ray->pos = inside_normal->pos;
+	tmp = inside_normal->vec;
+	vec3_scale(&tmp,
+		2 * vec3_dot(&refracted_ray->vec, &inside_normal->vec));
+	vec3_substract(&refracted_ray->pos, &tmp);
+}
+
+bool	calculate_outside_ray(
+			t_object const *object,
+			t_ray *refracted_ray,
+			t_ray *inside_normal,
+			t_ray *outside_ray)
+{
+	float const	density_factor = object->density;
+	int			loop_limit;
+	float		dst;
+
+	loop_limit = 10;
+	while (loop_limit > 0)
+	{
+		intern_reflect(refracted_ray, inside_normal);
+		dst = do_intern_intersection(object, refracted_ray);
+		if (dst < 0.0f)
+			return (false);
+		compute_normal_ray(object, refracted_ray, dst, inside_normal);
+		vec3_scale(&inside_normal->vec, -1.0f);
+		if (get_refracted_ray(
+				density_factor, refracted_ray, inside_normal, outside_ray))
+			return (true);
+		loop_limit--;
+	}
+	return (false);
+}
+
+static t_color	merge_color(
+					t_object const *object,
+					t_color const *illumination,
+					t_color const *refracted_color,
+					t_color const *reflected_color)
+{
+	t_color		color;
+	float const	inv_opacity = 1.0f - object->opacity;
+	// float const	inv_reflection = 1.0f - object->reflection;
+
+	(void)reflected_color;
+	color.r = illumination->r * object->opacity
+			+ refracted_color->r * inv_opacity;
+	color.g = illumination->g * object->opacity
+			+ refracted_color->g * inv_opacity;
+	color.b = illumination->b * object->opacity
+			+ refracted_color->b * inv_opacity;
+	return (color);
 }

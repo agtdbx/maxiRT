@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/15 18:19:12 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:46:56 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_object
 
 	float			opacity;
 	float			reflection;
-	float			refraction;
 	float			density;
 
 	struct s_object	*next;
