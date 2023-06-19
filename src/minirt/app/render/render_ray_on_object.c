@@ -6,18 +6,18 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/19 15:20:55 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:49:15 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
 
 #include <stdint.h>
-#include <stdio.h>
 
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/color/color.h"
 
+#include <stdio.h>
 static t_color	merge_color(
 					t_object const *object,
 					t_color const *in_color,

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/19 15:23:58 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:39:14 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,10 @@ t_color	compute_refracted_color(
 	density_factor = object->density;
 	if (get_refracted_ray(density_factor, &refracted_ray, &inside_normal, &outside_ray) == false
 		&& calculate_outside_ray(object, &refracted_ray, &inside_normal, &outside_ray) == false)
-	{
 		return ((t_color){ 0 });
-	}
 	// On calcule le point de depart du rayon sortant de l'objet
 	outside_ray.pos = inside_normal.pos;
 	vec3_normalize(&outside_ray.vec);
-
 
 	return (intersect_loop_without_param_obj(object, scene, &outside_ray));
 }
@@ -194,10 +191,6 @@ t_color	intersect_loop_without_param_obj(
 	// Renvois de la couleur
 	if (closest_obj == NULL)
 		return ((t_color){0});
-
-	// TODO calculer la couleur en fonction de l'éclairage, des reflets...
-	// render_ray_on_object(scene, &closest_obj, ray, dst);
-
 	// return (render_ray_on_object(scene, closest_obj, ray, dst));
 
 	t_ray	normal;

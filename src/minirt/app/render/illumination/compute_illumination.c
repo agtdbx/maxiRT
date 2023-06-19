@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/15 13:23:06 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:07:47 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	compute_illumination(
 	illumination->b = scene->ambient_lightning->color.b * ambient_illumination;
 	while (model.spotlight != NULL)
 	{
-		illumination_from_spotlight = (t_color){0.0f, 0.0f, 0.0f};
+		illumination_from_spotlight = (t_color){ 0 };
 		_collect_illumination_from_spotlight(
 				scene->objects, &model, &illumination_from_spotlight);
 		illumination->r +=
@@ -127,6 +127,7 @@ static void	_collect_illumination_from_spotlight(
 	_collect_objects_shades(objects, dist_to_spotlight, &ol, illumination);
 	if (color_to_int(illumination) == g_color_black)
 		return ;
+	os = (t_vec3){ 0 };
 	vec3_linear_transform(&os, 2.0f * idiffuse, &model->normal->vec);
 	vec3_substract(&os, &ol.vec);
 	vec3_normalize(&os);
