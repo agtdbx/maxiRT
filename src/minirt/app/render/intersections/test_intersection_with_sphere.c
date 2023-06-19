@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_intersection_with_sphere.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:10:34 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/19 12:04:40 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ bool	test_intersection_with_sphere(
 		return (false);
 	nabla = sqrtf(nabla);
 	*distance = -dot - nabla;
-	if (*distance > 0)
+	if (*distance >= 0)
 		return (true);
 	*distance = -dot + nabla;
-	if (*distance > 0)
+	if (*distance >= 0)
 		return (true);
 	return (false);
 }

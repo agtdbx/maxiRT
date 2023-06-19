@@ -6,13 +6,14 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/16 15:39:10 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:11:17 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
 
 #include <math.h>
+#include <stdio.h>
 
 #include "minirt/app/utils/geometry/geometry.h"
 
@@ -33,9 +34,10 @@ t_color	intersect_loop_without_param_obj(
 			t_scene const *scene,
 			t_ray const *ray);
 
-float	do_intern_intersection(
+bool	do_intern_intersection(
 			t_object const *object,
-			t_ray const *refracted_ray);
+			t_ray const *refracted_ray,
+			float *dst);
 
 bool	calculate_outside_ray(
 			t_object const *object,
@@ -72,18 +74,15 @@ t_color	compute_refracted_color(
 	density_factor = 1.0f / object->density;
 	if (get_refracted_ray(density_factor, ray, normal, &refracted_ray) == false)
 	{
-		//TODO transparency_reflect...
+		// transparency_reflect...
 		// Normalement c'est bon ca
 		return (reflection_outside_object(object, scene, ray, normal));
 	}
 	// On init le point de depart du rayon refracte
-	refracted_ray.pos = refracted_ray.pos;
-	// On recupere la distance a laquelle se trouve la sortie de l'objet
-	dst = do_intern_intersection(object, &refracted_ray);
-	// Si l'intersection fail, on part parce que c'est pas normal
+	refracted_ray.pos = normal->pos;
 
-	// TODO dst est parfois nan et tous le negatif
-	if (dst < 0.0f)
+	// On recupere la distance a laquelle se trouve la sortie de l'objet
+	if (do_intern_intersection(object, &refracted_ray, &dst) == false)
 		return ((t_color){ 0 });
 
 	// On calcule la nouvelle normale
@@ -94,14 +93,13 @@ t_color	compute_refracted_color(
 	// techniquement c'est 'object->density / 1.0f' mais bon ^^
 	density_factor = object->density;
 	if (get_refracted_ray(density_factor, &refracted_ray, &inside_normal, &outside_ray) == false
-		&& calculate_outside_ray(object, &refracted_ray, &inside_normal, &outside_ray))
+		&& calculate_outside_ray(object, &refracted_ray, &inside_normal, &outside_ray) == false)
 	{
 		return ((t_color){ 0 });
 	}
 	// On calcule le point de depart du rayon sortant de l'objet
 	outside_ray.pos = inside_normal.pos;
 
-	//TODO pour la couleur, prendre en compte l'illuminations, la texture, les reflets / transparence...
 	return (intersect_loop_without_param_obj(object, scene, &outside_ray));
 }
 
@@ -205,20 +203,17 @@ t_color	intersect_loop_without_param_obj(
 }
 
 
-float	do_intern_intersection(
+bool	do_intern_intersection(
 			t_object const *object,
-			t_ray const *refracted_ray)
+			t_ray const *refracted_ray,
+			float *dst)
 {
-	float	dst;
-
-	dst = -1.0f;
 	if (object->type == OBJ_SPHERE)
 	{
-		test_intersection_with_sphere_from_inside(
-			refracted_ray, &object->value.as_sphere, &dst);
-		// dst *= -1.0f;
+		return (test_intersection_with_sphere_from_inside(
+			refracted_ray, &object->value.as_sphere, dst));
 	}
-	return (dst);
+	return (false);
 }
 
 static void	intern_reflect(
@@ -248,8 +243,7 @@ bool	calculate_outside_ray(
 	while (loop_limit > 0)
 	{
 		intern_reflect(refracted_ray, inside_normal);
-		dst = do_intern_intersection(object, refracted_ray);
-		if (dst < 0.0f)
+		if (do_intern_intersection(object, refracted_ray, &dst) == false)
 			return (false);
 		compute_normal_ray(object, refracted_ray, dst, inside_normal);
 		vec3_scale(&inside_normal->vec, -1.0f);

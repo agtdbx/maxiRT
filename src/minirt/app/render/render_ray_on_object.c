@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/16 15:41:29 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/19 11:48:31 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int32_t	render_ray_on_object(
 	return (color_to_int(&color));
 }
 
-#include "stdio.h"
 static t_color	merge_color(
 					t_object const *object,
 					t_color const *refracted_color,
