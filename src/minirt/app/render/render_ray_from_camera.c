@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_ray.c                                       :+:      :+:    :+:   */
+/*   render_ray_from_camera.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 08:17:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:57:29 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/19 12:16:24 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int32_t	render_ray_from_camera(
 {
 	t_object const	*intersected_object;
 	t_light const	*light;
+	t_color			pixel_color;
 	float			distance;
 
 	intersected_object = \
@@ -55,7 +56,9 @@ int32_t	render_ray_from_camera(
 		return (g_color_black);
 	distance = _apply_fish_eye_effect_correction(
 			distance, &scene->camera->direction, &ray->vec);
-	return (render_ray_on_object(scene, intersected_object, ray, distance));
+	pixel_color =
+		render_ray_on_object(scene, intersected_object, ray, distance);
+	return (color_to_int(&pixel_color));
 }
 
 static t_light const	*_fetch_closer_spotlight(

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/16 13:36:17 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:17:32 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int32_t			render_ray_from_camera(
 
 /// raytracing
 
-int32_t			render_ray_on_object(
+t_color			render_ray_on_object(
 					t_scene const *scene,
 					t_object const *intersected_object,
 					t_ray const *ray,
