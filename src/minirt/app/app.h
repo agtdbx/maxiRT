@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/19 12:17:32 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:48:39 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,11 @@ bool			test_intersection_with_sphere_from_inside(
 					t_sphere const *sphere,
 					float *distance);
 
+t_color			intersect_loop_without_param_obj(
+					t_object const *object,
+					t_scene const *scene,
+					t_ray const *ray);
+
 /// normal rays
 
 void			compute_normal_ray(
@@ -130,16 +135,21 @@ typedef struct s_phong_model
 	t_light const	*spotlight;
 }	t_phong_model;
 
-void			compute_illumination(
+t_color			compute_illumination(
 					t_scene const *scene,
+					t_object const *object,
 					t_ray const *ray,
-					t_ray const *normal,
-					t_color *illumination);
-
+					t_ray const *normal);
 
 // transparency
-
 t_color			compute_refracted_color(
+					t_object const *object,
+					t_scene const *scene,
+					t_ray const *ray,
+					t_ray const *normal);
+
+// reflection
+t_color			compute_reflected_color(
 					t_object const *object,
 					t_scene const *scene,
 					t_ray const *ray,

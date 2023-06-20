@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/20 11:36:15 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:55:32 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,24 @@
 
 #include "minirt/app/utils/geometry/geometry.h"
 
-bool	get_refracted_ray(
+static bool	get_refracted_ray(
 			float ni_over_nt,
 			t_ray const *ray,
 			t_ray const *normal,
 			t_ray *refracted_ray);
 
-t_color	reflection_outside_object(
+static t_color	reflection_outside_object(
 			t_object const *object,
 			t_scene const *scene,
 			t_ray const *ray,
 			t_ray const *normal);
 
-t_color	intersect_loop_without_param_obj(
-			t_object const *object,
-			t_scene const *scene,
-			t_ray const *ray);
-
-bool	do_intern_intersection(
+static bool	do_intern_intersection(
 			t_object const *object,
 			t_ray const *refracted_ray,
 			float *dst);
 
-bool	calculate_outside_ray(
+static bool	calculate_outside_ray(
 			t_object const *object,
 			t_ray *refraction_ray,
 			t_ray *inside_normal,
@@ -49,7 +44,6 @@ bool	calculate_outside_ray(
  * @param[in] normal
  * @param[out] color
  */
-#include <stdio.h>
 t_color	compute_refracted_color(
 			t_object const *object,
 			t_scene const *scene,
@@ -59,7 +53,6 @@ t_color	compute_refracted_color(
 	t_ray	refracted_ray;
 	t_ray	inside_normal;
 	t_ray	outside_ray;
-
 	float	density_factor;
 	float	dst;
 
@@ -67,32 +60,18 @@ t_color	compute_refracted_color(
 		return ((t_color){ 0 });
 	density_factor = 1.0f / object->density;
 	if (get_refracted_ray(density_factor, ray, normal, &refracted_ray) == false)
-	{
-		// transparency_reflect...
-		// Normalement c'est bon ca
 		return (reflection_outside_object(object, scene, ray, normal));
-	}
-	// On init le point de depart du rayon refracte
 	refracted_ray.pos = normal->pos;
-
-	// On recupere la distance a laquelle se trouve la sortie de l'objet
 	if (do_intern_intersection(object, &refracted_ray, &dst) == false)
 		return ((t_color){ 0 });
-
-	// On calcule la nouvelle normale
 	compute_normal_ray(object, &refracted_ray, dst, &inside_normal);
-	// On l'inverse pour qu'elle pointe vers le centre de l'objet
 	vec3_scale(&inside_normal.vec, -1.0f);
-
-	// techniquement c'est 'object->density / 1.0f' mais bon ^^
 	density_factor = object->density;
 	if (get_refracted_ray(density_factor, &refracted_ray, &inside_normal, &outside_ray) == false
 		&& calculate_outside_ray(object, &refracted_ray, &inside_normal, &outside_ray) == false)
 		return ((t_color){ 0 });
-	// On calcule le point de depart du rayon sortant de l'objet
 	outside_ray.pos = inside_normal.pos;
 	vec3_normalize(&outside_ray.vec);
-
 	return (intersect_loop_without_param_obj(object, scene, &outside_ray));
 }
 
@@ -103,7 +82,7 @@ t_color	compute_refracted_color(
  * @param[out] refracted_ray
  * @returns Wether ray is refracted inside the object or not.
  */
-bool	get_refracted_ray(
+static bool	get_refracted_ray(
 			float ni_over_nt,
 			t_ray const *ray,
 			t_ray const *normal,
@@ -135,7 +114,7 @@ bool	get_refracted_ray(
 
 
 // Fonction pour faire le reflet exterieur a l'objet
-t_color	reflection_outside_object(
+static t_color	reflection_outside_object(
 			t_object const *object,
 			t_scene const *scene,
 			t_ray const *ray,
@@ -144,58 +123,17 @@ t_color	reflection_outside_object(
 	t_vec3			tmp;
 	t_ray			transparency_ray;
 
-	// Set l'origin du point là où y'a l'intersection avec la sphere
 	transparency_ray.pos = normal->pos;
-
-	// Calcule de la direction du rayon reflete
 	tmp = normal->vec;
 	vec3_scale(&tmp,
 		2 * vec3_dot(&ray->vec, &normal->vec));
 	transparency_ray.vec = ray->vec;
 	vec3_substract(&transparency_ray.vec, &tmp);
-
 	vec3_normalize(&transparency_ray.vec);
-
 	return (intersect_loop_without_param_obj(object, scene, &transparency_ray));
 }
 
-t_color	intersect_loop_without_param_obj(
-			t_object const *object,
-			t_scene const *scene,
-			t_ray const *ray)
-{
-	t_object		*obj;
-	t_object		*closest_obj;
-	float			dst;
-	float			tmp_dst;
-
-	// Boucle d'intersection
-	dst = -1.0f;
-	closest_obj = NULL;
-	obj = scene->objects;
-	while (obj)
-	{
-		if (obj != object)
-		{
-			tmp_dst = -1.0f;
-			test_intersection_with_obj(ray, obj, &tmp_dst);
-			if (tmp_dst >= 0.0f && (dst < 0.0f || tmp_dst < dst))
-			{
-				dst = tmp_dst;
-				closest_obj = obj;
-			}
-		}
-		obj = obj->next;
-	}
-
-	// Renvois de la couleur
-	if (closest_obj == NULL)
-		return ((t_color){0});
-	return (render_ray_on_object(scene, closest_obj, ray, dst));
-}
-
-
-bool	do_intern_intersection(
+static bool	do_intern_intersection(
 			t_object const *object,
 			t_ray const *refracted_ray,
 			float *dst)
@@ -221,7 +159,7 @@ static void	intern_reflect(
 	vec3_substract(&refracted_ray->pos, &tmp);
 }
 
-bool	calculate_outside_ray(
+static bool	calculate_outside_ray(
 			t_object const *object,
 			t_ray *refracted_ray,
 			t_ray *inside_normal,

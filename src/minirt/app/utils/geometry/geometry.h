@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   geometry.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:48:44 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/20 15:06:11 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@ typedef struct s_vec3
 	float	y;
 	float	z;
 }	t_vec3;
-
-typedef struct s_vec2
-{
-	float	x;
-	float	y;
-}	t_vec2;
 
 typedef struct s_ray
 {
@@ -67,10 +61,6 @@ extern void		vec3_linear_transform(
 					t_vec3 *restrict vec1,
 					float scaling_factor,
 					t_vec3 const *restrict vec2);
-
-extern t_vec2	vec2(
-					float x,
-					float y);
 
 extern t_vec3	vec3(
 					float x,
