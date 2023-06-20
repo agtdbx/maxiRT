@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/19 16:07:47 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:34:57 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ static void	_collect_illumination_from_spotlight(
 	*illumination = (t_color){1.0f, 1.0f, 1.0f};
 	ol.pos = model->normal->pos;
 	_collect_objects_shades(objects, dist_to_spotlight, &ol, illumination);
-	if (color_to_int(illumination) == g_color_black)
+	if (illumination->r == 0.0f && illumination->g == 0.0f
+		&& illumination->b == 0.0f)
 		return ;
 	os = (t_vec3){ 0 };
 	vec3_linear_transform(&os, 2.0f * idiffuse, &model->normal->vec);
@@ -134,7 +135,6 @@ static void	_collect_illumination_from_spotlight(
 	idiffuse *= g_diffuse_light_ratio;
 	ispecular = fmaxf(0.0f, -vec3_dot(&os, &model->from_camera->vec));
 	ispecular = powf(ispecular, g_phong_exponent) * g_specular_light_ratio;
-	DEBUG("%f %f", idiffuse, ispecular);
 	color_scale(
 		illumination, (idiffuse + ispecular) * model->spotlight->brightness);
 }

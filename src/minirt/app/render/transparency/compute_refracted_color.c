@@ -6,14 +6,13 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/19 15:39:14 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:36:15 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
 
 #include <math.h>
-#include <stdio.h>
 
 #include "minirt/app/utils/geometry/geometry.h"
 
@@ -50,6 +49,7 @@ bool	calculate_outside_ray(
  * @param[in] normal
  * @param[out] color
  */
+#include <stdio.h>
 t_color	compute_refracted_color(
 			t_object const *object,
 			t_scene const *scene,
@@ -191,19 +191,7 @@ t_color	intersect_loop_without_param_obj(
 	// Renvois de la couleur
 	if (closest_obj == NULL)
 		return ((t_color){0});
-	// return (render_ray_on_object(scene, closest_obj, ray, dst));
-
-	t_ray	normal;
-	t_color	illumination;
-	t_color	color = closest_obj->color;
-
-	compute_normal_ray(closest_obj, ray, dst, &normal);
-	compute_illumination(scene, ray, &normal, &illumination);
-
-	color.r *= illumination.r / 255.0f;
-	color.g *= illumination.g / 255.0f;
-	color.b *= illumination.b / 255.0f;
-	return (color);
+	return (render_ray_on_object(scene, closest_obj, ray, dst));
 }
 
 
