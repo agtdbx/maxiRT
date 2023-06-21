@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 18:10:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/21 20:03:31 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,10 @@ bool			test_intersection_with_sphere(
 bool			test_intersection_with_sphere_from_inside(
 					t_ray const *ray,
 					t_sphere const *sphere,
+					float *distance);
+bool			test_intersection_with_plane(
+					t_ray const *ray,
+					t_plane const *plane,
 					float *distance);
 
 t_color			intersect_loop_without_param_obj(

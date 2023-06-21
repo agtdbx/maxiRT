@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 16:21:08 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:55:40 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ typedef struct s_plane
 	t_vec3	rev_normal;
 
 }	t_plane;
+
+void	plane_compute_constants(
+			t_plane *plane);
 
 //---- CYLINDER --------------------------------------------------------------//
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:45:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:50:32 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ static const t_directive	g_directives[] = {
 	.identifier = "sp",
 	.usage = "sp <position> <diameter> <color>",
 	.callback = parse_sphere,
+},
+{
+	.identifier = "pl",
+	.usage = "sp <position> <orientation vector> <color>",
+	.callback = parse_plane,
 },
 };
 
