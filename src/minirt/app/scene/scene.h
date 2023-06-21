@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/16 13:46:56 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:21:08 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ typedef struct s_cylinder
 
 }	t_cylinder;
 
+//---- COLOR INTERFACE -------------------------------------------------------//
+
+typedef enum e_color_t
+{
+	C_COLOR,
+	C_CHECKBOARD,
+	C_TEXTURE,
+}	t_color_t;
+
 //---- OBJECT INTERFACE ------------------------------------------------------//
 
 typedef enum e_object_t
@@ -82,7 +91,10 @@ typedef struct s_object
 	t_object_t		type;
 	t_object_v		value;
 
+	t_color_t		color_type;
 	t_color			color;
+	mlx_texture_t	*texture;
+	mlx_texture_t	*normal_map;
 
 	float			opacity;
 	float			reflection;

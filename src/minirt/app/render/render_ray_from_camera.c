@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 08:17:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/19 12:16:24 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:14:03 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ static int32_t			_render_ray_on_spotlight(
 							t_light const *light,
 							t_ray const *ray,
 							float distance);
-static float			_apply_fish_eye_effect_correction(
-							float initial_distance,
-							t_vec3 const *camera_direction,
-							t_vec3 const *ray_direction);
 
 int32_t	render_ray_from_camera(
 			t_scene const *scene,
@@ -54,8 +50,6 @@ int32_t	render_ray_from_camera(
 	}
 	if (intersected_object == NULL)
 		return (g_color_black);
-	distance = _apply_fish_eye_effect_correction(
-			distance, &scene->camera->direction, &ray->vec);
 	pixel_color =
 		render_ray_on_object(scene, intersected_object, ray, distance);
 	return (color_to_int(&pixel_color));
@@ -109,15 +103,4 @@ static int32_t	_render_ray_on_spotlight(
 	color.g = light->color.g * light->brightness;
 	color.b = light->color.b * light->brightness;
 	return (color_to_int(&color));
-}
-
-static inline float	_apply_fish_eye_effect_correction(
-						float initial_distance,
-						t_vec3 const *camera_direction,
-						t_vec3 const *ray_direction)
-{
-	return (0.0f
-		+ camera_direction->x * ray_direction->x * initial_distance
-		+ camera_direction->y * ray_direction->y * initial_distance
-		+ camera_direction->z * ray_direction->z * initial_distance);
 }
