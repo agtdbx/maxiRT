@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/20 19:33:02 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 11:44:05 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,18 @@
 
 #include "minirt/debug/debug.h"//TODO debug
 
-static void	_collect_illumination_from_spotlight(
+static void		_collect_illumination_from_spotlight(
 					t_object const *objects,
 					t_object const *object,
 					t_phong_model const *model,
-					t_color *illumination);
+					t_color *illumination,
+				t_color const *base_color);
 static t_color	_collect_objects_shades(
 				t_object const *objects,
 				t_object const *object,
 				float dist_to_spotlight,
-				t_ray const *ray_to_spotlight);
+				t_ray const *ray_to_spotlight,
+				t_color const *base_color);
 
 /**
  * Compute illumination of point normal->pos
@@ -47,7 +49,8 @@ t_color	compute_illumination(
 			t_scene const *scene,
 			t_object const *object,
 			t_ray const *ray,
-			t_ray const *normal)
+			t_ray const *normal,
+			t_color const *base_color)
 {
 	float			ambient_illumination;
 	t_color			illumination_from_spotlight;
@@ -66,7 +69,7 @@ t_color	compute_illumination(
 	{
 		illumination_from_spotlight = (t_color){ 0 };
 		_collect_illumination_from_spotlight(
-				scene->objects, object, &model, &illumination_from_spotlight);
+				scene->objects, object, &model, &illumination_from_spotlight, base_color);
 		illumination.r +=
 			illumination_from_spotlight.r * model.spotlight->color.r;
 		illumination.g +=
@@ -113,7 +116,8 @@ static void	_collect_illumination_from_spotlight(
 					t_object const *objects,
 					t_object const *object,
 					t_phong_model const *model,
-					t_color *illumination)
+					t_color *illumination,
+					t_color const *base_color)
 {
 	float			dist_to_spotlight;
 	t_ray			ol;
@@ -128,7 +132,7 @@ static void	_collect_illumination_from_spotlight(
 		return ;
 	ol.pos = model->normal->pos;
 	*illumination = _collect_objects_shades(objects, object,
-		dist_to_spotlight, &ol);
+		dist_to_spotlight, &ol, base_color);
 	if (illumination->r <= 0.0f && illumination->g <= 0.0f
 		&& illumination->b <= 0.0f)
 	{
@@ -151,7 +155,8 @@ static t_color	_collect_objects_shades(
 				t_object const *objects,
 				t_object const *object,
 				float dist_to_spotlight,
-				t_ray const *ray_to_spotlight)
+				t_ray const *ray_to_spotlight,
+				t_color const *base_color)
 {
 	float	distance_to_object;
 	t_color illumination;
@@ -165,11 +170,11 @@ static t_color	_collect_objects_shades(
 			&& (distance_to_object < dist_to_spotlight))
 		{
 			illumination.r -= powf(objects->opacity,
-					1 + objects->color.r * g_opacity_color_ratio);
+					1 + base_color->r * g_opacity_color_ratio);
 			illumination.g -= powf(objects->opacity,
-					1 + objects->color.g * g_opacity_color_ratio);
+					1 + base_color->g * g_opacity_color_ratio);
 			illumination.b -= powf(objects->opacity,
-					1 + objects->color.b * g_opacity_color_ratio);
+					1 + base_color->b * g_opacity_color_ratio);
 		}
 		if (illumination.r <= 0.0f
 				&& illumination.g <= 0.0f

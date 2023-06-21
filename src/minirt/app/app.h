@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/20 19:48:39 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:12:01 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,8 @@ t_color			compute_illumination(
 					t_scene const *scene,
 					t_object const *object,
 					t_ray const *ray,
-					t_ray const *normal);
+					t_ray const *normal,
+					t_color const *base_color);
 
 // transparency
 t_color			compute_refracted_color(
@@ -154,5 +155,17 @@ t_color			compute_reflected_color(
 					t_scene const *scene,
 					t_ray const *ray,
 					t_ray const *normal);
+
+// mapping
+t_vec2			get_object_pixel_pos(
+					t_object const *intersected_object,
+					t_ray const *ray,
+					t_ray const *normal);
+t_color			get_base_color_object(
+					t_object const *intersected_object,
+					t_vec2 const *pixel_pos);
+t_color			apply_texture(
+					mlx_texture_t const *texture,
+					t_vec2 const *pixel_pos);
 
 #endif//APP_H

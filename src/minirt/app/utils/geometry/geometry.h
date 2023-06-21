@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/20 15:06:11 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:06:40 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 # include <stdbool.h>
 
 // model for a vector or point in space
+typedef struct s_vec2
+{
+	float	x;
+	float	y;
+}	t_vec2;
+
 typedef struct s_vec3
 {
 	float	x;

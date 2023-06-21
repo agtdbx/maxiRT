@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/20 19:54:44 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 13:04:37 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static const float		g_scene_radius = 1000.0f;
 
 // sphere
 static const float		g_sphere_default_opacity = 1.0f;
-static const float		g_sphere_default_reflection = 0.5f;
+static const float		g_sphere_default_reflection = 0.0f;
 static const float		g_sphere_default_density = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
