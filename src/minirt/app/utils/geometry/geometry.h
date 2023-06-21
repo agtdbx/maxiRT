@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 12:06:40 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:28:00 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ extern void		vec3_linear_transform(
 					t_vec3 *restrict vec1,
 					float scaling_factor,
 					t_vec3 const *restrict vec2);
+extern void		vec3_cross(
+					t_vec3 const *v1,
+					t_vec3 const *v2,
+					t_vec3 *vec_res);
 
 extern t_vec3	vec3(
 					float x,
@@ -78,5 +82,11 @@ extern bool		solve_quadratic(
 					float b,
 					float c,
 					float solutions[2]);
+
+t_vec3			mat_product(
+					t_vec3 const *mat_1,
+					t_vec3 const *mat_2,
+					t_vec3 const *mat_3,
+					t_vec3 const *lambda);
 
 #endif//GEOMETRY_H

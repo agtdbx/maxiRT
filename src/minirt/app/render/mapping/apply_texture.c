@@ -6,26 +6,23 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:08:47 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/21 16:11:16 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:29:24 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
 
 static t_color	apply_texture_not_found(t_vec2 const *pixel_pos);
-static t_color	get_pixel_color(
-					mlx_texture_t const *texture,
-					int x,
-					int y,
-					int space_between_color);
-t_color			apply_texture(
-					mlx_texture_t const *texture,
-					t_vec2 const *pixel_pos);
 static t_vec2	compute_ratio_pos_pixel(
 					mlx_texture_t const *texture,
 					t_vec2 const *pixel_pos,
 					int x[2],
 					int y[2]);
+static t_color	get_pixel_color(
+					mlx_texture_t const *texture,
+					int x,
+					int y,
+					int space_between_color);
 static t_color	merge_color_with_ratio(
 					t_vec2 const *ratio,
 					t_color color[4]);
@@ -66,22 +63,6 @@ static t_color	apply_texture_not_found(t_vec2 const *pixel_pos)
 	return (res);
 }
 
-static t_color	get_pixel_color(
-					mlx_texture_t const *texture,
-					int x,
-					int y,
-					int space_between_color)
-{
-	t_color	color;
-	int		pixel_index;
-
-	pixel_index = texture->width * y + x;
-	color.r = texture->pixels[pixel_index * texture->bytes_per_pixel];
-	color.g = texture->pixels[pixel_index * texture->bytes_per_pixel + space_between_color];
-	color.b = texture->pixels[pixel_index * texture->bytes_per_pixel + (space_between_color * 2)];
-	return (color);
-}
-
 /**
  * Calculate the pixel position and ratio for the interpolation of the texture
  *
@@ -114,22 +95,38 @@ static t_vec2	compute_ratio_pos_pixel(
 	return (ratio);
 }
 
+static t_color	get_pixel_color(
+					mlx_texture_t const *texture,
+					int x,
+					int y,
+					int space_between_color)
+{
+	t_color	color;
+	int		pixel_index;
+
+	pixel_index = texture->width * y + x;
+	color.r = texture->pixels[pixel_index * texture->bytes_per_pixel];
+	color.g = texture->pixels[pixel_index * texture->bytes_per_pixel + space_between_color];
+	color.b = texture->pixels[pixel_index * texture->bytes_per_pixel + (space_between_color * 2)];
+	return (color);
+}
+
 static t_color	merge_color_with_ratio(
 					t_vec2 const *ratio,
-					t_color color[4])
+					t_color colors[4])
 {
 	t_vec2	inv_ratio;
 
 	inv_ratio.x = 1.0f - ratio->x;
 	inv_ratio.y = 1.0f - ratio->y;
-	color[0].r = color[0].r * inv_ratio.x + color[1].r * ratio->x;
-	color[0].g = color[0].g * inv_ratio.x + color[1].g * ratio->x;
-	color[0].b = color[0].b * inv_ratio.x + color[1].b * ratio->x;
-	color[1].r = color[2].r * inv_ratio.x + color[3].r * ratio->x;
-	color[1].g = color[2].g * inv_ratio.x + color[3].g * ratio->x;
-	color[1].b = color[2].b * inv_ratio.x + color[3].b * ratio->x;
-	color[0].r = color[0].r * inv_ratio.y + color[1].r * ratio->y;
-	color[0].g = color[0].g * inv_ratio.y + color[1].g * ratio->y;
-	color[0].b = color[0].b * inv_ratio.y + color[1].b * ratio->y;
-	return (color[0]);
+	colors[0].r = colors[0].r * inv_ratio.x + colors[1].r * ratio->x;
+	colors[0].g = colors[0].g * inv_ratio.x + colors[1].g * ratio->x;
+	colors[0].b = colors[0].b * inv_ratio.x + colors[1].b * ratio->x;
+	colors[1].r = colors[2].r * inv_ratio.x + colors[3].r * ratio->x;
+	colors[1].g = colors[2].g * inv_ratio.x + colors[3].g * ratio->x;
+	colors[1].b = colors[2].b * inv_ratio.x + colors[3].b * ratio->x;
+	colors[0].r = colors[0].r * inv_ratio.y + colors[1].r * ratio->y;
+	colors[0].g = colors[0].g * inv_ratio.y + colors[1].g * ratio->y;
+	colors[0].b = colors[0].b * inv_ratio.y + colors[1].b * ratio->y;
+	return (colors[0]);
 }

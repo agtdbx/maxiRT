@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 13:59:29 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:29:23 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ t_color	render_ray_on_object(
 
 	compute_normal_ray(intersected_object, ray, distance, &normal);
 	pixel_pos = get_object_pixel_pos(intersected_object, ray, &normal);
-	//TODO normal mapping here
+	compute_normal_map(intersected_object, &pixel_pos, &normal);
 	color = compute_object_without_effect_color(
 			intersected_object, scene, ray, &normal, &pixel_pos);
 	refracted_color = compute_refracted_color(
 			intersected_object, scene, ray, &normal);
 	reflected_color = compute_reflected_color(
 			intersected_object, scene, ray, &normal);
-
 	color = merge_color(intersected_object, &color,
 				&refracted_color, &reflected_color);
 	return (color);
@@ -68,15 +67,12 @@ static t_color	compute_object_without_effect_color(
 	t_color	base_color;
 	t_color	color;
 
-	// On récupère la couleur de l'objet
 	base_color = get_base_color_object(intersected_object, pixel_pos);
-	// On récupère l'illumination de l'objet
 	illumination = compute_illumination(
 			scene, intersected_object, ray, normal, &base_color);
 	if (illumination.r == 0.0f && illumination.g == 0.0f
 		&& illumination.g == 0.0f)
 		return (illumination);
-	// On applique l'illumination à la couleur
 	color.r = base_color.r * (illumination.r / 255.0f);
 	color.g = base_color.g * (illumination.g / 255.0f);
 	color.b = base_color.b * (illumination.b / 255.0f);

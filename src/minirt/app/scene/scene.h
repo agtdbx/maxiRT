@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 11:46:57 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:21:08 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_object
 	t_color_t		color_type;
 	t_color			color;
 	mlx_texture_t	*texture;
+	mlx_texture_t	*normal_map;
 
 	float			opacity;
 	float			reflection;

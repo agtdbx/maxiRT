@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 16:12:01 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 16:40:48 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,12 @@ t_color			get_base_color_object(
 t_color			apply_texture(
 					mlx_texture_t const *texture,
 					t_vec2 const *pixel_pos);
-
+void			compute_normal_map(
+					t_object const *intersected_object,
+					t_vec2 const *pixel_pos,
+					t_ray *normal);
+void			apply_normal_map(
+					mlx_texture_t const *normal_map,
+					t_vec2 const *pixel_pos,
+					t_ray *normal);
 #endif//APP_H

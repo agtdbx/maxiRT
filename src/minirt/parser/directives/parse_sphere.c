@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 15:57:05 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/21 17:29:50 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ t_error	parse_sphere(
 		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE
 		|| parse_field(state, &g_color, &obj.color) == FAILURE)
 		return (FAILURE);
-	// obj.texture = NULL;
-	obj.texture = mlx_load_png("imgs/gravel_texture.png");
-	// obj.color_type = C_COLOR;
-	obj.color_type = C_TEXTURE;
+	obj.texture = NULL;
+	// obj.texture = mlx_load_png("imgs/gravel_texture.png");
+	obj.color_type = C_COLOR;
+	obj.normal_map = NULL;
+	// obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
 	obj.opacity = g_sphere_default_opacity;
 	obj.reflection = g_sphere_default_reflection;
 	obj.density = g_sphere_default_density;
