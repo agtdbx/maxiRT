@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 08:25:41 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 16:01:28 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/20 16:41:06 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ bool	handle_mouse_clicks(
 	if (menu->background->instances->x < pix[0])
 		return (true);
 	DEBUG_ON(); //TODO for debugging
-	(void)render_one_pixel(
-			scene, canvas, canvas->width * pix[1] + pix[0], true);
+	(void)render_one_pixel(scene, canvas, pix, true);
 	DEBUG_OFF();
 	return (false);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray_from_camera.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 08:17:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 15:14:03 by aderouba         ###   ########.fr       */
+/*   Created: 2023/06/21 18:09:28 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/21 18:09:41 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ static int32_t			_render_ray_on_spotlight(
 							t_ray const *ray,
 							float distance);
 
+/**
+ * @param[in] scene
+ * @param[in] ray Normalized ray from camera
+ * @param[in] show_spotlights Wether to render spotlight as disks.
+ * @return color The resulting color
+ */
 int32_t	render_ray_from_camera(
 			t_scene const *scene,
 			t_ray const *ray,

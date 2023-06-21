@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 00:25:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 16:40:48 by aderouba         ###   ########.fr       */
+/*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/21 18:10:04 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ bool			handle_mouse_clicks(
 void			render_canvas(
 					t_app *app,
 					bool should_render);
-void			render_one_pixel(
-					t_scene const *scene,
-					t_canvas const *canvas,
-					int32_t pixel_index,
-					bool show_spotlights);
+void			render_fast_on_front_canvas(
+					t_app *app,
+					int32_t ppr);
+int32_t			render_next_pixels_til_tmax_on_back_canvas(
+					t_app *app,
+					int32_t pixel_rendered);
 int32_t			render_ray_from_camera(
 					t_scene const *scene,
 					t_ray const *ray,

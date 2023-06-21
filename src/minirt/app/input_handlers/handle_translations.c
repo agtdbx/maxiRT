@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:51:14 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/21 16:10:40 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,15 @@ static inline bool	_update_camera_position_x(
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_D))
 		{
-			_safe_assign_pos(&position->x, position->x + o_x->x * speed);
-			_safe_assign_pos(&position->z, position->z + o_x->z * speed);
+			_safe_assign_pos(&position->x, position->x - o_x->x * speed);
+			_safe_assign_pos(&position->z, position->z - o_x->z * speed);
 			return (true);
 		}
 	}
 	else if (mlx_is_key_down(mlx, MLX_KEY_D))
 	{
-		_safe_assign_pos(&position->x, position->x - o_x->x * speed);
-		_safe_assign_pos(&position->z, position->z - o_x->z * speed);
+		_safe_assign_pos(&position->x, position->x + o_x->x * speed);
+		_safe_assign_pos(&position->z, position->z + o_x->z * speed);
 		return (true);
 	}
 	return (false);
@@ -108,13 +108,13 @@ static inline bool	_update_camera_position_y(
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_LEFT_SHIFT))
 		{
-			_safe_assign_pos(&position->y, position->y - speed);
+			_safe_assign_pos(&position->y, position->y + speed);
 			return (true);
 		}
 	}
 	else if (mlx_is_key_down(mlx, MLX_KEY_LEFT_SHIFT))
 	{
-		_safe_assign_pos(&position->y, position->y + speed);
+		_safe_assign_pos(&position->y, position->y - speed);
 		return (true);
 	}
 	return (false);

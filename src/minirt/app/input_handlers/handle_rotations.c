@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:39:00 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/21 16:11:03 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ static inline bool	_rotate_around_ox(
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_DOWN))
 		{
-			_relative_rotate(direction, o_x, rads);
+			_relative_rotate(direction, o_x, -rads);
 			return (true);
 		}
 	}
 	else if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
 	{
-		_relative_rotate(direction, o_x, -rads);
+		_relative_rotate(direction, o_x, +rads);
 		return (true);
 	}
 	return (false);
@@ -92,13 +92,13 @@ static inline bool	_rotate_around_oy(
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 		{
-			_absolute_rotate_around_oy(direction, rads);
+			_absolute_rotate_around_oy(direction, -rads);
 			return (true);
 		}
 	}
 	else if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 	{
-		_absolute_rotate_around_oy(direction, -rads);
+		_absolute_rotate_around_oy(direction, rads);
 		return (true);
 	}
 	return (false);

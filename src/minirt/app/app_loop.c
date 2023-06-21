@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:51:09 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:38:37 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static inline bool	_handle_user_inputs(
 static inline void	_limit_delta_time(
 						mlx_t *mlx)
 {
-	mlx->delta_time = fmin(mlx->delta_time, 0.25);
+	mlx->delta_time = fmin(mlx->delta_time, 0.5);
 }
 
 /**

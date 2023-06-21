@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 13:50:20 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:17:13 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,45 +26,42 @@ static void	_print_rendering_progress(
 				mlx_t *mlx,
 				bool is_rendering,
 				int32_t	pixel_rendered);
-static void	_get_top_left_ray(
-				t_canvas const *canvas,
-				t_camera const *camera,
-				t_vec3 *top_left_vec);
-static void	_fast_render(
-				mlx_t *mlx,
-				t_canvas const *canvas,
-				t_scene const *scene,
-				bool show_spotlights);
+static void	_update_ppr(
+				double delta_time,
+				int32_t *ppr);
+static bool	_is_under_10_fps(
+				double delta_time);
+static bool	_is_over_25_fps(
+				double delta_time);
 
 void	render_canvas(
 			t_app *app,
-			bool should_render)
+			bool should_render_fast)
 {
-	static bool		is_rendering = true;
 	static int32_t	pixel_rendered = 0;
-	double			tmax;
+	static int32_t	pixel_per_ray = 16;
+	static bool		is_rendering = false;
 
-	if (should_render)
+	if (should_render_fast)
 	{
+		if (is_rendering)
+			_update_ppr(app->mlx->delta_time, &pixel_per_ray);
+		render_fast_on_front_canvas(app, pixel_per_ray);
 		is_rendering = true;
 		pixel_rendered = 0;
-		_fast_render(app->mlx, &app->canvas, &app->scene, app->menu.is_visible);
 		return ;
 	}
 	_print_rendering_progress(app->mlx, is_rendering, pixel_rendered);
-	if (!is_rendering)
-		return ;
-	tmax = mlx_get_time() - app->mlx->delta_time + 0.15;
-	while (pixel_rendered < app->mlx->width * app->mlx->height)
+	if (is_rendering)
 	{
-		render_one_pixel(
-			&app->scene, &app->canvas, pixel_rendered, app->menu.is_visible);
-		++pixel_rendered;
-		if (mlx_get_time() > tmax)
-			return ;
+		pixel_rendered += render_next_pixels_til_tmax_on_back_canvas(
+				app, pixel_rendered);
+		if (pixel_rendered == app->canvas.width * app->canvas.height)
+		{
+			canvas_swap(&app->canvas);
+			is_rendering = false;
+		}
 	}
-	is_rendering = false;
-	canvas_swap(&app->canvas);
 }
 
 static void	_print_rendering_progress(
@@ -73,7 +70,7 @@ static void	_print_rendering_progress(
 				int32_t	pixel_rendered)
 {
 	static mlx_image_t	*img = NULL;
-	float				progress;
+	float				progress_rate;
 	char				str[30];
 	size_t				len;
 
@@ -84,37 +81,13 @@ static void	_print_rendering_progress(
 	}
 	if (!is_rendering)
 		return ;
-	progress = pixel_rendered;
-	progress /= mlx->width * mlx->height;
-	len = ft_sitoa(progress * 100.0f, str, sizeof(str));
+	progress_rate = pixel_rendered;
+	progress_rate *= 100.0f / (mlx->width * mlx->height);
+	len = ft_sitoa(progress_rate, str, sizeof(str));
 	ft_strlcpy(str + len, " %", sizeof(str) - len);
 	img = mlx_put_string(mlx, str, 10, 10);
 	mlx_set_instance_depth(img->instances, 3);
 }
-
-/**
- *  Compute the direction of the ray associated with the topleft corner pixel.
- *  @param[in] mlx The mlx harness
- *  @param[in] camera The camera instance
- *  @param[out] top_left The un-normalized computed ray
- */
-static void	_get_top_left_ray(
-				t_canvas const *canvas,
-				t_camera const *camera,
-				t_vec3 *top_left_vec)
-{
-	*top_left_vec = camera->pos;
-	vec3_linear_transform(top_left_vec, canvas->width_div_2, &camera->o_x);
-	vec3_linear_transform(top_left_vec, canvas->height_div_2, &camera->o_y);
-	vec3_linear_transform(top_left_vec, camera->focal, &camera->direction);
-	vec3_substract(top_left_vec, &camera->pos);
-}
-
-#define X 0
-#define Y 1
-
-#define FPS_10 0.1
-#define FPS_25 0.04
 
 /**
  * auto update ppr according to last dt
@@ -122,43 +95,27 @@ static void	_get_top_left_ray(
  * @param[out] ppr
  */
 static inline void	_update_ppr(
-						mlx_t *mlx,
+						double delta_time,
 						int32_t *ppr)
 {
-	if (FPS_10 < mlx->delta_time)
+	if (_is_under_10_fps(delta_time) && *ppr < 25)
+	{
 		++(*ppr);
-	else if (*ppr > 1 && mlx->delta_time < FPS_25)
+	}
+	if (_is_over_25_fps(delta_time) && 1 < *ppr)
+	{
 		--(*ppr);
+	}
 }
 
-static void	_fast_render(
-				mlx_t *mlx,
-				t_canvas const *canvas,
-				t_scene const *scene,
-				bool show_spotlights)
+static bool	_is_under_10_fps(
+				double delta_time)
 {
-	static int32_t	ppr = 16;
-	t_vec3			ray[2];
-	int32_t			pix[2];
-	t_ray			casted_ray;
+	return (0.1 < delta_time);
+}
 
-	_update_ppr(mlx, &ppr);
-	_get_top_left_ray(canvas, scene->camera, &ray[Y]);
-	casted_ray.pos = scene->camera->pos;
-	pix[Y] = 0;
-	while (pix[Y] < canvas->height)
-	{
-		ray[X] = ray[Y];
-		pix[X] = 0;
-		while (pix[X] < canvas->width)
-		{
-			vec3_normalize_into(&casted_ray.vec, &ray[X]);
-			img_draw_square(canvas->front, pix, ppr,
-				render_ray_from_camera(scene, &casted_ray, show_spotlights));
-			vec3_linear_transform(&ray[X], -ppr, &scene->camera->o_x);
-			pix[X] += ppr;
-		}
-		vec3_linear_transform(&ray[Y], -ppr, &scene->camera->o_y);
-		pix[Y] += ppr;
-	}
+static bool	_is_over_25_fps(
+				double delta_time)
+{
+	return (delta_time < 0.04);
 }
