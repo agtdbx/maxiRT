@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 20:33:55 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:32:25 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_color	render_ray_on_object(
 
 	compute_normal_ray(intersected_object, ray, distance, &normal);
 	pixel_pos = get_object_pixel_pos(intersected_object, ray, &normal);
-	// TODO Marche pas pour plan
 	compute_normal_map(intersected_object, &pixel_pos, &normal);
 	color = compute_object_without_effect_color(
 			intersected_object, scene, ray, &normal, &pixel_pos);

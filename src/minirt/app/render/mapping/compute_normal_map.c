@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/21 20:31:19 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:22:14 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static void	compute_normal_base_sphere(t_vec3 normal_base[3]);
 static void	compute_normal_base_plane(t_vec3 normal_base[3]);
-
+#include <stdio.h>
 void	compute_normal_map(
 					t_object const *intersected_object,
 					t_vec2 const *pixel_pos,

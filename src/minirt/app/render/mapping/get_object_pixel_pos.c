@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:58:24 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/21 20:27:31 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:22:39 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_vec2	get_object_pixel_pos(
 	(void)ray;
 	if (object->type == OBJ_SPHERE)
 		return (get_sphere_pixel_pos(&object->value.as_sphere, normal));
-	else if (object->type == OBJ_SPHERE)
+	else if (object->type == OBJ_PLANE)
 		return (get_plane_pixel_pos(&object->value.as_plane, normal));
 	return ((t_vec2){ 0 });
 }

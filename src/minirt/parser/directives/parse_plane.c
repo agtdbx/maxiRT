@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 20:31:44 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:24:09 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_error	parse_plane(
 	// obj.texture = mlx_load_png("imgs/Stylized_Stone_texture.png");
 	obj.color_type = C_COLOR;
 	obj.normal_map = NULL;
+	// obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
 	// obj.normal_map = mlx_load_png("imgs/Stylized_Stone_normal.png");
 	obj.opacity = g_plane_default_opacity;
 	obj.reflection = g_plane_default_reflection;

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/20 19:55:32 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 11:31:15 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ t_color	compute_refracted_color(
 
 	if (object->opacity == 1.0f)
 		return ((t_color){ 0 });
+	if (object->type == OBJ_PLANE)
+		return (intersect_loop_without_param_obj(object, scene, ray));
 	density_factor = 1.0f / object->density;
 	if (get_refracted_ray(density_factor, ray, normal, &refracted_ray) == false)
 		return (reflection_outside_object(object, scene, ray, normal));
