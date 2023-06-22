@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 12:30:06 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:22:04 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ typedef struct s_app
 	t_scene		scene;
 	t_canvas	canvas;
 }	t_app;
+
+//---- INTERSECTION STRUCT ---------------------------------------------------//
+
+typedef struct s_intersect_info
+{
+	float	distance;
+	int		sub_part_id;
+}	t_intersect_info;
 
 //**** METHODS ***************************************************************//
 
@@ -88,35 +96,39 @@ t_color			render_ray_on_object(
 					t_scene const *scene,
 					t_object const *intersected_object,
 					t_ray const *ray,
-					float distance);
+					t_intersect_info const *intersect_info);
 int32_t			render_ray(
 					t_scene const *scene,
 					t_object const *obj,
 					t_ray const *ray,
-					float distance);
+					t_intersect_info const *intersect_info);
 
 /// intersections
 
 t_object const	*fetch_closest_intersection(
 					t_ray const *ray,
 					t_object const *objects,
-					float *distance);
+					t_intersect_info *intersect_info);
 bool			test_intersection_with_obj(
 					t_ray const *ray,
 					t_object const *object,
-					float *distance);
+					t_intersect_info *intersect_info);
 bool			test_intersection_with_sphere(
 					t_ray const *ray,
 					t_sphere const *sphere,
-					float *distance);
+					t_intersect_info *intersect_info);
 bool			test_intersection_with_sphere_from_inside(
 					t_ray const *ray,
 					t_sphere const *sphere,
-					float *distance);
+					t_intersect_info *intersect_info);
 bool			test_intersection_with_plane(
 					t_ray const *ray,
 					t_plane const *plane,
-					float *distance);
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_cylinder(
+					t_ray const *ray,
+					t_cylinder const *cylinder,
+					t_intersect_info *intersect_info);
 
 t_color			intersect_loop_without_param_obj(
 					t_object const *object,
@@ -128,7 +140,7 @@ t_color			intersect_loop_without_param_obj(
 void			compute_normal_ray(
 					t_object const *object,
 					t_ray const *ray,
-					float distance,
+					t_intersect_info const *intersect_info,
 					t_ray *normal);
 
 /// illumination

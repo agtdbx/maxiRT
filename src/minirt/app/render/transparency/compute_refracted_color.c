@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 11:31:15 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:35:45 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_color	reflection_outside_object(
 static bool	do_intern_intersection(
 			t_object const *object,
 			t_ray const *refracted_ray,
-			float *dst);
+			t_intersect_info *intersect_info);
 
 static bool	calculate_outside_ray(
 			t_object const *object,
@@ -50,11 +50,11 @@ t_color	compute_refracted_color(
 			t_ray const *ray,
 			t_ray const *normal)
 {
-	t_ray	refracted_ray;
-	t_ray	inside_normal;
-	t_ray	outside_ray;
-	float	density_factor;
-	float	dst;
+	t_ray				refracted_ray;
+	t_ray				inside_normal;
+	t_ray				outside_ray;
+	float				density_factor;
+	t_intersect_info	intersect_info;
 
 	if (object->opacity == 1.0f)
 		return ((t_color){ 0 });
@@ -64,9 +64,9 @@ t_color	compute_refracted_color(
 	if (get_refracted_ray(density_factor, ray, normal, &refracted_ray) == false)
 		return (reflection_outside_object(object, scene, ray, normal));
 	refracted_ray.pos = normal->pos;
-	if (do_intern_intersection(object, &refracted_ray, &dst) == false)
+	if (do_intern_intersection(object, &refracted_ray, &intersect_info) == false)
 		return ((t_color){ 0 });
-	compute_normal_ray(object, &refracted_ray, dst, &inside_normal);
+	compute_normal_ray(object, &refracted_ray, &intersect_info, &inside_normal);
 	vec3_scale(&inside_normal.vec, -1.0f);
 	density_factor = object->density;
 	if (get_refracted_ray(density_factor, &refracted_ray, &inside_normal, &outside_ray) == false
@@ -138,12 +138,12 @@ static t_color	reflection_outside_object(
 static bool	do_intern_intersection(
 			t_object const *object,
 			t_ray const *refracted_ray,
-			float *dst)
+			t_intersect_info *intersect_info)
 {
 	if (object->type == OBJ_SPHERE)
 	{
 		return (test_intersection_with_sphere_from_inside(
-			refracted_ray, &object->value.as_sphere, dst));
+			refracted_ray, &object->value.as_sphere, intersect_info));
 	}
 	return (false);
 }
@@ -167,17 +167,17 @@ static bool	calculate_outside_ray(
 			t_ray *inside_normal,
 			t_ray *outside_ray)
 {
-	float const	density_factor = object->density;
-	int			loop_limit;
-	float		dst;
+	float const			density_factor = object->density;
+	int					loop_limit;
+	t_intersect_info	intersect_info;
 
 	loop_limit = 10;
 	while (loop_limit > 0)
 	{
 		intern_reflect(refracted_ray, inside_normal);
-		if (do_intern_intersection(object, refracted_ray, &dst) == false)
+		if (do_intern_intersection(object, refracted_ray, &intersect_info) == false)
 			return (false);
-		compute_normal_ray(object, refracted_ray, dst, inside_normal);
+		compute_normal_ray(object, refracted_ray, &intersect_info, inside_normal);
 		vec3_scale(&inside_normal->vec, -1.0f);
 		if (get_refracted_ray(
 				density_factor, refracted_ray, inside_normal, outside_ray))

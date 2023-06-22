@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 12:43:10 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:28:39 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,11 +152,11 @@ static t_color	_collect_objects_shades(
 				float dist_to_spotlight,
 				t_ray const *ray_to_spotlight)
 {
-	float	distance_to_object;
-	t_color	illumination;
-	t_color	base_color;
-	t_ray	normal;
-	t_vec2	pixel_pos;
+	t_intersect_info	distance_to_object;
+	t_color				illumination;
+	t_color				base_color;
+	t_ray				normal;
+	t_vec2				pixel_pos;
 
 	illumination = (t_color){1.0f, 1.0f, 1.0f};
 	while (objects != NULL)
@@ -164,11 +164,11 @@ static t_color	_collect_objects_shades(
 		if (objects != object
 			&& test_intersection_with_obj(
 				ray_to_spotlight, objects, &distance_to_object)
-			&& (distance_to_object < dist_to_spotlight))
+			&& (distance_to_object.distance < dist_to_spotlight))
 		{
 			if (objects->opacity == 1.0f)
 				return ((t_color){ 0 });
-			compute_normal_ray(objects, ray_to_spotlight, distance_to_object, &normal);
+			compute_normal_ray(objects, ray_to_spotlight, &distance_to_object, &normal);
 			pixel_pos = get_object_pixel_pos(objects, ray_to_spotlight, &normal);
 			base_color = get_base_color_object(objects, &pixel_pos);
 			illumination.r -= powf(objects->opacity,

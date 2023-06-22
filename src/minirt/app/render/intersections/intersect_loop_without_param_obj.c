@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:47:22 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/20 19:54:15 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:33:01 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,25 @@ t_color	intersect_loop_without_param_obj(
 			t_scene const *scene,
 			t_ray const *ray)
 {
-	t_object		*obj;
-	t_object		*closest_obj;
-	float			dst;
-	float			tmp_dst;
+	t_object		*	obj;
+	t_object			*closest_obj;
+	t_intersect_info	intersect_info;
+	t_intersect_info	tmp_intersect_info;
 
-	dst = -1.0f;
+	intersect_info.distance = -1.0f;
 	closest_obj = NULL;
 	obj = scene->objects;
 	while (obj)
 	{
 		if (obj != object)
 		{
-			if (test_intersection_with_obj(ray, obj, &tmp_dst)
-				&& tmp_dst >= 0.0f && (dst < 0.0f || tmp_dst < dst))
+			if (test_intersection_with_obj(ray, obj, &tmp_intersect_info)
+				&& tmp_intersect_info.distance >= 0.0f
+				&& (intersect_info.distance < 0.0f
+					|| tmp_intersect_info.distance < intersect_info.distance))
 			{
-				dst = tmp_dst;
+				intersect_info.distance = tmp_intersect_info.distance;
+				intersect_info.sub_part_id = tmp_intersect_info.sub_part_id;
 				closest_obj = obj;
 			}
 		}
@@ -47,5 +50,5 @@ t_color	intersect_loop_without_param_obj(
 	}
 	if (closest_obj == NULL)
 		return ((t_color){0});
-	return (render_ray_on_object(scene, closest_obj, ray, dst));
+	return (render_ray_on_object(scene, closest_obj, ray, &intersect_info));
 }

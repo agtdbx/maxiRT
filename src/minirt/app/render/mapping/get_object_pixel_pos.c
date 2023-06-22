@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:58:24 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/22 11:22:39 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:07:54 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ static t_vec2	get_sphere_pixel_pos(
 			t_ray const *normal);
 
 static t_vec2	get_plane_pixel_pos(
+			t_plane const *plane,
+			t_ray const *normal);
+
+static t_vec2	get_cylinder_pixel_pos(
 			t_plane const *plane,
 			t_ray const *normal);
 
@@ -85,11 +89,20 @@ static t_vec2	get_plane_pixel_pos(
 		pixel.x = 1.0f - pixel.x;
 	else
 		pixel.x = fabs(pixel.x);
-	pixel.y = vec3_dot(&o_y, &normal->pos) / 3.0f;
+	pixel.y = vec3_dot(&o_y, &normal->pos) / 3.0f; //TODO Pour la taille le 3.0f
 	pixel.y -= (int)pixel.y;
 	if (pixel.y > 0.0f)
 		pixel.y = 1.0f - pixel.y;
 	else
 		pixel.y = fabs(pixel.y);
 	return (pixel);
+}
+
+static t_vec2	get_cylinder_pixel_pos(
+			t_plane const *plane,
+			t_ray const *normal)
+{
+	(void)plane;
+	(void)normal;
+	return ((t_vec2){ 0 });
 }

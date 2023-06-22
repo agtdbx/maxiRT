@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 19:56:09 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 14:14:06 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ static void	_compute_constants(
 			sphere_compute_constants(&object_iterator->value.as_sphere);
 		else if (object_iterator->type == OBJ_PLANE)
 			plane_compute_constants(&object_iterator->value.as_plane);
+		else if (object_iterator->type == OBJ_CYLINDER)
+			cylinder_compute_constants(&object_iterator->value.as_cylinder);
 		object_iterator = object_iterator->next;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas);

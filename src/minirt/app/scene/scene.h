@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 19:55:40 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:46:54 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_sphere
 
 }	t_sphere;
 
-void	sphere_compute_constants(
-			t_sphere *sphere);
+void			sphere_compute_constants(
+					t_sphere *sphere);
 
 //---- PLANE -----------------------------------------------------------------//
 
@@ -46,23 +46,28 @@ typedef struct s_plane
 
 }	t_plane;
 
-void	plane_compute_constants(
-			t_plane *plane);
+void			plane_compute_constants(
+					t_plane *plane);
 
 //---- CYLINDER --------------------------------------------------------------//
 
 typedef struct s_cylinder
 {
 	t_vec3	pos;
-	float	radius;
+	float	diameter;
 	float	height;
 	t_vec3	axis;
 
 	t_plane	bot;
 	t_plane	top;
+	float	radius;
 	float	radius2;
+	float	half_height;
 
 }	t_cylinder;
+
+void			cylinder_compute_constants(
+					t_cylinder *cylinder);
 
 //---- COLOR INTERFACE -------------------------------------------------------//
 

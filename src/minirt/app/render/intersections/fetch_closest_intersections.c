@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fetch_closest_intersections.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 15:56:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:37:30 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:40:16 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,20 @@
 t_object const	*fetch_closest_intersection(
 					t_ray const *ray,
 					t_object const *objects,
-					float *distance)
+					t_intersect_info *intersect_info)
 {
-	float			actual_distance;
-	t_object const	*intersected_object;
+	t_intersect_info	actual_intersect_info;
+	t_object const		*intersected_object;
 
 	intersected_object = NULL;
-	*distance = -1;
+	intersect_info->distance = -1;
 	while (objects != NULL)
 	{
-		if (test_intersection_with_obj(ray, objects, &actual_distance)
-			&& !(0 <= *distance && *distance <= actual_distance))
+		if (test_intersection_with_obj(ray, objects, &actual_intersect_info)
+			&& !(0 <= intersect_info->distance && intersect_info->distance <= actual_intersect_info.distance))
 		{
-			*distance = actual_distance;
+			intersect_info->distance = actual_intersect_info.distance;
+			intersect_info->sub_part_id = actual_intersect_info.sub_part_id;
 			intersected_object = objects;
 		}
 		objects = objects->next;
