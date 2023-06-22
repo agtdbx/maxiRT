@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 11:32:02 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 12:43:32 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static const float		g_diffuse_light_ratio = 0.5f;
 static const float		g_specular_light_ratio = 0.3f;
 static const float		g_phong_exponent = 42.0f;
 
-static const float		g_opacity_color_ratio = 42.0f / 255.0f;
+static const float		g_opacity_color_ratio = 1.0f / 255.0f;
 
 //---- scene -----------------------------------------------------------------//
 
@@ -51,6 +51,16 @@ static const float		g_sphere_default_density = 1.0f;
 static const float		g_plane_default_opacity = 1.0f;
 static const float		g_plane_default_reflection = 0.0f;
 static const float		g_plane_default_density = 1.0f;
+
+// cylinder
+static const float		g_cylinder_default_opacity = 1.0f;
+static const float		g_cylinder_default_reflection = 0.0f;
+static const float		g_cylinder_default_density = 1.0f;
+
+// cone
+static const float		g_cone_default_opacity = 1.0f;
+static const float		g_cone_default_reflection = 0.0f;
+static const float		g_cone_default_density = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 

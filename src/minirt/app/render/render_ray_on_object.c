@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 11:32:25 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 12:40:41 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/color/color.h"
+
+#include "minirt/debug/debug.h"//TODO debug
 
 static t_color	compute_object_without_effect_color(
 			t_object const *intersected_object,
@@ -69,7 +71,7 @@ static t_color	compute_object_without_effect_color(
 
 	base_color = get_base_color_object(intersected_object, pixel_pos);
 	illumination = compute_illumination(
-			scene, intersected_object, ray, normal, &base_color);
+			scene, intersected_object, ray, normal);
 	if (illumination.r == 0.0f && illumination.g == 0.0f
 		&& illumination.g == 0.0f)
 		return (illumination);

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 20:03:31 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/22 12:30:06 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,7 @@ t_color			compute_illumination(
 					t_scene const *scene,
 					t_object const *object,
 					t_ray const *ray,
-					t_ray const *normal,
-					t_color const *base_color);
+					t_ray const *normal);
 
 // transparency
 t_color			compute_refracted_color(
