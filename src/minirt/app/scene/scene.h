@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 16:21:08 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:54:51 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_sphere
 
 }	t_sphere;
 
-void	sphere_compute_constants(
-			t_sphere *sphere);
+void			sphere_compute_constants(
+					t_sphere *sphere);
 
 //---- PLANE -----------------------------------------------------------------//
 
@@ -46,20 +46,46 @@ typedef struct s_plane
 
 }	t_plane;
 
+void			plane_compute_constants(
+					t_plane *plane);
+
 //---- CYLINDER --------------------------------------------------------------//
 
 typedef struct s_cylinder
 {
 	t_vec3	pos;
-	float	radius;
+	float	diameter;
 	float	height;
 	t_vec3	axis;
 
 	t_plane	bot;
 	t_plane	top;
+	float	radius;
 	float	radius2;
+	float	half_height;
 
 }	t_cylinder;
+
+void			cylinder_compute_constants(
+					t_cylinder *cylinder);
+
+//---- CYLINDER --------------------------------------------------------------//
+
+typedef struct s_cone
+{
+	t_vec3	pos;
+	float	diameter;
+	float	height;
+	t_vec3	axis;
+
+	t_plane	end;
+	float	radius;
+	float	radius2;
+
+}	t_cone;
+
+void			cone_compute_constants(
+					t_cone *cone);
 
 //---- COLOR INTERFACE -------------------------------------------------------//
 
@@ -77,6 +103,7 @@ typedef enum e_object_t
 	OBJ_SPHERE,
 	OBJ_PLANE,
 	OBJ_CYLINDER,
+	OBJ_CONE,
 }	t_object_t;
 
 typedef union u_object_v
@@ -84,6 +111,7 @@ typedef union u_object_v
 	t_sphere	as_sphere;
 	t_plane		as_plane;
 	t_cylinder	as_cylinder;
+	t_cone		as_cone;
 }	t_object_v;
 
 typedef struct s_object

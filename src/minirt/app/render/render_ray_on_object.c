@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 17:29:23 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:50:00 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/color/color.h"
+
+#include "minirt/debug/debug.h"//TODO debug
 
 static t_color	compute_object_without_effect_color(
 			t_object const *intersected_object,
@@ -33,7 +35,7 @@ t_color	render_ray_on_object(
 			t_scene const *scene,
 			t_object const *intersected_object,
 			t_ray const *ray,
-			float distance)
+			t_intersect_info const *intersect_info)
 {
 	t_ray	normal;
 	t_color	refracted_color;
@@ -41,9 +43,9 @@ t_color	render_ray_on_object(
 	t_color	color;
 	t_vec2	pixel_pos;
 
-	compute_normal_ray(intersected_object, ray, distance, &normal);
-	pixel_pos = get_object_pixel_pos(intersected_object, ray, &normal);
-	compute_normal_map(intersected_object, &pixel_pos, &normal);
+	compute_normal_ray(intersected_object, ray, intersect_info, &normal);
+	pixel_pos = get_object_pixel_pos(intersected_object, ray, &normal, intersect_info);
+	compute_normal_map(intersected_object, intersect_info, &pixel_pos, &normal);
 	color = compute_object_without_effect_color(
 			intersected_object, scene, ray, &normal, &pixel_pos);
 	refracted_color = compute_refracted_color(
@@ -69,7 +71,7 @@ static t_color	compute_object_without_effect_color(
 
 	base_color = get_base_color_object(intersected_object, pixel_pos);
 	illumination = compute_illumination(
-			scene, intersected_object, ray, normal, &base_color);
+			scene, intersected_object, ray, normal);
 	if (illumination.r == 0.0f && illumination.g == 0.0f
 		&& illumination.g == 0.0f)
 		return (illumination);

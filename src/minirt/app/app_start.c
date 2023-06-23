@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app_start.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 13:48:11 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:24:41 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,13 @@ static void	_compute_constants(
 	while (object_iterator != NULL)
 	{
 		if (object_iterator->type == OBJ_SPHERE)
-			sphere_compute_constants((t_sphere*)&object_iterator->value);
+			sphere_compute_constants(&object_iterator->value.as_sphere);
+		else if (object_iterator->type == OBJ_PLANE)
+			plane_compute_constants(&object_iterator->value.as_plane);
+		else if (object_iterator->type == OBJ_CYLINDER)
+			cylinder_compute_constants(&object_iterator->value.as_cylinder);
+		else if (object_iterator->type == OBJ_CONE)
+			cone_compute_constants(&object_iterator->value.as_cone);
 		object_iterator = object_iterator->next;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas);

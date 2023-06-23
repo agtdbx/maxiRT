@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray_from_camera.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:35 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 18:10:44 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/22 19:05:52 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 static t_light const	*_fetch_closer_spotlight(
 							t_ray const *ray,
 							t_light const *lights,
-							float *distance);
+							t_intersect_info *intersect_info);
 static int32_t			_render_ray_on_spotlight(
 							t_light const *light,
 							t_ray const *ray,
-							float distance);
+							t_intersect_info const *intersect_info);
 
 /**
  * @param[in] scene
@@ -41,34 +41,34 @@ int32_t	render_ray_from_camera(
 			t_ray const *ray,
 			bool show_spotlights)
 {
-	t_object const	*intersected_object;
-	t_light const	*light;
-	t_color			pixel_color;
-	float			distance;
+	t_object const		*intersected_object;
+	t_light const		*light;
+	t_color				pixel_color;
+	t_intersect_info	intersect_info;
 
 	intersected_object = \
-		fetch_closest_intersection(ray, scene->objects, &distance);
+		fetch_closest_intersection(ray, scene->objects, &intersect_info);
 	if (show_spotlights)
 	{
-		light = _fetch_closer_spotlight(ray, scene->spotlights, &distance);
+		light = _fetch_closer_spotlight(ray, scene->spotlights, &intersect_info);
 		if (light != NULL)
-			return (_render_ray_on_spotlight(light, ray, distance));
+			return (_render_ray_on_spotlight(light, ray, &intersect_info));
 	}
 	if (intersected_object == NULL)
 		return (g_color_black);
 	pixel_color =
-		render_ray_on_object(scene, intersected_object, ray, distance);
+		render_ray_on_object(scene, intersected_object, ray, &intersect_info);
 	return (color_to_int(&pixel_color));
 }
 
 static t_light const	*_fetch_closer_spotlight(
 							t_ray const *ray,
 							t_light const *lights,
-							float *distance)
+							t_intersect_info *intersect_info)
 {
-	float			actual_distance;
-	t_light const	*intersected_light;
-	t_sphere		light_bulb;
+	t_intersect_info	actual_intersect_info;
+	t_light const		*intersected_light;
+	t_sphere			light_bulb;
 
 	light_bulb.radius = 0.1;
 	light_bulb.radius2 = 0.01;
@@ -76,10 +76,10 @@ static t_light const	*_fetch_closer_spotlight(
 	while (lights != NULL)
 	{
 		light_bulb.pos = lights->pos;
-		if (test_intersection_with_sphere(ray, &light_bulb, &actual_distance)
-			&& !(0 <= *distance && *distance <= actual_distance))
+		if (test_intersection_with_sphere(ray, &light_bulb, &actual_intersect_info)
+			&& !(0 <= intersect_info->distance && intersect_info->distance <= actual_intersect_info.distance))
 		{
-			*distance = actual_distance;
+			intersect_info->distance = actual_intersect_info.distance;
 			intersected_light = lights;
 		}
 		lights = lights->next;
@@ -90,14 +90,14 @@ static t_light const	*_fetch_closer_spotlight(
 static int32_t	_render_ray_on_spotlight(
 					t_light const *light,
 					t_ray const *ray,
-					float distance)
+					t_intersect_info const *intersect_info)
 {
 	t_ray	normal;
 	float	intensity;
 	t_color	color;
 
 	normal.pos = ray->pos;
-	vec3_linear_transform(&normal.pos, distance, &ray->vec);
+	vec3_linear_transform(&normal.pos, intersect_info->distance, &ray->vec);
 	vec3_substract_into(&normal.vec, &normal.pos, &light->pos);
 	vec3_normalize(&normal.vec);
 	intensity = -vec3_dot(&normal.vec, &ray->vec);

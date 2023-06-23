@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 18:10:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:43:04 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ typedef struct s_app
 	t_scene		scene;
 	t_canvas	canvas;
 }	t_app;
+
+//---- INTERSECTION STRUCT ---------------------------------------------------//
+
+typedef struct s_intersect_info
+{
+	float	distance;
+	int		sub_part_id;
+}	t_intersect_info;
 
 //**** METHODS ***************************************************************//
 
@@ -88,31 +96,51 @@ t_color			render_ray_on_object(
 					t_scene const *scene,
 					t_object const *intersected_object,
 					t_ray const *ray,
-					float distance);
+					t_intersect_info const *intersect_info);
 int32_t			render_ray(
 					t_scene const *scene,
 					t_object const *obj,
 					t_ray const *ray,
-					float distance);
+					t_intersect_info const *intersect_info);
 
 /// intersections
 
 t_object const	*fetch_closest_intersection(
 					t_ray const *ray,
 					t_object const *objects,
-					float *distance);
+					t_intersect_info *intersect_info);
 bool			test_intersection_with_obj(
 					t_ray const *ray,
 					t_object const *object,
-					float *distance);
+					t_intersect_info *intersect_info);
 bool			test_intersection_with_sphere(
 					t_ray const *ray,
 					t_sphere const *sphere,
-					float *distance);
+					t_intersect_info *intersect_info);
 bool			test_intersection_with_sphere_from_inside(
 					t_ray const *ray,
 					t_sphere const *sphere,
-					float *distance);
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_plane(
+					t_ray const *ray,
+					t_plane const *plane,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_cylinder(
+					t_ray const *ray,
+					t_cylinder const *cylinder,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_cylinder_from_inside(
+					t_ray const *ray,
+					t_cylinder const *cylinder,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_cone(
+					t_ray const *ray,
+					t_cone const *cone,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_cone_from_inside(
+					t_ray const *ray,
+					t_cone const *cone,
+					t_intersect_info *intersect_info);
 
 t_color			intersect_loop_without_param_obj(
 					t_object const *object,
@@ -124,7 +152,7 @@ t_color			intersect_loop_without_param_obj(
 void			compute_normal_ray(
 					t_object const *object,
 					t_ray const *ray,
-					float distance,
+					t_intersect_info const *intersect_info,
 					t_ray *normal);
 
 /// illumination
@@ -140,8 +168,7 @@ t_color			compute_illumination(
 					t_scene const *scene,
 					t_object const *object,
 					t_ray const *ray,
-					t_ray const *normal,
-					t_color const *base_color);
+					t_ray const *normal);
 
 // transparency
 t_color			compute_refracted_color(
@@ -159,9 +186,10 @@ t_color			compute_reflected_color(
 
 // mapping
 t_vec2			get_object_pixel_pos(
-					t_object const *intersected_object,
+					t_object const *object,
 					t_ray const *ray,
-					t_ray const *normal);
+					t_ray const *normal,
+					t_intersect_info const *intersect_info);
 t_color			get_base_color_object(
 					t_object const *intersected_object,
 					t_vec2 const *pixel_pos);
@@ -170,6 +198,7 @@ t_color			apply_texture(
 					t_vec2 const *pixel_pos);
 void			compute_normal_map(
 					t_object const *intersected_object,
+					t_intersect_info const *intersect_info,
 					t_vec2 const *pixel_pos,
 					t_ray *normal);
 void			apply_normal_map(
