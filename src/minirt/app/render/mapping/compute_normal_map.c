@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/22 11:22:14 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:31:32 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@
 
 static void	compute_normal_base_sphere(t_vec3 normal_base[3]);
 static void	compute_normal_base_plane(t_vec3 normal_base[3]);
-#include <stdio.h>
+static void	compute_normal_base_cylinder(
+				t_vec3 normal_base[3],
+				t_cylinder const *cylinder,
+				t_intersect_info const *intersect_info);
+
 void	compute_normal_map(
 					t_object const *intersected_object,
+					t_intersect_info const *intersect_info,
 					t_vec2 const *pixel_pos,
 					t_ray *normal)
 {
@@ -31,6 +36,9 @@ void	compute_normal_map(
 		compute_normal_base_sphere(normal_base);
 	else if (intersected_object->type == OBJ_PLANE)
 		compute_normal_base_plane(normal_base);
+	else if (intersected_object->type == OBJ_CYLINDER)
+		compute_normal_base_cylinder(normal_base,
+			&intersected_object->value.as_cylinder, intersect_info);
 	else
 	{
 		normal_base[0] = (t_vec3){1.0f, 0.0f, 0.0f};
@@ -62,4 +70,20 @@ static void	compute_normal_base_plane(t_vec3 normal_base[3])
 	vec3_cross(&normal_base[2], &normal_base[1], &normal_base[0]);
 	vec3_normalize(&normal_base[0]);
 	vec3_normalize(&normal_base[1]);
+}
+
+static void	compute_normal_base_cylinder(
+				t_vec3 normal_base[3],
+				t_cylinder const *cylinder,
+				t_intersect_info const *intersect_info)
+{
+	if (intersect_info->sub_part_id != 0)
+		compute_normal_base_plane(normal_base);
+	else
+	{
+		vec3_normalize(&normal_base[0]);
+		vec3_scale(&normal_base[0], -1.0f);
+		normal_base[1] = cylinder->axis;
+		vec3_scale(&normal_base[1], -1.0f);
+	}
 }

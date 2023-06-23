@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 11:10:46 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:29:54 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_color	render_ray_on_object(
 	t_vec2	pixel_pos;
 
 	compute_normal_ray(intersected_object, ray, intersect_info, &normal);
-	pixel_pos = get_object_pixel_pos(intersected_object, ray, &normal);
-	compute_normal_map(intersected_object, &pixel_pos, &normal);
+	pixel_pos = get_object_pixel_pos(intersected_object, ray, &normal, intersect_info);
+	compute_normal_map(intersected_object, intersect_info, &pixel_pos, &normal);
 	color = compute_object_without_effect_color(
 			intersected_object, scene, ray, &normal, &pixel_pos);
 	refracted_color = compute_refracted_color(

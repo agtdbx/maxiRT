@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:58:24 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/22 19:07:54 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 11:56:49 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,24 @@ static t_vec2	get_plane_pixel_pos(
 			t_ray const *normal);
 
 static t_vec2	get_cylinder_pixel_pos(
-			t_plane const *plane,
-			t_ray const *normal);
+			t_cylinder const *cylinder,
+			t_ray const *ray,
+			t_ray const *normal,
+			t_intersect_info const *intersect_info);
 
 t_vec2	get_object_pixel_pos(
 			t_object const *object,
 			t_ray const *ray,
-			t_ray const *normal)
+			t_ray const *normal,
+			t_intersect_info const *intersect_info)
 {
-	(void)ray;
 	if (object->type == OBJ_SPHERE)
 		return (get_sphere_pixel_pos(&object->value.as_sphere, normal));
 	else if (object->type == OBJ_PLANE)
 		return (get_plane_pixel_pos(&object->value.as_plane, normal));
+	else if (object->type == OBJ_CYLINDER)
+		return (get_cylinder_pixel_pos(
+				&object->value.as_cylinder, ray, normal, intersect_info));
 	return ((t_vec2){ 0 });
 }
 
@@ -99,10 +104,44 @@ static t_vec2	get_plane_pixel_pos(
 }
 
 static t_vec2	get_cylinder_pixel_pos(
-			t_plane const *plane,
-			t_ray const *normal)
+			t_cylinder const *cylinder,
+			t_ray const *ray,
+			t_ray const *normal,
+			t_intersect_info const *intersect_info)
 {
-	(void)plane;
-	(void)normal;
-	return ((t_vec2){ 0 });
+	t_vec2	pixel;
+	t_vec3	vec;
+	float	dot[2];
+	float	heigth_on_cylinder;
+	t_vec3	p;
+	t_vec3	ref;
+	t_vec3	tmp;
+	t_vec3	proj;
+
+	if (intersect_info->sub_part_id == 1)
+		return (get_plane_pixel_pos(&cylinder->bot, normal));
+	else if (intersect_info->sub_part_id == 2)
+		return (get_plane_pixel_pos(&cylinder->top, normal));
+	vec3_substract_into(&vec, &ray->pos, &cylinder->pos);
+	dot[0] = vec3_dot(&ray->vec, &cylinder->axis);
+	dot[1] = vec3_dot(&vec, &cylinder->axis);
+	heigth_on_cylinder = dot[0] * intersect_info->distance + dot[1];
+	p = normal->pos;
+	vec3_substract(&p, &cylinder->pos);
+	if (cylinder->axis.x != 0.0f || cylinder->axis.y != 0.0f)
+		ref = (t_vec3){-cylinder->axis.y, cylinder->axis.x, 0.0f};
+	else
+		ref = (t_vec3){0.0f, 0.0f, 1.0f};
+	vec3_cross(&cylinder->axis, &p, &tmp);
+	vec3_cross(&cylinder->axis, &tmp, &proj);
+	vec3_normalize(&ref);
+	vec3_normalize(&proj);
+	pixel.x = acosf(vec3_dot(&proj, &ref));
+	pixel.x /= 2.0f * g_pi;
+	vec3_cross(&cylinder->axis, &ref, &tmp);
+	vec3_normalize(&tmp);
+	if (vec3_dot(&proj, &tmp) < 0.0f)
+		pixel.x = 1.0f - pixel.x;
+	pixel.y = (heigth_on_cylinder + cylinder->half_height) / cylinder->height;
+	return (pixel);
 }

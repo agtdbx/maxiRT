@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 18:28:39 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 11:46:36 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ static t_color	_collect_objects_shades(
 			if (objects->opacity == 1.0f)
 				return ((t_color){ 0 });
 			compute_normal_ray(objects, ray_to_spotlight, &distance_to_object, &normal);
-			pixel_pos = get_object_pixel_pos(objects, ray_to_spotlight, &normal);
+			pixel_pos = get_object_pixel_pos(objects, ray_to_spotlight, &normal, &distance_to_object);
 			base_color = get_base_color_object(objects, &pixel_pos);
 			illumination.r -= powf(objects->opacity,
 					1 + base_color.r * g_opacity_color_ratio);
