@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:08:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:32:58 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 18:42:05 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 void	vec3_label_hide(
 			t_vec3_label *label)
 {
-	label->is_visible = false;
 	if (label->img_title != NULL)
 		label->img_title->enabled = false;
 	float_label_hide(&label->label_x);

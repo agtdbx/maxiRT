@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:09:56 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:40:12 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 18:42:48 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
 void	float_label_show(
 			t_float_label *label)
 {
-	label->is_visible = true;
+	(void) label;
 }

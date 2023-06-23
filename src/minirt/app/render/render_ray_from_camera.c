@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:35 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 18:10:44 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 16:54:57 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/utils/color/color.h"
 
-static t_light const	*_fetch_closer_spotlight(
-							t_ray const *ray,
-							t_light const *lights,
-							float *distance);
 static int32_t			_render_ray_on_spotlight(
 							t_light const *light,
 							t_ray const *ray,
@@ -50,7 +46,7 @@ int32_t	render_ray_from_camera(
 		fetch_closest_intersection(ray, scene->objects, &distance);
 	if (show_spotlights)
 	{
-		light = _fetch_closer_spotlight(ray, scene->spotlights, &distance);
+		light = fetch_closer_spotlight(ray, scene->spotlights, &distance);
 		if (light != NULL)
 			return (_render_ray_on_spotlight(light, ray, distance));
 	}
@@ -59,32 +55,6 @@ int32_t	render_ray_from_camera(
 	pixel_color =
 		render_ray_on_object(scene, intersected_object, ray, distance);
 	return (color_to_int(&pixel_color));
-}
-
-static t_light const	*_fetch_closer_spotlight(
-							t_ray const *ray,
-							t_light const *lights,
-							float *distance)
-{
-	float			actual_distance;
-	t_light const	*intersected_light;
-	t_sphere		light_bulb;
-
-	light_bulb.radius = 0.1;
-	light_bulb.radius2 = 0.01;
-	intersected_light = NULL;
-	while (lights != NULL)
-	{
-		light_bulb.pos = lights->pos;
-		if (test_intersection_with_sphere(ray, &light_bulb, &actual_distance)
-			&& !(0 <= *distance && *distance <= actual_distance))
-		{
-			*distance = actual_distance;
-			intersected_light = lights;
-		}
-		lights = lights->next;
-	}
-	return (intersected_light);
 }
 
 static int32_t	_render_ray_on_spotlight(

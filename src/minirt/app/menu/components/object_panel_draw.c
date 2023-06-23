@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu_draw.c                                        :+:      :+:    :+:   */
+/*   object_panel_draw.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:48:44 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 17:52:57 by tdubois          ###   ########.fr       */
+/*   Created: 2023/06/23 17:48:00 by tdubois           #+#    #+#             */
+/*   Updated: 2023/06/23 18:43:53 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 #include "MLX42/MLX42.h"
 
-void	menu_draw(
+void	object_panel_draw(
 			mlx_t *mlx,
 			t_menu *menu)
 {
-	static double	date_of_next_redraw = 0.0;
-
-	if (!menu->is_visible || mlx_get_time() < date_of_next_redraw)
+	if (!menu->object_panel.is_enabled)
 		return ;
-	date_of_next_redraw = mlx_get_time() + 0.25;
-	camera_label_draw(mlx, menu);
-	ambient_label_draw(mlx, menu);
-	object_panel_draw(mlx, menu);
+	if (menu->object_panel.title != NULL)
+	{
+		menu->object_panel.title->instances->x = \
+			menu->background->instances->x + 20;
+	}
+	color_label_draw(mlx, menu, &menu->object_panel.color_label);
+	float_label_draw(mlx, menu, &menu->object_panel.opacity_label);
+	float_label_draw(mlx, menu, &menu->object_panel.density_label);
+	float_label_draw(mlx, menu, &menu->object_panel.reflection_label);
 }

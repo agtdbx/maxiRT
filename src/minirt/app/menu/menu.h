@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:59:32 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 18:41:16 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 
 typedef struct s_float_label
 {
-	bool		is_visible;
-
 	int32_t		x;
 	int32_t		y;
 	char const	*prefix;
@@ -36,8 +34,6 @@ typedef struct s_float_label
 
 typedef struct s_vec3_label
 {
-	bool			is_visible;
-
 	int32_t			x;
 	int32_t			y;
 	char const		*title;
@@ -52,8 +48,6 @@ typedef t_float_label	t_int_label;
 
 typedef struct s_color_label
 {
-	bool		is_visible;
-
 	int32_t		x;
 	int32_t		y;
 	char const	*title;
@@ -63,6 +57,25 @@ typedef struct s_color_label
 	t_int_label	label_g;
 	t_int_label	label_b;
 }	t_color_label;
+
+typedef struct s_object_panel
+{
+	bool			is_enabled;
+
+	mlx_image_t		*title;
+	mlx_image_t		*sphere_title;
+
+	t_color_label	color_label;
+
+	t_float_label	opacity_label;
+	t_float_label	density_label;
+	t_float_label	reflection_label;
+}	t_object_panel;
+
+typedef struct s_light_panel
+{
+	//TODO
+}	t_light_panel;
 
 typedef struct s_menu
 {
@@ -78,6 +91,8 @@ typedef struct s_menu
 	t_color_label	ambient_color_label;
 	t_float_label	ambient_ratio_label;
 
+	t_light_panel	light_panel;
+	t_object_panel	object_panel;
 }	t_menu;
 
 t_error	menu_init(
@@ -129,6 +144,22 @@ void	ambient_label_hide(
 void	ambient_label_draw(
 			mlx_t *mlx,
 			t_menu *menu);
+
+/// object_panel
+
+void	object_panel_init(
+			mlx_t *mlx,
+			t_menu *menu);
+void	object_panel_show(
+			t_menu *menu);
+void	object_panel_hide(
+			t_menu *menu);
+void	object_panel_draw(
+			mlx_t *mlx,
+			t_menu *menu);
+void	object_panel_register(
+			t_menu *menu,
+			t_object *object);
 
 //---- LIB --------------------------------------------------------------------#
 

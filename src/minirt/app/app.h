@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 18:10:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 16:46:45 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ int32_t			render_ray_from_camera(
 					t_ray const *ray,
 					bool show_spotlights);
 
+t_ray			create_ray_from_pixel_coords(
+					t_camera const *camera,
+					t_canvas const *canvas,
+					int32_t const coords[2]);
+
 /// raytracing
 
 t_color			render_ray_on_object(
@@ -97,9 +102,13 @@ int32_t			render_ray(
 
 /// intersections
 
-t_object const	*fetch_closest_intersection(
+t_object		*fetch_closest_intersection(
 					t_ray const *ray,
-					t_object const *objects,
+					t_object *objects,
+					float *distance);
+t_light			*fetch_closer_spotlight(
+					t_ray const *ray,
+					t_light *lights,
 					float *distance);
 bool			test_intersection_with_obj(
 					t_ray const *ray,

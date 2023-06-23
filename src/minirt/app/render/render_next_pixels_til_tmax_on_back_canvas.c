@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 17:50:05 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 16:08:02 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 16:25:33 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,7 @@ static void	_render_one_pixel_on_back_canvas(
 	int32_t	color;
 	t_ray	casted_ray;
 
-	casted_ray.pos = scene->camera->pos;
-	casted_ray.vec = scene->camera->pos;
-	vec3_linear_transform(
-		&casted_ray.vec, coords[0] - canvas->width_div_2, &scene->camera->o_x);
-	vec3_linear_transform(
-		&casted_ray.vec, coords[1] - canvas->height_div_2, &scene->camera->o_y);
-	vec3_linear_transform(
-		&casted_ray.vec, scene->camera->focal, &scene->camera->direction);
-	vec3_substract(&casted_ray.vec, &casted_ray.pos);
-	vec3_normalize(&casted_ray.vec);
+	casted_ray = create_ray_from_pixel_coords(scene->camera, canvas, coords);
 	color = render_ray_from_camera(scene, &casted_ray, show_spotlights);
 	mlx_put_pixel(canvas->back, coords[0], coords[1], color);
 }
