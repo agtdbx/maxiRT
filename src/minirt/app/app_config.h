@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 15:56:56 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:20:43 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,29 @@ static const float		g_opacity_color_ratio = 1.0f / 255.0f;
 static const float		g_scene_radius = 1000.0f;
 
 // sphere
-static const float		g_sphere_default_opacity = 1.0f;
 static const float		g_sphere_default_reflection = 0.0f;
+static const float		g_sphere_default_opacity = 1.0f;
 static const float		g_sphere_default_density = 1.0f;
 
 // plane
-static const float		g_plane_default_opacity = 1.0f;
 static const float		g_plane_default_reflection = 0.0f;
+static const float		g_plane_default_opacity = 1.0f;
 static const float		g_plane_default_density = 1.0f;
 
 // cylinder
-static const float		g_cylinder_default_opacity = 1.0f;
 static const float		g_cylinder_default_reflection = 0.0f;
+static const float		g_cylinder_default_opacity = 1.0f;
 static const float		g_cylinder_default_density = 1.0f;
 
 // cone
-static const float		g_cone_default_opacity = 1.0f;
 static const float		g_cone_default_reflection = 0.0f;
+static const float		g_cone_default_opacity = 1.0f;
 static const float		g_cone_default_density = 1.0f;
+
+// cube
+static const float		g_cube_default_reflection = 0.0f;
+static const float		g_cube_default_opacity = 1.0f;
+static const float		g_cube_default_density = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/23 16:14:38 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 20:07:40 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ static void	compute_normal_base_cylinder(
 static void	compute_normal_base_cone(
 				t_vec3 normal_base[3],
 				t_cone const *cone,
+				t_intersect_info const *intersect_info);
+static void	compute_normal_base_cube(
+				t_vec3 normal_base[3],
+				t_cube const *cube,
 				t_intersect_info const *intersect_info);
 
 void	compute_normal_map(
@@ -46,6 +50,9 @@ void	compute_normal_map(
 	else if (intersected_object->type == OBJ_CONE)
 		compute_normal_base_cone(normal_base,
 			&intersected_object->value.as_cone, intersect_info);
+	else if (intersected_object->type == OBJ_CUBE)
+		compute_normal_base_cube(normal_base,
+			&intersected_object->value.as_cube, intersect_info);
 	else
 	{
 		normal_base[0] = (t_vec3){1.0f, 0.0f, 0.0f};
@@ -109,4 +116,19 @@ static void	compute_normal_base_cone(
 		normal_base[1] = cone->axis;
 		vec3_scale(&normal_base[1], -1.0f);
 	}
+}
+
+static void	compute_normal_base_cube(
+				t_vec3 normal_base[3],
+				t_cube const *cube,
+				t_intersect_info const *intersect_info)
+{
+	// TODO faire en sorte que ca rotate pour les diffentes face
+	if (normal_base[2].x != 0.0f || normal_base[2].y != 0.0f)
+		normal_base[1] = (t_vec3){-normal_base[2].y, normal_base[2].x, 0.0f};
+	else
+		normal_base[1] = (t_vec3){0.0f, 1.0f, 0.0f};
+	vec3_cross(&normal_base[2], &normal_base[1], &normal_base[0]);
+	vec3_normalize(&normal_base[0]);
+	vec3_normalize(&normal_base[1]);
 }

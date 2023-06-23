@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_sphere.c                                     :+:      :+:    :+:   */
+/*   parse_cube.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 18:11:35 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:47:41 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,32 @@
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/app_config.h"
 
-t_error	parse_sphere(
+t_error	parse_cube(
 			t_parser_state *state)
 {
 	t_object	obj;
-	t_sphere	*const sphere = &obj.value.as_sphere;
+	t_cube	*const cube = &obj.value.as_cube;
 
 	ft_bzero(&obj, sizeof(t_object));
-	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
-		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE
+	if (parse_field(state, &g_position, &cube->pos) == FAILURE
+		|| parse_field(state, &g_direction, &cube->x_axis) == FAILURE
+		|| parse_field(state, &g_direction, &cube->y_axis) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->witdh) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->height) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->depth) == FAILURE
 		|| parse_field(state, &g_color, &obj.color) == FAILURE)
 		return (FAILURE);
-	obj.type = OBJ_SPHERE;
+	// TODO Les deux axes ne sont pas bon
+	if (vec3_dot(&cube->x_axis, &cube->y_axis) != 0.0f)
+		return (FAILURE);
+	obj.type = OBJ_CUBE;
 	obj.texture = NULL;
 	// obj.texture = mlx_load_png("imgs/gravel_texture.png");
 	obj.color_type = C_COLOR;
 	obj.normal_map = NULL;
-	// obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
-	obj.opacity = g_sphere_default_opacity;
-	obj.reflection = g_sphere_default_reflection;
-	obj.density = g_sphere_default_density;
+	obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
+	obj.opacity = g_cube_default_opacity;
+	obj.reflection = g_cube_default_reflection;
+	obj.density = g_cube_default_density;
 	return (scene_add_object(state->scene, &obj));
 }
