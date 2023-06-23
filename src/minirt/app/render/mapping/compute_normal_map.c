@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/23 13:31:32 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:14:38 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static void	compute_normal_base_plane(t_vec3 normal_base[3]);
 static void	compute_normal_base_cylinder(
 				t_vec3 normal_base[3],
 				t_cylinder const *cylinder,
+				t_intersect_info const *intersect_info);
+static void	compute_normal_base_cone(
+				t_vec3 normal_base[3],
+				t_cone const *cone,
 				t_intersect_info const *intersect_info);
 
 void	compute_normal_map(
@@ -39,6 +43,9 @@ void	compute_normal_map(
 	else if (intersected_object->type == OBJ_CYLINDER)
 		compute_normal_base_cylinder(normal_base,
 			&intersected_object->value.as_cylinder, intersect_info);
+	else if (intersected_object->type == OBJ_CONE)
+		compute_normal_base_cone(normal_base,
+			&intersected_object->value.as_cone, intersect_info);
 	else
 	{
 		normal_base[0] = (t_vec3){1.0f, 0.0f, 0.0f};
@@ -84,6 +91,22 @@ static void	compute_normal_base_cylinder(
 		vec3_normalize(&normal_base[0]);
 		vec3_scale(&normal_base[0], -1.0f);
 		normal_base[1] = cylinder->axis;
+		vec3_scale(&normal_base[1], -1.0f);
+	}
+}
+
+static void	compute_normal_base_cone(
+				t_vec3 normal_base[3],
+				t_cone const *cone,
+				t_intersect_info const *intersect_info)
+{
+	if (intersect_info->sub_part_id == 1)
+		compute_normal_base_plane(normal_base);
+	else
+	{
+		vec3_normalize(&normal_base[0]);
+		vec3_scale(&normal_base[0], -1.0f);
+		normal_base[1] = cone->axis;
 		vec3_scale(&normal_base[1], -1.0f);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/22 17:48:46 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:20:04 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	cylinder_compute_constants(
 {
 	t_vec3	rev_axis;
 
+	vec3_normalize(&cylinder->axis);
 	cylinder->radius = cylinder->diameter / 2.0f;
 	cylinder->radius2 = cylinder->radius * cylinder->radius;
 	cylinder->half_height = cylinder->height / 2.0f;

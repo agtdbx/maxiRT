@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 13:43:01 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:49:52 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,11 @@ static bool	do_intern_intersection(
 	{
 		return (test_intersection_with_cylinder_from_inside(
 			refracted_ray, &object->value.as_cylinder, intersect_info));
+	}
+	else if (object->type == OBJ_CONE)
+	{
+		return (test_intersection_with_cone_from_inside(
+			refracted_ray, &object->value.as_cone, intersect_info));
 	}
 	return (false);
 }

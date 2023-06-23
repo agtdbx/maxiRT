@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 12:54:34 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:01:45 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ static const t_directive	g_directives[] = {
 	.identifier = "cy",
 	.usage = "cy <position> <orientation vector> <diameter> <height> <color>",
 	.callback = parse_cylinder,
+},
+{
+	.identifier = "co",
+	.usage = "co <position> <orientation vector> <diameter> <height> <color>",
+	.callback = parse_cone,
 },
 };
 

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 13:41:52 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:43:04 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,14 @@ bool			test_intersection_with_cylinder(
 bool			test_intersection_with_cylinder_from_inside(
 					t_ray const *ray,
 					t_cylinder const *cylinder,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_cone(
+					t_ray const *ray,
+					t_cone const *cone,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_cone_from_inside(
+					t_ray const *ray,
+					t_cone const *cone,
 					t_intersect_info *intersect_info);
 
 t_color			intersect_loop_without_param_obj(
