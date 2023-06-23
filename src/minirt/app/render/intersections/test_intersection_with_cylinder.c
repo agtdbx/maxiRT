@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 20:27:33 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 11:10:20 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,25 @@ static bool	_test_intersection_with_cylinder_bot(
 	t_vec3	p;
 	float	dist_on_end;
 
-	if (test_intersection_with_plane(ray, &cylinder->bot, intersect_info))
+	if (test_intersection_with_plane(ray, &cylinder->bot, intersect_info)
+		&& intersect_info->sub_part_id == 0)
 	{
 		intersect_info->sub_part_id = 1;
 		p = ray->pos;
 		vec3_linear_transform(&p, intersect_info->distance, &ray->vec);
 		vec3_substract(&p, &cylinder->bot.pos);
+		dist_on_end = vec3_dot(&p, &p);
+		if (cylinder->radius2 < dist_on_end)
+			return (false);
+		return (true);
+	}
+	else if (test_intersection_with_plane(ray, &cylinder->top, intersect_info)
+		&& intersect_info->sub_part_id == 0)
+	{
+		intersect_info->sub_part_id = 2;
+		p = ray->pos;
+		vec3_linear_transform(&p, intersect_info->distance, &ray->vec);
+		vec3_substract(&p, &cylinder->top.pos);
 		dist_on_end = vec3_dot(&p, &p);
 		if (cylinder->radius2 < dist_on_end)
 			return (false);
@@ -123,12 +136,25 @@ static bool	_test_intersection_with_cylinder_top(
 	t_vec3	p;
 	float	dist_on_end;
 
-	if (test_intersection_with_plane(ray, &cylinder->top, intersect_info))
+	if (test_intersection_with_plane(ray, &cylinder->top, intersect_info)
+		&& intersect_info->sub_part_id == 0)
 	{
 		intersect_info->sub_part_id = 2;
 		p = ray->pos;
 		vec3_linear_transform(&p, intersect_info->distance, &ray->vec);
 		vec3_substract(&p, &cylinder->top.pos);
+		dist_on_end = vec3_dot(&p, &p);
+		if (cylinder->radius2 < dist_on_end)
+			return (false);
+		return (true);
+	}
+	else if (test_intersection_with_plane(ray, &cylinder->bot, intersect_info)
+			&& intersect_info->sub_part_id == 0)
+	{
+		intersect_info->sub_part_id = 1;
+		p = ray->pos;
+		vec3_linear_transform(&p, intersect_info->distance, &ray->vec);
+		vec3_substract(&p, &cylinder->bot.pos);
 		dist_on_end = vec3_dot(&p, &p);
 		if (cylinder->radius2 < dist_on_end)
 			return (false);

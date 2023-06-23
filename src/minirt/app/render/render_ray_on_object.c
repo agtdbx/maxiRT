@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 20:23:03 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 11:10:46 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ t_color	render_ray_on_object(
 	t_color	color;
 	t_vec2	pixel_pos;
 
-	if (intersected_object->type == OBJ_CYLINDER)
-		DEBUG("id touch %i, dst %f\n", intersect_info->sub_part_id,
-			intersect_info->distance);
 	compute_normal_ray(intersected_object, ray, intersect_info, &normal);
 	pixel_pos = get_object_pixel_pos(intersected_object, ray, &normal);
 	compute_normal_map(intersected_object, &pixel_pos, &normal);
