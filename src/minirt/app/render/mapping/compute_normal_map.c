@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_normal_map.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/23 20:07:40 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:37:06 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ static void	compute_normal_base_cube(
 				t_cube const *cube,
 				t_intersect_info const *intersect_info)
 {
+	(void)intersect_info;
+	(void)cube;
 	// TODO faire en sorte que ca rotate pour les diffentes face
 	if (normal_base[2].x != 0.0f || normal_base[2].y != 0.0f)
 		normal_base[1] = (t_vec3){-normal_base[2].y, normal_base[2].x, 0.0f};

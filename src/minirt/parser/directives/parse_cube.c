@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cube.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 19:47:41 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:38:07 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_error	parse_cube(
 	// obj.texture = mlx_load_png("imgs/gravel_texture.png");
 	obj.color_type = C_COLOR;
 	obj.normal_map = NULL;
-	obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
+	// obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
 	obj.opacity = g_cube_default_opacity;
 	obj.reflection = g_cube_default_reflection;
 	obj.density = g_cube_default_density;
