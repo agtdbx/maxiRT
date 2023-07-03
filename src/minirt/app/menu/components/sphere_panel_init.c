@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera_label_hide.c                                :+:      :+:    :+:   */
+/*   sphere_panel_init.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:39:29 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/03 16:00:23 by tdubois          ###   ########.fr       */
+/*   Created: 2023/07/03 11:10:59 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/03 13:50:32 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/menu/menu.h"
+#include <stdint.h>
 
-#include <stdbool.h>
-
-#include "minirt/app/utils/geometry/geometry.h"
-
-void	camera_label_hide(
+void	sphere_panel_init(
+			mlx_t *mlx,
 			t_menu *menu)
 {
-	menu->camera_label_title->enabled = false;
-	vec3_label_hide(&menu->camera_dir_label);
-	vec3_label_hide(&menu->camera_pos_label);
-	float_label_hide(&menu->camera_fov_label);
+	uint32_t const	pos[2] = {20, 440};
+
+	menu->object_panel.sphere_label.position_label = 
+		vec3_label_init(mlx, menu, "position: ", pos);
+	float_label_init(&menu->object_panel.sphere_label.diameter_label,
+		"diameter: ", (uint32_t[2]){pos[0] + 180, pos[1]});
 }

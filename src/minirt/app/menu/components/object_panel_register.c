@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:11:36 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 19:11:45 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/03 13:48:03 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	object_panel_register(
 	menu->object_panel.reflection_label.f = &object->reflection;
 	if (object->type == OBJ_SPHERE)
 	{
+		menu->object_panel.object_type = OBJ_SPHERE;
 		menu->object_panel.title = menu->object_panel.sphere_title;
-		// TODO: geometry specifics
+		sphere_panel_register(menu, &object->value.as_sphere);
+		sphere_panel_show(menu);
 	}
 	// object_panel_hide(menu);
 	object_panel_show(menu);

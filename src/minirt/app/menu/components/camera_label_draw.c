@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:51:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:53:44 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/03 16:01:23 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void	camera_label_draw(
 		menu->background->instances->x + 20;
 	vec3_label_draw(mlx, menu, &menu->camera_dir_label);
 	vec3_label_draw(mlx, menu, &menu->camera_pos_label);
+	float_label_draw(mlx, menu, &menu->camera_fov_label);
 }

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera_label_hide.c                                :+:      :+:    :+:   */
+/*   sphere_panel_register.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:39:29 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/03 16:00:23 by tdubois          ###   ########.fr       */
+/*   Created: 2023/07/03 11:57:08 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/03 12:00:48 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/menu/menu.h"
 
-#include <stdbool.h>
+#include "minirt/app/scene/scene.h"
 
-#include "minirt/app/utils/geometry/geometry.h"
-
-void	camera_label_hide(
-			t_menu *menu)
+void	sphere_panel_register(
+			t_menu *menu,
+			t_sphere *sphere)
 {
-	menu->camera_label_title->enabled = false;
-	vec3_label_hide(&menu->camera_dir_label);
-	vec3_label_hide(&menu->camera_pos_label);
-	float_label_hide(&menu->camera_fov_label);
+	menu->object_panel.sphere_label.position_label.label_x.f = &sphere->pos.x;
+	menu->object_panel.sphere_label.position_label.label_y.f = &sphere->pos.y;
+	menu->object_panel.sphere_label.position_label.label_z.f = &sphere->pos.z;
+	menu->object_panel.sphere_label.diameter_label.f = &sphere->diameter;
 }

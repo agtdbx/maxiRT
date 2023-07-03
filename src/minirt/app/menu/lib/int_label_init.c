@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera_label_hide.c                                :+:      :+:    :+:   */
+/*   int_label_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 17:39:29 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/03 16:00:23 by tdubois          ###   ########.fr       */
+/*   Created: 2023/07/03 10:14:02 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/03 10:15:09 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/menu/menu.h"
 
-#include <stdbool.h>
+#include <stdint.h>
 
-#include "minirt/app/utils/geometry/geometry.h"
-
-void	camera_label_hide(
-			t_menu *menu)
+void	int_label_init(
+			t_int_label *label,
+			char const *prefix,
+			uint32_t const pos[2])
 {
-	menu->camera_label_title->enabled = false;
-	vec3_label_hide(&menu->camera_dir_label);
-	vec3_label_hide(&menu->camera_pos_label);
-	float_label_hide(&menu->camera_fov_label);
+	label->prefix = prefix;
+	label->x = pos[0];
+	label->y = pos[1];
+	label->f = NULL;
+	label->img = NULL;
 }

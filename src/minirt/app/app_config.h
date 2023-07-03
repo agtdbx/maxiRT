@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 13:04:37 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/03 16:16:09 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static const int32_t	g_window_height = 1080;
 static const int32_t	g_menu_width = 400;
 static const int32_t	g_menu_background_color = 0x333333FF;
 static const int32_t	g_menu_dividers_color = 0x666666FF;
-static const int32_t	g_menu_divider_1_y = 140;
-static const int32_t	g_menu_divider_2_y = 280;
+static const int32_t	g_menu_divider_1_y = 160;
+static const int32_t	g_menu_divider_2_y = 300;
 
 //---- REFLECTION_CONSTANTS --------------------------------------------------//
 

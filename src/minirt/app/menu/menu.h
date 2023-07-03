@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 18:41:16 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:57:38 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,16 @@ typedef struct s_color_label
 	t_int_label	label_b;
 }	t_color_label;
 
+typedef struct s_sphere_panel
+{
+	t_vec3_label	position_label;
+	t_float_label	diameter_label;
+}	t_sphere_panel;
+
 typedef struct s_object_panel
 {
 	bool			is_enabled;
+	t_object_t		object_type;
 
 	mlx_image_t		*title;
 	mlx_image_t		*sphere_title;
@@ -70,6 +77,9 @@ typedef struct s_object_panel
 	t_float_label	opacity_label;
 	t_float_label	density_label;
 	t_float_label	reflection_label;
+
+	t_sphere_panel	sphere_label;
+
 }	t_object_panel;
 
 typedef struct s_light_panel
@@ -86,6 +96,8 @@ typedef struct s_menu
 	mlx_image_t		*camera_label_title;
 	t_vec3_label	camera_pos_label;
 	t_vec3_label	camera_dir_label;
+	t_float_label	camera_fov_label;
+
 
 	mlx_image_t		*ambient_label_title;
 	t_color_label	ambient_color_label;
@@ -161,10 +173,30 @@ void	object_panel_register(
 			t_menu *menu,
 			t_object *object);
 
+/// sphere_panel
+
+void	sphere_panel_init(
+			mlx_t *mlx,
+			t_menu *menu);
+void	sphere_panel_show(
+			t_menu *menu);
+void	sphere_panel_hide(
+			t_menu *menu);
+void	sphere_panel_draw(
+			mlx_t *mlx,
+			t_menu *menu);
+void	sphere_panel_register(
+			t_menu *menu,
+			t_sphere *sphere);
+
 //---- LIB --------------------------------------------------------------------#
 
 /// float_label
 
+void	float_label_init(
+			t_float_label *label,
+			char const *str,
+			uint32_t pos[2]);
 void	float_label_show(
 			t_float_label *label);
 void	float_label_hide(
@@ -176,6 +208,11 @@ void	float_label_draw(
 
 /// vec3_label
 
+t_vec3_label	vec3_label_init(
+					mlx_t *mlx,
+					t_menu *menu,
+					char const *title,
+					uint32_t const pos[2]);
 void	vec3_label_show(
 			t_vec3_label *label);
 void	vec3_label_hide(
@@ -187,6 +224,10 @@ void	vec3_label_draw(
 
 /// int_label
 
+void	int_label_init(
+			t_int_label *label,
+			char const *prefix,
+			uint32_t const pos[2]);
 void	int_label_show(
 			t_int_label *label);
 void	int_label_hide(
@@ -198,6 +239,11 @@ void	int_label_draw(
 
 /// color_label
 
+void	color_label_init(
+			mlx_t *mlx,
+			t_menu *menu,
+			t_color_label *label,
+			uint32_t const pos[2]);
 void	color_label_show(
 			t_color_label *label);
 void	color_label_hide(
