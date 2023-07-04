@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:58:24 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/23 19:37:34 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:15:26 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,59 +212,44 @@ static t_vec2	get_cube_pixel_pos(
 	t_vec2	pixel;
 	t_vec3	p;
 
+	p = normal->pos;
 	if (intersect_info->sub_part_id == 0)
 	{
-		//TODO Pour la taille le 3.0f
-		p = normal->pos;
 		vec3_substract(&p, &cube->right.pos);
-		pixel.x = vec3_dot(&cube->z_axis, &p) / 3.0f;
-		pixel.y = vec3_dot(&cube->y_axis, &p) / 3.0f;
+		pixel.x = -vec3_dot(&cube->z_axis, &p) / cube->depth;
+		pixel.y = -vec3_dot(&cube->y_axis, &p) / cube->height;
 	}
 	else if (intersect_info->sub_part_id == 1)
 	{
-		p = normal->pos;
 		vec3_substract(&p, &cube->left.pos);
-		pixel.x = vec3_dot(&cube->z_axis, &p) / 3.0f;
-		pixel.y = vec3_dot(&cube->y_axis, &p) / 3.0f;
+		pixel.x = vec3_dot(&cube->z_axis, &p) / cube->depth;
+		pixel.y = -vec3_dot(&cube->y_axis, &p) / cube->height;
 	}
 	else if (intersect_info->sub_part_id == 2)
 	{
-		p = normal->pos;
 		vec3_substract(&p, &cube->top.pos);
-		pixel.x = vec3_dot(&cube->x_axis, &p) / 3.0f;
-		pixel.y = vec3_dot(&cube->z_axis, &p) / 3.0f;
+		pixel.x = vec3_dot(&cube->x_axis, &p) / cube->witdh;
+		pixel.y = vec3_dot(&cube->z_axis, &p) / cube->depth;
 	}
 	else if (intersect_info->sub_part_id == 3)
 	{
-		p = normal->pos;
 		vec3_substract(&p, &cube->bot.pos);
-		pixel.x = vec3_dot(&cube->x_axis, &p) / 3.0f;
-		pixel.y = vec3_dot(&cube->z_axis, &p) / 3.0f;
+		pixel.x = vec3_dot(&cube->x_axis, &p) / cube->witdh;
+		pixel.y = -vec3_dot(&cube->z_axis, &p) / cube->depth;
 	}
 	else if (intersect_info->sub_part_id == 4)
 	{
-		p = normal->pos;
 		vec3_substract(&p, &cube->front.pos);
-		pixel.x = vec3_dot(&cube->x_axis, &p) / 3.0f;
-		pixel.y = vec3_dot(&cube->y_axis, &p) / 3.0f;
+		pixel.x = vec3_dot(&cube->x_axis, &p) / cube->witdh;
+		pixel.y = -vec3_dot(&cube->y_axis, &p) / cube->height;
 	}
 	else
 	{
-		p = normal->pos;
 		vec3_substract(&p, &cube->back.pos);
-		pixel.x = vec3_dot(&cube->x_axis, &p) / 3.0f;
-		pixel.y = vec3_dot(&cube->y_axis, &p) / 3.0f;
+		pixel.x = -vec3_dot(&cube->x_axis, &p) / cube->witdh;
+		pixel.y = -vec3_dot(&cube->y_axis, &p) / cube->height;
 	}
-
-	pixel.x -= (int)pixel.x;
-	if (pixel.x > 0.0f)
-		pixel.x = 1.0f - pixel.x;
-	else
-		pixel.x = fabs(pixel.x);
-	pixel.y -= (int)pixel.y;
-	if (pixel.y > 0.0f)
-		pixel.y = 1.0f - pixel.y;
-	else
-		pixel.y = fabs(pixel.y);
+	pixel.x += 0.5f;
+	pixel.y += 0.5f;
 	return (pixel);
 }
