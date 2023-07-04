@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/04 15:16:59 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:37:17 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,10 @@ t_error	parse_cube(
 		return (FAILURE);
 	obj.type = OBJ_CUBE;
 	obj.texture = NULL;
-	// obj.texture = mlx_load_png("imgs/gravel_texture.png");
 	// obj.texture = mlx_load_png("imgs/Stylized_Stone_texture.png");
-	// obj.texture = mlx_load_png("imgs/test.png");
 	obj.color_type = C_COLOR;
 	obj.normal_map = NULL;
-	// obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
-	obj.normal_map = mlx_load_png("imgs/Stylized_Stone_normal.png");
+	// obj.normal_map = mlx_load_png("imgs/Stylized_Stone_normal.png");
 	obj.opacity = g_cube_default_opacity;
 	obj.reflection = g_cube_default_reflection;
 	obj.density = g_cube_default_density;

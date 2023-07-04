@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 18:59:05 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/04 19:35:27 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 #include <math.h>
 
 #include "minirt/app/utils/geometry/geometry.h"
-
-#include "minirt/debug/debug.h"
-
 
 static bool	intersection_with_right(
 				t_ray const *ray,
@@ -66,18 +63,12 @@ bool	test_intersection_with_cube(
 	test.distance = 0.0f;
 	test.sub_part_id = -1;
 	is_face_intersect = false;
-	is_face_intersect = is_face_intersect
-						|| intersection_with_right(ray, cube, &test);
-	is_face_intersect = is_face_intersect
-						|| intersection_with_left(ray, cube, &test);
-	is_face_intersect = is_face_intersect
-						|| intersection_with_top(ray, cube, &test);
-	is_face_intersect = is_face_intersect
-						|| intersection_with_bot(ray, cube, &test);
-	is_face_intersect = is_face_intersect
-						|| intersection_with_front(ray, cube, &test);
-	is_face_intersect = is_face_intersect
-						|| intersection_with_back(ray, cube, &test);
+	is_face_intersect += intersection_with_right(ray, cube, &test);
+	is_face_intersect += intersection_with_left(ray, cube, &test);
+	is_face_intersect += intersection_with_top(ray, cube, &test);
+	is_face_intersect += intersection_with_bot(ray, cube, &test);
+	is_face_intersect += intersection_with_front(ray, cube, &test);
+	is_face_intersect += intersection_with_back(ray, cube, &test);
 	if (is_face_intersect)
 	{
 		intersect_info->distance = test.distance;
@@ -138,7 +129,7 @@ static bool	intersection_with_left(
 		vec3_substract(&p, &cube->left.pos);
 		// Recupere les coordonee du point sur le plan
 		pixel_pos.x = vec3_dot(&cube->z_axis, &p);
-		if (pixel_pos.x < -cube->half_depth|| cube->half_depth < pixel_pos.x)
+		if (pixel_pos.x < -cube->half_depth || cube->half_depth < pixel_pos.x)
 			return (false);
 		pixel_pos.y = vec3_dot(&cube->y_axis, &p);
 		if (pixel_pos.y < -cube->half_height || cube->half_height < pixel_pos.y)
@@ -172,7 +163,7 @@ static bool	intersection_with_top(
 		vec3_substract(&p, &cube->top.pos);
 		// Recupere les coordonee du point sur le plan
 		pixel_pos.x = vec3_dot(&cube->x_axis, &p);
-		if (pixel_pos.x < -cube->half_witdh|| cube->half_witdh < pixel_pos.x)
+		if (pixel_pos.x < -cube->half_witdh || cube->half_witdh < pixel_pos.x)
 			return (false);
 		pixel_pos.y = vec3_dot(&cube->z_axis, &p);
 		if (pixel_pos.y < -cube->half_depth || cube->half_depth < pixel_pos.y)
@@ -206,7 +197,7 @@ static bool	intersection_with_bot(
 		vec3_substract(&p, &cube->bot.pos);
 		// Recupere les coordonee du point sur le plan
 		pixel_pos.x = vec3_dot(&cube->x_axis, &p);
-		if (pixel_pos.x < -cube->half_witdh|| cube->half_witdh < pixel_pos.x)
+		if (pixel_pos.x < -cube->half_witdh || cube->half_witdh < pixel_pos.x)
 			return (false);
 		pixel_pos.y = vec3_dot(&cube->z_axis, &p);
 		if (pixel_pos.y < -cube->half_depth || cube->half_depth < pixel_pos.y)
@@ -240,7 +231,7 @@ static bool	intersection_with_front(
 		vec3_substract(&p, &cube->front.pos);
 		// Recupere les coordonee du point sur le plan
 		pixel_pos.x = vec3_dot(&cube->x_axis, &p);
-		if (pixel_pos.x < -cube->half_witdh|| cube->half_witdh < pixel_pos.x)
+		if (pixel_pos.x < -cube->half_witdh || cube->half_witdh < pixel_pos.x)
 			return (false);
 		pixel_pos.y = vec3_dot(&cube->y_axis, &p);
 		if (pixel_pos.y < -cube->half_height || cube->half_height < pixel_pos.y)
@@ -274,7 +265,7 @@ static bool	intersection_with_back(
 		vec3_substract(&p, &cube->back.pos);
 		// Recupere les coordonee du point sur le plan
 		pixel_pos.x = vec3_dot(&cube->x_axis, &p);
-		if (pixel_pos.x < -cube->half_witdh|| cube->half_witdh < pixel_pos.x)
+		if (pixel_pos.x < -cube->half_witdh || cube->half_witdh < pixel_pos.x)
 			return (false);
 		pixel_pos.y = vec3_dot(&cube->y_axis, &p);
 		if (pixel_pos.y < -cube->half_height || cube->half_height < pixel_pos.y)

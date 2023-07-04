@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/23 18:05:54 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:38:46 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,19 @@ void	cube_compute_constants(
 	// Bot
 	cube->bot.pos = cube->pos;
 	vec3_linear_transform(
-		&cube->bot.pos, cube->half_witdh, &rev_y_axis);
+		&cube->bot.pos, cube->half_height, &rev_y_axis);
 	cube->bot.normal = rev_y_axis;
 	cube->bot.rev_normal = cube->y_axis;
 	// Front
 	cube->front.pos = cube->pos;
 	vec3_linear_transform(
-		&cube->front.pos, cube->half_witdh, &cube->z_axis);
+		&cube->front.pos, cube->half_depth, &cube->z_axis);
 	cube->front.normal = cube->z_axis;
 	cube->front.rev_normal = rev_z_axis;
 	// Back
 	cube->back.pos = cube->pos;
 	vec3_linear_transform(
-		&cube->back.pos, cube->half_witdh, &rev_z_axis);
+		&cube->back.pos, cube->half_depth, &rev_z_axis);
 	cube->back.normal = rev_z_axis;
 	cube->back.rev_normal = cube->z_axis;
 }
