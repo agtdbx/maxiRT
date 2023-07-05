@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/04 18:37:17 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:23:38 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_error	parse_cube(
 		|| parse_field(state, &g_diameter, &cube->depth) == FAILURE
 		|| parse_field(state, &g_color, &obj.color) == FAILURE)
 		return (FAILURE);
-	// TODO Les deux axes ne sont pas bon
+	// TODO Message erreur si les deux axes ne sont pas bon
 	if (vec3_dot(&cube->x_axis, &cube->y_axis) != 0.0f)
 		return (FAILURE);
 	obj.type = OBJ_CUBE;

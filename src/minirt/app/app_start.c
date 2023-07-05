@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 18:06:57 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 13:26:11 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_error	app_start(
 	{
 		render_canvas(&app, true);
 		mlx_loop(app.mlx);
+		mlx_terminate(app.mlx);
 		//TODO(tdubois): cleanup
 		return (SUCCESS);
 	}
