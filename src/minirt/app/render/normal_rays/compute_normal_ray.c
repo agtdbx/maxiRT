@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:39:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 15:09:54 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:48:17 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ static void	_compute_normal_ray_on_cone(
 				t_ray const *ray,
 				t_intersect_info const *intersect_info,
 				t_ray *normal);
+static void	_compute_normal_ray_on_cube(
+				t_object const *cube,
+				t_ray const *ray,
+				t_intersect_info const *intersect_info,
+				t_ray *normal);
 
 
 /**
@@ -59,6 +64,8 @@ void	compute_normal_ray(
 		_compute_normal_ray_on_cylinder(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_CONE)
 		_compute_normal_ray_on_cone(object, ray, intersect_info, normal);
+	else if (object->type == OBJ_CUBE)
+		_compute_normal_ray_on_cube(object, ray, intersect_info, normal);
 	else
 		*normal = (t_ray){ 0 };
 }
@@ -159,4 +166,28 @@ static void	_compute_normal_ray_on_cone(
 		normal->vec = vec;
 		vec3_normalize(&normal->vec);
 	}
+}
+
+static void	_compute_normal_ray_on_cube(
+				t_object const *cube,
+				t_ray const *ray,
+				t_intersect_info const *intersect_info,
+				t_ray *normal)
+{
+	t_cube const *const	geometry = &cube->value.as_cube;
+
+	normal->pos = ray->pos;
+	vec3_linear_transform(&normal->pos, intersect_info->distance, &ray->vec);
+	if (intersect_info->sub_part_id == 0)
+		normal->vec = geometry->right.normal;
+	else if (intersect_info->sub_part_id == 1)
+		normal->vec = geometry->left.normal;
+	else if (intersect_info->sub_part_id == 2)
+		normal->vec = geometry->top.normal;
+	else if (intersect_info->sub_part_id == 3)
+		normal->vec = geometry->bot.normal;
+	else if (intersect_info->sub_part_id == 4)
+		normal->vec = geometry->front.normal;
+	else
+		normal->vec = geometry->back.normal;
 }

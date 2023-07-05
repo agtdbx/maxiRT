@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_plane.c                                      :+:      :+:    :+:   */
+/*   parse_cube.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/04 15:01:09 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/04 18:37:17 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,32 @@
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/app_config.h"
 
-t_error	parse_plane(
+t_error	parse_cube(
 			t_parser_state *state)
 {
-	t_object		obj;
-	t_plane *const	plane = &obj.value.as_plane;
+	t_object	obj;
+	t_cube	*const cube = &obj.value.as_cube;
 
 	ft_bzero(&obj, sizeof(t_object));
-	if (parse_field(state, &g_position, &plane->pos) == FAILURE
-		|| parse_field(state, &g_direction, &plane->normal) == FAILURE
+	if (parse_field(state, &g_position, &cube->pos) == FAILURE
+		|| parse_field(state, &g_direction, &cube->x_axis) == FAILURE
+		|| parse_field(state, &g_direction, &cube->y_axis) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->witdh) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->height) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->depth) == FAILURE
 		|| parse_field(state, &g_color, &obj.color) == FAILURE)
 		return (FAILURE);
-	obj.type = OBJ_PLANE;
+	// TODO Les deux axes ne sont pas bon
+	if (vec3_dot(&cube->x_axis, &cube->y_axis) != 0.0f)
+		return (FAILURE);
+	obj.type = OBJ_CUBE;
 	obj.texture = NULL;
 	// obj.texture = mlx_load_png("imgs/Stylized_Stone_texture.png");
 	obj.color_type = C_COLOR;
 	obj.normal_map = NULL;
-	// obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
 	// obj.normal_map = mlx_load_png("imgs/Stylized_Stone_normal.png");
-	obj.opacity = g_plane_default_opacity;
-	obj.reflection = g_plane_default_reflection;
-	obj.density = g_plane_default_density;
+	obj.opacity = g_cube_default_opacity;
+	obj.reflection = g_cube_default_reflection;
+	obj.density = g_cube_default_density;
 	return (scene_add_object(state->scene, &obj));
 }

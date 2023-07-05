@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 13:53:14 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:51:14 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ t_error	parse_cylinder(
 			t_parser_state *state);
 
 t_error	parse_cone(
+			t_parser_state *state);
+
+t_error	parse_cube(
 			t_parser_state *state);
 
 //**** PARSER ERROR LOGGING **************************************************//

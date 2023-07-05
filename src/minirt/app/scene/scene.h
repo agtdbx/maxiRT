@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 13:54:51 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:07:03 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_cylinder
 void			cylinder_compute_constants(
 					t_cylinder *cylinder);
 
-//---- CYLINDER --------------------------------------------------------------//
+//---- CONE ------------------------------------------------------------------//
 
 typedef struct s_cone
 {
@@ -86,6 +86,33 @@ typedef struct s_cone
 
 void			cone_compute_constants(
 					t_cone *cone);
+
+//---- CUBE ------------------------------------------------------------------//
+
+typedef struct s_cube
+{
+	t_vec3	pos;
+	float	witdh;
+	float	height;
+	float	depth;
+	t_vec3	x_axis;
+	t_vec3	y_axis;
+
+	t_vec3	z_axis;
+	t_plane	front;
+	t_plane	back;
+	t_plane	top;
+	t_plane	bot;
+	t_plane	left;
+	t_plane	right;
+	float	half_witdh;
+	float	half_height;
+	float	half_depth;
+
+}	t_cube;
+
+void			cube_compute_constants(
+					t_cube *cube);
 
 //---- COLOR INTERFACE -------------------------------------------------------//
 
@@ -104,6 +131,7 @@ typedef enum e_object_t
 	OBJ_PLANE,
 	OBJ_CYLINDER,
 	OBJ_CONE,
+	OBJ_CUBE,
 }	t_object_t;
 
 typedef union u_object_v
@@ -112,6 +140,7 @@ typedef union u_object_v
 	t_plane		as_plane;
 	t_cylinder	as_cylinder;
 	t_cone		as_cone;
+	t_cube		as_cube;
 }	t_object_v;
 
 typedef struct s_object
