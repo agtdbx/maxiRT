@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:08:47 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/21 17:15:00 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:48:25 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	apply_normal_map(
 		return ;
 	space_between_color = normal_map->bytes_per_pixel / 3;
 	ratio = compute_ratio_pos_pixel(normal_map, pixel_pos, x, y);
-
 	normals[0] = get_pixel_normal(normal_map, x[0], y[0], space_between_color);
 	normals[1] = get_pixel_normal(normal_map, x[1], y[0], space_between_color);
 	normals[2] = get_pixel_normal(normal_map, x[0], y[1], space_between_color);
@@ -94,8 +93,10 @@ static t_vec3	get_pixel_normal(
 
 	pixel_index = texture->width * y + x;
 	normal.x = texture->pixels[pixel_index * texture->bytes_per_pixel] / 255.0f;
-	normal.y = texture->pixels[pixel_index * texture->bytes_per_pixel + space_between_color] / 255.0f;
-	normal.z = texture->pixels[pixel_index * texture->bytes_per_pixel + (space_between_color * 2)] / 255.0f;
+	normal.y = texture->pixels[pixel_index * texture->bytes_per_pixel
+		+ space_between_color] / 255.0f;
+	normal.z = texture->pixels[pixel_index * texture->bytes_per_pixel
+		+ (space_between_color * 2)] / 255.0f;
 	return (normal);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:35 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 19:05:52 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:12:03 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ int32_t	render_ray_from_camera(
 		fetch_closest_intersection(ray, scene->objects, &intersect_info);
 	if (show_spotlights)
 	{
-		light = _fetch_closer_spotlight(ray, scene->spotlights, &intersect_info);
+		light = _fetch_closer_spotlight(
+				ray, scene->spotlights, &intersect_info);
 		if (light != NULL)
 			return (_render_ray_on_spotlight(light, ray, &intersect_info));
 	}
 	if (intersected_object == NULL)
 		return (g_color_black);
-	pixel_color =
-		render_ray_on_object(scene, intersected_object, ray, &intersect_info);
+	pixel_color = render_ray_on_object(
+			scene, intersected_object, ray, &intersect_info);
 	return (color_to_int(&pixel_color));
 }
 
@@ -76,8 +77,10 @@ static t_light const	*_fetch_closer_spotlight(
 	while (lights != NULL)
 	{
 		light_bulb.pos = lights->pos;
-		if (test_intersection_with_sphere(ray, &light_bulb, &actual_intersect_info)
-			&& !(0 <= intersect_info->distance && intersect_info->distance <= actual_intersect_info.distance))
+		if (test_intersection_with_sphere(
+				ray, &light_bulb, &actual_intersect_info)
+			&& !(0 <= intersect_info->distance && intersect_info->distance
+				<= actual_intersect_info.distance))
 		{
 			intersect_info->distance = actual_intersect_info.distance;
 			intersected_light = lights;

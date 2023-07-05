@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:39:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 18:48:17 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:41:31 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,6 @@
 
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/utils/geometry/geometry.h"
-
-#include "minirt/debug/debug.h"//TODO debug
-
-static void	_compute_normal_ray_on_sphere(
-				t_object const *sphere,
-				t_ray const *ray,
-				float distance,
-				t_ray *normal);
-static void	_compute_normal_ray_on_plane(
-				t_object const *sphere,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal);
-static void	_compute_normal_ray_on_cylinder(
-				t_object const *cylinder,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal);
-static void	_compute_normal_ray_on_cone(
-				t_object const *cone,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal);
-static void	_compute_normal_ray_on_cube(
-				t_object const *cube,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal);
-
 
 /**
  * @param[in] object
@@ -57,137 +28,16 @@ void	compute_normal_ray(
 			t_ray *normal)
 {
 	if (object->type == OBJ_SPHERE)
-		_compute_normal_ray_on_sphere(object, ray, intersect_info->distance, normal);
+		compute_normal_ray_on_sphere(
+			object, ray, intersect_info->distance, normal);
 	else if (object->type == OBJ_PLANE)
-		_compute_normal_ray_on_plane(object, ray, intersect_info, normal);
+		compute_normal_ray_on_plane(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_CYLINDER)
-		_compute_normal_ray_on_cylinder(object, ray, intersect_info, normal);
+		compute_normal_ray_on_cylinder(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_CONE)
-		_compute_normal_ray_on_cone(object, ray, intersect_info, normal);
+		compute_normal_ray_on_cone(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_CUBE)
-		_compute_normal_ray_on_cube(object, ray, intersect_info, normal);
+		compute_normal_ray_on_cube(object, ray, intersect_info, normal);
 	else
-		*normal = (t_ray){ 0 };
-}
-
-static void	_compute_normal_ray_on_sphere(
-				t_object const *sphere,
-				t_ray const *ray,
-				float distance,
-				t_ray *normal)
-{
-	t_sphere const *const	geometry = &sphere->value.as_sphere;
-
-	normal->pos = ray->pos;
-	vec3_linear_transform(&normal->pos, distance, &ray->vec);
-	vec3_substract_into(&normal->vec, &normal->pos, &geometry->pos);
-	vec3_normalize(&normal->vec);
-}
-
-static void	_compute_normal_ray_on_plane(
-				t_object const *plane,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal)
-{
-	t_plane const *const	geometry = &plane->value.as_plane;
-
-	normal->pos = ray->pos;
-	vec3_linear_transform(&normal->pos, intersect_info->distance, &ray->vec);
-	if (intersect_info->sub_part_id == 0)
-		normal->vec = geometry->normal;
-	else
-		normal->vec = geometry->rev_normal;
-}
-
-static void	_compute_normal_ray_on_cylinder(
-				t_object const *cylinder,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal)
-{
-	t_cylinder const *const	geometry = &cylinder->value.as_cylinder;
-	t_vec3	vec;
-	float	dot[2];
-	float	heigth_on_cylinder;
-
-	normal->pos = ray->pos;
-	vec3_linear_transform(&normal->pos, intersect_info->distance, &ray->vec);
-	if (intersect_info->sub_part_id == 1)
-		normal->vec = geometry->bot.normal;
-	else if (intersect_info->sub_part_id == 2)
-		normal->vec = geometry->top.normal;
-	else
-	{
-		vec3_substract_into(&vec, &ray->pos, &geometry->pos);
-		dot[0] = vec3_dot(&ray->vec, &geometry->axis);
-		dot[1] = vec3_dot(&vec, &geometry->axis);
-		heigth_on_cylinder = dot[0] * intersect_info->distance + dot[1];
-		vec = normal->pos;
-		vec3_substract(&vec, &geometry->pos);
-		normal->vec = geometry->axis;
-		vec3_scale(&normal->vec, heigth_on_cylinder);
-		vec3_substract(&vec, &normal->vec);
-		normal->vec = vec;
-		vec3_normalize(&normal->vec);
-	}
-}
-
-
-static void	_compute_normal_ray_on_cone(
-				t_object const *cone,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal)
-{
-	t_cone const *const	geometry = &cone->value.as_cone;
-	float const	k = geometry->radius / geometry->height;
-	float	dot[2];
-	float	heigth_on_cone;
-	float	tmp;
-	t_vec3	vec;
-
-	normal->pos = ray->pos;
-	vec3_linear_transform(&normal->pos, intersect_info->distance, &ray->vec);
-	if (intersect_info->sub_part_id == 1)
-		normal->vec = geometry->end.normal;
-	else
-	{
-		vec3_substract_into(&vec, &ray->pos, &geometry->pos);
-		dot[0] = vec3_dot(&ray->vec, &geometry->axis);
-		dot[1] = vec3_dot(&vec, &geometry->axis);
-		heigth_on_cone = dot[0] * intersect_info->distance + dot[1];
-		tmp = 1.0f + (k * k);
-		vec = normal->pos;
-		vec3_substract(&vec, &geometry->pos);
-		normal->vec = geometry->axis;
-		vec3_scale(&normal->vec, heigth_on_cone * tmp);
-		vec3_substract(&vec, &normal->vec);
-		normal->vec = vec;
-		vec3_normalize(&normal->vec);
-	}
-}
-
-static void	_compute_normal_ray_on_cube(
-				t_object const *cube,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal)
-{
-	t_cube const *const	geometry = &cube->value.as_cube;
-
-	normal->pos = ray->pos;
-	vec3_linear_transform(&normal->pos, intersect_info->distance, &ray->vec);
-	if (intersect_info->sub_part_id == 0)
-		normal->vec = geometry->right.normal;
-	else if (intersect_info->sub_part_id == 1)
-		normal->vec = geometry->left.normal;
-	else if (intersect_info->sub_part_id == 2)
-		normal->vec = geometry->top.normal;
-	else if (intersect_info->sub_part_id == 3)
-		normal->vec = geometry->bot.normal;
-	else if (intersect_info->sub_part_id == 4)
-		normal->vec = geometry->front.normal;
-	else
-		normal->vec = geometry->back.normal;
+		*normal = (t_ray){0};
 }

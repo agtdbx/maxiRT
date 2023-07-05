@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/04 16:43:12 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:47:07 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	compute_normal_map(
 	normal->vec.y = (normal->vec.y * 2.0f) - 1.0f;
 	normal->vec.z = (normal->vec.z * 2.0f) - 1.0f;
 	normal->vec = mat_product(&normal_base[0],
-							&normal_base[1], &normal_base[2], &normal->vec);
+			&normal_base[1], &normal_base[2], &normal->vec);
 	vec3_normalize(&normal->vec);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:08:47 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/04 15:13:26 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:49:48 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ t_color	apply_texture(
 	int			space_between_color;
 
 	if (!texture)
-		return apply_texture_not_found(pixel_pos);
+		return (apply_texture_not_found(pixel_pos));
 	space_between_color = texture->bytes_per_pixel / 3;
 	ratio = compute_ratio_pos_pixel(texture, pixel_pos, x, y);
-
 	colors[0] = get_pixel_color(texture, x[0], y[0], space_between_color);
 	colors[1] = get_pixel_color(texture, x[1], y[0], space_between_color);
 	colors[2] = get_pixel_color(texture, x[0], y[1], space_between_color);
@@ -53,7 +52,7 @@ static t_color	apply_texture_not_found(t_vec2 const *pixel_pos)
 {
 	t_color	res;
 
-	res = (t_color){ 0 };
+	res = (t_color){0};
 	if (((int)(pixel_pos->x * 8.0f) + (int)(pixel_pos->y * 8.0f)) % 2)
 	{
 		res.r = 255;
@@ -106,8 +105,10 @@ static t_color	get_pixel_color(
 
 	pixel_index = texture->width * y + x;
 	color.r = texture->pixels[pixel_index * texture->bytes_per_pixel];
-	color.g = texture->pixels[pixel_index * texture->bytes_per_pixel + space_between_color];
-	color.b = texture->pixels[pixel_index * texture->bytes_per_pixel + (space_between_color * 2)];
+	color.g = texture->pixels[pixel_index * texture->bytes_per_pixel
+		+ space_between_color];
+	color.b = texture->pixels[pixel_index * texture->bytes_per_pixel
+		+ (space_between_color * 2)];
 	return (color);
 }
 

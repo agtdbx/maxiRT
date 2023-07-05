@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/04 18:12:48 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:37:21 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/color/color.h"
 
-#include "minirt/debug/debug.h"//TODO debug
-
 static t_color	compute_object_without_effect_color(
-			t_object const *intersected_object,
-			t_scene const *scene,
-			t_ray const *ray,
-			t_ray const *normal,
-			t_vec2 const *pixel_pos);
+					t_object const *intersected_object,
+					t_scene const *scene,
+					t_ray const *ray,
+					t_ray const *normal,
+					t_vec2 const *pixel_pos);
 static t_color	merge_color(
 					t_object const *object,
 					t_color const *in_color,
@@ -44,7 +42,8 @@ t_color	render_ray_on_object(
 	t_vec2	pixel_pos;
 
 	compute_normal_ray(intersected_object, ray, intersect_info, &normal);
-	pixel_pos = get_object_pixel_pos(intersected_object, ray, &normal, intersect_info);
+	pixel_pos = get_object_pixel_pos(
+			intersected_object, ray, &normal, intersect_info);
 	compute_normal_map(intersected_object, intersect_info, &pixel_pos, &normal);
 	color = compute_object_without_effect_color(
 			intersected_object, scene, ray, &normal, &pixel_pos);
@@ -53,11 +52,10 @@ t_color	render_ray_on_object(
 	reflected_color = compute_reflected_color(
 			intersected_object, scene, ray, &normal);
 	color = merge_color(intersected_object, &color,
-				&refracted_color, &reflected_color);
+			&refracted_color, &reflected_color);
 	return (color);
 }
 
-// Retourne la couleur de l'objet sans la transparence et le reflet
 static t_color	compute_object_without_effect_color(
 			t_object const *intersected_object,
 			t_scene const *scene,
@@ -81,7 +79,6 @@ static t_color	compute_object_without_effect_color(
 	return (color);
 }
 
-// Merge les couleurs
 static t_color	merge_color(
 					t_object const *object,
 					t_color const *in_color,

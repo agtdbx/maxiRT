@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 18:31:13 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:50:27 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ bool	test_intersection_with_plane(
 	else if (denom > -0.000001f)
 	{
 		intersect_info->sub_part_id = 1;
-		intersect_info->distance = vec3_dot(&vec, &plane->rev_normal) / (-denom);
+		intersect_info->distance
+			= vec3_dot(&vec, &plane->rev_normal) / (-denom);
 		if (intersect_info->distance < 0.0f)
 			return (false);
 		return (true);

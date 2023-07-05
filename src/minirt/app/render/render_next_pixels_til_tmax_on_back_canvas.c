@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_next_pixels_til_tmax_on_back_canvas.c       :+:      :+:    :+:   */
+/*   render_next_pixels_til_tmax_on_back_canvas.        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 17:50:05 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 16:08:02 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/05 20:12:26 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,3 @@ static void	_render_one_pixel_on_back_canvas(
 	color = render_ray_from_camera(scene, &casted_ray, show_spotlights);
 	mlx_put_pixel(canvas->back, coords[0], coords[1], color);
 }
-

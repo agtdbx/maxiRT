@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 12:52:20 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/21 16:10:55 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:46:22 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static t_color	apply_checkboard(
 					float h,
 					t_vec2 const *pixel_pos);
 
-// Retourne la couleur de l'objet sans la transparence et le reflet ni la lumière
 t_color	get_base_color_object(
 			t_object const *intersected_object,
 			t_vec2 const *pixel_pos)
@@ -34,7 +33,7 @@ static t_color	apply_checkboard(float w, float h, t_vec2 const *pixel_pos)
 {
 	t_color	res;
 
-	res = (t_color){ 0 };
+	res = (t_color){0};
 	if (((int)(pixel_pos->x * w) + (int)(pixel_pos->y * h)) % 2)
 	{
 		res.r = 255;

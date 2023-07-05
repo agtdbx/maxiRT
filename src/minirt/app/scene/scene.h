@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 18:07:03 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:45:12 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,9 +184,9 @@ typedef struct s_camera
 	float	focal;
 }	t_camera;
 
-void		camera_compute_constants(
-				t_canvas const *canvas,
-				t_camera *camera);
+void			camera_compute_constants(
+					t_canvas const *canvas,
+					t_camera *camera);
 
 //---- SCENE -----------------------------------------------------------------//
 
@@ -198,11 +198,11 @@ typedef struct s_scene
 	t_camera	*camera;
 }	t_scene;
 
-t_error		scene_add_object(
-				t_scene *scene,
-				t_object *obj);
+t_error			scene_add_object(
+					t_scene *scene,
+					t_object *obj);
 
-void		scene_del(
-				t_scene *scene);
+void			scene_del(
+					t_scene *scene);
 
 #endif//SCENE_H

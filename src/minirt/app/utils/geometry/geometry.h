@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 17:28:00 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:45:29 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ extern float	vec3_dot_xyz(
 					t_vec3 const *vec);
 extern void		vec3_scale(
 					t_vec3 *vec,
+					float scaling_factor);
+extern void		vec3_scale_into(
+					t_vec3 *res,
+					t_vec3 const *restrict vec,
 					float scaling_factor);
 extern void		vec3_add(
 					t_vec3 *restrict vec1,

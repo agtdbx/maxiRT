@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 19:09:07 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:41:29 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,31 @@ void			compute_normal_ray(
 					t_ray const *ray,
 					t_intersect_info const *intersect_info,
 					t_ray *normal);
+void			compute_normal_ray_on_sphere(
+					t_object const *sphere,
+					t_ray const *ray,
+					float distance,
+					t_ray *normal);
+void			compute_normal_ray_on_plane(
+					t_object const *sphere,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
+void			compute_normal_ray_on_cylinder(
+					t_object const *cylinder,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
+void			compute_normal_ray_on_cone(
+					t_object const *cone,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
+void			compute_normal_ray_on_cube(
+					t_object const *cube,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
 
 /// illumination
 
@@ -187,6 +212,11 @@ t_color			compute_refracted_color(
 
 // reflection
 t_color			compute_reflected_color(
+					t_object const *object,
+					t_scene const *scene,
+					t_ray const *ray,
+					t_ray const *normal);
+t_color			reflection_outside_object(
 					t_object const *object,
 					t_scene const *scene,
 					t_ray const *ray,
