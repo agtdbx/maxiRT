@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 17:51:14 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:17:09 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,10 @@ t_error	parse_diameter(
 			t_parser_state *state,
 			void *data);
 
+t_error	parse_png(
+			t_parser_state *state,
+			void *data);
+
 //**** PARSER DIRECTIVES *****************************************************//
 
 typedef t_error				(*t_directive_cb)(t_parser_state *state);
@@ -120,17 +124,47 @@ t_error	parse_spotlight(
 
 t_error	parse_sphere(
 			t_parser_state *state);
+t_error	parse_sphere_checkerboard(
+			t_parser_state *state);
+t_error	parse_sphere_texture(
+			t_parser_state *state);
+t_error	parse_sphere_texture_and_normal(
+			t_parser_state *state);
 
 t_error	parse_plane(
+			t_parser_state *state);
+t_error	parse_plane_checkerboard(
+			t_parser_state *state);
+t_error	parse_plane_texture(
+			t_parser_state *state);
+t_error	parse_plane_texture_and_normal(
 			t_parser_state *state);
 
 t_error	parse_cylinder(
 			t_parser_state *state);
+t_error	parse_cylinder_checkerboard(
+			t_parser_state *state);
+t_error	parse_cylinder_texture(
+			t_parser_state *state);
+t_error	parse_cylinder_texture_and_normal(
+			t_parser_state *state);
 
 t_error	parse_cone(
 			t_parser_state *state);
+t_error	parse_cone_checkerboard(
+			t_parser_state *state);
+t_error	parse_cone_texture(
+			t_parser_state *state);
+t_error	parse_cone_texture_and_normal(
+			t_parser_state *state);
 
 t_error	parse_cube(
+			t_parser_state *state);
+t_error	parse_cube_checkerboard(
+			t_parser_state *state);
+t_error	parse_cube_texture(
+			t_parser_state *state);
+t_error	parse_cube_texture_and_normal(
 			t_parser_state *state);
 
 //**** PARSER ERROR LOGGING **************************************************//

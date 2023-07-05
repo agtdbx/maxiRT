@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sphere.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/24 17:46:09 by auguste          ###   ########.fr       */
+/*   Updated: 2023/07/05 16:42:35 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 t_error	parse_sphere(
 			t_parser_state *state)
 {
-	t_object	obj;
-	t_sphere	*const sphere = &obj.value.as_sphere;
+	t_object		obj;
+	t_sphere *const	sphere = &obj.value.as_sphere;
 
 	ft_bzero(&obj, sizeof(t_object));
 	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
@@ -30,10 +30,75 @@ t_error	parse_sphere(
 		return (FAILURE);
 	obj.type = OBJ_SPHERE;
 	obj.texture = NULL;
-	// obj.texture = mlx_load_png("imgs/gravel_texture.png");
 	obj.color_type = C_COLOR;
 	obj.normal_map = NULL;
-	// obj.normal_map = mlx_load_png("imgs/gravel_normal.png");
+	obj.opacity = g_sphere_default_opacity;
+	obj.reflection = g_sphere_default_reflection;
+	obj.density = g_sphere_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_sphere_checkerboard(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_sphere *const	sphere = &obj.value.as_sphere;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_SPHERE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_CHECKBOARD;
+	obj.normal_map = NULL;
+	obj.opacity = g_sphere_default_opacity;
+	obj.reflection = g_sphere_default_reflection;
+	obj.density = g_sphere_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_sphere_texture(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_sphere *const	sphere = &obj.value.as_sphere;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE
+		|| parse_field(state, &g_png, &obj.texture) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_SPHERE;
+	obj.color = (t_color){0};
+	obj.color_type = C_TEXTURE;
+	obj.normal_map = NULL;
+	obj.opacity = g_sphere_default_opacity;
+	obj.reflection = g_sphere_default_reflection;
+	obj.density = g_sphere_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_sphere_texture_and_normal(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_sphere *const	sphere = &obj.value.as_sphere;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE
+		|| parse_field(state, &g_png, &obj.texture) == FAILURE)
+		return (FAILURE);
+	if (parse_field(state, &g_png, &obj.normal_map) == FAILURE)
+	{
+		mlx_delete_texture(obj.texture);
+		return (FAILURE);
+	}
+	obj.type = OBJ_SPHERE;
+	obj.color = (t_color){0};
+	obj.color_type = C_TEXTURE;
 	obj.opacity = g_sphere_default_opacity;
 	obj.reflection = g_sphere_default_reflection;
 	obj.density = g_sphere_default_density;
