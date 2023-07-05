@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 17:07:31 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:01:25 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,12 @@ static const t_field		g_png = {
 	.identifier = "png",
 	.usage = "png file to load",
 	.callback = parse_png,
+};
+
+static const t_field		g_empty = {
+	.identifier = "empty",
+	.usage = "this field is empty",
+	.callback = NULL,
 };
 
 //**** PARSER ERRORS *********************************************************//
