@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 15:56:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/22 18:40:16 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:00:08 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ t_object const	*fetch_closest_intersection(
 	while (objects != NULL)
 	{
 		if (test_intersection_with_obj(ray, objects, &actual_intersect_info)
-			&& !(0 <= intersect_info->distance && intersect_info->distance <= actual_intersect_info.distance))
+			&& !(0 <= intersect_info->distance
+				&& intersect_info->distance <= actual_intersect_info.distance))
 		{
 			intersect_info->distance = actual_intersect_info.distance;
 			intersect_info->sub_part_id = actual_intersect_info.sub_part_id;

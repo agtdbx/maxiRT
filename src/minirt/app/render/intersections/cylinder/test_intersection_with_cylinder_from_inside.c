@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_intersection_with_cylinder.c                  :+:      :+:    :+:   */
+/*   test_intersection_with_cylinder_from_inside        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 11:10:20 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:21:00 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ static void	_test_intersection_with_cylinder_ends(
 				t_cylinder const *cylinder,
 				t_intersect_info *intersect_info);
 
-// TODO commentaire a changer
 /**
  * Test ray-cylinder intersection. Algorithm is derived from
- * https://en.wikipedia.org/wiki/Line%E2%80%93cylinder_intersection
+ * https://hugi.scene.org/online/hugi24/
+ * coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm
  *
  * @param[in] ray Normalized ray
  * @param[in] cylinder
  * @param[out] distance From ray origin to intersection point
  * @returns Wether ray intersects with cylinder
  */
-bool	test_intersection_with_cylinder(
+bool	test_intersection_with_cylinder_from_inside(
 			t_ray const *ray,
 			t_cylinder const *cylinder,
 			t_intersect_info *intersect_info)
@@ -55,11 +55,9 @@ bool	test_intersection_with_cylinder(
 	vec3_substract_into(&vec, &ray->pos, &cylinder->pos);
 	dot[0] = vec3_dot(&ray->vec, &cylinder->axis);
 	dot[1] = vec3_dot(&vec, &cylinder->axis);
-	// Compute a b c
 	abc[0] = vec3_dot(&ray->vec, &ray->vec) - (dot[0] * dot[0]);
 	abc[1] = (vec3_dot(&ray->vec, &vec) - (dot[0] * dot[1])) * 2.0f;
 	abc[2] = vec3_dot(&vec, &vec) - (dot[1] * dot[1]) - cylinder->radius2;
-	// revolse quadratic
 	discriminant = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (discriminant < 0)
 		return (false);
@@ -73,21 +71,17 @@ bool	test_intersection_with_cylinder(
 	{
 		discriminant = sqrtf(discriminant);
 		denom = 1.0f / (abc[0] * 2.0f);
-		intersect_info->distance = (-abc[1] - discriminant) * denom;
+		intersect_info->distance = (-abc[1] + discriminant) * denom;
 		if (intersect_info->distance < 0.0f)
-		{
-			intersect_info->distance = (-abc[1] + discriminant) * denom;
-			if (intersect_info->distance < 0.0f)
-				return (false);
-		}
+			return (false);
 	}
 	heigth_on_cylinder = dot[0] * intersect_info->distance + dot[1];
 	if (heigth_on_cylinder < -cylinder->half_height)
 		return (_test_intersection_with_cylinder_bot(
-					ray, cylinder, intersect_info));
+				ray, cylinder, intersect_info));
 	else if (cylinder->half_height < heigth_on_cylinder)
 		return (_test_intersection_with_cylinder_top(
-					ray, cylinder, intersect_info));
+				ray, cylinder, intersect_info));
 	intersect_info->sub_part_id = 0;
 	_test_intersection_with_cylinder_ends(ray, cylinder, intersect_info);
 	return (true);
@@ -102,7 +96,7 @@ static bool	_test_intersection_with_cylinder_bot(
 	float	dist_on_end;
 
 	if (test_intersection_with_plane(ray, &cylinder->bot, intersect_info)
-		&& intersect_info->sub_part_id == 0)
+		&& intersect_info->sub_part_id == 1)
 	{
 		intersect_info->sub_part_id = 1;
 		p = ray->pos;
@@ -114,7 +108,7 @@ static bool	_test_intersection_with_cylinder_bot(
 		return (true);
 	}
 	else if (test_intersection_with_plane(ray, &cylinder->top, intersect_info)
-		&& intersect_info->sub_part_id == 0)
+		&& intersect_info->sub_part_id == 1)
 	{
 		intersect_info->sub_part_id = 2;
 		p = ray->pos;
@@ -137,7 +131,7 @@ static bool	_test_intersection_with_cylinder_top(
 	float	dist_on_end;
 
 	if (test_intersection_with_plane(ray, &cylinder->top, intersect_info)
-		&& intersect_info->sub_part_id == 0)
+		&& intersect_info->sub_part_id == 1)
 	{
 		intersect_info->sub_part_id = 2;
 		p = ray->pos;
@@ -149,7 +143,7 @@ static bool	_test_intersection_with_cylinder_top(
 		return (true);
 	}
 	else if (test_intersection_with_plane(ray, &cylinder->bot, intersect_info)
-			&& intersect_info->sub_part_id == 0)
+		&& intersect_info->sub_part_id == 1)
 	{
 		intersect_info->sub_part_id = 1;
 		p = ray->pos;
@@ -173,7 +167,7 @@ static void	_test_intersection_with_cylinder_ends(
 	float				dist_on_end;
 
 	if (test_intersection_with_plane(ray, &cylinder->bot, &test)
-		&& test.distance <= intersect_info->distance && test.sub_part_id == 0)
+		&& test.distance <= intersect_info->distance && test.sub_part_id == 1)
 	{
 		p = ray->pos;
 		vec3_linear_transform(&p, test.distance, &ray->vec);
@@ -186,7 +180,7 @@ static void	_test_intersection_with_cylinder_ends(
 		}
 	}
 	if (test_intersection_with_plane(ray, &cylinder->top, &test)
-		&& test.distance <= intersect_info->distance && test.sub_part_id == 0)
+		&& test.distance <= intersect_info->distance && test.sub_part_id == 1)
 	{
 		p = ray->pos;
 		vec3_linear_transform(&p, test.distance, &ray->vec);

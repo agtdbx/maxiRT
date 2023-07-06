@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 13:26:11 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:25:41 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 
 #include "minirt/app/app_config.h"
 #include "minirt/app/scene/scene.h"
-
 
 static t_error	_app_init(
 					t_app *app,
@@ -45,7 +44,6 @@ t_error	app_start(
 		render_canvas(&app, true);
 		mlx_loop(app.mlx);
 		mlx_terminate(app.mlx);
-		//TODO(tdubois): cleanup
 		return (SUCCESS);
 	}
 	if (mlx_errno != MLX_SUCCESS)

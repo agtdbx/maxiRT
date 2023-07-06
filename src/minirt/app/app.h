@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 16:47:30 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:31:15 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,55 @@ bool			test_intersection_with_cube(
 					t_ray const *ray,
 					t_cube const *cube,
 					t_intersect_info *intersect_info);
+bool			intersection_with_right(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_with_left(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_with_top(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_with_bot(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_with_front(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_with_back(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
 bool			test_intersection_with_cube_from_inside(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_inside_with_right(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_inside_with_left(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_inside_with_top(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_inside_with_bot(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_inside_with_front(
+					t_ray const *ray,
+					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			intersection_inside_with_back(
 					t_ray const *ray,
 					t_cube const *cube,
 					t_intersect_info *intersect_info);

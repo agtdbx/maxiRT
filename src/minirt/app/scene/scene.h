@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 17:11:52 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:29:56 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,9 @@ typedef struct s_object
 
 typedef struct s_light
 {
-	t_vec3	pos;
-	t_color	color;
-	float	brightness;
+	t_vec3			pos;
+	t_color			color;
+	float			brightness;
 
 	struct s_light	*next;
 }	t_light;

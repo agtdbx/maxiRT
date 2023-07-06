@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_intersection_with_cone_from_inside.c          :+:      :+:    :+:   */
+/*   test_intersection_with_cone.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 15:42:38 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:16:21 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,41 +28,37 @@ static void	_test_intersection_with_cone_end_if_it_closer(
 				t_cone const *cone,
 				t_intersect_info *intersect_info);
 
-// TODO commentaire a changer
 /**
- * Test ray-cylinder intersection. Algorithm is derived from
- * https://en.wikipedia.org/wiki/Line%E2%80%93cylinder_intersection
+ * Test ray-cone intersection. Algorithm is derived from
+ * https://hugi.scene.org/online/
+ * hugi24/coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm
  *
  * @param[in] ray Normalized ray
  * @param[in] cylinder
  * @param[out] distance From ray origin to intersection point
- * @returns Wether ray intersects with cylinder
+ * @returns Wether ray intersects with cone
  */
-bool	test_intersection_with_cone_from_inside(
+bool	test_intersection_with_cone(
 			t_ray const *ray,
 			t_cone const *cone,
 			t_intersect_info *intersect_info)
 {
 	float const	k = cone->radius / cone->height;
-	t_vec3	vec;
-	float	dot[2];
-	float	abc[3];
-	float	discriminant;
-	float	denom;
-	float	heigth_on_cone;
+	t_vec3		vec;
+	float		dot[2];
+	float		abc[3];
+	float		discriminant;
+	float		denom;
+	float		heigth_on_cone;
 	float		tmp;
 
 	vec3_substract_into(&vec, &ray->pos, &cone->pos);
 	dot[0] = vec3_dot(&ray->vec, &cone->axis);
 	dot[1] = vec3_dot(&vec, &cone->axis);
 	tmp = 1.0f + (k * k);
-
-	// Compute a b c
 	abc[0] = vec3_dot(&ray->vec, &ray->vec) - (tmp * (dot[0] * dot[0]));
 	abc[1] = (vec3_dot(&ray->vec, &vec) - (tmp * (dot[0] * dot[1]))) * 2.0f;
 	abc[2] = vec3_dot(&vec, &vec) - (tmp * (dot[1] * dot[1]));
-
-	// Revolse quadratic
 	discriminant = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (discriminant < 0)
 		return (false);
@@ -76,15 +72,18 @@ bool	test_intersection_with_cone_from_inside(
 	{
 		discriminant = sqrtf(discriminant);
 		denom = 1.0f / (abc[0] * 2.0f);
-		intersect_info->distance = (-abc[1] + discriminant) * denom;
+		intersect_info->distance = (-abc[1] - discriminant) * denom;
 		if (intersect_info->distance < 0.0f)
-			return (false);
+		{
+			intersect_info->distance = (-abc[1] + discriminant) * denom;
+			if (intersect_info->distance < 0.0f)
+				return (false);
+		}
 	}
-	// Calculate height
 	heigth_on_cone = dot[0] * intersect_info->distance + dot[1];
 	if (cone->height < heigth_on_cone)
 		return (_test_intersection_with_cone_end(
-					ray, cone, intersect_info));
+				ray, cone, intersect_info));
 	intersect_info->sub_part_id = 0;
 	_test_intersection_with_cone_end_if_it_closer(ray, cone, intersect_info);
 	if (intersect_info->sub_part_id == 0 && heigth_on_cone < 0.0f)
@@ -101,7 +100,7 @@ static bool	_test_intersection_with_cone_end(
 	float	dist_on_end;
 
 	if (test_intersection_with_plane(ray, &cone->end, intersect_info)
-		&& intersect_info->sub_part_id == 1)
+		&& intersect_info->sub_part_id == 0)
 	{
 		intersect_info->sub_part_id = 1;
 		p = ray->pos;
@@ -125,7 +124,7 @@ static void	_test_intersection_with_cone_end_if_it_closer(
 	float				dist_on_end;
 
 	if (test_intersection_with_plane(ray, &cone->end, &test)
-		&& test.distance <= intersect_info->distance && test.sub_part_id == 1)
+		&& test.distance <= intersect_info->distance && test.sub_part_id == 0)
 	{
 		p = ray->pos;
 		vec3_linear_transform(&p, test.distance, &ray->vec);

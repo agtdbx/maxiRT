@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_intersection_with_plane.c                     :+:      :+:    :+:   */
+/*   test_intersection_with_cube.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 20:50:27 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:25:52 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,35 @@
 
 #include "minirt/app/utils/geometry/geometry.h"
 
-// TODO Changer ca
 /**
- * Test ray-sphere intersection. Algorithm is derived from
- * https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
+ * Test ray-cube intersection
  *
  * @param[in] ray Normalized ray
- * @param[in] sphere
+ * @param[in] cylinder
  * @param[out] distance From ray origin to intersection point
- * @returns Wether ray intersects with sphere
+ * @returns Wether ray intersects with plane
  */
-bool	test_intersection_with_plane(
+bool	test_intersection_with_cube(
 			t_ray const *ray,
-			t_plane const *plane,
+			t_cube const *cube,
 			t_intersect_info *intersect_info)
 {
-	t_vec3	vec;
-	float	denom;
+	bool				is_face_intersect;
+	t_intersect_info	test;
 
-	vec3_substract_into(&vec, &plane->pos, &ray->pos);
-	denom = vec3_dot(&ray->vec, &plane->normal);
-	if (denom < 0.000001f)
+	test.distance = 0.0f;
+	test.sub_part_id = -1;
+	is_face_intersect = false;
+	is_face_intersect += intersection_with_right(ray, cube, &test);
+	is_face_intersect += intersection_with_left(ray, cube, &test);
+	is_face_intersect += intersection_with_top(ray, cube, &test);
+	is_face_intersect += intersection_with_bot(ray, cube, &test);
+	is_face_intersect += intersection_with_front(ray, cube, &test);
+	is_face_intersect += intersection_with_back(ray, cube, &test);
+	if (is_face_intersect)
 	{
-		intersect_info->sub_part_id = 0;
-		intersect_info->distance = vec3_dot(&vec, &plane->normal) / denom;
-		if (intersect_info->distance < 0.0f)
-			return (false);
-		return (true);
+		intersect_info->distance = test.distance;
+		intersect_info->sub_part_id = test.sub_part_id;
 	}
-	else if (denom > -0.000001f)
-	{
-		intersect_info->sub_part_id = 1;
-		intersect_info->distance
-			= vec3_dot(&vec, &plane->rev_normal) / (-denom);
-		if (intersect_info->distance < 0.0f)
-			return (false);
-		return (true);
-	}
-	return (false);
+	return (is_face_intersect);
 }
