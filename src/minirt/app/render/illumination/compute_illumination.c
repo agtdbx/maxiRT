@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 11:46:36 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:12:28 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,38 @@ static t_color	_collect_objects_shades(
 				t_object const *object,
 				float dist_to_spotlight,
 				t_ray const *ray_to_spotlight);
+
+t_color	check_dynamic_illumination(
+			t_scene const *scene,
+			t_object const *object,
+			t_ray const *ray,
+			t_ray const *normal)
+{
+	t_color			illumination_from_spotlight;
+	t_phong_model	model;
+	t_color			illumination;
+
+	model.normal = normal;
+	model.from_camera = ray;
+	model.spotlight = scene->spotlights;
+	illumination.r = 0.0f;
+	illumination.g = 0.0f;
+	illumination.b = 0.0f;
+	while (model.spotlight != NULL)
+	{
+		illumination_from_spotlight = (t_color){ 0 };
+		_collect_illumination_from_spotlight(
+				scene->objects, object, &model, &illumination_from_spotlight);
+		illumination.r +=
+			illumination_from_spotlight.r * model.spotlight->color.r;
+		illumination.g +=
+			illumination_from_spotlight.g * model.spotlight->color.g;
+		illumination.b +=
+			illumination_from_spotlight.b * model.spotlight->color.b;
+		model.spotlight = model.spotlight->next;
+	}
+	return (illumination);
+}
 
 /**
  * Compute illumination of point normal->pos

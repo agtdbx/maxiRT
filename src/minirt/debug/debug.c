@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 08:39:03 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/20 16:57:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:33:20 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minirt/debug/debug.h>
 
 #include <stdbool.h>
-
-bool	g_is_debugging = false;
 
 #include "minirt/app/app.h"
 
@@ -23,6 +21,8 @@ bool	g_is_debugging = false;
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/canvas/canvas.h"
 #include "minirt/app/utils/geometry/geometry.h"
+
+bool	g_is_debugging = false;
 
 void	render_one_pixel(
 			t_scene const *scene,
@@ -50,4 +50,3 @@ void	render_one_pixel(
 	color = render_ray_from_camera(scene, &casted_ray, show_spotlights);
 	mlx_put_pixel(canvas->back, coords[0], coords[1], color);
 }
-

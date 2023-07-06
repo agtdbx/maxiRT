@@ -6,13 +6,15 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/05 20:47:07 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:05:03 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
 
 #include "minirt/app/utils/geometry/geometry.h"
+
+#include "minirt/debug/debug.h"
 
 static void	compute_normal_base_sphere(t_vec3 normal_base[3]);
 static void	compute_normal_base_plane(t_vec3 normal_base[3]);

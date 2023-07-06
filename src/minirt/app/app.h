@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 20:41:29 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:23:04 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ int32_t			render_ray_from_camera(
 					bool show_spotlights);
 
 /// raytracing
+
+typedef struct s_pixel_info
+{
+	t_ray	normal;
+	t_vec2	pos;
+}	t_pixel_info;
 
 t_color			render_ray_on_object(
 					t_scene const *scene,
@@ -196,6 +202,12 @@ typedef struct s_phong_model
 	t_ray const		*normal;
 	t_light const	*spotlight;
 }	t_phong_model;
+
+t_color			check_dynamic_illumination(
+					t_scene const *scene,
+					t_object const *object,
+					t_ray const *ray,
+					t_ray const *normal);
 
 t_color			compute_illumination(
 					t_scene const *scene,
