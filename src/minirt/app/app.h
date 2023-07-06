@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 15:53:40 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 16:47:30 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,23 +246,19 @@ t_vec2			get_object_pixel_pos(
 t_vec2			get_sphere_pixel_pos(
 					t_sphere const *sphere,
 					t_ray const *normal);
-
 t_vec2			get_plane_pixel_pos(
 					t_plane const *plane,
 					t_ray const *normal);
-
 t_vec2			get_cylinder_pixel_pos(
 					t_cylinder const *cylinder,
 					t_ray const *ray,
 					t_ray const *normal,
 					t_intersect_info const *intersect_info);
-
 t_vec2			get_cone_pixel_pos(
 					t_cone const *cone,
 					t_ray const *ray,
 					t_ray const *normal,
 					t_intersect_info const *intersect_info);
-
 t_vec2			get_cube_pixel_pos(
 					t_cube const *cube,
 					t_ray const *normal,
@@ -281,6 +277,22 @@ void			compute_normal_map(
 					t_intersect_info const *intersect_info,
 					t_vec2 const *pixel_pos,
 					t_ray *normal);
+void			compute_normal_base_sphere(
+					t_vec3 normal_base[3]);
+void			compute_normal_base_plane(
+					t_vec3 normal_base[3]);
+void			compute_normal_base_cylinder(
+					t_vec3 normal_base[3],
+					t_cylinder const *cylinder,
+					t_intersect_info const *intersect_info);
+void			compute_normal_base_cone(
+					t_vec3 normal_base[3],
+					t_cone const *cone,
+					t_intersect_info const *intersect_info);
+void			compute_normal_base_cube(
+					t_vec3 normal_base[3],
+					t_cube const *cube,
+					t_intersect_info const *intersect_info);
 void			apply_normal_map(
 					mlx_texture_t const *normal_map,
 					t_vec2 const *pixel_pos,
