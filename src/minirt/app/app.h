@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 15:23:04 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:53:40 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ t_color			compute_illumination(
 					t_ray const *normal);
 
 // transparency
+
 t_color			compute_refracted_color(
 					t_object const *object,
 					t_scene const *scene,
@@ -223,6 +224,7 @@ t_color			compute_refracted_color(
 					t_ray const *normal);
 
 // reflection
+
 t_color			compute_reflected_color(
 					t_object const *object,
 					t_scene const *scene,
@@ -235,17 +237,45 @@ t_color			reflection_outside_object(
 					t_ray const *normal);
 
 // mapping
+
 t_vec2			get_object_pixel_pos(
 					t_object const *object,
 					t_ray const *ray,
 					t_ray const *normal,
 					t_intersect_info const *intersect_info);
+t_vec2			get_sphere_pixel_pos(
+					t_sphere const *sphere,
+					t_ray const *normal);
+
+t_vec2			get_plane_pixel_pos(
+					t_plane const *plane,
+					t_ray const *normal);
+
+t_vec2			get_cylinder_pixel_pos(
+					t_cylinder const *cylinder,
+					t_ray const *ray,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info);
+
+t_vec2			get_cone_pixel_pos(
+					t_cone const *cone,
+					t_ray const *ray,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info);
+
+t_vec2			get_cube_pixel_pos(
+					t_cube const *cube,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info);
+
 t_color			get_base_color_object(
 					t_object const *intersected_object,
 					t_vec2 const *pixel_pos);
+
 t_color			apply_texture(
 					mlx_texture_t const *texture,
 					t_vec2 const *pixel_pos);
+
 void			compute_normal_map(
 					t_object const *intersected_object,
 					t_intersect_info const *intersect_info,
