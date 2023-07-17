@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:57:08 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/03 12:00:48 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 15:46:46 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,8 @@ void	sphere_panel_register(
 	menu->object_panel.sphere_label.position_label.label_y.f = &sphere->pos.y;
 	menu->object_panel.sphere_label.position_label.label_z.f = &sphere->pos.z;
 	menu->object_panel.sphere_label.diameter_label.f = &sphere->diameter;
+	menu->object_panel.sphere_label.position_label_button_x.f = &sphere->pos.x;
+	menu->object_panel.sphere_label.position_label_button_y.f = &sphere->pos.y;
+	menu->object_panel.sphere_label.position_label_button_z.f = &sphere->pos.z;
+	menu->object_panel.sphere_label.diameter_label_button.f = &sphere->diameter;
 }

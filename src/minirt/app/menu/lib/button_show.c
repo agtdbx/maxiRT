@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   camera_label_show.c                                :+:      :+:    :+:   */
+/*   button_show.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 16:44:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/12 21:03:26 by tdubois          ###   ########.fr       */
+/*   Created: 2023/07/07 16:40:06 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/17 09:11:16 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/menu/menu.h"
 
-#include <stdbool.h>
-
-#include "minirt/app/utils/geometry/geometry.h"
-
-void	camera_label_show(
-			t_menu *menu)
+void	button_show(
+			t_button *button)
 {
-	menu->camera_label_title->enabled = true;
-	vec3_label_show(&menu->camera_dir_label);
-	vec3_label_show(&menu->camera_pos_label);
-	float_label_show(&menu->camera_fov_label);
-	button_show(&menu->camera_fov_button);
+	if (button->img != NULL && button->img->instances != NULL)
+		button->img->instances->enabled = true;
+	if (button->img_minus != NULL && button->img_minus->instances != NULL)
+		button->img_minus->instances->enabled = true;
+	if (button->img_plus != NULL && button->img_plus->instances != NULL)
+		button->img_plus->instances->enabled = true;
 }

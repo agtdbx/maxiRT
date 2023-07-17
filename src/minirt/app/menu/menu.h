@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/03 15:57:38 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 16:09:03 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,52 @@ typedef struct s_color_label
 	t_int_label	label_b;
 }	t_color_label;
 
+typedef struct s_button
+{
+	int32_t		x;
+	int32_t		y;
+
+	mlx_image_t	*img;
+	mlx_image_t	*img_minus;
+	mlx_image_t	*img_plus;
+	int32_t		size;
+
+	float		*f;
+	float		max;
+	float		min;
+	float		step;
+}	t_button;
+
 typedef struct s_sphere_panel
 {
 	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
 	t_float_label	diameter_label;
+	t_button		diameter_label_button;
 }	t_sphere_panel;
 
 typedef struct s_object_panel
 {
 	bool			is_enabled;
 	t_object_t		object_type;
+	void			*object_ptr;
 
 	mlx_image_t		*title;
 	mlx_image_t		*sphere_title;
 
 	t_color_label	color_label;
+	t_button		color_label_button_r;
+	t_button		color_label_button_g;
+	t_button		color_label_button_b;
 
 	t_float_label	opacity_label;
+	t_button		opacity_label_button;
 	t_float_label	density_label;
+	t_button		density_label_button;
 	t_float_label	reflection_label;
+	t_button		reflection_label_button;
 
 	t_sphere_panel	sphere_label;
 
@@ -97,11 +124,15 @@ typedef struct s_menu
 	t_vec3_label	camera_pos_label;
 	t_vec3_label	camera_dir_label;
 	t_float_label	camera_fov_label;
-
+	t_button		camera_fov_button;
 
 	mlx_image_t		*ambient_label_title;
 	t_color_label	ambient_color_label;
+	t_button		ambient_color_button_r;
+	t_button		ambient_color_button_g;
+	t_button		ambient_color_button_b;
 	t_float_label	ambient_ratio_label;
+	t_button		ambient_ratio_button;
 
 	t_light_panel	light_panel;
 	t_object_panel	object_panel;
@@ -118,9 +149,11 @@ void	menu_show(
 			t_menu *menu);
 void	menu_hide(
 			t_menu *menu);
-void	menu_draw(
+bool	menu_draw(
 			mlx_t *mlx,
-			t_menu *menu);
+			t_menu *menu,
+			t_canvas *canvas,
+			t_scene const *scene);
 
 //---- COMPONENTS -------------------------------------------------------------#
 
@@ -139,9 +172,11 @@ void	camera_label_show(
 			t_menu *menu);
 void	camera_label_hide(
 			t_menu *menu);
-void	camera_label_draw(
+bool	camera_label_draw(
 			mlx_t *mlx,
-			t_menu *menu);
+			t_menu *menu,
+			t_canvas *canvas,
+			t_scene const *scene);
 
 /// ambient_label
 
@@ -153,7 +188,7 @@ void	ambient_label_show(
 			t_menu *menu);
 void	ambient_label_hide(
 			t_menu *menu);
-void	ambient_label_draw(
+bool	ambient_label_draw(
 			mlx_t *mlx,
 			t_menu *menu);
 
@@ -166,7 +201,7 @@ void	object_panel_show(
 			t_menu *menu);
 void	object_panel_hide(
 			t_menu *menu);
-void	object_panel_draw(
+bool	object_panel_draw(
 			mlx_t *mlx,
 			t_menu *menu);
 void	object_panel_register(
@@ -182,7 +217,7 @@ void	sphere_panel_show(
 			t_menu *menu);
 void	sphere_panel_hide(
 			t_menu *menu);
-void	sphere_panel_draw(
+bool	sphere_panel_draw(
 			mlx_t *mlx,
 			t_menu *menu);
 void	sphere_panel_register(
@@ -190,6 +225,21 @@ void	sphere_panel_register(
 			t_sphere *sphere);
 
 //---- LIB --------------------------------------------------------------------#
+
+/// float buttons
+
+void	button_init(
+			mlx_t *mlx,
+			t_button *button,
+			int32_t	pos[2]);
+void	button_show(
+			t_button *button);
+void	button_hide(
+			t_button *button);
+bool	button_draw(
+			mlx_t *mlx,
+			t_menu *menu,
+			t_button *button);
 
 /// float_label
 

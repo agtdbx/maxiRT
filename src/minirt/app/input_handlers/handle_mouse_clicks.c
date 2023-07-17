@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 08:25:41 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 19:11:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 11:17:42 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	_handle_clicks_on_canvas(
 				t_canvas const *canvas,
 				int32_t const pix[2]);
 
-bool	handle_mouse_clicks(
+void	handle_mouse_clicks(
 			mlx_t *mlx,
 			t_menu *menu,
 			t_scene *scene,
@@ -42,7 +42,7 @@ bool	handle_mouse_clicks(
 	if (!menu->is_visible
 		|| !mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT)
 		|| mlx_get_time() < no_clicks_until)
-		return (false);
+		return ;
 	no_clicks_until = mlx_get_time() + 0.25;
 	mlx_get_mouse_pos(mlx, &pix[0], &pix[1]);
 
@@ -52,11 +52,8 @@ bool	handle_mouse_clicks(
 		(void)render_one_pixel(scene, canvas, pix, true);
 		DEBUG_OFF();
 		_handle_clicks_on_canvas(menu, scene, canvas, pix);
-		return (false);
+		return ;
 	}
-	
-
-	return (true);
 }
 
 static bool	_has_clicked_on_canvas(

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 16:46:45 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 11:19:41 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool			handle_rotations(
 bool			handle_menu_toggling(
 					mlx_t *mlx,
 					t_menu *menu);
-bool			handle_mouse_clicks(
+void			handle_mouse_clicks(
 					mlx_t *mlx,
 					t_menu *menu,
 					t_scene *scene,
