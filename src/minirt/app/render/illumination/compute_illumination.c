@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 17:59:49 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:07:02 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/geometry/geometry.h"
 #include <minirt/app/scene/scene.h>
-
-#include "minirt/debug/debug.h"//TODO debug
 
 static void		_collect_illumination_from_spotlight(
 					t_object const *objects,

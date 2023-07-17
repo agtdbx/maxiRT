@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 17:11:16 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:09:16 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static t_error	check_axis(
 					t_parser_state *state,
 					t_cube *const cube);
 
-// TODO Message erreur si les deux axes ne sont pas bon
 t_error	parse_cube(
 			t_parser_state *state)
 {
@@ -51,7 +50,6 @@ t_error	parse_cube(
 	return (scene_add_object(state->scene, &obj));
 }
 
-// TODO Message erreur si les deux axes ne sont pas bon
 t_error	parse_cube_checkerboard(
 			t_parser_state *state)
 {
@@ -81,7 +79,6 @@ t_error	parse_cube_checkerboard(
 	return (scene_add_object(state->scene, &obj));
 }
 
-// TODO Message erreur si les deux axes ne sont pas bon
 t_error	parse_cube_texture(
 			t_parser_state *state)
 {
@@ -111,7 +108,6 @@ t_error	parse_cube_texture(
 	return (scene_add_object(state->scene, &obj));
 }
 
-// TODO Message erreur si les deux axes ne sont pas bon
 t_error	parse_cube_texture_and_normal(
 			t_parser_state *state)
 {

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 17:25:41 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/17 17:08:40 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static void	_compute_constants(
 {
 	t_object	*object_iterator;
 
-	// camera_compute_constants(mlx, scene->camera);//TODO(tdubois)
 	object_iterator = scene->objects;
 	while (object_iterator != NULL)
 	{

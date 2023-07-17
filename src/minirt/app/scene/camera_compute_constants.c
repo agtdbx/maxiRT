@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera_compute_constants.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:09:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 16:04:18 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:08:33 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 
 #include "minirt/app/canvas/canvas.h"
 #include "minirt/app/utils/geometry/geometry.h"
-
-//TODO(tdubois): calculer tanf seulement quand la fov est modifiée
 
 /**
  * Compute constants from camera properties to facilitate further calculations
@@ -42,4 +40,7 @@ void	camera_compute_constants(
 			+ camera->direction.y * camera->direction.z);
 	vec3_normalize(&camera->o_y);
 	camera->focal = canvas->width_div_2 / tanf(camera->fov * g_pi_div_360);
+	camera->move_forward = camera->direction;
+	camera->move_forward.y = 0.0f;
+	vec3_normalize(&camera->move_forward);
 }
