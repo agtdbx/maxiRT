@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 16:09:03 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:24:10 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,24 @@ typedef struct s_object_panel
 
 typedef struct s_light_panel
 {
-	//TODO
+	bool			is_enabled;
+	void			*light_ptr;
+
+	mlx_image_t		*title;
+
+	t_color_label	color_label;
+	t_button		color_label_button_r;
+	t_button		color_label_button_g;
+	t_button		color_label_button_b;
+
+	t_float_label	intensity_label;
+	t_button		intensity_label_button;
+
+	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
+
 }	t_light_panel;
 
 typedef struct s_menu
@@ -191,6 +208,22 @@ void	ambient_label_hide(
 bool	ambient_label_draw(
 			mlx_t *mlx,
 			t_menu *menu);
+
+/// light_panel
+
+void	light_panel_init(
+			mlx_t *mlx,
+			t_menu *menu);
+void	light_panel_show(
+			t_menu *menu);
+void	light_panel_hide(
+			t_menu *menu);
+bool	light_panel_draw(
+			mlx_t *mlx,
+			t_menu *menu);
+void	light_panel_register(
+			t_menu *menu,
+			t_light *light);
 
 /// object_panel
 

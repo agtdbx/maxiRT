@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 08:25:41 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 11:17:42 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:26:05 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ static void	_handle_clicks_on_canvas(
 		light = fetch_closer_spotlight(&ray, scene->spotlights, &distance);
 		if (light != NULL)
 		{
-			menu->object_panel.is_enabled = false;
-			object_panel_hide(menu);
+			light_panel_register(menu, light);
 			return ;
 		}
 		if (object != NULL)

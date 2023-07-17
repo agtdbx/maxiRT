@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:48:44 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 13:23:25 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:18:29 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ bool	menu_draw(
 	should_redraw |= camera_label_draw(mlx, menu, canvas, scene);
 	should_redraw |= ambient_label_draw(mlx, menu);
 	should_redraw |= object_panel_draw(mlx, menu);
+	should_redraw |= light_panel_draw(mlx, menu);
 	return (should_redraw);
 }

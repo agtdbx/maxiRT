@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:11:36 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 16:11:07 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:24:58 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	object_panel_register(
 			t_menu *menu,
 			t_object *object)
 {
-	// light_panel_hide(menu); TODO: create this function
+	light_panel_hide(menu);
+	menu->light_panel.is_enabled = false;
 	menu->object_panel.is_enabled = true;
 	_register_common_labels(menu, object);
 	if (object->type == OBJ_SPHERE)
@@ -34,7 +35,6 @@ void	object_panel_register(
 		sphere_panel_register(menu, &object->value.as_sphere);
 		sphere_panel_show(menu);
 	}
-	// object_panel_hide(menu); TODO
 	object_panel_show(menu);
 }
 

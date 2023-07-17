@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:42:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/23 18:32:31 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 17:29:05 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@ void	menu_hide(
 	camera_label_hide(menu);
 	ambient_label_hide(menu);
 	object_panel_hide(menu);
+	light_panel_hide(menu);
 }
