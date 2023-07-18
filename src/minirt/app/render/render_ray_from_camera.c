@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray_from_camera.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/21 18:10:35 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 20:12:03 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/18 12:44:01 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/18 12:55:51 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,10 @@
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/utils/color/color.h"
 
-static t_light const	*_fetch_closer_spotlight(
-							t_ray const *ray,
-							t_light const *lights,
-							t_intersect_info *intersect_info);
-static int32_t			_render_ray_on_spotlight(
-							t_light const *light,
-							t_ray const *ray,
-							t_intersect_info const *intersect_info);
+static int32_t	_render_ray_on_spotlight(
+					t_light const *light,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info);
 
 /**
  * @param[in] scene
@@ -50,7 +46,7 @@ int32_t	render_ray_from_camera(
 		fetch_closest_intersection(ray, scene->objects, &intersect_info);
 	if (show_spotlights)
 	{
-		light = _fetch_closer_spotlight(
+		light = fetch_closer_spotlight(
 				ray, scene->spotlights, &intersect_info);
 		if (light != NULL)
 			return (_render_ray_on_spotlight(light, ray, &intersect_info));
@@ -60,34 +56,6 @@ int32_t	render_ray_from_camera(
 	pixel_color = render_ray_on_object(
 			scene, intersected_object, ray, &intersect_info);
 	return (color_to_int(&pixel_color));
-}
-
-static t_light const	*_fetch_closer_spotlight(
-							t_ray const *ray,
-							t_light const *lights,
-							t_intersect_info *intersect_info)
-{
-	t_intersect_info	actual_intersect_info;
-	t_light const		*intersected_light;
-	t_sphere			light_bulb;
-
-	light_bulb.radius = 0.1;
-	light_bulb.radius2 = 0.01;
-	intersected_light = NULL;
-	while (lights != NULL)
-	{
-		light_bulb.pos = lights->pos;
-		if (test_intersection_with_sphere(
-				ray, &light_bulb, &actual_intersect_info)
-			&& !(0 <= intersect_info->distance && intersect_info->distance
-				<= actual_intersect_info.distance))
-		{
-			intersect_info->distance = actual_intersect_info.distance;
-			intersected_light = lights;
-		}
-		lights = lights->next;
-	}
-	return (intersected_light);
 }
 
 static int32_t	_render_ray_on_spotlight(

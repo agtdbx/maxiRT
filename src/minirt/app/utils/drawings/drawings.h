@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:01:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:49:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/07 15:19:55 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	img_fill(
 
 void	img_draw_square(
 			mlx_image_t *img,
-			int32_t coords[2],
+			int32_t const coords[2],
 			int32_t size,
 			int32_t color);
 

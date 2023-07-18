@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:49:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:37:38 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 18:42:25 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
 void	int_label_show(
 			t_int_label *label)
 {
-	label->is_visible = true;
+	(void) label;
 }

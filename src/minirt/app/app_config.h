@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app_config.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 18:31:44 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/18 12:42:54 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/18 12:43:04 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static const int32_t	g_window_height = 1080;
 static const int32_t	g_menu_width = 400;
 static const int32_t	g_menu_background_color = 0x333333FF;
 static const int32_t	g_menu_dividers_color = 0x666666FF;
-static const int32_t	g_menu_divider_1_y = 140;
-static const int32_t	g_menu_divider_2_y = 280;
+static const int32_t	g_menu_divider_1_y = 160;
+static const int32_t	g_menu_divider_2_y = 300;
 
 //---- REFLECTION_CONSTANTS --------------------------------------------------//
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/21 18:10:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 18:31:15 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/18 13:11:47 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool			handle_rotations(
 bool			handle_menu_toggling(
 					mlx_t *mlx,
 					t_menu *menu);
-bool			handle_mouse_clicks(
+void			handle_mouse_clicks(
 					mlx_t *mlx,
 					t_menu *menu,
 					t_scene *scene,
@@ -89,6 +89,11 @@ int32_t			render_ray_from_camera(
 					t_scene const *scene,
 					t_ray const *ray,
 					bool show_spotlights);
+
+t_ray			create_ray_from_pixel_coords(
+					t_camera const *camera,
+					t_canvas const *canvas,
+					int32_t const coords[2]);
 
 /// raytracing
 
@@ -111,9 +116,13 @@ int32_t			render_ray(
 
 /// intersections
 
-t_object const	*fetch_closest_intersection(
+t_object		*fetch_closest_intersection(
 					t_ray const *ray,
-					t_object const *objects,
+					t_object *objects,
+					t_intersect_info *intersect_info);
+t_light			*fetch_closer_spotlight(
+					t_ray const *ray,
+					t_light *lights,
 					t_intersect_info *intersect_info);
 bool			test_intersection_with_obj(
 					t_ray const *ray,

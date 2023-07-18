@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fetch_closest_intersections.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 15:56:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 18:00:08 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/18 12:40:24 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/18 13:11:00 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@
  * Fetch closest object intersected by ray
  * @param[in] ray
  * @param[in] objects
- * @param[out] distance The distance to the closest object
+ * @param[out] distance The distance to the closest object or NULL.
  * @returns A pointer to the closest object
  * or NULL if ray did not intercept any object.
  */
-t_object const	*fetch_closest_intersection(
-					t_ray const *ray,
-					t_object const *objects,
-					t_intersect_info *intersect_info)
+t_object 	*fetch_closest_intersection(
+				t_ray const *ray,
+				t_object *objects,
+				t_intersect_info *intersect_info)
 {
 	t_intersect_info	actual_intersect_info;
-	t_object const		*intersected_object;
+	t_object			*intersected_object;
 
 	intersected_object = NULL;
 	intersect_info->distance = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:05:39 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/18 12:43:26 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_plane
 	t_vec3	normal;
 
 	t_vec3	rev_normal;
-
 }	t_plane;
 
 void			plane_compute_constants(
@@ -154,8 +153,8 @@ typedef struct s_object
 	mlx_texture_t	*normal_map;
 
 	float			opacity;
-	float			reflection;
 	float			density;
+	float			reflection;
 
 	struct s_object	*next;
 }	t_object;
