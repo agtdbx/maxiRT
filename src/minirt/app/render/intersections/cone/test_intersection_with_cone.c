@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 18:16:21 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/19 19:47:02 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 
 #include "minirt/debug/debug.h"
 
+static bool	compute_intersection_distance(
+				t_intersect_info *intersect_info,
+				float abc[3]);
 static bool	_test_intersection_with_cone_end(
 				t_ray const *ray,
 				t_cone const *cone,
@@ -43,22 +46,37 @@ bool	test_intersection_with_cone(
 			t_cone const *cone,
 			t_intersect_info *intersect_info)
 {
-	float const	k = cone->radius / cone->height;
 	t_vec3		vec;
 	float		dot[2];
 	float		abc[3];
-	float		discriminant;
-	float		denom;
 	float		heigth_on_cone;
-	float		tmp;
 
 	vec3_substract_into(&vec, &ray->pos, &cone->pos);
 	dot[0] = vec3_dot(&ray->vec, &cone->axis);
 	dot[1] = vec3_dot(&vec, &cone->axis);
-	tmp = 1.0f + (k * k);
-	abc[0] = vec3_dot(&ray->vec, &ray->vec) - (tmp * (dot[0] * dot[0]));
-	abc[1] = (vec3_dot(&ray->vec, &vec) - (tmp * (dot[0] * dot[1]))) * 2.0f;
-	abc[2] = vec3_dot(&vec, &vec) - (tmp * (dot[1] * dot[1]));
+	abc[0] = vec3_dot(&ray->vec, &ray->vec) - (cone->ratio * (dot[0] * dot[0]));
+	abc[1] = (vec3_dot(&ray->vec, &vec) - cone->ratio * dot[0] * dot[1]) * 2.0f;
+	abc[2] = vec3_dot(&vec, &vec) - (cone->ratio * (dot[1] * dot[1]));
+	if (compute_intersection_distance(intersect_info, abc) == false)
+		return (false);
+	heigth_on_cone = dot[0] * intersect_info->distance + dot[1];
+	if (cone->height < heigth_on_cone)
+		return (_test_intersection_with_cone_end(
+				ray, cone, intersect_info));
+	intersect_info->sub_part_id = 0;
+	_test_intersection_with_cone_end_if_it_closer(ray, cone, intersect_info);
+	if (intersect_info->sub_part_id == 0 && heigth_on_cone < 0.0f)
+		return (false);
+	return (true);
+}
+
+static bool	compute_intersection_distance(
+				t_intersect_info *intersect_info,
+				float abc[3])
+{
+	float	denom;
+	float	discriminant;
+
 	discriminant = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (discriminant < 0)
 		return (false);
@@ -80,14 +98,6 @@ bool	test_intersection_with_cone(
 				return (false);
 		}
 	}
-	heigth_on_cone = dot[0] * intersect_info->distance + dot[1];
-	if (cone->height < heigth_on_cone)
-		return (_test_intersection_with_cone_end(
-				ray, cone, intersect_info));
-	intersect_info->sub_part_id = 0;
-	_test_intersection_with_cone_end_if_it_closer(ray, cone, intersect_info);
-	if (intersect_info->sub_part_id == 0 && heigth_on_cone < 0.0f)
-		return (false);
 	return (true);
 }
 

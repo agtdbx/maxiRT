@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/23 16:20:43 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/19 19:42:24 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,6 @@ void	cone_compute_constants(
 	cone->end.normal = cone->axis;
 	cone->end.rev_normal = cone->axis;
 	vec3_scale(&cone->end.rev_normal, -1.0f);
+	cone->ratio = cone->radius / cone->height;
+	cone->ratio = 1.0 + (cone->ratio * cone->ratio);
 }

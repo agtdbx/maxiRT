@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_panel_init.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:10:59 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 15:59:59 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 19:35:08 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ static void	_init_position_label(
 {
 	t_sphere_panel *const	panel = &menu->object_panel.sphere_label;
 
-	panel->position_label = 
-		vec3_label_init(mlx, menu, "position: ", g_pos);
+	panel->position_label = vec3_label_init(mlx, menu, "position: ", g_pos);
 	button_init(mlx, &panel->position_label_button_x,
 		(int32_t[2]){g_pos[0] + 100, g_pos[1] + 20});
 	panel->position_label_button_x.f = NULL;

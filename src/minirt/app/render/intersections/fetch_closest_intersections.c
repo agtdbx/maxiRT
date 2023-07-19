@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fetch_closest_intersections.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:40:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 13:11:00 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 19:35:57 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
  * @returns A pointer to the closest object
  * or NULL if ray did not intercept any object.
  */
-t_object 	*fetch_closest_intersection(
+t_object	*fetch_closest_intersection(
 				t_ray const *ray,
 				t_object *objects,
 				t_intersect_info *intersect_info)

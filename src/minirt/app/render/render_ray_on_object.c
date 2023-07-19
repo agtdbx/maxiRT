@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 18:26:40 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 19:36:40 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_color	render_ray_on_object(
 	t_color			color;
 
 	if (ray->depth > 16)
-		return ((t_color){0,0,0});
+		return ((t_color){0.0, 0.0, 0.0});
 	pixel_info = get_pixel_info(scene, intersected_object, ray, intersect_info);
 	color = compute_object_without_effect_color(intersected_object,
 			scene, ray, &pixel_info);
