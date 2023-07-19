@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera_label_init.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:47:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/12 21:05:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 20:57:50 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	camera_label_init(
 			t_menu *menu,
 			t_scene const *scene)
 {
-
-	menu->camera_label_title = mlx_put_string(mlx, "camera:", g_pos[0], g_pos[1]);
-	menu->camera_pos_label = vec3_label_init(mlx, menu, "position: ", 
-		(uint32_t[2]){g_pos[0], g_pos[1] + 30});
+	menu->camera_label_title = mlx_put_string(
+			mlx, "camera:", g_pos[0], g_pos[1]);
+	menu->camera_pos_label = vec3_label_init(mlx, menu, "position: ",
+			(uint32_t[2]){g_pos[0], g_pos[1] + 30});
 	menu->camera_pos_label.label_x.f = &scene->camera->pos.x;
 	menu->camera_pos_label.label_y.f = &scene->camera->pos.y;
 	menu->camera_pos_label.label_z.f = &scene->camera->pos.z;
-	menu->camera_dir_label = vec3_label_init(mlx, menu, "direction: ", 
-		(uint32_t[2]){g_pos[0] + 180, g_pos[1] + 30});
+	menu->camera_dir_label = vec3_label_init(mlx, menu, "direction: ",
+			(uint32_t[2]){g_pos[0] + 180, g_pos[1] + 30});
 	menu->camera_dir_label.label_x.f = &scene->camera->direction.x;
 	menu->camera_dir_label.label_y.f = &scene->camera->direction.y;
 	menu->camera_dir_label.label_z.f = &scene->camera->direction.z;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_panel_init.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:54:26 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:53:35 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:17:57 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,9 @@ static void	_init_position_label(
 				t_menu *menu)
 {
 	t_light_panel *const	panel = &menu->light_panel;
+
 	panel->position_label = vec3_label_init(mlx, menu, "position:",
-		(uint32_t[2]){g_pos[0], g_pos[1] + 120});
+			(uint32_t[2]){g_pos[0], g_pos[1] + 120});
 	button_init(mlx, &panel->position_label_button_x,
 		(int32_t[2]){g_pos[0] + 100, g_pos[1] + 140});
 	panel->position_label_button_x.f = NULL;

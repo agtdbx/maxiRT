@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_mouse_clicks.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 08:25:41 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 13:12:34 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 20:50:56 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	handle_mouse_clicks(
 		return ;
 	no_clicks_until = mlx_get_time() + 0.25;
 	mlx_get_mouse_pos(mlx, &pix[0], &pix[1]);
-
 	if (_has_clicked_on_canvas(canvas, pix))
 	{
 		DEBUG_ON(); //TODO for debugging
@@ -76,23 +75,21 @@ static void	_handle_clicks_on_canvas(
 				t_canvas const *canvas,
 				int32_t const pix[2])
 {
-		t_ray				ray; 
-		t_intersect_info	info;
-		t_object			*object;
-		t_light				*light;
-		
-		(void) menu;
+	t_ray				ray;
+	t_intersect_info	info;
+	t_object			*object;
+	t_light				*light;
 
-		ray = create_ray_from_pixel_coords(scene->camera, canvas, pix);
-		object = fetch_closest_intersection(&ray, scene->objects, &info);
-		light = fetch_closer_spotlight(&ray, scene->spotlights, &info);
-		if (light != NULL)
-		{
-			light_panel_register(menu, light);
-			return ;
-		}
-		if (object != NULL)
-		{
-			object_panel_register(menu, object);
-		}
+	ray = create_ray_from_pixel_coords(scene->camera, canvas, pix);
+	object = fetch_closest_intersection(&ray, scene->objects, &info);
+	light = fetch_closer_spotlight(&ray, scene->spotlights, &info);
+	if (light != NULL)
+	{
+		light_panel_register(menu, light);
+		return ;
+	}
+	if (object != NULL)
+	{
+		object_panel_register(menu, object);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_panel_init.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:54:26 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 18:36:52 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:09:32 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,3 @@ static void	_init_reflection_label(
 	panel->reflection_label_button.max = 1.0f;
 	panel->reflection_label_button.step = 0.01f;
 }
-

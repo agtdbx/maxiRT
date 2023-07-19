@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 18:37:10 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 20:56:26 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,187 +215,187 @@ typedef struct s_menu
 	t_object_panel	object_panel;
 }	t_menu;
 
-t_error	menu_init(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_scene const *scene);
-void	menu_update_position(
-			mlx_t const *mlx,
-			t_menu *menu);
-void	menu_show(
-			t_menu *menu);
-void	menu_hide(
-			t_menu *menu);
-bool	menu_draw(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_canvas *canvas,
-			t_scene const *scene);
+t_error			menu_init(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_scene const *scene);
+void			menu_update_position(
+					mlx_t const *mlx,
+					t_menu *menu);
+void			menu_show(
+					t_menu *menu);
+void			menu_hide(
+					t_menu *menu);
+bool			menu_draw(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_canvas *canvas,
+					t_scene const *scene);
 
 //---- COMPONENTS -------------------------------------------------------------#
 
 /// background
 
-void	background_draw(
-			t_menu *menu);
+void			background_draw(
+					t_menu *menu);
 
 /// camera_label
 
-void	camera_label_init(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_scene const *scene);
-void	camera_label_show(
-			t_menu *menu);
-void	camera_label_hide(
-			t_menu *menu);
-bool	camera_label_draw(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_canvas *canvas,
-			t_scene const *scene);
+void			camera_label_init(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_scene const *scene);
+void			camera_label_show(
+					t_menu *menu);
+void			camera_label_hide(
+					t_menu *menu);
+bool			camera_label_draw(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_canvas *canvas,
+					t_scene const *scene);
 
 /// ambient_label
 
-void	ambient_label_init(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_scene const *scene);
-void	ambient_label_show(
-			t_menu *menu);
-void	ambient_label_hide(
-			t_menu *menu);
-bool	ambient_label_draw(
-			mlx_t *mlx,
-			t_menu *menu);
+void			ambient_label_init(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_scene const *scene);
+void			ambient_label_show(
+					t_menu *menu);
+void			ambient_label_hide(
+					t_menu *menu);
+bool			ambient_label_draw(
+					mlx_t *mlx,
+					t_menu *menu);
 
 /// light_panel
 
-void	light_panel_init(
-			mlx_t *mlx,
-			t_menu *menu);
-void	light_panel_show(
-			t_menu *menu);
-void	light_panel_hide(
-			t_menu *menu);
-bool	light_panel_draw(
-			mlx_t *mlx,
-			t_menu *menu);
-void	light_panel_register(
-			t_menu *menu,
-			t_light *light);
+void			light_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			light_panel_show(
+					t_menu *menu);
+void			light_panel_hide(
+					t_menu *menu);
+bool			light_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			light_panel_register(
+					t_menu *menu,
+					t_light *light);
 
 /// object_panel
 
-void	object_panel_init(
-			mlx_t *mlx,
-			t_menu *menu);
-void	object_panel_show(
-			t_menu *menu);
-void	object_panel_hide(
-			t_menu *menu);
-bool	object_panel_draw(
-			mlx_t *mlx,
-			t_menu *menu);
-void	object_panel_register(
-			t_menu *menu,
-			t_object *object);
+void			object_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			object_panel_show(
+					t_menu *menu);
+void			object_panel_hide(
+					t_menu *menu);
+bool			object_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			object_panel_register(
+					t_menu *menu,
+					t_object *object);
 
 /// cone_panel
 
-void	cone_panel_init(
-			mlx_t *mlx,
-			t_menu *menu);
-void	cone_panel_show(
-			t_menu *menu);
-void	cone_panel_hide(
-			t_menu *menu);
-bool	cone_panel_draw(
-			mlx_t *mlx,
-			t_menu *menu);
-void	cone_panel_register(
-			t_menu *menu,
-			t_cone *cone);
+void			cone_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cone_panel_show(
+					t_menu *menu);
+void			cone_panel_hide(
+					t_menu *menu);
+bool			cone_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cone_panel_register(
+					t_menu *menu,
+					t_cone *cone);
 
 /// sphere_panel
 
-void	sphere_panel_init(
-			mlx_t *mlx,
-			t_menu *menu);
-void	sphere_panel_show(
-			t_menu *menu);
-void	sphere_panel_hide(
-			t_menu *menu);
-bool	sphere_panel_draw(
-			mlx_t *mlx,
-			t_menu *menu);
-void	sphere_panel_register(
-			t_menu *menu,
-			t_sphere *sphere);
+void			sphere_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			sphere_panel_show(
+					t_menu *menu);
+void			sphere_panel_hide(
+					t_menu *menu);
+bool			sphere_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			sphere_panel_register(
+					t_menu *menu,
+					t_sphere *sphere);
 
 /// plane_panel
 
-void	plane_panel_init(
-			mlx_t *mlx,
-			t_menu *menu);
-void	plane_panel_show(
-			t_menu *menu);
-void	plane_panel_hide(
-			t_menu *menu);
-bool	plane_panel_draw(
-			mlx_t *mlx,
-			t_menu *menu);
-void	plane_panel_register(
-			t_menu *menu,
-			t_plane *plane);
+void			plane_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			plane_panel_show(
+					t_menu *menu);
+void			plane_panel_hide(
+					t_menu *menu);
+bool			plane_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			plane_panel_register(
+					t_menu *menu,
+					t_plane *plane);
 
 /// cylinder_panel
 
-void	cylinder_panel_init(
-			mlx_t *mlx,
-			t_menu *menu);
-void	cylinder_panel_show(
-			t_menu *menu);
-void	cylinder_panel_hide(
-			t_menu *menu);
-bool	cylinder_panel_draw(
-			mlx_t *mlx,
-			t_menu *menu);
-void	cylinder_panel_register(
-			t_menu *menu,
-			t_cylinder *cylinder);
+void			cylinder_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cylinder_panel_show(
+					t_menu *menu);
+void			cylinder_panel_hide(
+					t_menu *menu);
+bool			cylinder_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cylinder_panel_register(
+					t_menu *menu,
+					t_cylinder *cylinder);
 
 //---- LIB --------------------------------------------------------------------#
 
 /// float buttons
 
-void	button_init(
-			mlx_t *mlx,
-			t_button *button,
-			int32_t	pos[2]);
-void	button_show(
-			t_button *button);
-void	button_hide(
-			t_button *button);
-bool	button_draw(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_button *button);
+void			button_init(
+					mlx_t *mlx,
+					t_button *button,
+					int32_t	pos[2]);
+void			button_show(
+					t_button *button);
+void			button_hide(
+					t_button *button);
+bool			button_draw(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_button *button);
 
 /// float_label
 
-void	float_label_init(
-			t_float_label *label,
-			char const *str,
-			uint32_t pos[2]);
-void	float_label_show(
-			t_float_label *label);
-void	float_label_hide(
-			t_float_label *label);
-void	float_label_draw(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_float_label *label);
+void			float_label_init(
+					t_float_label *label,
+					char const *str,
+					uint32_t pos[2]);
+void			float_label_show(
+					t_float_label *label);
+void			float_label_hide(
+					t_float_label *label);
+void			float_label_draw(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_float_label *label);
 
 /// vec3_label
 
@@ -404,44 +404,44 @@ t_vec3_label	vec3_label_init(
 					t_menu *menu,
 					char const *title,
 					uint32_t const pos[2]);
-void	vec3_label_show(
-			t_vec3_label *label);
-void	vec3_label_hide(
-			t_vec3_label *label);
-void	vec3_label_draw(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_vec3_label *label);
+void			vec3_label_show(
+					t_vec3_label *label);
+void			vec3_label_hide(
+					t_vec3_label *label);
+void			vec3_label_draw(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_vec3_label *label);
 
 /// int_label
 
-void	int_label_init(
-			t_int_label *label,
-			char const *prefix,
-			uint32_t const pos[2]);
-void	int_label_show(
-			t_int_label *label);
-void	int_label_hide(
-			t_int_label *label);
-void	int_label_draw(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_int_label *label);
+void			int_label_init(
+					t_int_label *label,
+					char const *prefix,
+					uint32_t const pos[2]);
+void			int_label_show(
+					t_int_label *label);
+void			int_label_hide(
+					t_int_label *label);
+void			int_label_draw(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_int_label *label);
 
 /// color_label
 
-void	color_label_init(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_color_label *label,
-			uint32_t const pos[2]);
-void	color_label_show(
-			t_color_label *label);
-void	color_label_hide(
-			t_color_label *label);
-void	color_label_draw(
-			mlx_t *mlx,
-			t_menu *menu,
-			t_color_label *label);
+void			color_label_init(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_color_label *label,
+					uint32_t const pos[2]);
+void			color_label_show(
+					t_color_label *label);
+void			color_label_hide(
+					t_color_label *label);
+void			color_label_draw(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_color_label *label);
 
 #endif//MENU_H

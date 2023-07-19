@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:49 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 10:41:47 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:05:19 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ bool	button_draw(
 	bool	should_render;
 
 	button->img->instances[0].x = menu->background->instances[0].x + button->x;
-	button->img_minus->instances[0].x = menu->background->instances[0].x + button->x + 5;
-	button->img_plus->instances[0].x = menu->background->instances[0].x + button->x + 25;
+	button->img_minus->instances[0].x
+		= menu->background->instances[0].x + button->x + 5;
+	button->img_plus->instances[0].x
+		= menu->background->instances[0].x + button->x + 25;
 	if (!mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT))
 	{
 		img_fill(button->img, 0xFF0000FF);
@@ -58,15 +60,15 @@ static bool	_draw_left_button(
 				int32_t const pos_click[2],
 				t_button *button)
 {
-	int32_t	const pos_button[2] = { button->x, button->y };
-	int32_t const pos_inside_img[2] = {0,0};
+	int32_t const	pos_button[2] = {button->x, button->y};
+	int32_t const	pos_inside_img[2] = {0, 0};
 
 	if (pos_button[0] <= pos_click[0] && pos_click[0] < pos_button[0] + 20)
 	{
 		img_draw_square(button->img, pos_inside_img, 20, 0x00FF00FF);
 		if (button->min < *button->f)
 		{
-			*button->f = fmaxf(button->min, *button->f - button->step) ;
+			*button->f = fmaxf(button->min, *button->f - button->step);
 			return (true);
 		}
 		return (false);
@@ -79,15 +81,15 @@ static bool	_draw_right_button(
 				int32_t const pos_click[2],
 				t_button *button)
 {
-	int32_t	const pos_button[2] = { button->x + 20, button->y };
-	int32_t const pos_inside_img[2] = {20,0};
+	int32_t const	pos_button[2] = {button->x + 20, button->y};
+	int32_t const	pos_inside_img[2] = {20, 0};
 
 	if (pos_button[0] <= pos_click[0] && pos_click[0] < pos_button[0] + 20)
 	{
 		img_draw_square(button->img, pos_inside_img, 20, 0x00FF00FF);
 		if (*button->f < button->max)
 		{
-			*button->f = fminf(button->max, *button->f + button->step) ;
+			*button->f = fminf(button->max, *button->f + button->step);
 			return (true);
 		}
 		return (false);

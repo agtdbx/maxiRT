@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_panel_draw.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:48:00 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 18:37:37 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:01:18 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ static bool	_draw_common_labels(
 	should_redraw = false;
 	color_label_draw(mlx, menu, &menu->object_panel.color_label);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.color_label_button_r);
+			&menu->object_panel.color_label_button_r);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.color_label_button_g);
+			&menu->object_panel.color_label_button_g);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.color_label_button_b);
+			&menu->object_panel.color_label_button_b);
 	float_label_draw(mlx, menu, &menu->object_panel.opacity_label);
 	float_label_draw(mlx, menu, &menu->object_panel.density_label);
 	float_label_draw(mlx, menu, &menu->object_panel.reflection_label);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.opacity_label_button);
+			&menu->object_panel.opacity_label_button);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.density_label_button);
+			&menu->object_panel.density_label_button);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.reflection_label_button);
+			&menu->object_panel.reflection_label_button);
 	return (should_redraw);
 }

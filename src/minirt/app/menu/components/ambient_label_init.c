@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ambient_label_init.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:35:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/12 21:00:23 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 20:58:56 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	_init_color_label(
 				t_menu *menu,
 				t_scene const *scene);
 
-static void _init_float_label(
+static void	_init_float_label(
 				mlx_t *mlx,
 				t_menu *menu,
 				t_scene const *scene);
@@ -71,7 +71,7 @@ static void	_init_color_label(
 	menu->ambient_color_button_b.step = 1.0f;
 }
 
-static void _init_float_label(
+static void	_init_float_label(
 				mlx_t *mlx,
 				t_menu *menu,
 				t_scene const *scene)

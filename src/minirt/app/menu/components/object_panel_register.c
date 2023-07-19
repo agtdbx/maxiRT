@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_panel_register.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:11:36 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 18:40:33 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:00:57 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "MLX42/MLX42.h"
 #include "minirt/app/scene/scene.h"
 
-static void _register_common_labels(
+static void	_register_common_labels(
 				t_menu *menu,
 				t_object *object);
 
@@ -51,7 +51,7 @@ void	object_panel_register(
 	object_panel_show(menu);
 }
 
-static void _register_common_labels(
+static void	_register_common_labels(
 				t_menu *menu,
 				t_object *object)
 {

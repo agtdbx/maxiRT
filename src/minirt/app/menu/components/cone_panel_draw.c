@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_panel_draw.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 18:33:35 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:08:02 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	cone_panel_draw(
 	should_redraw |= _draw_position_and_direction_labels(mlx, menu);
 	should_redraw |= _draw_diameter_and_height_labels(mlx, menu);
 	if (should_redraw)
-		cone_compute_constants((t_cone*)menu->object_panel.object_ptr);
+		cone_compute_constants((t_cone *)menu->object_panel.object_ptr);
 	return (should_redraw);
 }
 
@@ -47,20 +47,20 @@ static bool	_draw_position_and_direction_labels(
 	should_redraw = false;
 	vec3_label_draw(mlx, menu,
 		&menu->object_panel.cone_panel.position_label);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cone_panel.position_label_button_x);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cone_panel.position_label_button_y);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cone_panel.position_label_button_z);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cone_panel.position_label_button_x);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cone_panel.position_label_button_y);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cone_panel.position_label_button_z);
 	vec3_label_draw(mlx, menu,
 		&menu->object_panel.cone_panel.direction_label);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cone_panel.direction_label_button_x);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cone_panel.direction_label_button_y);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cone_panel.direction_label_button_z);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cone_panel.direction_label_button_x);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cone_panel.direction_label_button_y);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cone_panel.direction_label_button_z);
 	return (should_redraw);
 }
 
@@ -74,10 +74,10 @@ static bool	_draw_diameter_and_height_labels(
 	float_label_draw(mlx, menu,
 		&menu->object_panel.cone_panel.diameter_label);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.cone_panel.diameter_label_button);
+			&menu->object_panel.cone_panel.diameter_label_button);
 	float_label_draw(mlx, menu,
 		&menu->object_panel.cone_panel.height_label);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.cone_panel.height_label_button);
+			&menu->object_panel.cone_panel.height_label_button);
 	return (should_redraw);
 }

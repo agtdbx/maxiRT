@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_panel_register.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:57:08 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 18:04:20 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:03:17 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "minirt/app/scene/scene.h"
 
-static void _register_position_and_direction_labels(
+static void	_register_position_and_direction_labels(
 				t_menu *menu,
 				t_cylinder *cylinder);
 static void	_register_diameter_and_height_labels(
@@ -32,7 +32,7 @@ void	cylinder_panel_register(
 	_register_position_and_direction_labels(menu, cylinder);
 }
 
-static void _register_position_and_direction_labels(
+static void	_register_position_and_direction_labels(
 				t_menu *menu,
 				t_cylinder *cylinder)
 {

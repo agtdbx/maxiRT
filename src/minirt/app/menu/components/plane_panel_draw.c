@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_panel_draw.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 15:13:27 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:02:45 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ bool	plane_panel_draw(
 	should_redraw = false;
 	vec3_label_draw(mlx, menu, &menu->object_panel.plane_panel.position_label);
 	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.plane_panel.position_label_button_x);
+			mlx, menu, &menu->object_panel.plane_panel.position_label_button_x);
 	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.plane_panel.position_label_button_y);
+			mlx, menu, &menu->object_panel.plane_panel.position_label_button_y);
 	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.plane_panel.position_label_button_z);
+			mlx, menu, &menu->object_panel.plane_panel.position_label_button_z);
 	vec3_label_draw(mlx, menu, &menu->object_panel.plane_panel.direction_label);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.plane_panel.direction_label_button_x);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.plane_panel.direction_label_button_y);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.plane_panel.direction_label_button_z);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.plane_panel.direction_label_button_x);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.plane_panel.direction_label_button_y);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.plane_panel.direction_label_button_z);
 	if (should_redraw)
-		plane_compute_constants((t_plane*)menu->object_panel.object_ptr);
+		plane_compute_constants((t_plane *)menu->object_panel.object_ptr);
 	return (should_redraw);
 }
