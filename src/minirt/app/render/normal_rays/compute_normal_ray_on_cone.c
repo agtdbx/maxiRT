@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:40:10 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/05 20:40:49 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/19 19:55:31 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ void	compute_normal_ray_on_cone(
 				t_ray *normal)
 {
 	t_cone const *const	geometry = &cone->value.as_cone;
-	float const			k = geometry->radius / geometry->height;
 	float				heigth_on_cone;
-	float				tmp;
 	t_vec3				vec;
 
 	normal->pos = ray->pos;
@@ -50,11 +48,10 @@ void	compute_normal_ray_on_cone(
 	else
 	{
 		heigth_on_cone = get_height_in_cone(geometry, ray, intersect_info);
-		tmp = 1.0f + (k * k);
 		vec = normal->pos;
 		vec3_substract(&vec, &geometry->pos);
 		normal->vec = geometry->axis;
-		vec3_scale(&normal->vec, heigth_on_cone * tmp);
+		vec3_scale(&normal->vec, heigth_on_cone * geometry->ratio);
 		vec3_substract(&vec, &normal->vec);
 		normal->vec = vec;
 		vec3_normalize(&normal->vec);

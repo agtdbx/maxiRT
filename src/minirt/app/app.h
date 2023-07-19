@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 18:23:03 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 20:32:13 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,12 @@ bool			test_intersection_with_cone_from_inside(
 					t_ray const *ray,
 					t_cone const *cone,
 					t_intersect_info *intersect_info);
+bool			compute_intersection_distance(
+					t_intersect_info *intersect_info,
+					float abc[3]);
+bool			compute_intersection_distance_from_inside(
+					t_intersect_info *intersect_info,
+					float abc[3]);
 bool			test_intersection_with_cube(
 					t_ray const *ray,
 					t_cube const *cube,

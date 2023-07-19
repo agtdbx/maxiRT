@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 19:47:02 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:34:41 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 
 #include "minirt/debug/debug.h"
 
-static bool	compute_intersection_distance(
-				t_intersect_info *intersect_info,
-				float abc[3]);
 static bool	_test_intersection_with_cone_end(
 				t_ray const *ray,
 				t_cone const *cone,
@@ -67,37 +64,6 @@ bool	test_intersection_with_cone(
 	_test_intersection_with_cone_end_if_it_closer(ray, cone, intersect_info);
 	if (intersect_info->sub_part_id == 0 && heigth_on_cone < 0.0f)
 		return (false);
-	return (true);
-}
-
-static bool	compute_intersection_distance(
-				t_intersect_info *intersect_info,
-				float abc[3])
-{
-	float	denom;
-	float	discriminant;
-
-	discriminant = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
-	if (discriminant < 0)
-		return (false);
-	else if (discriminant == 0)
-	{
-		intersect_info->distance = -abc[1] / (abc[0] * 2.0f);
-		if (intersect_info->distance < 0.0f)
-			return (false);
-	}
-	else
-	{
-		discriminant = sqrtf(discriminant);
-		denom = 1.0f / (abc[0] * 2.0f);
-		intersect_info->distance = (-abc[1] - discriminant) * denom;
-		if (intersect_info->distance < 0.0f)
-		{
-			intersect_info->distance = (-abc[1] + discriminant) * denom;
-			if (intersect_info->distance < 0.0f)
-				return (false);
-		}
-	}
 	return (true);
 }
 
