@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:48:00 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 16:02:12 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:32:51 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ bool	object_panel_draw(
 	should_redraw |= button_draw(mlx, menu, &menu->object_panel.opacity_label_button);
 	should_redraw |= button_draw(mlx, menu, &menu->object_panel.density_label_button);
 	should_redraw |= button_draw(mlx, menu, &menu->object_panel.reflection_label_button);
+	if (menu->object_panel.object_type == OBJ_PLANE)
+		should_redraw |= plane_panel_draw(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_SPHERE)
 		should_redraw |= sphere_panel_draw(mlx, menu);
 	return (should_redraw);

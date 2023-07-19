@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:54:26 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 14:17:15 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:43:55 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,15 @@ void	object_panel_init(
 	panel->title = NULL;
 	panel->sphere_title = mlx_put_string(mlx, "-- Sphere --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->sphere_title->enabled = false;
+	panel->plane_title = mlx_put_string(mlx, "-- Plane --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->plane_title->enabled = false;
 	_init_color_label(mlx, menu);
 	_init_opacity_label(mlx, menu);
 	_init_density_label(mlx, menu);
 	_init_reflection_label(mlx, menu);
+	plane_panel_init(mlx, menu);
 	sphere_panel_init(mlx, menu);
 }
 

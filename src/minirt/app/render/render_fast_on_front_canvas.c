@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 17:52:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 16:08:45 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:24:07 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	render_fast_on_front_canvas(
 		pix[X] = 0;
 		while (pix[X] < app->canvas.width)
 		{
+			casted_ray.depth = 0;
 			vec3_normalize_into(&casted_ray.vec, &ray[X]);
 			img_draw_square(app->canvas.front, pix, ppr, render_ray_from_camera(
 					&app->scene, &casted_ray, app->menu.is_visible));

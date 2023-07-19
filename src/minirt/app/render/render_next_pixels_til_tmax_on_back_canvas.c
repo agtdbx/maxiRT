@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:56:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 12:56:48 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:26:02 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static void	_render_one_pixel_on_back_canvas(
 	t_ray	casted_ray;
 
 	casted_ray = create_ray_from_pixel_coords(scene->camera, canvas, coords);
+	casted_ray.depth = 0;
 	color = render_ray_from_camera(scene, &casted_ray, show_spotlights);
 	mlx_put_pixel(canvas->back, coords[0], coords[1], color);
 }

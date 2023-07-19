@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:24:10 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:21:04 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,23 @@ typedef struct s_sphere_panel
 	t_button		position_label_button_x;
 	t_button		position_label_button_y;
 	t_button		position_label_button_z;
+
 	t_float_label	diameter_label;
 	t_button		diameter_label_button;
 }	t_sphere_panel;
+
+typedef struct s_plane_panel
+{
+	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
+
+	t_vec3_label	direction_label;
+	t_button		direction_label_button_x;
+	t_button		direction_label_button_y;
+	t_button		direction_label_button_z;
+}	t_plane_panel;
 
 typedef struct s_object_panel
 {
@@ -91,6 +105,7 @@ typedef struct s_object_panel
 	void			*object_ptr;
 
 	mlx_image_t		*title;
+	mlx_image_t		*plane_title;
 	mlx_image_t		*sphere_title;
 
 	t_color_label	color_label;
@@ -100,11 +115,14 @@ typedef struct s_object_panel
 
 	t_float_label	opacity_label;
 	t_button		opacity_label_button;
+
 	t_float_label	density_label;
 	t_button		density_label_button;
+
 	t_float_label	reflection_label;
 	t_button		reflection_label_button;
 
+	t_plane_panel	plane_panel;
 	t_sphere_panel	sphere_label;
 
 }	t_object_panel;
@@ -256,6 +274,22 @@ bool	sphere_panel_draw(
 void	sphere_panel_register(
 			t_menu *menu,
 			t_sphere *sphere);
+
+/// plane_panel
+
+void	plane_panel_init(
+			mlx_t *mlx,
+			t_menu *menu);
+void	plane_panel_show(
+			t_menu *menu);
+void	plane_panel_hide(
+			t_menu *menu);
+bool	plane_panel_draw(
+			mlx_t *mlx,
+			t_menu *menu);
+void	plane_panel_register(
+			t_menu *menu,
+			t_plane *plane);
 
 //---- LIB --------------------------------------------------------------------#
 

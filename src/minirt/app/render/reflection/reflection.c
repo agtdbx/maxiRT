@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:41:46 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/05 20:09:34 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:34:22 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_color	compute_reflected_color(
 	tmp = normal->vec;
 	vec3_scale(&tmp, 2 * vec3_dot(&ray->vec, &normal->vec));
 	vec3_substract(&reflected_ray.vec, &tmp);
+	reflected_ray.depth = ray->depth + 1;
 	return (intersect_loop_without_param_obj(object, scene, &reflected_ray));
 }
 
@@ -49,5 +50,6 @@ t_color	reflection_outside_object(
 	transparency_ray.vec = ray->vec;
 	vec3_substract(&transparency_ray.vec, &tmp);
 	vec3_normalize(&transparency_ray.vec);
+	transparency_ray.depth = ray->depth + 1;
 	return (intersect_loop_without_param_obj(object, scene, &transparency_ray));
 }

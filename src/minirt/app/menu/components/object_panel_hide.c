@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:49:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 14:13:05 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:44:42 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 void	object_panel_hide(
 			t_menu *menu)
 {
-	if (menu->object_panel.sphere_title != NULL)
-		menu->object_panel.sphere_title->enabled = false;
+	if (menu->object_panel.title != NULL)
+		menu->object_panel.title->enabled = false;
 	color_label_hide(&menu->object_panel.color_label);
 	button_hide(&menu->object_panel.color_label_button_r);
 	button_hide(&menu->object_panel.color_label_button_g);
@@ -31,5 +31,6 @@ void	object_panel_hide(
 	button_hide(&menu->object_panel.opacity_label_button);
 	button_hide(&menu->object_panel.density_label_button);
 	button_hide(&menu->object_panel.reflection_label_button);
+	plane_panel_hide(menu);
 	sphere_panel_hide(menu);
 }

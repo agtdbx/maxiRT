@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 20:14:05 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:33:58 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ t_color	compute_refracted_color(
 		return ((t_color){0});
 	outside_ray.pos = inside_normal.pos;
 	vec3_normalize(&outside_ray.vec);
+	outside_ray.depth = ray->depth + 1;
 	return (intersect_loop_without_param_obj(object, scene, &outside_ray));
 }
 

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 20:45:29 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:35:37 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GEOMETRY_H
 
 # include <stdbool.h>
+# include <stdint.h>
 
 // model for a vector or point in space
 typedef struct s_vec2
@@ -31,8 +32,9 @@ typedef struct s_vec3
 
 typedef struct s_ray
 {
-	t_vec3	pos;
-	t_vec3	vec;
+	t_vec3		pos;
+	t_vec3		vec;
+	uint32_t	depth;
 }	t_ray;
 
 extern float	vec3_norm(

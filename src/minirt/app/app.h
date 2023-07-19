@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 13:11:47 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:23:03 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct s_app
 
 typedef struct s_intersect_info
 {
-	float	distance;
-	int		sub_part_id;
+	float		distance;
+	int			sub_part_id;
 }	t_intersect_info;
 
 //**** METHODS ***************************************************************//
