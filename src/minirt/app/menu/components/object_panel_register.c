@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:11:36 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 17:36:40 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 18:40:33 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,22 @@ void	object_panel_register(
 	menu->light_panel.is_enabled = false;
 	menu->object_panel.is_enabled = true;
 	_register_common_labels(menu, object);
-	if (object->type == OBJ_SPHERE)
+	if (object->type == OBJ_CONE)
 	{
-		sphere_panel_register(menu, &object->value.as_sphere);
-		sphere_panel_show(menu);
+		cone_panel_register(menu, &object->value.as_cone);
+		cone_panel_show(menu);
 	}
-	if (object->type == OBJ_PLANE)
+	else if (object->type == OBJ_PLANE)
 	{
 		plane_panel_register(menu, &object->value.as_plane);
 		plane_panel_show(menu);
 	}
-	if (object->type == OBJ_CYLINDER)
+	else if (object->type == OBJ_SPHERE)
+	{
+		sphere_panel_register(menu, &object->value.as_sphere);
+		sphere_panel_show(menu);
+	}
+	else if (object->type == OBJ_CYLINDER)
 	{
 		cylinder_panel_register(menu, &object->value.as_cylinder);
 		cylinder_panel_show(menu);

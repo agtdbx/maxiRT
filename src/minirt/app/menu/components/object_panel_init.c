@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:54:26 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 17:43:33 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 18:36:52 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,15 @@ void	object_panel_init(
 
 	panel->is_enabled = false;
 	panel->title = NULL;
-	panel->sphere_title = mlx_put_string(mlx, "-- Sphere --",
+	panel->cone_title = mlx_put_string(mlx, "-- Cone --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
-	panel->sphere_title->enabled = false;
+	panel->cone_title->enabled = false;
 	panel->plane_title = mlx_put_string(mlx, "-- Plane --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->plane_title->enabled = false;
+	panel->sphere_title = mlx_put_string(mlx, "-- Sphere --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->sphere_title->enabled = false;
 	panel->cylinder_title = mlx_put_string(mlx, "-- Cylinder --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->cylinder_title->enabled = false;
@@ -55,6 +58,7 @@ void	object_panel_init(
 	_init_opacity_label(mlx, menu);
 	_init_density_label(mlx, menu);
 	_init_reflection_label(mlx, menu);
+	cone_panel_init(mlx, menu);
 	plane_panel_init(mlx, menu);
 	sphere_panel_init(mlx, menu);
 	cylinder_panel_init(mlx, menu);
@@ -115,9 +119,9 @@ static void	_init_density_label(
 	button_init(mlx, &panel->density_label_button,
 		(int32_t[2]){g_pos[0] + 335, g_pos[1] + 70});
 	panel->density_label_button.f = NULL;
-	panel->density_label_button.min = 0.0f;
-	panel->density_label_button.max = 1.0f;
-	panel->density_label_button.step = 0.01f;
+	panel->density_label_button.min = 1.0f;
+	panel->density_label_button.max = 2.5f;
+	panel->density_label_button.step = 0.001f;
 }
 
 static void	_init_reflection_label(

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:48:00 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 17:40:15 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 18:37:37 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ bool	object_panel_draw(
 		return (false);
 	should_redraw = false;
 	should_redraw |= _draw_common_labels(mlx, menu);
+	if (menu->object_panel.object_type == OBJ_CONE)
+		should_redraw |= cone_panel_draw(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_PLANE)
 		should_redraw |= plane_panel_draw(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_SPHERE)
