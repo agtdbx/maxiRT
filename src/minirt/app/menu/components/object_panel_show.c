@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:54:11 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 15:22:06 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 17:41:33 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,6 @@ void	object_panel_show(
 		sphere_panel_show(menu);
 	if (menu->object_panel.object_type == OBJ_PLANE)
 		plane_panel_show(menu);
+	if (menu->object_panel.object_type == OBJ_CYLINDER)
+		cylinder_panel_show(menu);
 }

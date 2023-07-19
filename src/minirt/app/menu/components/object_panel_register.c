@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:11:36 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 15:33:15 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 17:36:40 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ void	object_panel_register(
 	{
 		plane_panel_register(menu, &object->value.as_plane);
 		plane_panel_show(menu);
+	}
+	if (object->type == OBJ_CYLINDER)
+	{
+		cylinder_panel_register(menu, &object->value.as_cylinder);
+		cylinder_panel_show(menu);
 	}
 	object_panel_show(menu);
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:49:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 15:44:42 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/19 17:41:50 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void	object_panel_hide(
 	button_hide(&menu->object_panel.reflection_label_button);
 	plane_panel_hide(menu);
 	sphere_panel_hide(menu);
+	cylinder_panel_hide(menu);
 }
