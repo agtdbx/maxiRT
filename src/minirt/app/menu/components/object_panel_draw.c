@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_panel_draw.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 17:48:00 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 21:01:18 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/20 17:53:38 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/20 17:53:40 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ bool	object_panel_draw(
 	should_redraw |= _draw_common_labels(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_CONE)
 		should_redraw |= cone_panel_draw(mlx, menu);
+	if (menu->object_panel.object_type == OBJ_CUBE)
+		should_redraw |= cube_panel_draw(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_PLANE)
 		should_redraw |= plane_panel_draw(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_SPHERE)

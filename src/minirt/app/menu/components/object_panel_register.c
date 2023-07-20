@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_panel_register.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 17:11:36 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 21:00:57 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/20 17:54:51 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/20 17:54:53 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	object_panel_register(
 	{
 		cone_panel_register(menu, &object->value.as_cone);
 		cone_panel_show(menu);
+	}
+	if (object->type == OBJ_CUBE)
+	{
+		cube_panel_register(menu, &object->value.as_cube);
+		cube_panel_show(menu);
 	}
 	else if (object->type == OBJ_PLANE)
 	{

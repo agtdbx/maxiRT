@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 01:39:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 20:56:26 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/20 17:55:17 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/20 17:56:12 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,33 @@ typedef struct s_cone_panel
 	t_button		height_label_button;
 }	t_cone_panel;
 
+typedef struct s_cube_panel
+{
+	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
+
+	t_vec3_label	x_axis_label;
+	t_button		x_axis_label_button_x;
+	t_button		x_axis_label_button_y;
+	t_button		x_axis_label_button_z;
+
+	t_vec3_label	y_axis_label;
+	t_button		y_axis_label_button_x;
+	t_button		y_axis_label_button_y;
+	t_button		y_axis_label_button_z;
+
+	t_float_label	width_label;
+	t_button		width_label_button;
+
+	t_float_label	height_label;
+	t_button		height_label_button;
+
+	t_float_label	depth_label;
+	t_button		depth_label_button;
+}	t_cube_panel;
+
 typedef struct s_object_panel
 {
 	bool				is_enabled;
@@ -144,6 +171,7 @@ typedef struct s_object_panel
 
 	mlx_image_t			*title;
 	mlx_image_t			*cone_title;
+	mlx_image_t			*cube_title;
 	mlx_image_t			*plane_title;
 	mlx_image_t			*sphere_title;
 	mlx_image_t			*cylinder_title;
@@ -163,6 +191,7 @@ typedef struct s_object_panel
 	t_button			reflection_label_button;
 
 	t_cone_panel		cone_panel;
+	t_cube_panel		cube_panel;
 	t_plane_panel		plane_panel;
 	t_sphere_panel		sphere_label;
 	t_cylinder_panel	cylinder_panel;
@@ -364,6 +393,22 @@ bool			cylinder_panel_draw(
 void			cylinder_panel_register(
 					t_menu *menu,
 					t_cylinder *cylinder);
+
+// cube_panel
+
+void			cube_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cube_panel_show(
+					t_menu *menu);
+void			cube_panel_hide(
+					t_menu *menu);
+bool			cube_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cube_panel_register(
+					t_menu *menu,
+					t_cube *cube);
 
 //---- LIB --------------------------------------------------------------------#
 

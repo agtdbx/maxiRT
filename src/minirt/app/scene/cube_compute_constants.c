@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/05 18:32:35 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/20 17:50:53 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ static void	init_face(
 	vec3_linear_transform(
 		&face->pos, dist, axis);
 	face->normal = *axis;
-	vec3_scale_into(&face->rev_normal, &face->normal, dist);
+	vec3_scale_into(&face->rev_normal, &face->normal, -1.0f);
 }

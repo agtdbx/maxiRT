@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_panel_init.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 14:54:26 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 21:09:32 by aderouba         ###   ########.fr       */
+/*   Created: 2023/07/20 17:54:10 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/20 17:54:12 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void	object_panel_init(
 	panel->cone_title = mlx_put_string(mlx, "-- Cone --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->cone_title->enabled = false;
+	panel->cube_title = mlx_put_string(mlx, "-- Cube --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->cube_title->enabled = false;
 	panel->plane_title = mlx_put_string(mlx, "-- Plane --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->plane_title->enabled = false;
@@ -59,6 +62,7 @@ void	object_panel_init(
 	_init_density_label(mlx, menu);
 	_init_reflection_label(mlx, menu);
 	cone_panel_init(mlx, menu);
+	cube_panel_init(mlx, menu);
 	plane_panel_init(mlx, menu);
 	sphere_panel_init(mlx, menu);
 	cylinder_panel_init(mlx, menu);
