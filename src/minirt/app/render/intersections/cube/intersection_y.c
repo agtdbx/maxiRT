@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 18:23:37 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/06 18:24:43 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:28:14 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ bool	intersection_with_top(
 	t_vec3				p;
 	t_vec2				pixel_pos;
 
-	if (test_intersection_with_plane(ray, &cube->top, &test)
-		&& test.sub_part_id == 0)
+	if (test_intersection_with_plane(ray, &cube->top, &test))
 	{
 		p = ray->pos;
 		vec3_linear_transform(&p, test.distance, &ray->vec);
@@ -58,8 +57,7 @@ bool	intersection_with_bot(
 	t_vec3				p;
 	t_vec2				pixel_pos;
 
-	if (test_intersection_with_plane(ray, &cube->bot, &test)
-		&& test.sub_part_id == 0)
+	if (test_intersection_with_plane(ray, &cube->bot, &test))
 	{
 		p = ray->pos;
 		vec3_linear_transform(&p, test.distance, &ray->vec);

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/06 18:25:52 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:38:21 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ bool	test_intersection_with_cube(
 	test.distance = 0.0f;
 	test.sub_part_id = -1;
 	is_face_intersect = false;
-	is_face_intersect += intersection_with_right(ray, cube, &test);
-	is_face_intersect += intersection_with_left(ray, cube, &test);
-	is_face_intersect += intersection_with_top(ray, cube, &test);
-	is_face_intersect += intersection_with_bot(ray, cube, &test);
-	is_face_intersect += intersection_with_front(ray, cube, &test);
-	is_face_intersect += intersection_with_back(ray, cube, &test);
+	is_face_intersect |= intersection_with_right(ray, cube, &test);
+	is_face_intersect |= intersection_with_left(ray, cube, &test);
+	is_face_intersect |= intersection_with_top(ray, cube, &test);
+	is_face_intersect |= intersection_with_bot(ray, cube, &test);
+	is_face_intersect |= intersection_with_front(ray, cube, &test);
+	is_face_intersect |= intersection_with_back(ray, cube, &test);
 	if (is_face_intersect)
 	{
 		intersect_info->distance = test.distance;
