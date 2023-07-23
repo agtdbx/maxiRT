@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_panel_draw.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:02:22 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 12:44:59 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ bool	cube_panel_draw(
 	should_redraw |= _draw_y_axis_label(mlx, menu);
 	should_redraw |= _draw_size_labels(mlx, menu);
 	if (should_redraw)
-		cube_compute_constants((t_cube*)menu->object_panel.object_ptr);
+		cube_compute_constants_from_menu(
+			(t_cube *)menu->object_panel.object_ptr);
 	return (should_redraw);
 }
 

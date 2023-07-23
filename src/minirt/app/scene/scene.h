@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 19:47:44 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 12:44:31 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ typedef struct s_cube
 }	t_cube;
 
 void			cube_compute_constants(
+					t_cube *cube);
+void			cube_compute_constants_from_menu(
 					t_cube *cube);
 
 //---- COLOR INTERFACE -------------------------------------------------------//
