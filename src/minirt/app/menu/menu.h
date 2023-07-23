@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:55:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:56:12 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:20:34 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,18 @@ void			light_panel_register(
 /// object_panel
 
 void			object_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			init_color_label(
+					mlx_t *mlx,
+					t_menu *menu);
+void			init_opacity_label(
+					mlx_t *mlx,
+					t_menu *menu);
+void			init_density_label(
+					mlx_t *mlx,
+					t_menu *menu);
+void			init_reflection_label(
 					mlx_t *mlx,
 					t_menu *menu);
 void			object_panel_show(

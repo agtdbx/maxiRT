@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/23 12:50:10 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 12:59:56 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void	init_face(
 				t_plane *face,
 				t_vec3 const *axis,
 				float dist);
+static void	axis_checker(
+				t_cube *cube);
 
 /**
  * Compute constants from cube properties to facilitate further calculations
@@ -39,10 +41,10 @@ void	cube_compute_constants(
 	vec3_normalize(&cube->y_axis);
 	vec3_normalize(&cube->z_axis);
 	rev_x_axis = cube->x_axis;
-	vec3_scale(&rev_x_axis, -1.0f);
 	rev_y_axis = cube->y_axis;
-	vec3_scale(&rev_y_axis, -1.0f);
 	rev_z_axis = cube->z_axis;
+	vec3_scale(&rev_x_axis, -1.0f);
+	vec3_scale(&rev_y_axis, -1.0f);
 	vec3_scale(&rev_z_axis, -1.0f);
 	cube->half_witdh = cube->witdh / 2.0f;
 	cube->half_height = cube->height / 2.0f;
@@ -66,25 +68,16 @@ void	cube_compute_constants_from_menu(
 	t_vec3	rev_y_axis;
 	t_vec3	rev_z_axis;
 
-	if (vec3_dot(&cube->x_axis, &cube->y_axis) != 0.0f)
-	{
-		if (vec3_dot(&cube->x_axis, &cube->z_axis) != 0.0f)
-			vec3_cross(&cube->y_axis, &cube->z_axis, &cube->x_axis);
-		else
-			vec3_cross(&cube->x_axis, &cube->z_axis, &cube->y_axis);
-	}
-	else if (vec3_dot(&cube->x_axis, &cube->z_axis) != 0.0f)
-	{
-		vec3_cross(&cube->x_axis, &cube->y_axis, &cube->z_axis);
-	}
+	axis_checker(cube);
+	vec3_cross(&cube->x_axis, &cube->y_axis, &cube->z_axis);
 	vec3_normalize(&cube->x_axis);
 	vec3_normalize(&cube->y_axis);
 	vec3_normalize(&cube->z_axis);
 	rev_x_axis = cube->x_axis;
-	vec3_scale(&rev_x_axis, -1.0f);
 	rev_y_axis = cube->y_axis;
-	vec3_scale(&rev_y_axis, -1.0f);
 	rev_z_axis = cube->z_axis;
+	vec3_scale(&rev_x_axis, -1.0f);
+	vec3_scale(&rev_y_axis, -1.0f);
 	vec3_scale(&rev_z_axis, -1.0f);
 	cube->half_witdh = cube->witdh / 2.0f;
 	cube->half_height = cube->height / 2.0f;
@@ -95,6 +88,18 @@ void	cube_compute_constants_from_menu(
 	init_face(cube, &cube->bot, &rev_y_axis, cube->half_height);
 	init_face(cube, &cube->front, &cube->z_axis, cube->half_depth);
 	init_face(cube, &cube->back, &rev_z_axis, cube->half_depth);
+}
+
+static void	axis_checker(
+				t_cube *cube)
+{
+	if (vec3_dot(&cube->x_axis, &cube->y_axis) != 0.0f)
+	{
+		if (vec3_dot(&cube->x_axis, &cube->z_axis) != 0.0f)
+			vec3_cross(&cube->y_axis, &cube->z_axis, &cube->x_axis);
+		else
+			vec3_cross(&cube->x_axis, &cube->z_axis, &cube->y_axis);
+	}
 }
 
 static void	init_face(

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_panel_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:10:59 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:44:30 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:03:51 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ static void	_init_position_label(
 				t_menu *menu,
 				t_cube_panel *const	panel)
 {
-	panel->position_label = 
-		vec3_label_init(mlx, menu, "position: ", g_pos);
+	panel->position_label = vec3_label_init(mlx, menu, "position: ", g_pos);
 	button_init(mlx, &panel->position_label_button_x,
 		(int32_t[2]){g_pos[0] + 100, g_pos[1] + 20});
 	panel->position_label_button_x.f = NULL;
@@ -75,9 +74,8 @@ static void	_init_x_axis_label(
 				t_menu *menu,
 				t_cube_panel *const	panel)
 {
-	panel->x_axis_label = 
-		vec3_label_init(mlx, menu, "x_axis: ",
-		(uint32_t[2]){g_pos[0] + 180, g_pos[1]});
+	panel->x_axis_label = vec3_label_init(mlx, menu, "x_axis: ",
+			(uint32_t[2]){g_pos[0] + 180, g_pos[1]});
 	button_init(mlx, &panel->x_axis_label_button_x,
 		(int32_t[2]){g_pos[0] + 300, g_pos[1] + 20});
 	panel->x_axis_label_button_x.f = NULL;
@@ -103,9 +101,8 @@ static void	_init_y_axis_label(
 				t_menu *menu,
 				t_cube_panel *const	panel)
 {
-	panel->y_axis_label = 
-		vec3_label_init(mlx, menu, "y_axis: ",
-		(uint32_t[2]){g_pos[0] + 180, g_pos[1] + 100});
+	panel->y_axis_label = vec3_label_init(mlx, menu, "y_axis: ",
+			(uint32_t[2]){g_pos[0] + 180, g_pos[1] + 100});
 	button_init(mlx, &panel->y_axis_label_button_x,
 		(int32_t[2]){g_pos[0] + 300, g_pos[1] + 120});
 	panel->y_axis_label_button_x.f = NULL;

@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 12:44:59 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 13:02:05 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ static bool	_draw_position_label(
 	should_redraw = false;
 	vec3_label_draw(mlx, menu,
 		&menu->object_panel.cube_panel.position_label);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.position_label_button_x);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.position_label_button_y);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.position_label_button_z);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.position_label_button_x);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.position_label_button_y);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.position_label_button_z);
 	return (should_redraw);
 }
 
@@ -74,12 +74,12 @@ static bool	_draw_x_axis_label(
 	should_redraw = false;
 	vec3_label_draw(mlx, menu,
 		&menu->object_panel.cube_panel.x_axis_label);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.x_axis_label_button_x);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.x_axis_label_button_y);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.x_axis_label_button_z);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.x_axis_label_button_x);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.x_axis_label_button_y);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.x_axis_label_button_z);
 	return (should_redraw);
 }
 
@@ -92,12 +92,12 @@ static bool	_draw_y_axis_label(
 	should_redraw = false;
 	vec3_label_draw(mlx, menu,
 		&menu->object_panel.cube_panel.y_axis_label);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.y_axis_label_button_x);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.y_axis_label_button_y);
-	should_redraw |= button_draw(
-		mlx, menu, &menu->object_panel.cube_panel.y_axis_label_button_z);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.y_axis_label_button_x);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.y_axis_label_button_y);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.cube_panel.y_axis_label_button_z);
 	return (should_redraw);
 }
 
@@ -111,14 +111,14 @@ static bool	_draw_size_labels(
 	float_label_draw(mlx, menu,
 		&menu->object_panel.cube_panel.width_label);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.cube_panel.width_label_button);
+			&menu->object_panel.cube_panel.width_label_button);
 	float_label_draw(mlx, menu,
 		&menu->object_panel.cube_panel.height_label);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.cube_panel.height_label_button);
+			&menu->object_panel.cube_panel.height_label_button);
 	float_label_draw(mlx, menu,
 		&menu->object_panel.cube_panel.depth_label);
 	should_redraw |= button_draw(mlx, menu,
-		&menu->object_panel.cube_panel.depth_label_button);
+			&menu->object_panel.cube_panel.depth_label_button);
 	return (should_redraw);
 }

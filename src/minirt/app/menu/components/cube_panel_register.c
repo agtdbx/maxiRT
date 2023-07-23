@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube_panel_register.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:57:08 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:23:48 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:05:06 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 #include "minirt/app/scene/scene.h"
 
-static void _register_position_label(
+static void	_register_position_label(
 				t_menu *menu,
 				t_cube *cube);
-static void _register_x_axis_label(
+static void	_register_x_axis_label(
 				t_menu *menu,
 				t_cube *cube);
-static void _register_y_axis_label(
+static void	_register_y_axis_label(
 				t_menu *menu,
 				t_cube *cube);
 static void	_register_size_labels(
@@ -40,7 +40,7 @@ void	cube_panel_register(
 	_register_size_labels(menu, cube);
 }
 
-static void _register_position_label(
+static void	_register_position_label(
 				t_menu *menu,
 				t_cube *cube)
 {
@@ -54,7 +54,7 @@ static void _register_position_label(
 	panel->position_label_button_z.f = &cube->pos.z;
 }
 
-static void _register_x_axis_label(
+static void	_register_x_axis_label(
 				t_menu *menu,
 				t_cube *cube)
 {
@@ -68,7 +68,7 @@ static void _register_x_axis_label(
 	panel->x_axis_label_button_z.f = &cube->x_axis.z;
 }
 
-static void _register_y_axis_label(
+static void	_register_y_axis_label(
 				t_menu *menu,
 				t_cube *cube)
 {

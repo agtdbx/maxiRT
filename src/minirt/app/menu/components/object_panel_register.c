@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_panel_register.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:54:53 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:26:14 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static void	_register_common_labels(
 				t_menu *menu,
 				t_object *object);
 
+static void	_register_object(
+				t_menu *menu,
+				t_object *object);
+
 void	object_panel_register(
 			t_menu *menu,
 			t_object *object)
@@ -28,31 +32,7 @@ void	object_panel_register(
 	menu->light_panel.is_enabled = false;
 	menu->object_panel.is_enabled = true;
 	_register_common_labels(menu, object);
-	if (object->type == OBJ_CONE)
-	{
-		cone_panel_register(menu, &object->value.as_cone);
-		cone_panel_show(menu);
-	}
-	if (object->type == OBJ_CUBE)
-	{
-		cube_panel_register(menu, &object->value.as_cube);
-		cube_panel_show(menu);
-	}
-	else if (object->type == OBJ_PLANE)
-	{
-		plane_panel_register(menu, &object->value.as_plane);
-		plane_panel_show(menu);
-	}
-	else if (object->type == OBJ_SPHERE)
-	{
-		sphere_panel_register(menu, &object->value.as_sphere);
-		sphere_panel_show(menu);
-	}
-	else if (object->type == OBJ_CYLINDER)
-	{
-		cylinder_panel_register(menu, &object->value.as_cylinder);
-		cylinder_panel_show(menu);
-	}
+	_register_object(menu, object);
 	object_panel_show(menu);
 }
 
@@ -72,4 +52,35 @@ static void	_register_common_labels(
 	menu->object_panel.opacity_label_button.f = &object->opacity;
 	menu->object_panel.density_label_button.f = &object->density;
 	menu->object_panel.reflection_label_button.f = &object->reflection;
+}
+
+static void	_register_object(
+			t_menu *menu,
+			t_object *object)
+{
+	if (object->type == OBJ_CONE)
+	{
+		cone_panel_register(menu, &object->value.as_cone);
+		cone_panel_show(menu);
+	}
+	else if (object->type == OBJ_CUBE)
+	{
+		cube_panel_register(menu, &object->value.as_cube);
+		cube_panel_show(menu);
+	}
+	else if (object->type == OBJ_PLANE)
+	{
+		plane_panel_register(menu, &object->value.as_plane);
+		plane_panel_show(menu);
+	}
+	else if (object->type == OBJ_SPHERE)
+	{
+		sphere_panel_register(menu, &object->value.as_sphere);
+		sphere_panel_show(menu);
+	}
+	else if (object->type == OBJ_CYLINDER)
+	{
+		cylinder_panel_register(menu, &object->value.as_cylinder);
+		cylinder_panel_show(menu);
+	}
 }

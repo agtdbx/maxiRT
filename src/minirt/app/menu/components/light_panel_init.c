@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:54:26 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 21:17:57 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 13:05:30 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	light_panel_init(
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	_init_color_label(mlx, menu);
 	_init_intensity_label(mlx, menu);
-	_init_position_label(mlx, menu);//TODO
+	_init_position_label(mlx, menu);
 }
 
 static void	_init_color_label(
