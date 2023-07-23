@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 08:25:41 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:06:05 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 13:31:46 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 #include "minirt/app/menu/menu.h"
 #include "minirt/app/scene/scene.h"
-#include "minirt/debug/debug.h"//TODO
 
 static bool	_has_clicked_on_canvas(
 				t_canvas const *canvas,
@@ -47,9 +46,6 @@ void	handle_mouse_clicks(
 	mlx_get_mouse_pos(mlx, &pix[0], &pix[1]);
 	if (_has_clicked_on_canvas(canvas, pix))
 	{
-		DEBUG_ON(); //TODO for debugging
-		(void)render_one_pixel(scene, canvas, pix, true);
-		DEBUG_OFF();
 		_handle_clicks_on_canvas(menu, scene, canvas, pix);
 		return ;
 	}

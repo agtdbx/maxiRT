@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:07:02 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 13:58:13 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,6 @@ static void		apply_shadow_to_illumination(
 					t_color *illumination,
 					float dist_to_spotlight,
 					t_ray const *ray_to_spotlight);
-
-t_color	check_dynamic_illumination(
-			t_scene const *scene,
-			t_object const *object,
-			t_ray const *ray,
-			t_ray const *normal)
-{
-	t_color			ill_from_spotlight;
-	t_phong_model	model;
-	t_color			illumination;
-
-	model.normal = normal;
-	model.from_camera = ray;
-	model.spotlight = scene->spotlights;
-	illumination.r = 0.0f;
-	illumination.g = 0.0f;
-	illumination.b = 0.0f;
-	while (model.spotlight != NULL)
-	{
-		ill_from_spotlight = (t_color){0};
-		_collect_illumination_from_spotlight(
-			scene->objects, object, &model, &ill_from_spotlight);
-		illumination.r += ill_from_spotlight.r * model.spotlight->color.r;
-		illumination.g += ill_from_spotlight.g * model.spotlight->color.g;
-		illumination.b += ill_from_spotlight.b * model.spotlight->color.b;
-		model.spotlight = model.spotlight->next;
-	}
-	return (illumination);
-}
 
 /**
  * Compute illumination of point normal->pos
@@ -203,7 +174,6 @@ static void	apply_shadow_to_illumination(
 	t_intersect_info	distance_to_object;
 	t_color				base_color;
 	t_ray				normal;
-	t_vec2				pixel_pos;
 
 	if (test_intersection_with_obj(
 			ray_to_spotlight, objects, &distance_to_object)
@@ -215,9 +185,7 @@ static void	apply_shadow_to_illumination(
 			return ;
 		compute_normal_ray(objects, ray_to_spotlight,
 			&distance_to_object, &normal);
-		pixel_pos = get_object_pixel_pos(objects, ray_to_spotlight,
-				&normal, &distance_to_object);
-		base_color = get_base_color_object(objects, &pixel_pos);
+		base_color = objects->color;
 		illumination->r -= powf(objects->opacity,
 				1 + base_color.r * g_opacity_color_ratio);
 		illumination->g -= powf(objects->opacity,

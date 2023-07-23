@@ -1,0 +1,116 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_cube_pixel_pos.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/06 15:49:28 by aderouba          #+#    #+#             */
+/*   Updated: 2023/07/06 16:05:15 by aderouba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt/app/app_bonus.h"
+
+#include <math.h>
+
+#include "minirt/app/utils/geometry/geometry_bonus.h"
+
+static t_vec2	get_pixel_pos_x(
+					t_cube const *cube,
+					t_intersect_info const *intersect_info,
+					t_vec3 *p);
+static t_vec2	get_pixel_pos_y(
+					t_cube const *cube,
+					t_intersect_info const *intersect_info,
+					t_vec3 *p);
+static t_vec2	get_pixel_pos_z(
+					t_cube const *cube,
+					t_intersect_info const *intersect_info,
+					t_vec3 *p);
+
+t_vec2	get_cube_pixel_pos(
+					t_cube const *cube,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info)
+{
+	t_vec2	pixel;
+	t_vec3	p;
+
+	p = normal->pos;
+	if (intersect_info->sub_part_id <= 1)
+		pixel = get_pixel_pos_x(cube, intersect_info, &p);
+	else if (intersect_info->sub_part_id <= 3)
+		pixel = get_pixel_pos_y(cube, intersect_info, &p);
+	else
+		pixel = get_pixel_pos_z(cube, intersect_info, &p);
+	pixel.x += 0.5f;
+	pixel.y += 0.5f;
+	return (pixel);
+}
+
+static t_vec2	get_pixel_pos_x(
+					t_cube const *cube,
+					t_intersect_info const *intersect_info,
+					t_vec3 *p)
+{
+	t_vec2	pixel;
+
+	if (intersect_info->sub_part_id == 0)
+	{
+		vec3_substract(p, &cube->right.pos);
+		pixel.x = -vec3_dot(&cube->z_axis, p) / cube->depth;
+		pixel.y = -vec3_dot(&cube->y_axis, p) / cube->height;
+	}
+	else
+	{
+		vec3_substract(p, &cube->left.pos);
+		pixel.x = vec3_dot(&cube->z_axis, p) / cube->depth;
+		pixel.y = -vec3_dot(&cube->y_axis, p) / cube->height;
+	}
+	return (pixel);
+}
+
+static t_vec2	get_pixel_pos_y(
+					t_cube const *cube,
+					t_intersect_info const *intersect_info,
+					t_vec3 *p)
+{
+	t_vec2	pixel;
+
+	if (intersect_info->sub_part_id == 2)
+	{
+		vec3_substract(p, &cube->top.pos);
+		pixel.x = vec3_dot(&cube->x_axis, p) / cube->witdh;
+		pixel.y = vec3_dot(&cube->z_axis, p) / cube->depth;
+	}
+	else
+	{
+		vec3_substract(p, &cube->bot.pos);
+		pixel.x = vec3_dot(&cube->x_axis, p) / cube->witdh;
+		pixel.y = -vec3_dot(&cube->z_axis, p) / cube->depth;
+	}
+	return (pixel);
+}
+
+static t_vec2	get_pixel_pos_z(
+					t_cube const *cube,
+					t_intersect_info const *intersect_info,
+					t_vec3 *p)
+{
+	t_vec2	pixel;
+
+	if (intersect_info->sub_part_id == 4)
+	{
+		vec3_substract(p, &cube->front.pos);
+		pixel.x = vec3_dot(&cube->x_axis, p) / cube->witdh;
+		pixel.y = -vec3_dot(&cube->y_axis, p) / cube->height;
+	}
+	else
+	{
+		vec3_substract(p, &cube->back.pos);
+		pixel.x = -vec3_dot(&cube->x_axis, p) / cube->witdh;
+		pixel.y = -vec3_dot(&cube->y_axis, p) / cube->height;
+	}
+	return (pixel);
+}

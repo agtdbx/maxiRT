@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 16:37:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/07 16:39:20 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 14:15:26 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	button_init(
 	if (button->img != NULL)
 	{
 		mlx_image_to_window(mlx, button->img, pos[0], pos[1]);
-		img_fill(button->img, 0xFF0000FF);
+		img_fill(button->img, 0x333333FF);
 		button->img->instances->enabled = false;
 	}
 	button->img_minus = mlx_put_string(mlx, "-", pos[0], pos[1]);

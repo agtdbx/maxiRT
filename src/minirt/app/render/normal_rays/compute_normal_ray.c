@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:39:25 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 20:41:31 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 13:56:26 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ void	compute_normal_ray(
 		compute_normal_ray_on_plane(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_CYLINDER)
 		compute_normal_ray_on_cylinder(object, ray, intersect_info, normal);
-	else if (object->type == OBJ_CONE)
-		compute_normal_ray_on_cone(object, ray, intersect_info, normal);
-	else if (object->type == OBJ_CUBE)
-		compute_normal_ray_on_cube(object, ray, intersect_info, normal);
 	else
 		*normal = (t_ray){0};
 }

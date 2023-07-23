@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:26:14 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 14:07:36 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,7 @@ static void	_register_object(
 			t_menu *menu,
 			t_object *object)
 {
-	if (object->type == OBJ_CONE)
-	{
-		cone_panel_register(menu, &object->value.as_cone);
-		cone_panel_show(menu);
-	}
-	else if (object->type == OBJ_CUBE)
-	{
-		cube_panel_register(menu, &object->value.as_cube);
-		cube_panel_show(menu);
-	}
-	else if (object->type == OBJ_PLANE)
+	if (object->type == OBJ_PLANE)
 	{
 		plane_panel_register(menu, &object->value.as_plane);
 		plane_panel_show(menu);

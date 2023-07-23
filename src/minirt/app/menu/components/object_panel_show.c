@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_panel_show.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:54:11 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:02:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 14:07:28 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ void	object_panel_show(
 	button_show(&menu->object_panel.opacity_label_button);
 	button_show(&menu->object_panel.density_label_button);
 	button_show(&menu->object_panel.reflection_label_button);
-	if (menu->object_panel.object_type == OBJ_CONE)
-		cone_panel_show(menu);
-	if (menu->object_panel.object_type == OBJ_CUBE)
-		cube_panel_show(menu);
 	if (menu->object_panel.object_type == OBJ_PLANE)
 		plane_panel_show(menu);
 	if (menu->object_panel.object_type == OBJ_SPHERE)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+         #
+#    By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2023/05/02 07:52:21 by tdubois          ###   ########.fr        #
+#    Updated: 2023/07/23 15:15:22 by aderouba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,335 @@ LIBFT		:=	lib/libft/libft.a
 #==============================================================================#
 #==== DIRECTORIES =============================================================#
 
+BUILD_BONUS	:= .build_bonus
+ifdef BONUS
+SRC			:=	src_bonus
+SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
+				src_bonus/minirt/app/app_start_bonus.c \
+				src_bonus/minirt/app/canvas/canvas_init_bonus.c \
+				src_bonus/minirt/app/canvas/canvas_swap_bonus.c \
+				src_bonus/minirt/app/input_handlers/handle_menu_toggling_bonus.c \
+				src_bonus/minirt/app/input_handlers/handle_mouse_clicks_bonus.c \
+				src_bonus/minirt/app/input_handlers/handle_rotations_bonus.c \
+				src_bonus/minirt/app/input_handlers/handle_translations_bonus.c \
+				src_bonus/minirt/app/input_handlers/handle_window_resizing_bonus.c \
+				src_bonus/minirt/app/menu/components/ambient_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/ambient_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/ambient_label_init_bonus.c \
+				src_bonus/minirt/app/menu/components/ambient_label_show_bonus.c \
+				src_bonus/minirt/app/menu/components/background_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/camera_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/camera_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/camera_label_init_bonus.c \
+				src_bonus/minirt/app/menu/components/camera_label_show_bonus.c \
+				src_bonus/minirt/app/menu/components/cone_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/cone_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/cone_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/cone_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/cone_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/cube_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/cube_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/cube_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/cube_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/cube_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/init_labels_bonus.c \
+				src_bonus/minirt/app/menu/components/light_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/light_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/light_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/light_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/light_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/object_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/object_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/object_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/object_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/object_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/plane_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/plane_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/plane_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/plane_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/plane_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/button_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/button_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/button_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/button_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/color_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/color_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/color_label_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/color_label_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/float_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/float_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/float_label_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/float_label_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/int_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/int_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/int_label_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/int_label_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/vec3_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/vec3_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/vec3_label_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/vec3_label_show_bonus.c \
+				src_bonus/minirt/app/menu/menu_draw_bonus.c \
+				src_bonus/minirt/app/menu/menu_hide_bonus.c \
+				src_bonus/minirt/app/menu/menu_init_bonus.c \
+				src_bonus/minirt/app/menu/menu_show_bonus.c \
+				src_bonus/minirt/app/menu/menu_update_position_bonus.c \
+				src_bonus/minirt/app/render/create_ray_from_pixel_coords_bonus.c \
+				src_bonus/minirt/app/render/illumination/compute_illumination_bonus.c \
+				src_bonus/minirt/app/render/intersections/compute_intersection_distance_bonus.c \
+				src_bonus/minirt/app/render/intersections/compute_intersection_distance_from_inside_bonus.c \
+				src_bonus/minirt/app/render/intersections/cone/test_intersection_with_cone_bonus.c \
+				src_bonus/minirt/app/render/intersections/cone/test_intersection_with_cone_from_inside_bonus.c \
+				src_bonus/minirt/app/render/intersections/cube/intersection_inside_x_bonus.c \
+				src_bonus/minirt/app/render/intersections/cube/intersection_inside_y_bonus.c \
+				src_bonus/minirt/app/render/intersections/cube/intersection_inside_z_bonus.c \
+				src_bonus/minirt/app/render/intersections/cube/intersection_x_bonus.c \
+				src_bonus/minirt/app/render/intersections/cube/intersection_y_bonus.c \
+				src_bonus/minirt/app/render/intersections/cube/intersection_z_bonus.c \
+				src_bonus/minirt/app/render/intersections/cube/test_intersection_with_cube_bonus.c \
+				src_bonus/minirt/app/render/intersections/cube/test_intersection_with_cube_from_inside_bonus.c \
+				src_bonus/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder_bonus.c \
+				src_bonus/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder_from_inside_bonus.c \
+				src_bonus/minirt/app/render/intersections/fetch_closer_spotlight_bonus.c \
+				src_bonus/minirt/app/render/intersections/fetch_closest_intersections_bonus.c \
+				src_bonus/minirt/app/render/intersections/intersect_loop_without_param_obj_bonus.c \
+				src_bonus/minirt/app/render/intersections/plane/test_intersection_with_plane_bonus.c \
+				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_bonus.c \
+				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside_bonus.c \
+				src_bonus/minirt/app/render/intersections/test_intersection_with_obj_bonus.c \
+				src_bonus/minirt/app/render/mapping/color/apply_texture_bonus.c \
+				src_bonus/minirt/app/render/mapping/color/get_base_color_object_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/apply_normal_map_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_cone_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_cube_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_cylinder_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_plane_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_sphere_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_map_bonus.c \
+				src_bonus/minirt/app/render/mapping/pixel_pos/get_cone_pixel_pos_bonus.c \
+				src_bonus/minirt/app/render/mapping/pixel_pos/get_cube_pixel_pos_bonus.c \
+				src_bonus/minirt/app/render/mapping/pixel_pos/get_cylinder_pixel_pos_bonus.c \
+				src_bonus/minirt/app/render/mapping/pixel_pos/get_object_pixel_pos_bonus.c \
+				src_bonus/minirt/app/render/mapping/pixel_pos/get_plane_pixel_pos_bonus.c \
+				src_bonus/minirt/app/render/mapping/pixel_pos/get_sphere_pixel_pos_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cone_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cube_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cylinder_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_plane_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_sphere_bonus.c \
+				src_bonus/minirt/app/render/reflection/reflection_bonus.c \
+				src_bonus/minirt/app/render/render_canvas_bonus.c \
+				src_bonus/minirt/app/render/render_fast_on_front_canvas_bonus.c \
+				src_bonus/minirt/app/render/render_next_pixels_til_tmax_on_back_canvas_bonus.c \
+				src_bonus/minirt/app/render/render_ray_from_camera_bonus.c \
+				src_bonus/minirt/app/render/render_ray_on_object_bonus.c \
+				src_bonus/minirt/app/render/transparency/compute_refracted_color_bonus.c \
+				src_bonus/minirt/app/scene/camera_compute_constants_bonus.c \
+				src_bonus/minirt/app/scene/cone_compute_constants_bonus.c \
+				src_bonus/minirt/app/scene/cube_compute_constants_bonus.c \
+				src_bonus/minirt/app/scene/cylinder_compute_constants_bonus.c \
+				src_bonus/minirt/app/scene/plane_compute_constants_bonus.c \
+				src_bonus/minirt/app/scene/scene_add_object_bonus.c \
+				src_bonus/minirt/app/scene/scene_del_bonus.c \
+				src_bonus/minirt/app/scene/sphere_compute_constants_bonus.c \
+				src_bonus/minirt/app/utils/color/color_scale_bonus.c \
+				src_bonus/minirt/app/utils/color/color_to_int_bonus.c \
+				src_bonus/minirt/app/utils/drawings/img_draw_divider_bonus.c \
+				src_bonus/minirt/app/utils/drawings/img_draw_square_bonus.c \
+				src_bonus/minirt/app/utils/drawings/img_fill_bonus.c \
+				src_bonus/minirt/app/utils/geometry/mat_product_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_add_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_cross_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_dot_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_dot_xyz_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_linear_transform_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_normalize_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_normalize_into_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_norm_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_scale_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_scale_into_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_substract_bonus.c \
+				src_bonus/minirt/app/utils/geometry/vec3_substract_into_bonus.c \
+				src_bonus/minirt_bonus.c \
+				src_bonus/minirt/parser/directives/parse_ambient_light_bonus.c \
+				src_bonus/minirt/parser/directives/parse_camera_bonus.c \
+				src_bonus/minirt/parser/directives/parse_cone_bonus.c \
+				src_bonus/minirt/parser/directives/parse_cube_bonus.c \
+				src_bonus/minirt/parser/directives/parse_cylinder_bonus.c \
+				src_bonus/minirt/parser/directives/parse_plane_bonus.c \
+				src_bonus/minirt/parser/directives/parse_sphere_bonus.c \
+				src_bonus/minirt/parser/directives/parse_spotlight_bonus.c \
+				src_bonus/minirt/parser/error_logs/put_directive_error_bonus.c \
+				src_bonus/minirt/parser/error_logs/put_field_error_bonus.c \
+				src_bonus/minirt/parser/error_logs/put_unknown_directive_error_bonus.c \
+				src_bonus/minirt/parser/fields/parse_brightness_bonus.c \
+				src_bonus/minirt/parser/fields/parse_color_bonus.c \
+				src_bonus/minirt/parser/fields/parse_diameter_bonus.c \
+				src_bonus/minirt/parser/fields/parse_direction_bonus.c \
+				src_bonus/minirt/parser/fields/parse_float_bonus.c \
+				src_bonus/minirt/parser/fields/parse_fov_bonus.c \
+				src_bonus/minirt/parser/fields/parse_png_bonus.c \
+				src_bonus/minirt/parser/fields/parse_vec3_bonus.c \
+				src_bonus/minirt/parser/parse_directive_bonus.c \
+				src_bonus/minirt/parser/parse_field_bonus.c \
+				src_bonus/minirt/parser/parse_file_bonus.c \
+				src_bonus/minirt/parser/parse_lines_bonus.c
+BUILD		:=	.build_bonus
+else
 SRC			:=	src
+SRCS		:=	src/minirt/app/app_loop.c \
+				src/minirt/app/app_start.c \
+				src/minirt/app/canvas/canvas_init.c \
+				src/minirt/app/canvas/canvas_swap.c \
+				src/minirt/app/input_handlers/handle_menu_toggling.c \
+				src/minirt/app/input_handlers/handle_mouse_clicks.c \
+				src/minirt/app/input_handlers/handle_rotations.c \
+				src/minirt/app/input_handlers/handle_translations.c \
+				src/minirt/app/input_handlers/handle_window_resizing.c \
+				src/minirt/app/menu/components/ambient_label_draw.c \
+				src/minirt/app/menu/components/ambient_label_hide.c \
+				src/minirt/app/menu/components/ambient_label_init.c \
+				src/minirt/app/menu/components/ambient_label_show.c \
+				src/minirt/app/menu/components/background_draw.c \
+				src/minirt/app/menu/components/camera_label_draw.c \
+				src/minirt/app/menu/components/camera_label_hide.c \
+				src/minirt/app/menu/components/camera_label_init.c \
+				src/minirt/app/menu/components/camera_label_show.c \
+				src/minirt/app/menu/components/cylinder_panel_draw.c \
+				src/minirt/app/menu/components/cylinder_panel_hide.c \
+				src/minirt/app/menu/components/cylinder_panel_init.c \
+				src/minirt/app/menu/components/cylinder_panel_register.c \
+				src/minirt/app/menu/components/cylinder_panel_show.c \
+				src/minirt/app/menu/components/init_labels.c \
+				src/minirt/app/menu/components/light_panel_draw.c \
+				src/minirt/app/menu/components/light_panel_hide.c \
+				src/minirt/app/menu/components/light_panel_init.c \
+				src/minirt/app/menu/components/light_panel_register.c \
+				src/minirt/app/menu/components/light_panel_show.c \
+				src/minirt/app/menu/components/object_panel_draw.c \
+				src/minirt/app/menu/components/object_panel_hide.c \
+				src/minirt/app/menu/components/object_panel_init.c \
+				src/minirt/app/menu/components/object_panel_register.c \
+				src/minirt/app/menu/components/object_panel_show.c \
+				src/minirt/app/menu/components/plane_panel_draw.c \
+				src/minirt/app/menu/components/plane_panel_hide.c \
+				src/minirt/app/menu/components/plane_panel_init.c \
+				src/minirt/app/menu/components/plane_panel_register.c \
+				src/minirt/app/menu/components/plane_panel_show.c \
+				src/minirt/app/menu/components/sphere_panel_draw.c \
+				src/minirt/app/menu/components/sphere_panel_hide.c \
+				src/minirt/app/menu/components/sphere_panel_init.c \
+				src/minirt/app/menu/components/sphere_panel_register.c \
+				src/minirt/app/menu/components/sphere_panel_show.c \
+				src/minirt/app/menu/lib/button_draw.c \
+				src/minirt/app/menu/lib/button_hide.c \
+				src/minirt/app/menu/lib/button_init.c \
+				src/minirt/app/menu/lib/button_show.c \
+				src/minirt/app/menu/lib/color_label_draw.c \
+				src/minirt/app/menu/lib/color_label_hide.c \
+				src/minirt/app/menu/lib/color_label_init.c \
+				src/minirt/app/menu/lib/color_label_show.c \
+				src/minirt/app/menu/lib/float_label_draw.c \
+				src/minirt/app/menu/lib/float_label_hide.c \
+				src/minirt/app/menu/lib/float_label_init.c \
+				src/minirt/app/menu/lib/float_label_show.c \
+				src/minirt/app/menu/lib/int_label_draw.c \
+				src/minirt/app/menu/lib/int_label_hide.c \
+				src/minirt/app/menu/lib/int_label_init.c \
+				src/minirt/app/menu/lib/int_label_show.c \
+				src/minirt/app/menu/lib/vec3_label_draw.c \
+				src/minirt/app/menu/lib/vec3_label_hide.c \
+				src/minirt/app/menu/lib/vec3_label_init.c \
+				src/minirt/app/menu/lib/vec3_label_show.c \
+				src/minirt/app/menu/menu_draw.c \
+				src/minirt/app/menu/menu_hide.c \
+				src/minirt/app/menu/menu_init.c \
+				src/minirt/app/menu/menu_show.c \
+				src/minirt/app/menu/menu_update_position.c \
+				src/minirt/app/render/create_ray_from_pixel_coords.c \
+				src/minirt/app/render/illumination/compute_illumination.c \
+				src/minirt/app/render/intersections/compute_intersection_distance.c \
+				src/minirt/app/render/intersections/compute_intersection_distance_from_inside.c \
+				src/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder.c \
+				src/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder_from_inside.c \
+				src/minirt/app/render/intersections/fetch_closer_spotlight.c \
+				src/minirt/app/render/intersections/fetch_closest_intersections.c \
+				src/minirt/app/render/intersections/intersect_loop_without_param_obj.c \
+				src/minirt/app/render/intersections/plane/test_intersection_with_plane.c \
+				src/minirt/app/render/intersections/sphere/test_intersection_with_sphere.c \
+				src/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside.c \
+				src/minirt/app/render/intersections/test_intersection_with_obj.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_cylinder.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_plane.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_sphere.c \
+				src/minirt/app/render/reflection/reflection.c \
+				src/minirt/app/render/render_canvas.c \
+				src/minirt/app/render/render_fast_on_front_canvas.c \
+				src/minirt/app/render/render_next_pixels_til_tmax_on_back_canvas.c \
+				src/minirt/app/render/render_ray_from_camera.c \
+				src/minirt/app/render/render_ray_on_object.c \
+				src/minirt/app/render/transparency/compute_refracted_color.c \
+				src/minirt/app/scene/camera_compute_constants.c \
+				src/minirt/app/scene/cylinder_compute_constants.c \
+				src/minirt/app/scene/plane_compute_constants.c \
+				src/minirt/app/scene/scene_add_object.c \
+				src/minirt/app/scene/scene_del.c \
+				src/minirt/app/scene/sphere_compute_constants.c \
+				src/minirt/app/utils/color/color_scale.c \
+				src/minirt/app/utils/color/color_to_int.c \
+				src/minirt/app/utils/drawings/img_draw_divider.c \
+				src/minirt/app/utils/drawings/img_draw_square.c \
+				src/minirt/app/utils/drawings/img_fill.c \
+				src/minirt/app/utils/geometry/mat_product.c \
+				src/minirt/app/utils/geometry/vec3_add.c \
+				src/minirt/app/utils/geometry/vec3.c \
+				src/minirt/app/utils/geometry/vec3_cross.c \
+				src/minirt/app/utils/geometry/vec3_dot.c \
+				src/minirt/app/utils/geometry/vec3_dot_xyz.c \
+				src/minirt/app/utils/geometry/vec3_linear_transform.c \
+				src/minirt/app/utils/geometry/vec3_normalize.c \
+				src/minirt/app/utils/geometry/vec3_normalize_into.c \
+				src/minirt/app/utils/geometry/vec3_norm.c \
+				src/minirt/app/utils/geometry/vec3_scale.c \
+				src/minirt/app/utils/geometry/vec3_scale_into.c \
+				src/minirt/app/utils/geometry/vec3_substract.c \
+				src/minirt/app/utils/geometry/vec3_substract_into.c \
+				src/minirt.c \
+				src/minirt/parser/directives/parse_ambient_light.c \
+				src/minirt/parser/directives/parse_camera.c \
+				src/minirt/parser/directives/parse_cylinder.c \
+				src/minirt/parser/directives/parse_plane.c \
+				src/minirt/parser/directives/parse_sphere.c \
+				src/minirt/parser/directives/parse_spotlight.c \
+				src/minirt/parser/error_logs/put_directive_error.c \
+				src/minirt/parser/error_logs/put_field_error.c \
+				src/minirt/parser/error_logs/put_unknown_directive_error.c \
+				src/minirt/parser/fields/parse_brightness.c \
+				src/minirt/parser/fields/parse_color.c \
+				src/minirt/parser/fields/parse_diameter.c \
+				src/minirt/parser/fields/parse_direction.c \
+				src/minirt/parser/fields/parse_float.c \
+				src/minirt/parser/fields/parse_fov.c \
+				src/minirt/parser/fields/parse_png.c \
+				src/minirt/parser/fields/parse_vec3.c \
+				src/minirt/parser/parse_directive.c \
+				src/minirt/parser/parse_field.c \
+				src/minirt/parser/parse_file.c \
+				src/minirt/parser/parse_lines.c
 BUILD		:=	.build
+endif
 
 INCLUDES	:=	$(SRC) lib/libft/include lib/mlx42/include
 
@@ -55,12 +382,6 @@ CFLAGS		+=	-ggdb3 -Wno-unused-function
 endif
 
 #==============================================================================#
-#==== SOURCES =================================================================#
-
-#TODO
-SRCS	:=	$(shell fd -g '*.c' -E '*.test.c' -E 'minirt/parser/old' $(SRC))
-
-#==============================================================================#
 #==== BUILD FILES =============================================================#
 
 OBJS	:=	$(SRCS:%.c=$(BUILD)/%.o)
@@ -73,6 +394,7 @@ DIRS	:=	$(sort $(shell dirname $(BUILD) $(OBJS)))
 .PHONY:	all				\
 		libft objs		\
 		clean fclean re	\
+		bonus
 
 all: | $(LIBMLX42)					#build mlx42 once (and first)
 all: objs libft $(NAME)				#build other targets every time needed
@@ -81,16 +403,14 @@ libft:								#libft may be updated during development,
 	$(MAKE) -C lib/libft			#hence it's made a phony target
 
 objs:								#build objs in parallel
-ifdef OBJS
 	$(MAKE) -j$(nproc) $(OBJS)
-endif
 
 clean:
 	#clean libft
 	$(MAKE) -C lib/libft clean
 	#clean minirt
 	$(info $(RED)Deleting objects$(NOC))
-	rm -rf $(BUILD)
+	rm -rf $(BUILD) $(BUILD_BONUS)
 
 fclean: clean
 	#full clean libft
@@ -102,6 +422,9 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+bonus:
+	$(MAKE) BONUS=42
 
 #******************************************************************************#
 #**** BUILD RULES *************************************************************#
@@ -137,7 +460,12 @@ PURPLE		:=	$(shell printf "\033[1;35m")
 #%%%% PROGRESS LOG UTILS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
 
 objs: export N		:=	0
-objs: export NTOTAL	?=	$(shell make NTOTAL=1 -n $(OBJS) | grep clang | wc -l)
+
+ifdef BONUS
+objs: export NTOTAL	?=	$(shell $(MAKE) BONUS=42 NTOTAL=1 -n $(OBJS) | grep clang | wc -l)
+else
+objs: export NTOTAL	?=	$(shell $(MAKE) NTOTAL=1 -n $(OBJS) | grep clang | wc -l)
+endif
 
 define progress-log =
 	$(info [$(words $(N))/$(NTOTAL)] $(PURPLE)Building $< $(NOC))

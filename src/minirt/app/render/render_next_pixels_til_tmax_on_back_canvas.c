@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_next_pixels_til_tmax_on_back_canvas.c       :+:      :+:    :+:   */
+/*   render_next_pixels_til_tmax_on_back_canvas.        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:56:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 18:26:02 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:29:43 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
-
-#include "minirt/debug/debug.h"
 
 #include <stdbool.h>
 #include <stdint.h>

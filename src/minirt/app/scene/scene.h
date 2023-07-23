@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 12:44:31 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 13:55:10 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,53 +68,6 @@ typedef struct s_cylinder
 void			cylinder_compute_constants(
 					t_cylinder *cylinder);
 
-//---- CONE ------------------------------------------------------------------//
-
-typedef struct s_cone
-{
-	t_vec3	pos;
-	float	diameter;
-	float	height;
-	t_vec3	axis;
-
-	t_plane	end;
-	float	radius;
-	float	radius2;
-	float	ratio;
-}	t_cone;
-
-void			cone_compute_constants(
-					t_cone *cone);
-
-//---- CUBE ------------------------------------------------------------------//
-
-typedef struct s_cube
-{
-	t_vec3	pos;
-	float	witdh;
-	float	height;
-	float	depth;
-	t_vec3	x_axis;
-	t_vec3	y_axis;
-
-	t_vec3	z_axis;
-	t_plane	front;
-	t_plane	back;
-	t_plane	top;
-	t_plane	bot;
-	t_plane	left;
-	t_plane	right;
-	float	half_witdh;
-	float	half_height;
-	float	half_depth;
-
-}	t_cube;
-
-void			cube_compute_constants(
-					t_cube *cube);
-void			cube_compute_constants_from_menu(
-					t_cube *cube);
-
 //---- COLOR INTERFACE -------------------------------------------------------//
 
 typedef enum e_color_t
@@ -131,8 +84,6 @@ typedef enum e_object_t
 	OBJ_SPHERE,
 	OBJ_PLANE,
 	OBJ_CYLINDER,
-	OBJ_CONE,
-	OBJ_CUBE,
 }	t_object_t;
 
 typedef union u_object_v
@@ -140,8 +91,6 @@ typedef union u_object_v
 	t_sphere	as_sphere;
 	t_plane		as_plane;
 	t_cylinder	as_cylinder;
-	t_cone		as_cone;
-	t_cube		as_cube;
 }	t_object_v;
 
 typedef struct s_object

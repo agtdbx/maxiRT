@@ -1,0 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_intersection_with_cube_from_inside.c          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/23 13:30:15 by aderouba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt/app/app_bonus.h"
+
+#include <stdbool.h>
+#include <math.h>
+
+#include "minirt/app/utils/geometry/geometry_bonus.h"
+
+/**
+ * Test ray-cube intersection. Algorithm is derived from
+ * https://hugi.scene.org/online/hugi24/
+ * coding%20graphics%20chris%20dragan%20raytracing%20shapes.htm
+ *
+ * @param[in] ray Normalized ray
+ * @param[in] cylinder
+ * @param[out] distance From ray origin to intersection point
+ * @returns Wether ray intersects with cylinder
+ */
+bool	test_intersection_with_cube_from_inside(
+			t_ray const *ray,
+			t_cube const *cube,
+			t_intersect_info *intersect_info)
+{
+	bool				is_face_intersect;
+	t_intersect_info	test;
+
+	test.distance = 0.0f;
+	test.sub_part_id = -1;
+	is_face_intersect = false;
+	is_face_intersect += intersection_inside_with_right(ray, cube, &test);
+	is_face_intersect += intersection_inside_with_left(ray, cube, &test);
+	is_face_intersect += intersection_inside_with_top(ray, cube, &test);
+	is_face_intersect += intersection_inside_with_bot(ray, cube, &test);
+	is_face_intersect += intersection_inside_with_front(ray, cube, &test);
+	is_face_intersect += intersection_inside_with_back(ray, cube, &test);
+	if (is_face_intersect)
+	{
+		intersect_info->distance = test.distance;
+		intersect_info->sub_part_id = test.sub_part_id;
+	}
+	return (is_face_intersect);
+}

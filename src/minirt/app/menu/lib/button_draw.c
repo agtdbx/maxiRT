@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:01:49 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 21:05:19 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/23 15:22:15 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 #include <math.h>
 
 static bool	_draw_left_button(
+				mlx_t *mlx,
 				int32_t const pos_click[2],
 				t_button *button);
 
 static bool	_draw_right_button(
+				mlx_t *mlx,
 				int32_t const pos_click[2],
 				t_button *button);
 
@@ -42,7 +44,7 @@ bool	button_draw(
 		= menu->background->instances[0].x + button->x + 25;
 	if (!mlx_is_mouse_down(mlx, MLX_MOUSE_BUTTON_LEFT))
 	{
-		img_fill(button->img, 0xFF0000FF);
+		img_fill(button->img, 0x333333FF);
 		return (false);
 	}
 	mlx_get_mouse_pos(mlx, &pos_click[0], &pos_click[1]);
@@ -51,12 +53,13 @@ bool	button_draw(
 		return (false);
 	pos_click[0] -= menu->background->instances[0].x;
 	should_render = false;
-	should_render |= _draw_left_button(pos_click, button);
-	should_render |= _draw_right_button(pos_click, button);
+	should_render |= _draw_left_button(mlx, pos_click, button);
+	should_render |= _draw_right_button(mlx, pos_click, button);
 	return (should_render);
 }
 
 static bool	_draw_left_button(
+				mlx_t *mlx,
 				int32_t const pos_click[2],
 				t_button *button)
 {
@@ -65,19 +68,23 @@ static bool	_draw_left_button(
 
 	if (pos_button[0] <= pos_click[0] && pos_click[0] < pos_button[0] + 20)
 	{
-		img_draw_square(button->img, pos_inside_img, 20, 0x00FF00FF);
+		img_draw_square(button->img, pos_inside_img, 20, 0x666666FF);
 		if (button->min < *button->f)
 		{
-			*button->f = fmaxf(button->min, *button->f - button->step);
+			if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
+				*button->f = fmaxf(button->min, *button->f - button->step * 10);
+			else
+				*button->f = fmaxf(button->min, *button->f - button->step);
 			return (true);
 		}
 		return (false);
 	}
-	img_draw_square(button->img, pos_inside_img, 20, 0xFF0000FF);
+	img_draw_square(button->img, pos_inside_img, 20, 0x333333FF);
 	return (false);
 }
 
 static bool	_draw_right_button(
+				mlx_t *mlx,
 				int32_t const pos_click[2],
 				t_button *button)
 {
@@ -86,14 +93,17 @@ static bool	_draw_right_button(
 
 	if (pos_button[0] <= pos_click[0] && pos_click[0] < pos_button[0] + 20)
 	{
-		img_draw_square(button->img, pos_inside_img, 20, 0x00FF00FF);
+		img_draw_square(button->img, pos_inside_img, 20, 0x666666FF);
 		if (*button->f < button->max)
 		{
-			*button->f = fminf(button->max, *button->f + button->step);
+			if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
+				*button->f = fminf(button->max, *button->f + button->step * 10);
+			else
+				*button->f = fminf(button->max, *button->f + button->step);
 			return (true);
 		}
 		return (false);
 	}
-	img_draw_square(button->img, pos_inside_img, 20, 0xFF0000FF);
+	img_draw_square(button->img, pos_inside_img, 20, 0x333333FF);
 	return (false);
 }
