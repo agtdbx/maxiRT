@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/24 20:42:33 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/24 20:56:58 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,18 +123,10 @@ static inline void	_relative_rotate(
 	float	t[13];
 	t_vec3	ret;
 
-	if (vec->y == 1.0f)
-	{
-		vec->x = 0.01;
-		vec->y = 0.99;
+	if (fabs(vec->y) == 1.0f)
+		vec->z = 0.1;
+	if (fabs(vec->y) == 1.0f)
 		vec3_normalize(vec);
-	}
-	else if (vec->y == -1.0f)
-	{
-		vec->x = 0.01;
-		vec->y = -0.99;
-		vec3_normalize(vec);
-	}
 	t[0] = cosf(rads);
 	t[1] = 1.0f - t[0];
 	t[2] = axis->x * axis->x;
@@ -151,7 +143,8 @@ static inline void	_relative_rotate(
 	ret.x = vec3_dot_xyz(t[0] + t[1] * t[2], t[4] - t[6], t[7] + t[8], vec);
 	ret.y = vec3_dot_xyz(t[4] + t[6], t[0] + t[1] * t[9], t[10] - t[11], vec);
 	ret.z = vec3_dot_xyz(t[7] - t[8], t[10] + t[11], t[0] + t[1] * t[12], vec);
-	*vec = ret;
+	if (fabs(vec->y) < 0.995 || fabs(ret.y) < fabs(vec->y))
+		*vec = ret;
 }
 
 /**
