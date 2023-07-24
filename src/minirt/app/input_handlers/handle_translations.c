@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:06:28 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:24:33 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static inline bool	_update_camera_position_x(
 	t_vec3 *const	position = &camera->pos;
 	t_vec3 *const	o_x = &camera->o_x;
 
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
+		speed *= 5.0f;
 	if (mlx_is_key_down(mlx, MLX_KEY_A) || mlx_is_key_down(mlx, MLX_KEY_Q))
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_D))
@@ -104,6 +106,8 @@ static inline bool	_update_camera_position_y(
 {
 	t_vec3 *const	position = &camera->pos;
 
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
+		speed *= 5.0f;
 	if (mlx_is_key_down(mlx, MLX_KEY_SPACE))
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_LEFT_SHIFT))
@@ -128,6 +132,8 @@ static inline bool	_update_camera_position_z(
 	t_vec3 *const	position = &camera->pos;
 	t_vec3 *const	direction = &camera->move_forward;
 
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
+		speed *= 5.0f;
 	if (mlx_is_key_down(mlx, MLX_KEY_W) || mlx_is_key_down(mlx, MLX_KEY_Z))
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_S))

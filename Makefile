@@ -6,7 +6,7 @@
 #    By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2023/07/23 15:15:22 by aderouba         ###   ########.fr        #
+#    Updated: 2023/07/24 12:20:20 by aderouba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -369,7 +369,7 @@ INCLUDES	:=	$(SRC) lib/libft/include lib/mlx42/include
 CC			:=	clang									\
 
 CFLAGS		:=	-std=c99 -Wall -Wextra -Werror			\
-				-Wunreachable-code #-Ofast				\
+				-Wunreachable-code -Ofast				\
 
 CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES))	\
 

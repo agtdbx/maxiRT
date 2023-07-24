@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 08:35:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 20:58:56 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:41:48 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	_init_float_label(
 				t_menu *menu,
 				t_scene const *scene)
 {
-	float_label_init(&menu->ambient_ratio_label, "ratio: ",
+	float_label_init(&menu->ambient_ratio_label, "intensity: ",
 		(uint32_t[2]){g_pos[0] + 180, g_pos[1] + 30});
 	menu->ambient_ratio_label.f = &scene->ambient_lightning->brightness;
 	button_init(mlx, &menu->ambient_ratio_button,
