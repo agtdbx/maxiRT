@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CANVAS_H
-# define CANVAS_H
+#ifndef CANVAS_BONUS_H
+# define CANVAS_BONUS_H
 
 # include <stdint.h>
 
@@ -36,4 +36,4 @@ t_error	canvas_init(
 void	canvas_swap(
 			t_canvas *canvas);
 
-#endif//CANVAS_H
+#endif//CANVAS_BONUS_H

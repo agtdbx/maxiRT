@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtof.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:20:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/26 09:08:24 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/24 15:25:25 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
+
+#include <float.h>
+#include <math.h>
 
 /**
  * Parses float from string representation
@@ -32,7 +35,7 @@ float	ft_strtof(
 	sign = 1 - 2 * ((*endptr)[0] == '-');
 	*endptr += (ft_strchr("+-", (*endptr)[0]) != 0 && ft_isdigit((*endptr)[1]));
 	ret = 0.0;
-	while (ft_isdigit((*endptr)[0]))
+	while (ft_isdigit((*endptr)[0]) && !isnan(ret) && isfinite(ret) && ret < FLT_MAX)
 	{
 		ret = ret * 10.0 + ((double)((*endptr)[0] - '0'));
 		++(*endptr);
@@ -41,7 +44,7 @@ float	ft_strtof(
 		return (sign * ret);
 	++(*endptr);
 	exponent = 0.1;
-	while (ft_isdigit((*endptr)[0]))
+	while (ft_isdigit((*endptr)[0]) && !isnan(ret) && isfinite(ret) && ret < FLT_MAX)
 	{
 		ret += ((double)((*endptr)[0] - '0')) * exponent;
 		++(*endptr);

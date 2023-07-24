@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_vec3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:37:39 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/24 15:43:45 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <stddef.h>
 #include <stdbool.h>
+#include <math.h>
 
 #include "minirt/app/utils/geometry/geometry.h"
 
@@ -66,6 +67,11 @@ static t_error	_parse_one_coord(
 	if (endptr[0] != '\0')
 	{
 		put_field_error(state, endptr, "Unexpected chars");
+		return (FAILURE);
+	}
+	if (isnan(*ret) || !isfinite(*ret) || g_scene_radius < fabsf(*ret))
+	{
+		put_field_error(state, coord, "Coordinate not in range [-1000,1000]");
 		return (FAILURE);
 	}
 	if (state->tok != NULL)

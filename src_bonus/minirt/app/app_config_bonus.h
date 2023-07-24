@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef APP_CONFIG_H
-# define APP_CONFIG_H
+#ifndef APP_CONFIG_BONUS_H
+# define APP_CONFIG_BONUS_H
 
 # include <stdint.h>
 
@@ -77,4 +77,4 @@ static const float		g_pi_div_360 = 0.008726f;
 
 static const int32_t	g_color_black = 0xFF;
 
-#endif//APP_CONFIG_H
+#endif//APP_CONFIG_BONUS_H

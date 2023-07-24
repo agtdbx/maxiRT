@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef APP_H
-# define APP_H
+#ifndef APP_BONUS_H
+# define APP_BONUS_H
 
 # include <stdbool.h>
 # include <stdint.h>
@@ -360,4 +360,4 @@ void			apply_normal_map(
 					mlx_texture_t const *normal_map,
 					t_vec2 const *pixel_pos,
 					t_ray *normal);
-#endif//APP_H
+#endif//APP_BONUS_H

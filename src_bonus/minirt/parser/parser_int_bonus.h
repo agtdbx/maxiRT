@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_INT_H
-# define PARSER_INT_H
+#ifndef PARSER_INT_BONUS_H
+# define PARSER_INT_BONUS_H
 
 # include <stddef.h>
 
@@ -183,4 +183,4 @@ void	put_field_error(
 			char const *token,
 			char const *error);
 
-#endif//PARSER_INT_H
+#endif//PARSER_INT_BONUS_H

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAWINGS_H
-# define DRAWINGS_H
+#ifndef DRAWINGS_BONUS_H
+# define DRAWINGS_BONUS_H
 
 # include <stdint.h>
 
@@ -32,4 +32,4 @@ void	img_draw_divider(
 			uint32_t y,
 			int32_t color);
 
-#endif // DRAWINGS_H
+#endif // DRAWINGS_BONUS_H

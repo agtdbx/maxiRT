@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCENE_H
-# define SCENE_H
+#ifndef SCENE_BONUS_H
+# define SCENE_BONUS_H
 
 # include "libft/libft.h"
 # include "MLX42/MLX42.h"
@@ -207,4 +207,4 @@ t_error			scene_add_object(
 void			scene_del(
 					t_scene *scene);
 
-#endif//SCENE_H
+#endif//SCENE_BONUS_H

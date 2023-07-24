@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef PARSER_BONUS_H
+# define PARSER_BONUS_H
 
 # include <minirt/parser/parser_int_bonus.h>
 
@@ -203,4 +203,4 @@ static const char			g_file_err[] = \
 	"Error"																"\n"
 	"<%s>: %s"															"\n";
 
-#endif//PARSER_H
+#endif//PARSER_BONUS_H

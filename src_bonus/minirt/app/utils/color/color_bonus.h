@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#ifndef COLOR_BONUS_H
+# define COLOR_BONUS_H
 
 # include <stdint.h>
 
@@ -31,4 +31,4 @@ void	color_scale(
 			t_color *color,
 			float scaling_factor);
 
-#endif//COLOR_H
+#endif//COLOR_BONUS_H

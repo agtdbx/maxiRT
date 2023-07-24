@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/24 12:24:33 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:41:44 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ bool	handle_translations(
 	return (should_render);
 }
 
-//TODO(tdubois): consider stricter condition than isfinite
 /**
  * Assign src to *dst if src is a finite float
  * @param[in] src The value to assign from

@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MENU_H
-# define MENU_H
+#ifndef MENU_BONUS_H
+# define MENU_BONUS_H
 
 # include <stdbool.h>
 # include <stdint.h>
@@ -501,4 +501,4 @@ void			color_label_draw(
 					t_menu *menu,
 					t_color_label *label);
 
-#endif//MENU_H
+#endif//MENU_BONUS_H

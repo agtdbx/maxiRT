@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GEOMETRY_H
-# define GEOMETRY_H
+#ifndef GEOMETRY_BONUS_H
+# define GEOMETRY_BONUS_H
 
 # include <stdbool.h>
 # include <stdint.h>
@@ -95,4 +95,4 @@ t_vec3			mat_product(
 					t_vec3 const *mat_3,
 					t_vec3 const *lambda);
 
-#endif//GEOMETRY_H
+#endif//GEOMETRY_BONUS_H
