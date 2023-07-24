@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_rotations.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:42:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 16:11:03 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:42:33 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static inline bool	_rotate_around_ox(
 	t_vec3 *const	direction = &camera->direction;
 	t_vec3 *const	o_x = &camera->o_x;
 
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
+		rads *= 5.0f;
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_DOWN))
@@ -88,6 +90,8 @@ static inline bool	_rotate_around_oy(
 {
 	t_vec3 *const	direction = &camera->direction;
 
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
+		rads *= 5.0f;
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
 		if (!mlx_is_key_down(mlx, MLX_KEY_RIGHT))
@@ -119,6 +123,18 @@ static inline void	_relative_rotate(
 	float	t[13];
 	t_vec3	ret;
 
+	if (vec->y == 1.0f)
+	{
+		vec->x = 0.01;
+		vec->y = 0.99;
+		vec3_normalize(vec);
+	}
+	else if (vec->y == -1.0f)
+	{
+		vec->x = 0.01;
+		vec->y = -0.99;
+		vec3_normalize(vec);
+	}
 	t[0] = cosf(rads);
 	t[1] = 1.0f - t[0];
 	t[2] = axis->x * axis->x;
