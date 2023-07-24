@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:45:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:42:24 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ static const t_directive	g_directives[] = {
 	.identifier = "sp",
 	.usage = "sp <position> <diameter> <color>",
 	.callback = parse_sphere,
+},
+{
+	.identifier = "pl",
+	.usage = "pl <position> <orientation vector> <color>",
+	.callback = parse_plane,
+},
+{
+	.identifier = "cy",
+	.usage = "cy <position> <orientation vector> <diameter> <height> <color>",
+	.callback = parse_cylinder,
 },
 };
 
@@ -76,6 +86,18 @@ static const t_field		g_color = {
 	.identifier = "color",
 	.usage = "R,G,B colors in range [0-255]",
 	.callback = parse_color,
+};
+
+static const t_field		g_png = {
+	.identifier = "png",
+	.usage = "png file to load",
+	.callback = parse_png,
+};
+
+static const t_field		g_empty = {
+	.identifier = "empty",
+	.usage = "this field is empty",
+	.callback = NULL,
 };
 
 //**** PARSER ERRORS *********************************************************//

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:03:12 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:27:15 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/12 20:55:14 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,8 @@ void	ambient_label_hide(
 	menu->ambient_label_title->enabled = false;
 	color_label_hide(&menu->ambient_color_label);
 	float_label_hide(&menu->ambient_ratio_label);
+	button_hide(&menu->ambient_ratio_button);
+	button_hide(&menu->ambient_color_button_r);
+	button_hide(&menu->ambient_color_button_g);
+	button_hide(&menu->ambient_color_button_b);
 }

@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 17:22:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:39:37 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 18:45:22 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 void	float_label_hide(
 			t_float_label *label)
 {
-	label->is_visible = false;
 	if (label->img != NULL)
 		label->img->enabled = false;
 }

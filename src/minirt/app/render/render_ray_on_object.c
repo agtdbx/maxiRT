@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray_on_object.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 17:37:32 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:52:39 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,94 @@
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/color/color.h"
 
-int32_t	render_ray_on_object(
+static t_color		compute_object_without_effect_color(
+						t_object const *intersected_object,
+						t_scene const *scene,
+						t_ray const *ray,
+						t_ray const *normal);
+
+static t_color		merge_color(
+						t_object const *object,
+						t_color const *in_color,
+						t_color const *refracted_color,
+						t_color const *reflected_color);
+
+t_color	render_ray_on_object(
 			t_scene const *scene,
-			t_object const	*intersected_object,
+			t_object const *intersected_object,
 			t_ray const *ray,
-			float distance)
+			t_intersect_info const *intersect_info)
 {
 	t_ray	normal;
-	t_color	illumination;
-	// t_color	refracted_color;
+	t_color	refracted_color;
+	t_color	reflected_color;
 	t_color	color;
 
-	compute_normal_ray(intersected_object, ray, distance, &normal);
-	//TODO normal mapping here
-	compute_illumination(scene, ray, &normal, &illumination);
-	// compute_refracted_color(scene, ray, &normal, &refracted_color);
-	//TODO mirror here
-	// color = refracted_color;
-	color = illumination;
-	color.r *= intersected_object->color.r / 255.0f;
-	color.g *= intersected_object->color.g / 255.0f;
-	color.b *= intersected_object->color.b / 255.0f;
-	return (color_to_int(&color));
+	if (ray->depth > 16)
+		return ((t_color){0.0, 0.0, 0.0});
+	compute_normal_ray(
+		intersected_object, ray, intersect_info, &normal);
+	color = compute_object_without_effect_color(intersected_object,
+			scene, ray, &normal);
+	refracted_color = compute_refracted_color(
+			intersected_object, scene, ray, &normal);
+	reflected_color = compute_reflected_color(
+			intersected_object, scene, ray, &normal);
+	color = merge_color(intersected_object, &color,
+			&refracted_color, &reflected_color);
+	return (color);
+}
+
+static t_color	compute_object_without_effect_color(
+					t_object const *intersected_object,
+					t_scene const *scene,
+					t_ray const *ray,
+					t_ray const *normal)
+{
+	t_color	illumination;
+	t_color	base_color;
+	t_color	color;
+
+	base_color = intersected_object->color;
+	illumination = compute_illumination(
+			scene, intersected_object, ray, normal);
+	if (illumination.r == 0.0f && illumination.g == 0.0f
+		&& illumination.g == 0.0f)
+		return (illumination);
+	color.r = base_color.r * (illumination.r / 255.0f);
+	color.g = base_color.g * (illumination.g / 255.0f);
+	color.b = base_color.b * (illumination.b / 255.0f);
+	return (color);
+}
+
+static t_color	merge_color(
+					t_object const *object,
+					t_color const *in_color,
+					t_color const *refracted_color,
+					t_color const *reflected_color)
+{
+	t_color		color;
+	float const	inv_opacity = 1.0f - object->opacity;
+	float const	inv_reflection = 1.0f - object->reflection;
+
+	color = *in_color;
+	if (object->opacity < 1.0f)
+	{
+		color.r = (color.r * object->opacity)
+			+ (refracted_color->r * inv_opacity);
+		color.g = (color.g * object->opacity)
+			+ (refracted_color->g * inv_opacity);
+		color.b = (color.b * object->opacity)
+			+ (refracted_color->b * inv_opacity);
+	}
+	if (object->reflection > 0.0f)
+	{
+		color.r = (color.r * inv_reflection)
+			+ (reflected_color->r * object->reflection);
+		color.g = (color.g * inv_reflection)
+			+ (reflected_color->g * object->reflection);
+		color.b = (color.b * inv_reflection)
+			+ (reflected_color->b * object->reflection);
+	}
+	return (color);
 }

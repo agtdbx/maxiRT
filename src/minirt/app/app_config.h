@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app_config.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 11:49:06 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/14 17:05:26 by tdubois          ###   ########.fr       */
+/*   Created: 2023/07/18 12:42:54 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/23 14:14:06 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,36 @@ static const int32_t	g_window_height = 1080;
 static const int32_t	g_menu_width = 400;
 static const int32_t	g_menu_background_color = 0x333333FF;
 static const int32_t	g_menu_dividers_color = 0x666666FF;
-static const int32_t	g_menu_divider_1_y = 140;
-static const int32_t	g_menu_divider_2_y = 280;
+static const int32_t	g_menu_divider_1_y = 160;
+static const int32_t	g_menu_divider_2_y = 300;
 
 //---- REFLECTION_CONSTANTS --------------------------------------------------//
 
-static const float		g_ambient_light_ratio = 0.1f;
+static const float		g_ambient_light_ratio = 0.2f;
 static const float		g_diffuse_light_ratio = 0.5f;
 static const float		g_specular_light_ratio = 0.3f;
-static const float		g_phong_exponent = 1.0f;
+static const float		g_phong_exponent = 42.0f;
 
-static const float		g_opacity_color_ratio = 42.0f / 255.0f;
+static const float		g_opacity_color_ratio = 1.0f / 255.0f;
 
 //---- scene -----------------------------------------------------------------//
 
 static const float		g_scene_radius = 1000.0f;
 
 // sphere
-static const float		g_sphere_default_opacity = 0.5f;
-static const float		g_sphere_default_refraction_ratio = 0.0f;
-static const float		g_sphere_default_reflection_ratio = 0.0f;
+static const float		g_sphere_default_reflection = 0.0f;
+static const float		g_sphere_default_opacity = 1.0f;
+static const float		g_sphere_default_density = 1.0f;
+
+// plane
+static const float		g_plane_default_reflection = 0.0f;
+static const float		g_plane_default_opacity = 1.0f;
+static const float		g_plane_default_density = 1.0f;
+
+// cylinder
+static const float		g_cylinder_default_reflection = 0.0f;
+static const float		g_cylinder_default_opacity = 1.0f;
+static const float		g_cylinder_default_density = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 

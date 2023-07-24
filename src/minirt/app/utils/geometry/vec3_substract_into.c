@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3_substract_into.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:03:03 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 14:59:54 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:26:57 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

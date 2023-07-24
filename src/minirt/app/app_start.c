@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app_start.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 13:48:11 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 14:09:45 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 
 #include "minirt/app/app_config.h"
 #include "minirt/app/scene/scene.h"
-
 
 static t_error	_app_init(
 					t_app *app,
@@ -44,7 +43,7 @@ t_error	app_start(
 	{
 		render_canvas(&app, true);
 		mlx_loop(app.mlx);
-		//TODO(tdubois): cleanup
+		mlx_terminate(app.mlx);
 		return (SUCCESS);
 	}
 	if (mlx_errno != MLX_SUCCESS)
@@ -84,12 +83,15 @@ static void	_compute_constants(
 {
 	t_object	*object_iterator;
 
-	// camera_compute_constants(mlx, scene->camera);//TODO(tdubois)
 	object_iterator = scene->objects;
 	while (object_iterator != NULL)
 	{
 		if (object_iterator->type == OBJ_SPHERE)
-			sphere_compute_constants((t_sphere*)&object_iterator->value);
+			sphere_compute_constants(&object_iterator->value.as_sphere);
+		else if (object_iterator->type == OBJ_PLANE)
+			plane_compute_constants(&object_iterator->value.as_plane);
+		else if (object_iterator->type == OBJ_CYLINDER)
+			cylinder_compute_constants(&object_iterator->value.as_cylinder);
 		object_iterator = object_iterator->next;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas);

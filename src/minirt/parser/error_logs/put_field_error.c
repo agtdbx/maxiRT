@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_field_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:27:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 14:52:16 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:53:16 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	put_field_error(
 				char const *token,
 				char const *error)
 {
+	if (!state || !token || !error)
+		return ;
 	printf(
 		g_field_error_msg,
 		state->filename,

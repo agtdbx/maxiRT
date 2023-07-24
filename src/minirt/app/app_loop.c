@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:51:09 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:09:27 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ void	app_loop(
 	}
 	_log_fps(app->mlx);
 	_limit_delta_time(app->mlx);
-	should_render = _handle_user_inputs(app);
-	menu_draw(app->mlx, &app->menu);
+	should_render = false;
+	should_render |= _handle_user_inputs(app);
+	should_render |= menu_draw(app->mlx, &app->menu, &app->canvas, &app->scene);
 	render_canvas(app, should_render);
 }
 
@@ -68,8 +69,7 @@ static inline bool	_handle_user_inputs(
 			app->mlx, app->scene.camera);
 	should_render |= handle_rotations(
 			app->mlx, &app->canvas, app->scene.camera);
-	should_render |= handle_mouse_clicks(
-			app->mlx, &app->menu, &app->scene, &app->canvas);
+	handle_mouse_clicks(app->mlx, &app->menu, &app->scene, &app->canvas);
 	return (should_render);
 }
 
@@ -80,7 +80,7 @@ static inline bool	_handle_user_inputs(
 static inline void	_limit_delta_time(
 						mlx_t *mlx)
 {
-	mlx->delta_time = fmin(mlx->delta_time, 0.25);
+	mlx->delta_time = fmin(mlx->delta_time, 0.5);
 }
 
 /**

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sphere.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 17:33:14 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 13:45:41 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/parser/parser.h"
-
-#include <stdio.h>
 
 #include "libft/libft.h"
 
@@ -22,17 +20,41 @@
 t_error	parse_sphere(
 			t_parser_state *state)
 {
-	t_object	sphere;
-	t_sphere	*const geometry = &sphere.value.as_sphere;
+	t_object		obj;
+	t_sphere *const	sphere = &obj.value.as_sphere;
 
-	ft_bzero(&sphere, sizeof(sphere));
-	if (parse_field(state, &g_position, &geometry->pos) == FAILURE
-		|| parse_field(state, &g_diameter, &geometry->diameter) == FAILURE
-		|| parse_field(state, &g_color, &sphere.color) == FAILURE)
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE
+		|| parse_field(state, &g_color, &obj.color) == FAILURE)
 		return (FAILURE);
-	sphere.type = OBJ_SPHERE;
-	sphere.opacity = g_sphere_default_opacity;
-	sphere.refraction_ratio = g_sphere_default_refraction_ratio;
-	sphere.reflection_ratio = g_sphere_default_reflection_ratio;
-	return (scene_add_object(state->scene, &sphere));
+	obj.type = OBJ_SPHERE;
+	obj.texture = NULL;
+	obj.color_type = C_COLOR;
+	obj.normal_map = NULL;
+	obj.opacity = g_sphere_default_opacity;
+	obj.reflection = g_sphere_default_reflection;
+	obj.density = g_sphere_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_sphere_checkerboard(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_sphere *const	sphere = &obj.value.as_sphere;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_SPHERE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_CHECKBOARD;
+	obj.normal_map = NULL;
+	obj.opacity = g_sphere_default_opacity;
+	obj.reflection = g_sphere_default_reflection;
+	obj.density = g_sphere_default_density;
+	return (scene_add_object(state->scene, &obj));
 }

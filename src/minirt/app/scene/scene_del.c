@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_del.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:30:35 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:14:14 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/05 13:01:33 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,20 @@ static void	loc_del_objects(
 void	scene_del(
 			t_scene *scene)
 {
+	t_object	*tmp;
+
 	ft_memdel(&scene->camera);
 	loc_del_lights(&scene->spotlights);
 	loc_del_lights(&scene->ambient_lightning);
+	tmp = scene->objects;
+	while (tmp)
+	{
+		if (tmp->texture != NULL)
+			mlx_delete_texture(tmp->texture);
+		if (tmp->normal_map != NULL)
+			mlx_delete_texture(tmp->normal_map);
+		tmp = tmp->next;
+	}
 	loc_del_objects(&scene->objects);
 }
 

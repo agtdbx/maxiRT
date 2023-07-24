@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 09:28:14 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:53:17 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/06/23 17:59:26 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ static void	_update_content(
 	size_t	len;
 
 	if (label->img != NULL)
+	{
 		mlx_delete_image(mlx, label->img);
+		label->img = NULL;
+	}
+	if (label->f == NULL)
+		return ;
 	len = ft_strlcpy(buf, label->prefix, sizeof(buf));
 	if (len < sizeof(buf))
 		ft_sftoa(*label->f, buf + len, sizeof(buf) - len);

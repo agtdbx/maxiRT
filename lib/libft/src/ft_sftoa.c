@@ -6,7 +6,7 @@
 /*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:38:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:46:07 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/24 10:50:49 by tdubois          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static size_t	_handle_finite_float(
 	while (len < buf_size - 1)
 	{
 		x *= 10.0f;
-		digit = roundf(x);
+		digit = truncf(x);
 		buf[len] = (int)fmax(0.0f, digit) + '0';
 		x -= digit;
 		++len;

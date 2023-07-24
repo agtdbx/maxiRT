@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 01:03:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/14 16:47:06 by tdubois          ###   ########.fr       */
+/*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
+/*   Updated: 2023/07/23 13:55:10 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_sphere
 
 }	t_sphere;
 
-void	sphere_compute_constants(
-			t_sphere *sphere);
+void			sphere_compute_constants(
+					t_sphere *sphere);
 
 //---- PLANE -----------------------------------------------------------------//
 
@@ -43,23 +43,39 @@ typedef struct s_plane
 	t_vec3	normal;
 
 	t_vec3	rev_normal;
-
 }	t_plane;
+
+void			plane_compute_constants(
+					t_plane *plane);
 
 //---- CYLINDER --------------------------------------------------------------//
 
 typedef struct s_cylinder
 {
 	t_vec3	pos;
-	float	radius;
+	float	diameter;
 	float	height;
 	t_vec3	axis;
 
 	t_plane	bot;
 	t_plane	top;
+	float	radius;
 	float	radius2;
+	float	half_height;
 
 }	t_cylinder;
+
+void			cylinder_compute_constants(
+					t_cylinder *cylinder);
+
+//---- COLOR INTERFACE -------------------------------------------------------//
+
+typedef enum e_color_t
+{
+	C_COLOR,
+	C_CHECKBOARD,
+	C_TEXTURE,
+}	t_color_t;
 
 //---- OBJECT INTERFACE ------------------------------------------------------//
 
@@ -82,10 +98,14 @@ typedef struct s_object
 	t_object_t		type;
 	t_object_v		value;
 
+	t_color_t		color_type;
 	t_color			color;
-	float			refraction_ratio;
-	float			reflection_ratio;
+	mlx_texture_t	*texture;
+	mlx_texture_t	*normal_map;
+
 	float			opacity;
+	float			density;
+	float			reflection;
 
 	struct s_object	*next;
 }	t_object;
@@ -111,12 +131,13 @@ typedef struct s_camera
 
 	t_vec3	o_x;
 	t_vec3	o_y;
+	t_vec3	move_forward;
 	float	focal;
 }	t_camera;
 
-void		camera_compute_constants(
-				t_canvas const *canvas,
-				t_camera *camera);
+void			camera_compute_constants(
+					t_canvas const *canvas,
+					t_camera *camera);
 
 //---- SCENE -----------------------------------------------------------------//
 
@@ -128,11 +149,11 @@ typedef struct s_scene
 	t_camera	*camera;
 }	t_scene;
 
-t_error		scene_add_object(
-				t_scene *scene,
-				t_object const *object);
+t_error			scene_add_object(
+					t_scene *scene,
+					t_object *obj);
 
-void		scene_del(
-				t_scene *scene);
+void			scene_del(
+					t_scene *scene);
 
 #endif//SCENE_H

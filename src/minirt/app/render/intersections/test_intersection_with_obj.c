@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_intersection_with_obj.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:34:00 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/12 15:35:07 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/07/23 14:00:14 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,16 @@
 bool	test_intersection_with_obj(
 			t_ray const *ray,
 			t_object const *object,
-			float *distance)
+			t_intersect_info *intersect_info)
 {
 	if (object->type == OBJ_SPHERE)
 		return (test_intersection_with_sphere(
-					ray, &object->value.as_sphere, distance));
+				ray, &object->value.as_sphere, intersect_info));
+	else if (object->type == OBJ_PLANE)
+		return (test_intersection_with_plane(
+				ray, &object->value.as_plane, intersect_info));
+	else if (object->type == OBJ_CYLINDER)
+		return (test_intersection_with_cylinder(
+				ray, &object->value.as_cylinder, intersect_info));
 	return (false);
 }
