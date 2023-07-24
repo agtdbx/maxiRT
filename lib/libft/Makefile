@@ -6,7 +6,7 @@
 #    By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 20:11:42 by tdubois           #+#    #+#              #
-#    Updated: 2023/04/06 02:33:20 by tdubois          ###   ########.fr        #
+#    Updated: 2023/07/24 12:24:15 by tdubois          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,41 @@ endif
 #==============================================================================#
 #==== SOURCES =================================================================#
 
-SRCS		:=	$(sort $(shell fd -g '*.c' -E '*.test.c' $(SRC)))
+SRCS		:=	src/ft_strlen.c \
+				src/ft_strncmp.c \
+				src/ft_strsep.c \
+				src/ft_memcpy.c \
+				src/ft_max.c \
+				src/ft_strtok.c \
+				src/ft_bzero.c \
+				src/ft_puterr.c \
+				src/ft_strdup.c \
+				src/ft_substr.c \
+				src/ft_strtof.c \
+				src/ft_strspn.c \
+				src/ft_gnl.c \
+				src/ft_abs.c \
+				src/ft_putstr.c \
+				src/ft_min.c \
+				src/ft_strcspn.c \
+				src/ft_strendswith.c \
+				src/ft_strrev.c \
+				src/ft_basename.c \
+				src/ft_strcmp.c \
+				src/ft_swap.c \
+				src/ft_strchr.c \
+				src/ft_memdup.c \
+				src/ft_memdel.c \
+				src/ft_isdigit.c \
+				src/ft_strlcpy.c \
+				src/ft_memset.c \
+				src/ft_sftoa.c \
+				src/ft_strtoi.c \
+				src/ft_gnl_init_buffer.c \
+				src/ft_strtok_r.c \
+				src/ft_putstr_fd.c \
+				src/ft_gnl_r.c \
+				src/ft_sitoa.c
 
 #==============================================================================#
 #==== BUILD FILES =============================================================#
