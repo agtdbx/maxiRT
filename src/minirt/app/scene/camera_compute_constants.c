@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:09:21 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:08:33 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:21:26 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	camera_compute_constants(
 			t_canvas const *canvas,
 			t_camera *camera)
 {
+	if (fabs(camera->direction.y) == 1.0f)
+		camera->direction.z = 0.1;
 	vec3_normalize(&camera->direction);
 	camera->o_x = vec3(
 			- camera->direction.z,
