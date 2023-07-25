@@ -6,7 +6,7 @@
 #    By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2023/07/25 14:43:43 by aderouba         ###   ########.fr        #
+#    Updated: 2023/07/25 15:08:05 by aderouba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,71 +43,71 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/input_handlers/handle_rotations_bonus.c \
 				src_bonus/minirt/app/input_handlers/handle_translations_bonus.c \
 				src_bonus/minirt/app/input_handlers/handle_window_resizing_bonus.c \
-				src_bonus/minirt/app/menu/components/ambient_label_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/ambient_label_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/ambient_label_init_bonus.c \
-				src_bonus/minirt/app/menu/components/ambient_label_show_bonus.c \
+				src_bonus/minirt/app/menu/components/ambient/ambient_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/ambient/ambient_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/ambient/ambient_label_init_bonus.c \
+				src_bonus/minirt/app/menu/components/ambient/ambient_label_show_bonus.c \
 				src_bonus/minirt/app/menu/components/background_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/camera_label_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/camera_label_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/camera_label_init_bonus.c \
-				src_bonus/minirt/app/menu/components/camera_label_show_bonus.c \
-				src_bonus/minirt/app/menu/components/cone_panel_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/cone_panel_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/cone_panel_init_bonus.c \
-				src_bonus/minirt/app/menu/components/cone_panel_register_bonus.c \
-				src_bonus/minirt/app/menu/components/cone_panel_show_bonus.c \
-				src_bonus/minirt/app/menu/components/cube_panel_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/cube_panel_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/cube_panel_init_bonus.c \
-				src_bonus/minirt/app/menu/components/cube_panel_register_bonus.c \
-				src_bonus/minirt/app/menu/components/cube_panel_show_bonus.c \
-				src_bonus/minirt/app/menu/components/cylinder_panel_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/cylinder_panel_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/cylinder_panel_init_bonus.c \
-				src_bonus/minirt/app/menu/components/cylinder_panel_register_bonus.c \
-				src_bonus/minirt/app/menu/components/cylinder_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/camera/camera_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/camera/camera_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/camera/camera_label_init_bonus.c \
+				src_bonus/minirt/app/menu/components/camera/camera_label_show_bonus.c \
+				src_bonus/minirt/app/menu/components/cone/cone_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/cone/cone_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/cone/cone_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/cone/cone_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/cone/cone_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/cube/cube_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/cube/cube_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/cube/cube_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/cube/cube_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/cube/cube_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder/cylinder_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder/cylinder_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder/cylinder_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder/cylinder_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/cylinder/cylinder_panel_show_bonus.c \
 				src_bonus/minirt/app/menu/components/init_labels_bonus.c \
-				src_bonus/minirt/app/menu/components/light_panel_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/light_panel_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/light_panel_init_bonus.c \
-				src_bonus/minirt/app/menu/components/light_panel_register_bonus.c \
-				src_bonus/minirt/app/menu/components/light_panel_show_bonus.c \
-				src_bonus/minirt/app/menu/components/object_panel_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/object_panel_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/object_panel_init_bonus.c \
-				src_bonus/minirt/app/menu/components/object_panel_register_bonus.c \
-				src_bonus/minirt/app/menu/components/object_panel_show_bonus.c \
-				src_bonus/minirt/app/menu/components/plane_panel_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/plane_panel_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/plane_panel_init_bonus.c \
-				src_bonus/minirt/app/menu/components/plane_panel_register_bonus.c \
-				src_bonus/minirt/app/menu/components/plane_panel_show_bonus.c \
-				src_bonus/minirt/app/menu/components/sphere_panel_draw_bonus.c \
-				src_bonus/minirt/app/menu/components/sphere_panel_hide_bonus.c \
-				src_bonus/minirt/app/menu/components/sphere_panel_init_bonus.c \
-				src_bonus/minirt/app/menu/components/sphere_panel_register_bonus.c \
-				src_bonus/minirt/app/menu/components/sphere_panel_show_bonus.c \
-				src_bonus/minirt/app/menu/lib/button_draw_bonus.c \
-				src_bonus/minirt/app/menu/lib/button_hide_bonus.c \
-				src_bonus/minirt/app/menu/lib/button_init_bonus.c \
-				src_bonus/minirt/app/menu/lib/button_show_bonus.c \
-				src_bonus/minirt/app/menu/lib/color_label_draw_bonus.c \
-				src_bonus/minirt/app/menu/lib/color_label_hide_bonus.c \
-				src_bonus/minirt/app/menu/lib/color_label_init_bonus.c \
-				src_bonus/minirt/app/menu/lib/color_label_show_bonus.c \
-				src_bonus/minirt/app/menu/lib/float_label_draw_bonus.c \
-				src_bonus/minirt/app/menu/lib/float_label_hide_bonus.c \
-				src_bonus/minirt/app/menu/lib/float_label_init_bonus.c \
-				src_bonus/minirt/app/menu/lib/float_label_show_bonus.c \
-				src_bonus/minirt/app/menu/lib/int_label_draw_bonus.c \
-				src_bonus/minirt/app/menu/lib/int_label_hide_bonus.c \
-				src_bonus/minirt/app/menu/lib/int_label_init_bonus.c \
-				src_bonus/minirt/app/menu/lib/int_label_show_bonus.c \
-				src_bonus/minirt/app/menu/lib/vec3_label_draw_bonus.c \
-				src_bonus/minirt/app/menu/lib/vec3_label_hide_bonus.c \
-				src_bonus/minirt/app/menu/lib/vec3_label_init_bonus.c \
-				src_bonus/minirt/app/menu/lib/vec3_label_show_bonus.c \
+				src_bonus/minirt/app/menu/components/light/light_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/light/light_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/light/light_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/light/light_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/light/light_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/object/object_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/object/object_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/object/object_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/object/object_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/object/object_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/plane/plane_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/plane/plane_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/plane/plane_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/plane/plane_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/plane/plane_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere/sphere_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere/sphere_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere/sphere_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere/sphere_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/sphere/sphere_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/button/button_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/button/button_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/button/button_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/button/button_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/color_label/color_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/color_label/color_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/color_label/color_label_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/color_label/color_label_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/float_label/float_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/float_label/float_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/float_label/float_label_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/float_label/float_label_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/int_label/int_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/int_label/int_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/int_label/int_label_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/int_label/int_label_show_bonus.c \
+				src_bonus/minirt/app/menu/lib/vec3_label/vec3_label_draw_bonus.c \
+				src_bonus/minirt/app/menu/lib/vec3_label/vec3_label_hide_bonus.c \
+				src_bonus/minirt/app/menu/lib/vec3_label/vec3_label_init_bonus.c \
+				src_bonus/minirt/app/menu/lib/vec3_label/vec3_label_show_bonus.c \
 				src_bonus/minirt/app/menu/menu_draw_bonus.c \
 				src_bonus/minirt/app/menu/menu_hide_bonus.c \
 				src_bonus/minirt/app/menu/menu_init_bonus.c \
@@ -194,13 +194,13 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt_bonus.c \
 				src_bonus/minirt/parser/directives/parse_ambient_light_bonus.c \
 				src_bonus/minirt/parser/directives/parse_camera_bonus.c \
+				src_bonus/minirt/parser/directives/parse_comment_bonus.c \
 				src_bonus/minirt/parser/directives/parse_cone_bonus.c \
 				src_bonus/minirt/parser/directives/parse_cube_bonus.c \
 				src_bonus/minirt/parser/directives/parse_cylinder_bonus.c \
 				src_bonus/minirt/parser/directives/parse_plane_bonus.c \
 				src_bonus/minirt/parser/directives/parse_sphere_bonus.c \
 				src_bonus/minirt/parser/directives/parse_spotlight_bonus.c \
-				src_bonus/minirt/parser/directives/parse_comment_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_directive_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_field_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_unknown_directive_error_bonus.c \
@@ -228,61 +228,61 @@ SRCS		:=	src/minirt/app/app_loop.c \
 				src/minirt/app/input_handlers/handle_rotations.c \
 				src/minirt/app/input_handlers/handle_translations.c \
 				src/minirt/app/input_handlers/handle_window_resizing.c \
-				src/minirt/app/menu/components/ambient_label_draw.c \
-				src/minirt/app/menu/components/ambient_label_hide.c \
-				src/minirt/app/menu/components/ambient_label_init.c \
-				src/minirt/app/menu/components/ambient_label_show.c \
+				src/minirt/app/menu/components/ambient/ambient_label_draw.c \
+				src/minirt/app/menu/components/ambient/ambient_label_hide.c \
+				src/minirt/app/menu/components/ambient/ambient_label_init.c \
+				src/minirt/app/menu/components/ambient/ambient_label_show.c \
 				src/minirt/app/menu/components/background_draw.c \
-				src/minirt/app/menu/components/camera_label_draw.c \
-				src/minirt/app/menu/components/camera_label_hide.c \
-				src/minirt/app/menu/components/camera_label_init.c \
-				src/minirt/app/menu/components/camera_label_show.c \
-				src/minirt/app/menu/components/cylinder_panel_draw.c \
-				src/minirt/app/menu/components/cylinder_panel_hide.c \
-				src/minirt/app/menu/components/cylinder_panel_init.c \
-				src/minirt/app/menu/components/cylinder_panel_register.c \
-				src/minirt/app/menu/components/cylinder_panel_show.c \
+				src/minirt/app/menu/components/camera/camera_label_draw.c \
+				src/minirt/app/menu/components/camera/camera_label_hide.c \
+				src/minirt/app/menu/components/camera/camera_label_init.c \
+				src/minirt/app/menu/components/camera/camera_label_show.c \
+				src/minirt/app/menu/components/cylinder/cylinder_panel_draw.c \
+				src/minirt/app/menu/components/cylinder/cylinder_panel_hide.c \
+				src/minirt/app/menu/components/cylinder/cylinder_panel_init.c \
+				src/minirt/app/menu/components/cylinder/cylinder_panel_register.c \
+				src/minirt/app/menu/components/cylinder/cylinder_panel_show.c \
 				src/minirt/app/menu/components/init_labels.c \
-				src/minirt/app/menu/components/light_panel_draw.c \
-				src/minirt/app/menu/components/light_panel_hide.c \
-				src/minirt/app/menu/components/light_panel_init.c \
-				src/minirt/app/menu/components/light_panel_register.c \
-				src/minirt/app/menu/components/light_panel_show.c \
-				src/minirt/app/menu/components/object_panel_draw.c \
-				src/minirt/app/menu/components/object_panel_hide.c \
-				src/minirt/app/menu/components/object_panel_init.c \
-				src/minirt/app/menu/components/object_panel_register.c \
-				src/minirt/app/menu/components/object_panel_show.c \
-				src/minirt/app/menu/components/plane_panel_draw.c \
-				src/minirt/app/menu/components/plane_panel_hide.c \
-				src/minirt/app/menu/components/plane_panel_init.c \
-				src/minirt/app/menu/components/plane_panel_register.c \
-				src/minirt/app/menu/components/plane_panel_show.c \
-				src/minirt/app/menu/components/sphere_panel_draw.c \
-				src/minirt/app/menu/components/sphere_panel_hide.c \
-				src/minirt/app/menu/components/sphere_panel_init.c \
-				src/minirt/app/menu/components/sphere_panel_register.c \
-				src/minirt/app/menu/components/sphere_panel_show.c \
-				src/minirt/app/menu/lib/button_draw.c \
-				src/minirt/app/menu/lib/button_hide.c \
-				src/minirt/app/menu/lib/button_init.c \
-				src/minirt/app/menu/lib/button_show.c \
-				src/minirt/app/menu/lib/color_label_draw.c \
-				src/minirt/app/menu/lib/color_label_hide.c \
-				src/minirt/app/menu/lib/color_label_init.c \
-				src/minirt/app/menu/lib/color_label_show.c \
-				src/minirt/app/menu/lib/float_label_draw.c \
-				src/minirt/app/menu/lib/float_label_hide.c \
-				src/minirt/app/menu/lib/float_label_init.c \
-				src/minirt/app/menu/lib/float_label_show.c \
-				src/minirt/app/menu/lib/int_label_draw.c \
-				src/minirt/app/menu/lib/int_label_hide.c \
-				src/minirt/app/menu/lib/int_label_init.c \
-				src/minirt/app/menu/lib/int_label_show.c \
-				src/minirt/app/menu/lib/vec3_label_draw.c \
-				src/minirt/app/menu/lib/vec3_label_hide.c \
-				src/minirt/app/menu/lib/vec3_label_init.c \
-				src/minirt/app/menu/lib/vec3_label_show.c \
+				src/minirt/app/menu/components/light/light_panel_draw.c \
+				src/minirt/app/menu/components/light/light_panel_hide.c \
+				src/minirt/app/menu/components/light/light_panel_init.c \
+				src/minirt/app/menu/components/light/light_panel_register.c \
+				src/minirt/app/menu/components/light/light_panel_show.c \
+				src/minirt/app/menu/components/object/object_panel_draw.c \
+				src/minirt/app/menu/components/object/object_panel_hide.c \
+				src/minirt/app/menu/components/object/object_panel_init.c \
+				src/minirt/app/menu/components/object/object_panel_register.c \
+				src/minirt/app/menu/components/object/object_panel_show.c \
+				src/minirt/app/menu/components/plane/plane_panel_draw.c \
+				src/minirt/app/menu/components/plane/plane_panel_hide.c \
+				src/minirt/app/menu/components/plane/plane_panel_init.c \
+				src/minirt/app/menu/components/plane/plane_panel_register.c \
+				src/minirt/app/menu/components/plane/plane_panel_show.c \
+				src/minirt/app/menu/components/sphere/sphere_panel_draw.c \
+				src/minirt/app/menu/components/sphere/sphere_panel_hide.c \
+				src/minirt/app/menu/components/sphere/sphere_panel_init.c \
+				src/minirt/app/menu/components/sphere/sphere_panel_register.c \
+				src/minirt/app/menu/components/sphere/sphere_panel_show.c \
+				src/minirt/app/menu/lib/button/button_draw.c \
+				src/minirt/app/menu/lib/button/button_hide.c \
+				src/minirt/app/menu/lib/button/button_init.c \
+				src/minirt/app/menu/lib/button/button_show.c \
+				src/minirt/app/menu/lib/color_label/color_label_draw.c \
+				src/minirt/app/menu/lib/color_label/color_label_hide.c \
+				src/minirt/app/menu/lib/color_label/color_label_init.c \
+				src/minirt/app/menu/lib/color_label/color_label_show.c \
+				src/minirt/app/menu/lib/float_label/float_label_draw.c \
+				src/minirt/app/menu/lib/float_label/float_label_hide.c \
+				src/minirt/app/menu/lib/float_label/float_label_init.c \
+				src/minirt/app/menu/lib/float_label/float_label_show.c \
+				src/minirt/app/menu/lib/int_label/int_label_draw.c \
+				src/minirt/app/menu/lib/int_label/int_label_hide.c \
+				src/minirt/app/menu/lib/int_label/int_label_init.c \
+				src/minirt/app/menu/lib/int_label/int_label_show.c \
+				src/minirt/app/menu/lib/vec_label/vec3_label_draw.c \
+				src/minirt/app/menu/lib/vec_label/vec3_label_hide.c \
+				src/minirt/app/menu/lib/vec_label/vec3_label_init.c \
+				src/minirt/app/menu/lib/vec_label/vec3_label_show.c \
 				src/minirt/app/menu/menu_draw.c \
 				src/minirt/app/menu/menu_hide.c \
 				src/minirt/app/menu/menu_init.c \
