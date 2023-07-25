@@ -6,7 +6,7 @@
 #    By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2023/07/24 19:33:08 by aderouba         ###   ########.fr        #
+#    Updated: 2023/07/25 14:43:43 by aderouba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -200,6 +200,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/parser/directives/parse_plane_bonus.c \
 				src_bonus/minirt/parser/directives/parse_sphere_bonus.c \
 				src_bonus/minirt/parser/directives/parse_spotlight_bonus.c \
+				src_bonus/minirt/parser/directives/parse_comment_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_directive_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_field_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_unknown_directive_error_bonus.c \

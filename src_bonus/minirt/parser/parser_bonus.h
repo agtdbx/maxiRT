@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 15:38:45 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/25 14:41:46 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,11 @@ static const t_directive	g_directives[] = {
 	.usage = "cu-tn <position> <orientation x vector> <orientation y vector> "
 	"<widht> <height> <depth> <texture path> <normal map path>",
 	.callback = parse_cube_texture_and_normal,
+},
+{
+	.identifier = "#",
+	.usage = "a comment !",
+	.callback = parse_comment,
 },
 };
 

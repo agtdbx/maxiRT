@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_int.h                                       :+:      :+:    :+:   */
+/*   parser_int_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 16:17:09 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/07/25 14:41:07 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,9 @@ t_error	parse_cube_checkerboard(
 t_error	parse_cube_texture(
 			t_parser_state *state);
 t_error	parse_cube_texture_and_normal(
+			t_parser_state *state);
+
+t_error	parse_comment(
 			t_parser_state *state);
 
 //**** PARSER ERROR LOGGING **************************************************//
