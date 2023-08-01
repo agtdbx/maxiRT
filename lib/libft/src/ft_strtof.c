@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:20:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/24 15:25:25 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/08/01 13:27:21 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 #include <float.h>
 #include <math.h>
+
+static float	calculate_dot_part(
+					char **restrict endptr,
+					double ret,
+					int sign);
 
 /**
  * Parses float from string representation
@@ -27,7 +32,6 @@ float	ft_strtof(
 			char **restrict endptr)
 {
 	double	ret;
-	double	exponent;
 	int		sign;
 
 	*endptr = (char *)nptr;
@@ -35,7 +39,8 @@ float	ft_strtof(
 	sign = 1 - 2 * ((*endptr)[0] == '-');
 	*endptr += (ft_strchr("+-", (*endptr)[0]) != 0 && ft_isdigit((*endptr)[1]));
 	ret = 0.0;
-	while (ft_isdigit((*endptr)[0]) && !isnan(ret) && isfinite(ret) && ret < FLT_MAX)
+	while (ft_isdigit((*endptr)[0])
+		&& !isnan(ret) && isfinite(ret) && ret < FLT_MAX)
 	{
 		ret = ret * 10.0 + ((double)((*endptr)[0] - '0'));
 		++(*endptr);
@@ -43,8 +48,19 @@ float	ft_strtof(
 	if ((*endptr)[0] != '.' || !ft_isdigit((*endptr)[1]))
 		return (sign * ret);
 	++(*endptr);
+	return (calculate_dot_part(endptr, ret, sign));
+}
+
+static float	calculate_dot_part(
+					char **restrict endptr,
+					double ret,
+					int sign)
+{
+	double	exponent;
+
 	exponent = 0.1;
-	while (ft_isdigit((*endptr)[0]) && !isnan(ret) && isfinite(ret) && ret < FLT_MAX)
+	while (ft_isdigit((*endptr)[0])
+			&& !isnan(ret) && isfinite(ret) && ret < FLT_MAX)
 	{
 		ret += ((double)((*endptr)[0] - '0')) * exponent;
 		++(*endptr);

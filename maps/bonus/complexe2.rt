@@ -1,0 +1,61 @@
+A  0.4   255,255,255
+
+C  0,5,-35   0,0,1   70
+
+
+li  -2,5,-15  0.7   255,0,0
+li   0,5,-5  0.7   0,255,0
+li   0,2,-15  0.3   255,0,255
+li   2,5,-15  0.7   0,0,255
+
+
+
+pl-tn  0,0,0    0,1,0   imgs/Stone_texture.png  imgs/Stone_normal.png
+pl  0,10,0    0,1,0   0,255,255
+pl  0,0,20   0,0,1   255,0,0
+pl  0,0,-40   0,0,1   255,255,0
+pl  20,0,0   1,0,0   0,255,0
+pl -20,0,0   1,0,0   0,0,255
+
+
+cy-tn  5,5,5   0,1,0  2  10  imgs/Bark_texture.png  imgs/Bark_normal.png
+sp-tn  5,0,5   3  imgs/gravel_texture.png  imgs/gravel_normal.png
+sp-tn  5,10,5  3  imgs/gravel_texture.png  imgs/gravel_normal.png
+
+cy-tn  -5,5,5   0,1,0  2  10  imgs/Bark_texture.png  imgs/Bark_normal.png
+sp-tn  -5,0,5   3  imgs/gravel_texture.png  imgs/gravel_normal.png
+sp-tn  -5,10,5  3  imgs/gravel_texture.png  imgs/gravel_normal.png
+
+co  10,10,0   0,-1,0  2  10  255,255,255
+sp  10,0,0   3  255,255,255
+
+co  -10,10,0   0,-1,0  2  10  255,255,255
+sp  -10,0,0   3  255,255,255
+
+
+cu-tn  0,-2,-5  1,0,0  0,1,0  8  8  4  imgs/Stone_texture.png  imgs/Stone_normal.png
+
+sp    -3.5,1.5,-7   0.5  255,255,255
+sp-ck -3.0,1.5,-7   0.5
+sp    -2.5,1.5,-7   0.5  255,255,255
+sp-tn -2.0,1.5,-7   0.5  imgs/gravel_texture.png  imgs/gravel_normal.png
+sp    -1.5,1.5,-7   0.5  255,255,255
+sp-ck -1.0,1.5,-7   0.5
+sp    -0.5,1.5,-7   0.5  255,255,255
+sp    -0.0,1.5,-7   0.6  0,255,255
+
+sp     3.5,1.5,-7   0.5  255,255,255
+sp-ck    3.0,1.5,-7   0.5
+sp     2.5,1.5,-7   0.5  255,255,255
+sp-tn  2.0,1.5,-7   0.5  imgs/gravel_texture.png  imgs/gravel_normal.png
+sp     1.5,1.5,-7   0.5  255,255,255
+sp-ck  1.0,1.5,-7   0.5
+sp     0.5,1.5,-7   0.5  255,255,255
+
+
+cy-ck  0,5,10   0,0.707106,0.707106  3  12
+
+
+sp  -20,10,-30  10  255,255,255
+sp   20,0,-30   10  255,255,255
+sp   20,10,-30  10  255,255,255
