@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane_compute_constants.c                          :+:      :+:    :+:   */
+/*   plane_compute_constants_bonus.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2023/06/23 16:20:38 by aderouba         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:33:20 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	plane_compute_constants(
 {
 	vec3_normalize(&plane->normal);
 	plane->rev_normal = plane->normal;
-	vec3_scale(&plane->normal, -1.0f);
+	vec3_scale(&plane->rev_normal, -1.0f);
 }

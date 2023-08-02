@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_file.c                                       :+:      :+:    :+:   */
+/*   parse_file_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:08:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:25:07 by tdubois          ###   ########.fr       */
+/*   Updated: 2023/08/02 18:35:51 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_error	_open_file(
 
 /**
  * Parses scene data structure from config file.
- * 
+ *
  * @param[in] path_to_file Path to config file
  * @param[out] scene Scene to fill up with parsed data
  * @returns SUCCESS or FAILURE whether parsing has has been succesful or not
@@ -60,13 +60,20 @@ t_error	parse_file(
 		printf(g_file_err, basename, "Missing camera directive");
 		return (FAILURE);
 	}
+	if (scene->ambient_lightning == NULL)
+	{
+		close(fd);
+		scene_del(scene);
+		printf(g_file_err, basename, "Missing ambiant light directive");
+		return (FAILURE);
+	}
 	close (fd);
 	return (SUCCESS);
 }
 
 /**
  * Private: Open file with error feedback
- * 
+ *
  * @param[in] path_to_file
  * @param[out] fd
  * @returns SUCCESS or FAILURE whether file has been opened or not
@@ -96,7 +103,7 @@ static t_error	_open_file(
  * 1. Checks for extension
  * 2. Empty filename
  * 3. Extension only filename
- * 
+ *
  * @param[in] basename Basename of config file
  * @returns SUCCESS or FAILURE whether file has been opened or not
  */
