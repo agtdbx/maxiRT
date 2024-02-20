@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersect_loop_without_param_obj.c                 :+:      :+:    :+:   */
+/*   intersect_loop_without_param_obj_bonus.c           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:47:22 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/06 18:08:15 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:31:04 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_color	intersect_loop_without_param_obj(
 			t_scene const *scene,
 			t_ray const *ray)
 {
+	t_ray				new_ray;
 	t_object			*obj;
 	t_object			*closest_obj;
 	t_intersect_info	intersect_info;
@@ -38,7 +39,9 @@ t_color	intersect_loop_without_param_obj(
 	closest_obj = get_closest_object(obj, object, ray, &intersect_info);
 	if (closest_obj == NULL)
 		return ((t_color){0});
-	return (render_ray_on_object(scene, closest_obj, ray, &intersect_info));
+	new_ray = *ray;
+	new_ray.depth += 1;
+	return (render_ray_on_object(scene, closest_obj, &new_ray, &intersect_info));
 }
 
 static t_object	*get_closest_object(
