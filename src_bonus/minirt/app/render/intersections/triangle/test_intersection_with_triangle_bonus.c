@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/08 15:02:54 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:27:53 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,37 @@ bool	test_intersection_with_triangle(
 			t_triangle const *triangle,
 			t_intersect_info *intersect_info)
 {
-	(void)ray;
-	(void)triangle;
-	(void)intersect_info;
+	t_vec3	vec;
+	t_vec3	intersect_point;
+	float	denom;
+	float	p;
+	float	q;
+
+	vec3_substract_into(&vec, &triangle->point1, &ray->pos);
+	denom = vec3_dot(&ray->vec, &triangle->normal);
+	if (denom < 0.000001f)
+	{
+		intersect_info->sub_part_id = 0;
+		intersect_info->distance = vec3_dot(&vec, &triangle->normal) / denom;
+		if (intersect_info->distance < 0.0f)
+			return (false);
+
+		// Get the intersection point
+		intersect_point = ray->pos;
+		vec3_linear_transform(&intersect_point, intersect_info->distance,
+								&ray->vec);
+
+		return (true);
+	}
 	return (false);
-
-	//t_vec3	vec;
-	//float	dot;
-	//float	nabla;
-
-	//vec3_substract_into(&vec, &ray->pos, &sphere->pos);
-	//dot = vec3_dot(&ray->vec, &vec);
-	//nabla = powf(dot, 2.0f) - vec3_dot(&vec, &vec) + sphere->radius2;
-	//if (nabla < 0)
-	//	return (false);
-	//nabla = sqrtf(nabla);
-	//intersect_info->sub_part_id = 0;
-	//intersect_info->distance = -dot - nabla;
-	//if (intersect_info->distance >= 0)
-	//	return (true);
-	//intersect_info->distance = -dot + nabla;
-	//if (intersect_info->distance >= 0)
-	//	return (true);
-	//return (false);
 }
+
+/*
+[ Px-Cx ] = [ V1.x V2.x ] * [ p ]
+[ Py-Cy ]   [ V1.y V2.y ]   [ q ]
+
+
+Px-Cx = V1.x * p + V2.x * q
+Py-Cy = V1.y * p + V2.y * q
+
+*/

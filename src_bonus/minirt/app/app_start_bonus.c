@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_start.c                                        :+:      :+:    :+:   */
+/*   app_start_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:08:40 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:04:04 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ static void	_compute_constants(
 			cone_compute_constants(&object_iterator->value.as_cone);
 		else if (object_iterator->type == OBJ_CUBE)
 			cube_compute_constants(&object_iterator->value.as_cube);
+		else if (object_iterator->type == OBJ_CUBE)
+			triangle_compute_constants(&object_iterator->value.as_triangle);
 		object_iterator = object_iterator->next;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas);
