@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app.h                                              :+:      :+:    :+:   */
+/*   app_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 20:32:13 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:58:37 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,10 @@ bool			intersection_inside_with_front(
 bool			intersection_inside_with_back(
 					t_ray const *ray,
 					t_cube const *cube,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_triangle(
+					t_ray const *ray,
+					t_triangle const *triangle,
 					t_intersect_info *intersect_info);
 
 t_color			intersect_loop_without_param_obj(

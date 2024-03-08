@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_config.h                                       :+:      :+:    :+:   */
+/*   app_config_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:42:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 12:43:04 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/03/08 14:47:43 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ static const float		g_cone_default_density = 1.0f;
 static const float		g_cube_default_reflection = 0.0f;
 static const float		g_cube_default_opacity = 1.0f;
 static const float		g_cube_default_density = 1.0f;
+
+// triangle
+static const float		g_triangle_default_reflection = 0.0f;
+static const float		g_triangle_default_opacity = 1.0f;
+static const float		g_triangle_default_density = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 

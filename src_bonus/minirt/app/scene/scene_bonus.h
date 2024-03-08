@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.h                                            :+:      :+:    :+:   */
+/*   scene_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 12:44:31 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:34:58 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,22 @@ void			cube_compute_constants(
 void			cube_compute_constants_from_menu(
 					t_cube *cube);
 
+//---- TRIANGLE --------------------------------------------------------------//
+
+typedef struct s_triangle
+{
+	t_vec3	point1;
+	t_vec3	point2;
+	t_vec3	point3;
+
+	t_vec3	normal;
+	t_vec3	v1; // point1 to point2
+	t_vec3	v2; // point1 to point3
+}	t_triangle;
+
+void			triangle_compute_constants(
+					t_triangle *triangle);
+
 //---- COLOR INTERFACE -------------------------------------------------------//
 
 typedef enum e_color_t
@@ -133,6 +149,7 @@ typedef enum e_object_t
 	OBJ_CYLINDER,
 	OBJ_CONE,
 	OBJ_CUBE,
+	OBJ_TRIANGLE,
 }	t_object_t;
 
 typedef union u_object_v
@@ -142,6 +159,7 @@ typedef union u_object_v
 	t_cylinder	as_cylinder;
 	t_cone		as_cone;
 	t_cube		as_cube;
+	t_triangle	as_triangle;
 }	t_object_v;
 
 typedef struct s_object
@@ -207,4 +225,4 @@ t_error			scene_add_object(
 void			scene_del(
 					t_scene *scene);
 
-#endif//SCENE_BONUS_H
+#endif //SCENE_BONUS_H

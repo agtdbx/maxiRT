@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+         #
+#    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2023/07/25 15:08:05 by aderouba         ###   ########.fr        #
+#    Updated: 2024/03/08 14:59:13 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,6 +136,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside_bonus.c \
 				src_bonus/minirt/app/render/intersections/test_intersection_with_obj_bonus.c \
+				src_bonus/minirt/app/render/intersections/triangle/test_intersection_with_triangle_bonus.c \
 				src_bonus/minirt/app/render/mapping/color/apply_texture_bonus.c \
 				src_bonus/minirt/app/render/mapping/color/get_base_color_object_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/apply_normal_map_bonus.c \
@@ -172,6 +173,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/scene/scene_add_object_bonus.c \
 				src_bonus/minirt/app/scene/scene_del_bonus.c \
 				src_bonus/minirt/app/scene/sphere_compute_constants_bonus.c \
+				src_bonus/minirt/app/scene/triangle_compute_constants_bonus.c \
 				src_bonus/minirt/app/utils/color/color_scale_bonus.c \
 				src_bonus/minirt/app/utils/color/color_to_int_bonus.c \
 				src_bonus/minirt/app/utils/drawings/img_draw_divider_bonus.c \
@@ -201,6 +203,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/parser/directives/parse_plane_bonus.c \
 				src_bonus/minirt/parser/directives/parse_sphere_bonus.c \
 				src_bonus/minirt/parser/directives/parse_spotlight_bonus.c \
+				src_bonus/minirt/parser/directives/parse_triangle_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_directive_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_field_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_unknown_directive_error_bonus.c \
