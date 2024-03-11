@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/08 15:04:04 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:55:31 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void	_compute_constants(
 			cone_compute_constants(&object_iterator->value.as_cone);
 		else if (object_iterator->type == OBJ_CUBE)
 			cube_compute_constants(&object_iterator->value.as_cube);
-		else if (object_iterator->type == OBJ_CUBE)
+		else if (object_iterator->type == OBJ_TRIANGLE)
 			triangle_compute_constants(&object_iterator->value.as_triangle);
 		object_iterator = object_iterator->next;
 	}

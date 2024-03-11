@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/08 14:59:13 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/11 16:00:46 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -152,12 +152,14 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_object_pixel_pos_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_plane_pixel_pos_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_sphere_pixel_pos_bonus.c \
+				src_bonus/minirt/app/render/mapping/pixel_pos/get_triangle_pixel_pos_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cone_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cube_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cylinder_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_plane_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_sphere_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_triangle_bonus.c \
 				src_bonus/minirt/app/render/reflection/reflection_bonus.c \
 				src_bonus/minirt/app/render/render_canvas_bonus.c \
 				src_bonus/minirt/app/render/render_fast_on_front_canvas_bonus.c \

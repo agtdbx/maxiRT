@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/08 15:27:53 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:58:31 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,30 @@ bool	test_intersection_with_triangle(
 		vec3_linear_transform(&intersect_point, intersect_info->distance,
 								&ray->vec);
 
+		if (triangle->v2.x == 0.0f)
+			return (false);
+
+		float	div_part = triangle->v1.y * triangle->v2.x
+							- triangle->v1.x * triangle->v2.y;
+
+		if (div_part == 0.0f)
+			return (false);
+
+		p = triangle->v2.x * (intersect_point.y - triangle->point1.y) -
+			triangle->v2.y * (intersect_point.x - triangle->point1.x);
+		p = p / div_part;
+
+		if (p < 0.0f || p > 1.0f)
+			return (false);
+
+		q = intersect_point.x - triangle->point1.x - (triangle->v1.x * p);
+		q = q / triangle->v2.x;
+
+		if (q < 0.0f || q > 1.0f)
+			return (false);
+
+		if (q + p < 0.0f || q + p > 1.0f)
+			return (false);
 		return (true);
 	}
 	return (false);

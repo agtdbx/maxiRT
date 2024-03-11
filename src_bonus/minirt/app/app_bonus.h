@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/08 14:58:37 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/11 16:01:19 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,11 @@ void			compute_normal_ray_on_cube(
 					t_ray const *ray,
 					t_intersect_info const *intersect_info,
 					t_ray *normal);
+void			compute_normal_ray_on_triangle(
+					t_object const *triangle,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
 
 /// illumination
 
@@ -330,6 +335,9 @@ t_vec2			get_cube_pixel_pos(
 					t_cube const *cube,
 					t_ray const *normal,
 					t_intersect_info const *intersect_info);
+t_vec2			get_triangle_pixel_pos(
+					t_triangle const *triangle,
+					t_ray const *normal);
 
 t_color			get_base_color_object(
 					t_object const *intersected_object,
