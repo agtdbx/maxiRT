@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/08 14:34:58 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:56:48 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct s_triangle
 	t_vec3	point3;
 
 	t_vec3	normal;
+	t_vec3	rev_normal;
 	t_vec3	v1; // point1 to point2
 	t_vec3	v2; // point1 to point3
 }	t_triangle;

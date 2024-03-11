@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 16:01:19 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:19:32 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,6 +368,8 @@ void			compute_normal_base_cube(
 					t_vec3 normal_base[3],
 					t_cube const *cube,
 					t_intersect_info const *intersect_info);
+void			compute_normal_base_triangle(
+					t_vec3 normal_base[3]);
 void			apply_normal_map(
 					mlx_texture_t const *normal_map,
 					t_vec2 const *pixel_pos,

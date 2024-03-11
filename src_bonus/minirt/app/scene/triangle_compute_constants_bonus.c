@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/11 15:59:07 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:57:37 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	triangle_compute_constants(
 	triangle->normal.z = (triangle->v1.x * triangle->v2.y)
 						- (triangle->v1.y * triangle->v2.x);
 	vec3_normalize(&triangle->normal);
+	vec3_scale_into(&triangle->rev_normal, &triangle->normal, -1.0f);
 }

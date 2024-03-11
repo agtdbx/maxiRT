@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/08 14:55:34 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:45:25 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,23 @@ static const t_directive	g_directives[] = {
 },
 {
 	.identifier = "tr",
-	.usage = "tri <point> <point> <point> <color>",
+	.usage = "tr <point> <point> <point> <color>",
 	.callback = parse_triangle,
+},
+{
+	.identifier = "tr-ck",
+	.usage = "tr <point> <point> <point>",
+	.callback = parse_triangle_checkerboard,
+},
+{
+	.identifier = "tr-t",
+	.usage = "tr <point> <point> <point> <texture path>",
+	.callback = parse_triangle_texture,
+},
+{
+	.identifier = "tr-tn",
+	.usage = "tr <point> <point> <point> <texture path> <normal map path>",
+	.callback = parse_triangle_texture_and_normal,
 },
 {
 	.identifier = "#",

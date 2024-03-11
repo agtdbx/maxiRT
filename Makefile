@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/11 16:00:46 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/11 17:19:51 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,6 +145,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_cylinder_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_plane_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_sphere_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_triangle_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_map_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_cone_pixel_pos_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_cube_pixel_pos_bonus.c \

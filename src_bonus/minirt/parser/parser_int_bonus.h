@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/08 14:50:32 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:32:18 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,12 @@ t_error	parse_cube_texture_and_normal(
 			t_parser_state *state);
 
 t_error	parse_triangle(
+			t_parser_state *state);
+t_error	parse_triangle_checkerboard(
+			t_parser_state *state);
+t_error	parse_triangle_texture(
+			t_parser_state *state);
+t_error	parse_triangle_texture_and_normal(
 			t_parser_state *state);
 
 t_error	parse_comment(
