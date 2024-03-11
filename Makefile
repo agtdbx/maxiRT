@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+         #
+#    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2023/07/25 15:08:05 by aderouba         ###   ########.fr        #
+#    Updated: 2024/03/11 18:29:31 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,11 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/menu/components/sphere/sphere_panel_init_bonus.c \
 				src_bonus/minirt/app/menu/components/sphere/sphere_panel_register_bonus.c \
 				src_bonus/minirt/app/menu/components/sphere/sphere_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_show_bonus.c \
 				src_bonus/minirt/app/menu/lib/button/button_draw_bonus.c \
 				src_bonus/minirt/app/menu/lib/button/button_hide_bonus.c \
 				src_bonus/minirt/app/menu/lib/button/button_init_bonus.c \
@@ -136,6 +141,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside_bonus.c \
 				src_bonus/minirt/app/render/intersections/test_intersection_with_obj_bonus.c \
+				src_bonus/minirt/app/render/intersections/triangle/test_intersection_with_triangle_bonus.c \
 				src_bonus/minirt/app/render/mapping/color/apply_texture_bonus.c \
 				src_bonus/minirt/app/render/mapping/color/get_base_color_object_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/apply_normal_map_bonus.c \
@@ -144,6 +150,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_cylinder_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_plane_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_sphere_bonus.c \
+				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_base_triangle_bonus.c \
 				src_bonus/minirt/app/render/mapping/normal_map/compute_normal_map_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_cone_pixel_pos_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_cube_pixel_pos_bonus.c \
@@ -151,12 +158,14 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_object_pixel_pos_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_plane_pixel_pos_bonus.c \
 				src_bonus/minirt/app/render/mapping/pixel_pos/get_sphere_pixel_pos_bonus.c \
+				src_bonus/minirt/app/render/mapping/pixel_pos/get_triangle_pixel_pos_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cone_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cube_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cylinder_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_plane_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_sphere_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_triangle_bonus.c \
 				src_bonus/minirt/app/render/reflection/reflection_bonus.c \
 				src_bonus/minirt/app/render/render_canvas_bonus.c \
 				src_bonus/minirt/app/render/render_fast_on_front_canvas_bonus.c \
@@ -172,6 +181,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/scene/scene_add_object_bonus.c \
 				src_bonus/minirt/app/scene/scene_del_bonus.c \
 				src_bonus/minirt/app/scene/sphere_compute_constants_bonus.c \
+				src_bonus/minirt/app/scene/triangle_compute_constants_bonus.c \
 				src_bonus/minirt/app/utils/color/color_scale_bonus.c \
 				src_bonus/minirt/app/utils/color/color_to_int_bonus.c \
 				src_bonus/minirt/app/utils/drawings/img_draw_divider_bonus.c \
@@ -201,6 +211,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/parser/directives/parse_plane_bonus.c \
 				src_bonus/minirt/parser/directives/parse_sphere_bonus.c \
 				src_bonus/minirt/parser/directives/parse_spotlight_bonus.c \
+				src_bonus/minirt/parser/directives/parse_triangle_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_directive_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_field_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_unknown_directive_error_bonus.c \

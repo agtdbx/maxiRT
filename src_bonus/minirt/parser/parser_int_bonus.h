@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_int_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/25 14:41:07 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:32:18 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,15 @@ t_error	parse_cube_checkerboard(
 t_error	parse_cube_texture(
 			t_parser_state *state);
 t_error	parse_cube_texture_and_normal(
+			t_parser_state *state);
+
+t_error	parse_triangle(
+			t_parser_state *state);
+t_error	parse_triangle_checkerboard(
+			t_parser_state *state);
+t_error	parse_triangle_texture(
+			t_parser_state *state);
+t_error	parse_triangle_texture_and_normal(
 			t_parser_state *state);
 
 t_error	parse_comment(

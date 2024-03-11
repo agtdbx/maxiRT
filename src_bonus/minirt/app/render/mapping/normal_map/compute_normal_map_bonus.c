@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   compute_normal_map.c                               :+:      :+:    :+:   */
+/*   compute_normal_map_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/06 16:51:56 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:22:52 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static void	compute_normal_base(
 	else if (intersected_object->type == OBJ_CUBE)
 		compute_normal_base_cube(normal_base,
 			&intersected_object->value.as_cube, intersect_info);
+	else if (intersected_object->type == OBJ_TRIANGLE)
+		compute_normal_base_triangle(normal_base);
 	else
 	{
 		normal_base[0] = (t_vec3){1.0f, 0.0f, 0.0f};

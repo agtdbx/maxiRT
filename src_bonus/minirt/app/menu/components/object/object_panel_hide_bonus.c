@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_panel_hide.c                                :+:      :+:    :+:   */
+/*   object_panel_hide_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:49:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:03:48 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/03/11 18:56:41 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ void	object_panel_hide(
 	plane_panel_hide(menu);
 	sphere_panel_hide(menu);
 	cylinder_panel_hide(menu);
+	triangle_panel_hide(menu);
 }

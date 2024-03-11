@@ -26,3 +26,8 @@ cu-ck  -7.5,0,3  0,0,1  0,1,0  1.5  1.5  1.5
 cu-t   -7.5,0,6  0,0,1  0,1,0  1.5  1.5  1.5  imgs/Stone_texture.png
 cu-tn  -7.5,0,9  0,0,1  0,1,0  1.5  1.5  1.5  imgs/Stone_texture.png  imgs/Stone_normal.png
 
+tr     -10.5,0,0  -12.5,2,0  -14.5,0,0  0,0,255
+tr-ck  -10.5,0,3  -12.5,2,3  -14.5,0,3
+tr-t   -10.5,0,6  -12.5,2,6  -14.5,0,6  imgs/gravel_texture.png
+tr-tn  -10.5,0,9  -12.5,2,9  -14.5,0,9  imgs/gravel_texture.png  imgs/gravel_normal.png
+

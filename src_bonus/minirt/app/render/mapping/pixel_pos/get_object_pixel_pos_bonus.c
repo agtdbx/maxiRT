@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_object_pixel_pos.c                             :+:      :+:    :+:   */
+/*   get_object_pixel_pos_bonus.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:58:24 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/06 15:55:19 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:02:07 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,8 @@ t_vec2	get_object_pixel_pos(
 	else if (object->type == OBJ_CUBE)
 		return (get_cube_pixel_pos(
 				&object->value.as_cube, normal, intersect_info));
+	else if (object->type == OBJ_TRIANGLE)
+		return (get_triangle_pixel_pos(
+				&object->value.as_triangle, normal));
 	return ((t_vec2){0});
 }

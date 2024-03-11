@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app.h                                              :+:      :+:    :+:   */
+/*   app_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 20:32:13 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:19:32 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,10 @@ bool			intersection_inside_with_back(
 					t_ray const *ray,
 					t_cube const *cube,
 					t_intersect_info *intersect_info);
+bool			test_intersection_with_triangle(
+					t_ray const *ray,
+					t_triangle const *triangle,
+					t_intersect_info *intersect_info);
 
 t_color			intersect_loop_without_param_obj(
 					t_object const *object,
@@ -253,6 +257,11 @@ void			compute_normal_ray_on_cone(
 					t_ray *normal);
 void			compute_normal_ray_on_cube(
 					t_object const *cube,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
+void			compute_normal_ray_on_triangle(
+					t_object const *triangle,
 					t_ray const *ray,
 					t_intersect_info const *intersect_info,
 					t_ray *normal);
@@ -326,6 +335,9 @@ t_vec2			get_cube_pixel_pos(
 					t_cube const *cube,
 					t_ray const *normal,
 					t_intersect_info const *intersect_info);
+t_vec2			get_triangle_pixel_pos(
+					t_triangle const *triangle,
+					t_ray const *normal);
 
 t_color			get_base_color_object(
 					t_object const *intersected_object,
@@ -356,6 +368,8 @@ void			compute_normal_base_cube(
 					t_vec3 normal_base[3],
 					t_cube const *cube,
 					t_intersect_info const *intersect_info);
+void			compute_normal_base_triangle(
+					t_vec3 normal_base[3]);
 void			apply_normal_map(
 					mlx_texture_t const *normal_map,
 					t_vec2 const *pixel_pos,
