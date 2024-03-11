@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   compute_refracted_color.c                          :+:      :+:    :+:   */
+/*   compute_refracted_color_bonus.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 18:33:58 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/03/11 19:50:23 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_color	compute_refracted_color(
 
 	if (object->opacity == 1.0f)
 		return ((t_color){0});
-	if (object->type == OBJ_PLANE)
+	if (object->type == OBJ_PLANE || object->type == OBJ_TRIANGLE)
 		return (intersect_loop_without_param_obj(object, scene, ray));
 	if (!get_refracted_ray(1.0f / object->density, ray, normal, &refracted_ray))
 		return (reflection_outside_object(object, scene, ray, normal));
