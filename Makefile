@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/11 17:19:51 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/11 18:29:31 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,11 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/menu/components/sphere/sphere_panel_init_bonus.c \
 				src_bonus/minirt/app/menu/components/sphere/sphere_panel_register_bonus.c \
 				src_bonus/minirt/app/menu/components/sphere/sphere_panel_show_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_draw_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_hide_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_init_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_register_bonus.c \
+				src_bonus/minirt/app/menu/components/triangle/triangle_panel_show_bonus.c \
 				src_bonus/minirt/app/menu/lib/button/button_draw_bonus.c \
 				src_bonus/minirt/app/menu/lib/button/button_hide_bonus.c \
 				src_bonus/minirt/app/menu/lib/button/button_init_bonus.c \

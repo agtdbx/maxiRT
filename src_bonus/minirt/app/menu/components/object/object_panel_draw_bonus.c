@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_panel_draw.c                                :+:      :+:    :+:   */
+/*   object_panel_draw_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:53:38 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:53:40 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/03/11 19:36:31 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ bool	object_panel_draw(
 		should_redraw |= sphere_panel_draw(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_CYLINDER)
 		should_redraw |= cylinder_panel_draw(mlx, menu);
+	if (menu->object_panel.object_type == OBJ_TRIANGLE)
+		should_redraw |= triangle_panel_draw(mlx, menu);
 	return (should_redraw);
 }
-
+#include <stdio.h>
 static bool	_draw_common_labels(
 			mlx_t *mlx,
 			t_menu *menu)

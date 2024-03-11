@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu.h                                             :+:      :+:    :+:   */
+/*   menu_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:55:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:20:34 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:40:43 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,25 @@ typedef struct s_cube_panel
 	t_button		depth_label_button;
 }	t_cube_panel;
 
+typedef struct s_triangle_panel
+{
+	t_vec3_label	position_p1_label;
+	t_button		position_p1_label_button_x;
+	t_button		position_p1_label_button_y;
+	t_button		position_p1_label_button_z;
+
+	t_vec3_label	position_p2_label;
+	t_button		position_p2_label_button_x;
+	t_button		position_p2_label_button_y;
+	t_button		position_p2_label_button_z;
+
+	t_vec3_label	position_p3_label;
+	t_button		position_p3_label_button_x;
+	t_button		position_p3_label_button_y;
+	t_button		position_p3_label_button_z;
+
+}	t_triangle_panel;
+
 typedef struct s_object_panel
 {
 	bool				is_enabled;
@@ -175,6 +194,7 @@ typedef struct s_object_panel
 	mlx_image_t			*plane_title;
 	mlx_image_t			*sphere_title;
 	mlx_image_t			*cylinder_title;
+	mlx_image_t			*triangle_title;
 
 	t_color_label		color_label;
 	t_button			color_label_button_r;
@@ -195,6 +215,7 @@ typedef struct s_object_panel
 	t_plane_panel		plane_panel;
 	t_sphere_panel		sphere_label;
 	t_cylinder_panel	cylinder_panel;
+	t_triangle_panel	triangle_panel;
 
 }	t_object_panel;
 
@@ -421,6 +442,22 @@ bool			cube_panel_draw(
 void			cube_panel_register(
 					t_menu *menu,
 					t_cube *cube);
+
+// triangle_panel
+
+void			triangle_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			triangle_panel_show(
+					t_menu *menu);
+void			triangle_panel_hide(
+					t_menu *menu);
+bool			triangle_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			triangle_panel_register(
+					t_menu *menu,
+					t_triangle *triangle);
 
 //---- LIB --------------------------------------------------------------------#
 

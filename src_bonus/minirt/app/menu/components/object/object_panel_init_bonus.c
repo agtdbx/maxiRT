@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_panel_init.c                                :+:      :+:    :+:   */
+/*   object_panel_init_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:10 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:13:37 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:03:29 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	object_panel_init(
 	plane_panel_init(mlx, menu);
 	sphere_panel_init(mlx, menu);
 	cylinder_panel_init(mlx, menu);
+	triangle_panel_init(mlx, menu);
 }
 
 static void	object_title_init(
@@ -66,4 +67,7 @@ static void	object_title_init(
 	panel->cylinder_title = mlx_put_string(mlx, "-- Cylinder --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->cylinder_title->enabled = false;
+	panel->triangle_title = mlx_put_string(mlx, "-- Triangle --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->triangle_title->enabled = false;
 }

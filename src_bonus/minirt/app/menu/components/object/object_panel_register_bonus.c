@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_panel_register.c                            :+:      :+:    :+:   */
+/*   object_panel_register_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:26:14 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:16:25 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,10 @@ static void	_register_object(
 	{
 		cylinder_panel_register(menu, &object->value.as_cylinder);
 		cylinder_panel_show(menu);
+	}
+	else if (object->type == OBJ_TRIANGLE)
+	{
+		triangle_panel_register(menu, &object->value.as_triangle);
+		triangle_panel_show(menu);
 	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_panel_show.c                                :+:      :+:    :+:   */
+/*   object_panel_show_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:54:11 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/20 17:02:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/03/11 19:10:09 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,6 @@ void	object_panel_show(
 		sphere_panel_show(menu);
 	if (menu->object_panel.object_type == OBJ_CYLINDER)
 		cylinder_panel_show(menu);
+	if (menu->object_panel.object_type == OBJ_TRIANGLE)
+		triangle_panel_show(menu);
 }
