@@ -31,6 +31,8 @@ typedef	struct s_parse_dot_struct
 }	t_parse_dot_struct;
 
 
+void	parse_dot_struct_add_init(
+			t_parse_dot_struct *parse_dot_struct);
 bool	parse_dot_struct_add_vertice(
 			t_parse_dot_struct *parse_dot_struct,
 			float x, float y, float z);

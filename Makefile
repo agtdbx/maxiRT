@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/16 12:35:12 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/16 16:08:17 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -217,9 +217,9 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_directive_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_field_error_bonus.c \
 				src_bonus/minirt/parser/error_logs/put_unknown_directive_error_bonus.c \
-				src_bonus/minirt/parser/fields/dot_obj_file/apply_parsing_to_object_file_bonus.c \
-				src_bonus/minirt/parser/fields/dot_obj_file/parse_dot_file_bonus.c \
-				src_bonus/minirt/parser/fields/dot_obj_file/parse_dot_struct_bonus.c \
+				src_bonus/minirt/parser/dot_obj_file/apply_parsing_to_object_file_bonus.c \
+				src_bonus/minirt/parser/dot_obj_file/parse_dot_file_bonus.c \
+				src_bonus/minirt/parser/dot_obj_file/parse_dot_struct_bonus.c \
 				src_bonus/minirt/parser/fields/parse_brightness_bonus.c \
 				src_bonus/minirt/parser/fields/parse_color_bonus.c \
 				src_bonus/minirt/parser/fields/parse_diameter_bonus.c \

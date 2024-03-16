@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 13:42:08 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 16:42:12 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_error	parse_dot_obj_file(
 		put_field_error(state, state->tok, "Invalid file");
 		return (FAILURE);
 	}
+	parse_dot_struct_add_init(&parse_dot_struct);
 	file_res = parse_dot_file(fd, &parse_dot_struct);
 	close(fd);
 	if (file_res != PARSE_DOT_FILE_SUCCESS)
@@ -71,8 +72,8 @@ static void	create_line_error_message(char *msg, int line)
 	i = 0;
 	while (buf[i] != '\0')
 	{
-		msg[23 + i] = buf[i];
+		msg[22 + i] = buf[i];
 		i++;
 	}
-	msg[23 + i] = '\0';
+	msg[22 + i] = '\0';
 }

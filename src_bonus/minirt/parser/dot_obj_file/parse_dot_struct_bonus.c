@@ -6,13 +6,24 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:34:56 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/16 14:09:20 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 16:49:35 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/parser/dot_obj_file/dot_obj_file_bonus.h"
 
 #include <stdlib.h>
+#include <stdio.h>
+
+void	parse_dot_struct_add_init(
+			t_parse_dot_struct *parse_dot_struct)
+{
+	parse_dot_struct->nb_faces = 0;
+	parse_dot_struct->nb_vertices = 0;
+	parse_dot_struct->faces = NULL;
+	parse_dot_struct->vertices = NULL;
+}
+
 
 bool	parse_dot_struct_add_vertice(
 			t_parse_dot_struct *parse_dot_struct,
@@ -22,13 +33,13 @@ bool	parse_dot_struct_add_vertice(
 	t_vertice	*tmp;
 
 	if (parse_dot_struct == NULL)
-		return ;
+		return (false);
 
 	// Create the new vertice
 	vertice = malloc(sizeof(t_vertice));
 	if (vertice == NULL)
 	{
-		parse_dot_struct_free(parse_dot_file);
+		parse_dot_struct_free(parse_dot_struct);
 		return (false);
 	}
 	vertice->x = x;
@@ -58,13 +69,13 @@ bool	parse_dot_struct_add_face(
 	t_face	*tmp;
 
 	if (parse_dot_struct == NULL)
-		return ;
+		return (false);
 
 	// Create the new face
 	face = malloc(sizeof(t_face));
 	if (face == NULL)
 	{
-		parse_dot_struct_free(parse_dot_file);
+		parse_dot_struct_free(parse_dot_struct);
 		return (false);
 	}
 	face->p1 = p1;
@@ -97,17 +108,6 @@ void	parse_dot_struct_free(
 	if (parse_dot_struct == NULL)
 		return ;
 
-	// free faces
-	actual_face = parse_dot_struct->faces;
-	while (actual_face && actual_face->next)
-	{
-		next_face = actual_face->next;
-		free(actual_face);
-		actual_face = next_face;
-	}
-	if (actual_face)
-		free(actual_face);
-
 	// free vertices
 	actual_vertice = parse_dot_struct->vertices;
 	while (actual_vertice && actual_vertice->next)
@@ -118,6 +118,17 @@ void	parse_dot_struct_free(
 	}
 	if (actual_vertice)
 		free(actual_vertice);
+
+	// free faces
+	actual_face = parse_dot_struct->faces;
+	while (actual_face && actual_face->next)
+	{
+		next_face = actual_face->next;
+		free(actual_face);
+		actual_face = next_face;
+	}
+	if (actual_face)
+		free(actual_face);
 
 	parse_dot_struct->faces = NULL;
 	parse_dot_struct->vertices = NULL;

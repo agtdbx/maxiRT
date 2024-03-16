@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 11:26:29 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 16:14:24 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 #include "minirt/app/scene/scene_bonus.h"
 #include "minirt/app/app_config_bonus.h"
 
-static t_error	check_axis(
-					t_parser_state *state,
-					t_cube *const cube);
+//static t_error	check_axis(
+//					t_parser_state *state,
+//					t_cube *const cube);
 
-t_error	parse_objf(
+t_error	parse_object_file(
 			t_parser_state *state)
 {
 	t_object				obj;
@@ -31,7 +31,7 @@ t_error	parse_objf(
 	if (parse_field(state, &g_position, &objf->pos) == FAILURE
 		|| parse_field(state, &g_direction, &objf->x_axis) == FAILURE
 		|| parse_field(state, &g_direction, &objf->y_axis) == FAILURE
-		|| parse_field(state, &g_objf, &objf) == FAILURE)
+		|| parse_field(state, &g_objf, objf) == FAILURE)
 		return (FAILURE);
 	if (vec3_dot(&objf->x_axis, &objf->y_axis) != 0.0f)
 	{
