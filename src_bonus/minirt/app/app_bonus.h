@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 17:19:32 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 20:07:43 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,10 @@ bool			test_intersection_with_triangle(
 					t_ray const *ray,
 					t_triangle const *triangle,
 					t_intersect_info *intersect_info);
+bool			test_intersection_with_object_file(
+					t_ray const *ray,
+					t_object_file const *objf,
+					t_intersect_info *intersect_info);
 
 t_color			intersect_loop_without_param_obj(
 					t_object const *object,
@@ -262,6 +266,11 @@ void			compute_normal_ray_on_cube(
 					t_ray *normal);
 void			compute_normal_ray_on_triangle(
 					t_object const *triangle,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
+void			compute_normal_ray_on_object_file(
+					t_object const *object_file,
 					t_ray const *ray,
 					t_intersect_info const *intersect_info,
 					t_ray *normal);

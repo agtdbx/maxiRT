@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:39:25 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 15:32:15 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 20:08:03 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	compute_normal_ray(
 		compute_normal_ray_on_cube(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_TRIANGLE)
 		compute_normal_ray_on_triangle(object, ray, intersect_info, normal);
+	else if (object->type == OBJ_OBJECT_FILE)
+		compute_normal_ray_on_object_file(object, ray, intersect_info, normal);
 	else
 		*normal = (t_ray){0};
 }

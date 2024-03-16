@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:34:00 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 15:25:16 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:55:50 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,9 @@ bool	test_intersection_with_obj(
 	else if (object->type == OBJ_TRIANGLE)
 		return (test_intersection_with_triangle(
 				ray, &object->value.as_triangle, intersect_info));
+	else if (object->type == OBJ_OBJECT_FILE)
+		return (test_intersection_with_object_file(
+				ray, &object->value.as_object_file, intersect_info));
+
 	return (false);
 }

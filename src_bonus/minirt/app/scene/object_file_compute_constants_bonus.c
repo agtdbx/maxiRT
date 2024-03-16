@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/16 19:23:04 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 20:34:42 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ static void	compute_objf_vertices(
 	}
 }
 
-
+#include <stdio.h>
 static void	compute_objf_triangles(
 				t_object_file *objf)
 {
 	int	i;
 
 	i = 0;
-	while (i < objf->nb_vertices)
+	while (i < objf->nb_triangles)
 	{
 		t_objf_triangle *triangle = &objf->triangles[i];
 

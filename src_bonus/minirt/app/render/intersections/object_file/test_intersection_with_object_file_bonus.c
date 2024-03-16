@@ -1,0 +1,129 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_intersection_with_object_file_bonus.c         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
+/*   Updated: 2024/03/16 20:11:35 by auguste          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt/app/app_bonus.h"
+
+#include <stdbool.h>
+#include <math.h>
+
+#include "minirt/app/utils/geometry/geometry_bonus.h"
+
+
+static bool	test_intersection_with_object_triangle(
+			t_ray const *ray,
+			t_objf_triangle const *triangle,
+			t_intersect_info *intersect_info);
+
+/**
+ * Test ray-triangle intersection. Algorithm is derived from
+ * https://hugi.scene.org/online/hugi24/coding%20graphics
+ * %20chris%20dragan%20raytracing%20shapes.htm
+ *
+ * @param[in] ray Normalized ray
+ * @param[in] triangle
+ * @param[out] distance From ray origin to intersection point
+ * @returns Wether ray intersects with sphere
+ */
+bool	test_intersection_with_object_file(
+			t_ray const *ray,
+			t_object_file const *objf,
+			t_intersect_info *intersect_info)
+{
+	t_intersect_info	intersect_test;
+	t_intersect_info	local_triangle_test;
+	int	i;
+
+	//if (test_intersection_with_cube(ray, &objf->bounding_box, &intersect_test))
+	//{
+		i = 0;
+		intersect_test.distance = -1.0f;
+		intersect_test.sub_part_id = 0;
+		while (i < objf->nb_triangles)
+		{
+			local_triangle_test.distance = -1.0f;
+			local_triangle_test.sub_part_id = 0;
+			if (test_intersection_with_object_triangle(
+					ray, &objf->triangles[i], &local_triangle_test))
+			{
+				if (intersect_test.distance > local_triangle_test.distance
+					|| intersect_test.distance == -1.0f )
+				{
+					intersect_test.distance = local_triangle_test.distance;
+					intersect_test.sub_part_id = i;
+				}
+			}
+			i++;
+		}
+		if (intersect_test.distance != -1.0f)
+		{
+			intersect_info->distance = intersect_test.distance;
+			intersect_info->sub_part_id = intersect_test.sub_part_id;
+			return (true);
+		}
+	//}
+	return (false);
+}
+
+
+static bool	test_intersection_with_object_triangle(
+			t_ray const *ray,
+			t_objf_triangle const *triangle,
+			t_intersect_info *intersect_info)
+{
+	t_vec3	vec;
+	t_vec3	intersect_point;
+	float	denom;
+	float	p;
+	float	q;
+
+	vec3_substract_into(&vec, &triangle->point1, &ray->pos);
+	denom = vec3_dot(&ray->vec, &triangle->normal);
+	if (denom < 0.000001f)
+	{
+		intersect_info->sub_part_id = 0;
+		intersect_info->distance = vec3_dot(&vec, &triangle->normal) / denom;
+		if (intersect_info->distance < 0.0f)
+			return (false);
+
+		// Get the intersection point
+		intersect_point = ray->pos;
+		vec3_linear_transform(&intersect_point, intersect_info->distance,
+								&ray->vec);
+
+		if (triangle->v2.x == 0.0f)
+			return (false);
+
+		float	div_part = triangle->v1.y * triangle->v2.x
+							- triangle->v1.x * triangle->v2.y;
+
+		if (div_part == 0.0f)
+			return (false);
+
+		p = triangle->v2.x * (intersect_point.y - triangle->point1.y) -
+			triangle->v2.y * (intersect_point.x - triangle->point1.x);
+		p = p / div_part;
+
+		if (p < 0.0f || p > 1.0f)
+			return (false);
+
+		q = intersect_point.x - triangle->point1.x - (triangle->v1.x * p);
+		q = q / triangle->v2.x;
+
+		if (q < 0.0f || q > 1.0f)
+			return (false);
+
+		if (q + p < 0.0f || q + p > 1.0f)
+			return (false);
+		return (true);
+	}
+	return (false);
+}

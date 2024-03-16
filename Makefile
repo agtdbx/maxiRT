@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/16 16:08:17 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/16 20:29:35 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,6 +137,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closer_spotlight_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closest_intersections_bonus.c \
 				src_bonus/minirt/app/render/intersections/intersect_loop_without_param_obj_bonus.c \
+				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_file_bonus.c \
 				src_bonus/minirt/app/render/intersections/plane/test_intersection_with_plane_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside_bonus.c \
@@ -163,6 +164,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cone_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cube_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_cylinder_bonus.c \
+				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_object_file_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_plane_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_sphere_bonus.c \
 				src_bonus/minirt/app/render/normal_rays/compute_normal_ray_on_triangle_bonus.c \
@@ -386,7 +388,7 @@ INCLUDES	:=	$(SRC) lib/libft/include lib/mlx42/include
 
 CC			:=	clang									\
 
-CFLAGS		:=	-std=c99 -Wall -Wextra -Werror			\
+CFLAGS		:=	-std=c99 -Wall -Wextra -Werror	-gdwarf-4		\
 				-Wunreachable-code -Ofast				\
 
 CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES))	\
