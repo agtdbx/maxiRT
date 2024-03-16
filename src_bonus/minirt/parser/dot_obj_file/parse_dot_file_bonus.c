@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 11:47:03 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/16 12:39:20 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 14:13:06 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 #include "libft/libft.h"
 
 static bool	parse_line(char *line, t_parse_dot_struct *parse_dot_struct);
+static bool	parse_vertice(char *line, t_parse_dot_struct *parse_dot_struct);
+static bool	parse_face(char *line, t_parse_dot_struct *parse_dot_struct);
 
-/* Function to parse a .obj file
+/* Function to parse a .obj file.
  * @param fd The fd of the file to read
  * @param parse_dot_struct The struct for obj file parsing
- * @return PARSE_DOT_FILE_SUCCESS(-1) if the parsing work as well, number of the error line instead
+ * @return PARSE_DOT_FILE_SUCCESS(-1) if the parsing work as well,
+ *  number of the error line instead
  */
 int	parse_dot_file(int fd, t_parse_dot_struct *parse_dot_struct)
 {
@@ -47,5 +50,24 @@ int	parse_dot_file(int fd, t_parse_dot_struct *parse_dot_struct)
 
 static bool	parse_line(char *line, t_parse_dot_struct *parse_dot_struct)
 {
+	// In case of vertice
+	if (ft_strncmp(line, "v ", 2) == 0)
+		return (parse_vertice(line, parse_dot_struct));
+	// In case of face
+	if (ft_strncmp(line, "f ", 2) == 0)
+		return (parse_face(line, parse_dot_struct));
+	//In any other case, skip the line
+	return (true);
+}
 
+
+static bool	parse_vertice(char *line, t_parse_dot_struct *parse_dot_struct)
+{
+	return (true);
+}
+
+
+static bool	parse_face(char *line, t_parse_dot_struct *parse_dot_struct)
+{
+	return (true);
 }

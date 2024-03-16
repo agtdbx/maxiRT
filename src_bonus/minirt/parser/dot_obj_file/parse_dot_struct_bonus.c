@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:34:56 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/16 12:46:30 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 14:09:20 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,38 @@
 
 #include <stdlib.h>
 
-bool	parse_dot_struct_add_vertrice(
+bool	parse_dot_struct_add_vertice(
 			t_parse_dot_struct *parse_dot_struct,
 			float x, float y, float z)
 {
-	t_vertrice	*vertrice;
-	t_vertrice	*tmp;
+	t_vertice	*vertice;
+	t_vertice	*tmp;
 
-	vertrice = malloc(sizeof(t_vertrice));
-	if (vertrice == NULL)
+	if (parse_dot_struct == NULL)
+		return ;
+
+	// Create the new vertice
+	vertice = malloc(sizeof(t_vertice));
+	if (vertice == NULL)
+	{
+		parse_dot_struct_free(parse_dot_file);
 		return (false);
-	vertrice->x = x;
-	vertrice->y = y;
-	vertrice->z = z;
-	vertrice->next = NULL;
-	tmp = parse_dot_struct->vertrices;
+	}
+	vertice->x = x;
+	vertice->y = y;
+	vertice->z = z;
+	vertice->next = NULL;
+
+	// Add the new vertice at the parse_dot_struct
+	tmp = parse_dot_struct->vertices;
 	if (tmp == NULL)
 	{
-		parse_dot_struct->vertrices = vertrice;
+		parse_dot_struct->vertices = vertice;
 		return (true);
 	}
 	while (tmp->next != NULL)
 		tmp = tmp->next;
-	tmp->next = vertrice;
+	tmp->next = vertice;
 	return (true);
 }
 
@@ -48,13 +57,22 @@ bool	parse_dot_struct_add_face(
 	t_face	*face;
 	t_face	*tmp;
 
+	if (parse_dot_struct == NULL)
+		return ;
+
+	// Create the new face
 	face = malloc(sizeof(t_face));
 	if (face == NULL)
+	{
+		parse_dot_struct_free(parse_dot_file);
 		return (false);
+	}
 	face->p1 = p1;
 	face->p2 = p2;
 	face->p3 = p3;
 	face->next = NULL;
+
+	// Add the new face at the parse_dot_struct
 	tmp = parse_dot_struct->faces;
 	if (tmp == NULL)
 	{
@@ -69,4 +87,38 @@ bool	parse_dot_struct_add_face(
 
 
 void	parse_dot_struct_free(
-			t_parse_dot_struct *parse_dot_struct);
+			t_parse_dot_struct *parse_dot_struct)
+{
+	t_face	*actual_face;
+	t_face	*next_face;
+	t_vertice	*actual_vertice;
+	t_vertice	*next_vertice;
+
+	if (parse_dot_struct == NULL)
+		return ;
+
+	// free faces
+	actual_face = parse_dot_struct->faces;
+	while (actual_face && actual_face->next)
+	{
+		next_face = actual_face->next;
+		free(actual_face);
+		actual_face = next_face;
+	}
+	if (actual_face)
+		free(actual_face);
+
+	// free vertices
+	actual_vertice = parse_dot_struct->vertices;
+	while (actual_vertice && actual_vertice->next)
+	{
+		next_vertice = actual_vertice->next;
+		free(actual_vertice);
+		actual_vertice = next_vertice;
+	}
+	if (actual_vertice)
+		free(actual_vertice);
+
+	parse_dot_struct->faces = NULL;
+	parse_dot_struct->vertices = NULL;
+}

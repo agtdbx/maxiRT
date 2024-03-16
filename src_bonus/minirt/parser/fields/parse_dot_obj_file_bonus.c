@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 13:18:51 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 12:34:22 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 13:42:08 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft/libft.h"
 #include "minirt/parser/dot_obj_file/dot_obj_file_bonus.h"
 #include <fcntl.h>
-#include <stdio.h>
+#include <unistd.h>
 
 //############################################################################//
 //#### DECLARATIONS ##########################################################//
@@ -23,6 +23,7 @@
 t_error	parse_dot_obj_file(
 			t_parser_state *state,
 			void *data);
+static void	create_line_error_message(char *msg, int line);
 
 //############################################################################//
 //#### DEFINITIONS ###########################################################//
@@ -39,13 +40,15 @@ t_error	parse_dot_obj_file(
 	fd = open(state->tok, O_RDONLY);
 	if (fd == -1)
 	{
+		close(fd);
 		put_field_error(state, state->tok, "Invalid file");
 		return (FAILURE);
 	}
 	file_res = parse_dot_file(fd, &parse_dot_struct);
+	close(fd);
 	if (file_res != PARSE_DOT_FILE_SUCCESS)
 	{
-		sprintf(error, "Parsing error on line %i", file_res);
+		create_line_error_message(error, file_res);
 		put_field_error(state, state->tok, error);
 		return (FAILURE);
 	}
@@ -55,4 +58,21 @@ t_error	parse_dot_obj_file(
 		return (FAILURE);
 	}
 	return (SUCCESS);
+}
+
+
+static void	create_line_error_message(char *msg, int line)
+{
+	char	buf[11];
+	int		i;
+
+	ft_strlcpy(msg, "Parsing error on line ", 23);
+	ft_sitoa(line, buf, 11);
+	i = 0;
+	while (buf[i] != '\0')
+	{
+		msg[23 + i] = buf[i];
+		i++;
+	}
+	msg[23 + i] = '\0';
 }

@@ -4,14 +4,14 @@
 # include "minirt/app/scene/scene_bonus.h"
 # define PARSE_DOT_FILE_SUCCESS -1
 
-typedef	struct s_vertrice
+typedef	struct s_vertice
 {
 	float				x;
 	float				y;
 	float				z;
 
-	struct s_vertrice	*next;
-}	t_vertrice;
+	struct s_vertice	*next;
+}	t_vertice;
 
 typedef	struct s_face
 {
@@ -24,14 +24,14 @@ typedef	struct s_face
 
 typedef	struct s_parse_dot_struct
 {
-	t_vertrice	*vertrices;
+	t_vertice	*vertices;
 	t_face		*faces;
-	int			nb_vertrices;
+	int			nb_vertices;
 	int			nb_faces;
 }	t_parse_dot_struct;
 
 
-bool	parse_dot_struct_add_vertrice(
+bool	parse_dot_struct_add_vertice(
 			t_parse_dot_struct *parse_dot_struct,
 			float x, float y, float z);
 bool	parse_dot_struct_add_face(
