@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene_del.c                                        :+:      :+:    :+:   */
+/*   scene_del_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:30:35 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 13:01:33 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:53:43 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/scene/scene_bonus.h"
 
 #include <stddef.h>
+#include <stdlib.h>
 
 #include "libft/libft.h"
 
@@ -56,5 +57,12 @@ static void	loc_del_objects(
 	if (*objects == NULL)
 		return ;
 	loc_del_objects(&(*objects)->next);
+	if ((*objects)->type == OBJ_OBJECT_FILE)
+	{
+		free((*objects)->value.as_object_file.vertices);
+		(*objects)->value.as_object_file.vertices = NULL;
+		free((*objects)->value.as_object_file.triangles);
+		(*objects)->value.as_object_file.triangles = NULL;
+	}
 	ft_memdel(objects);
 }

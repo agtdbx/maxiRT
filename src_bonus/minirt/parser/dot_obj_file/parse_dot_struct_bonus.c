@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:34:56 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/16 16:49:35 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 16:57:37 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ bool	parse_dot_struct_add_vertice(
 	vertice->next = NULL;
 
 	// Add the new vertice at the parse_dot_struct
+	parse_dot_struct->nb_vertices++;
 	tmp = parse_dot_struct->vertices;
 	if (tmp == NULL)
 	{
@@ -84,6 +85,7 @@ bool	parse_dot_struct_add_face(
 	face->next = NULL;
 
 	// Add the new face at the parse_dot_struct
+	parse_dot_struct->nb_faces++;
 	tmp = parse_dot_struct->faces;
 	if (tmp == NULL)
 	{

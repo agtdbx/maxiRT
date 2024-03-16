@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 11:06:19 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 17:08:09 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,25 +134,31 @@ void			triangle_compute_constants(
 
 //---- OBJECT FILE------------------------------------------------------------//
 
-typedef struct s_obj_tri
+typedef struct s_objf_tri
 {
+	int		vertice_1;
+	int		vertice_2;
+	int		vertice_3;
+
 	t_vec3	point1;
 	t_vec3	point2;
 	t_vec3	point3;
-
 	t_vec3	normal;
 	t_vec3	v1; // point1 to point2
 	t_vec3	v2; // point1 to point3
-}	t_obj_tri;
+}	t_objf_tri;
 
 typedef struct s_object_file
 {
 	t_vec3		pos;
 	t_vec3		x_axis;
 	t_vec3		y_axis;
-	t_vec3		*points;
-	t_obj_tri	*triangles;
+	t_vec3		*vertices;
+	t_objf_tri	*triangles;
+	int			nb_points;
+	int			nb_triangles;
 
+	float		size;
 	t_vec3		z_axis;
 	t_cube		bounding_box;
 }	t_object_file;
