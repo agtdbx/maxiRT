@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 17:08:09 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:22:43 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void			triangle_compute_constants(
 
 //---- OBJECT FILE------------------------------------------------------------//
 
-typedef struct s_objf_tri
+typedef struct s_objf_triangle
 {
 	int		vertice_1;
 	int		vertice_2;
@@ -146,21 +146,22 @@ typedef struct s_objf_tri
 	t_vec3	normal;
 	t_vec3	v1; // point1 to point2
 	t_vec3	v2; // point1 to point3
-}	t_objf_tri;
+}	t_objf_triangle;
 
 typedef struct s_object_file
 {
-	t_vec3		pos;
-	t_vec3		x_axis;
-	t_vec3		y_axis;
-	t_vec3		*vertices;
-	t_objf_tri	*triangles;
-	int			nb_points;
-	int			nb_triangles;
+	t_vec3			pos;
+	t_vec3			x_axis;
+	t_vec3			y_axis;
+	t_vec3			*vertices;
+	t_vec3			*real_vertices;
+	t_objf_triangle	*triangles;
+	int				nb_vertices;
+	int				nb_triangles;
 
-	float		size;
-	t_vec3		z_axis;
-	t_cube		bounding_box;
+	float			size;
+	t_vec3			z_axis;
+	t_cube			bounding_box;
 }	t_object_file;
 
 void			object_file_compute_constants(

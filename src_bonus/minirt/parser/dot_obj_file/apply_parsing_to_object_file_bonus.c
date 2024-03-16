@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:22:57 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/16 17:38:16 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 18:44:01 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,18 @@ bool	apply_parsing_to_object_file(
 		parse_dot_struct_free(parse_dot_struct);
 		return (false);
 	}
-	objf->triangles = malloc(sizeof(t_objf_tri) * parse_dot_struct->nb_faces);
+	objf->real_vertices = malloc(sizeof(t_vec3) * parse_dot_struct->nb_vertices);
+	if (objf->real_vertices == NULL)
+	{
+		free(objf->vertices);
+		parse_dot_struct_free(parse_dot_struct);
+		return (false);
+	}
+	objf->triangles = malloc(sizeof(t_objf_triangle) * parse_dot_struct->nb_faces);
 	if (objf->triangles == NULL)
 	{
 		free(objf->vertices);
+		free(objf->real_vertices);
 		parse_dot_struct_free(parse_dot_struct);
 		return (false);
 	}
@@ -65,9 +73,13 @@ static void	fill_vertices(
 		objf->vertices[i].x = actual->x;
 		objf->vertices[i].y = actual->y;
 		objf->vertices[i].z = actual->z;
+		objf->real_vertices[i].x = actual->x;
+		objf->real_vertices[i].y = actual->y;
+		objf->real_vertices[i].z = actual->z;
 		actual = actual->next;
 		i++;
 	}
+	objf->nb_vertices = parse_dot_struct->nb_vertices;
 }
 
 
@@ -88,4 +100,5 @@ static void	fill_faces(
 		actual = actual->next;
 		i++;
 	}
+	objf->nb_triangles = parse_dot_struct->nb_faces;
 }
