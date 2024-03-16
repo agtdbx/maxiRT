@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 18:27:04 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 11:06:19 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,34 @@ typedef struct s_triangle
 void			triangle_compute_constants(
 					t_triangle *triangle);
 
+//---- OBJECT FILE------------------------------------------------------------//
+
+typedef struct s_obj_tri
+{
+	t_vec3	point1;
+	t_vec3	point2;
+	t_vec3	point3;
+
+	t_vec3	normal;
+	t_vec3	v1; // point1 to point2
+	t_vec3	v2; // point1 to point3
+}	t_obj_tri;
+
+typedef struct s_object_file
+{
+	t_vec3		pos;
+	t_vec3		x_axis;
+	t_vec3		y_axis;
+	t_vec3		*points;
+	t_obj_tri	*triangles;
+
+	t_vec3		z_axis;
+	t_cube		bounding_box;
+}	t_object_file;
+
+void			object_file_compute_constants(
+					t_object_file *objf);
+
 //---- COLOR INTERFACE -------------------------------------------------------//
 
 typedef enum e_color_t
@@ -151,16 +179,18 @@ typedef enum e_object_t
 	OBJ_CONE,
 	OBJ_CUBE,
 	OBJ_TRIANGLE,
+	OBJ_OBJECT_FILE,
 }	t_object_t;
 
 typedef union u_object_v
 {
-	t_sphere	as_sphere;
-	t_plane		as_plane;
-	t_cylinder	as_cylinder;
-	t_cone		as_cone;
-	t_cube		as_cube;
-	t_triangle	as_triangle;
+	t_sphere		as_sphere;
+	t_plane			as_plane;
+	t_cylinder		as_cylinder;
+	t_cone			as_cone;
+	t_cube			as_cube;
+	t_triangle		as_triangle;
+	t_object_file	as_object_file;
 }	t_object_v;
 
 typedef struct s_object

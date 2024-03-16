@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:42:54 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/08 14:47:43 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 11:25:54 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ static const float		g_cube_default_density = 1.0f;
 static const float		g_triangle_default_reflection = 0.0f;
 static const float		g_triangle_default_opacity = 1.0f;
 static const float		g_triangle_default_density = 1.0f;
+
+// object_file
+static const float		g_object_file_default_reflection = 0.0f;
+static const float		g_object_file_default_opacity = 1.0f;
+static const float		g_object_file_default_density = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 

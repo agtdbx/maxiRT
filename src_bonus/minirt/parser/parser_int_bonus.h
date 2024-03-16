@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:54:46 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 17:32:18 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 11:03:09 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,10 @@ t_error	parse_png(
 			t_parser_state *state,
 			void *data);
 
+t_error	parse_dot_obj_file(
+			t_parser_state *state,
+			void *data);
+
 //**** PARSER DIRECTIVES *****************************************************//
 
 typedef t_error				(*t_directive_cb)(t_parser_state *state);
@@ -174,6 +178,9 @@ t_error	parse_triangle_checkerboard(
 t_error	parse_triangle_texture(
 			t_parser_state *state);
 t_error	parse_triangle_texture_and_normal(
+			t_parser_state *state);
+
+t_error	parse_object_file(
 			t_parser_state *state);
 
 t_error	parse_comment(

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 15:55:31 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 11:05:44 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ static void	_compute_constants(
 			cube_compute_constants(&object_iterator->value.as_cube);
 		else if (object_iterator->type == OBJ_TRIANGLE)
 			triangle_compute_constants(&object_iterator->value.as_triangle);
+		else if (object_iterator->type == OBJ_OBJECT_FILE)
+			object_file_compute_constants(&object_iterator->value.as_object_file);
 		object_iterator = object_iterator->next;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas);
