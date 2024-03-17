@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:39:11 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/11 17:56:51 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 00:09:07 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,5 @@ void	compute_normal_ray_on_triangle(
 
 	normal->pos = ray->pos;
 	vec3_linear_transform(&normal->pos, intersect_info->distance, &ray->vec);
-	if (intersect_info->sub_part_id == 0)
-		normal->vec = geometry->normal;
-	else
-		normal->vec = geometry->rev_normal;
+	normal->vec = geometry->normal;
 }

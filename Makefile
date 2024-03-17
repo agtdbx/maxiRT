@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/16 20:29:35 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/16 21:33:37 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -388,7 +388,7 @@ INCLUDES	:=	$(SRC) lib/libft/include lib/mlx42/include
 
 CC			:=	clang									\
 
-CFLAGS		:=	-std=c99 -Wall -Wextra -Werror	-gdwarf-4		\
+CFLAGS		:=	-std=c99 -Wall -Wextra -Werror			\
 				-Wunreachable-code -Ofast				\
 
 CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES))	\
@@ -398,7 +398,7 @@ LDFLAGS		:=	-Llib/libft -lft						\
 				-ldl -lglfw -pthread -lm				\
 
 ifdef DEBUG
-CFLAGS		+=	-ggdb3 -Wno-unused-function
+CFLAGS		+=	-gdwarf-4 -Wno-unused-function
 endif
 
 #==============================================================================#

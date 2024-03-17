@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:22:57 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/16 18:44:01 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 00:23:30 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	apply_parsing_to_object_file(
 		parse_dot_struct_free(parse_dot_struct);
 		return (false);
 	}
-	objf->triangles = malloc(sizeof(t_objf_triangle) * parse_dot_struct->nb_faces);
+	objf->triangles = malloc(sizeof(t_object_triangle) * parse_dot_struct->nb_faces);
 	if (objf->triangles == NULL)
 	{
 		free(objf->vertices);

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 18:05:43 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/16 21:27:13 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_error	parse_object_file(
 		|| parse_field(state, &g_direction, &objf->x_axis) == FAILURE
 		|| parse_field(state, &g_direction, &objf->y_axis) == FAILURE
 		|| parse_field(state, &g_diameter, &objf->size) == FAILURE
-		|| parse_field(state, &g_color, &obj.color) == FAILURE
-		|| parse_field(state, &g_objf, objf) == FAILURE)
+		|| parse_field(state, &g_objf, objf) == FAILURE
+		|| parse_field(state, &g_color, &obj.color) == FAILURE)
 		return (FAILURE);
 	if (vec3_dot(&objf->x_axis, &objf->y_axis) != 0.0f)
 	{

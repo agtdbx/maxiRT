@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:37 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 00:20:15 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@
 void	triangle_compute_constants(
 			t_triangle *triangle)
 {
-	vec3_substract_into(&triangle->v1, &triangle->point2, &triangle->point1);
-	vec3_substract_into(&triangle->v2, &triangle->point3, &triangle->point1);
-	triangle->normal.x = (triangle->v1.y * triangle->v2.z)
-						- (triangle->v1.z * triangle->v2.y);
-	triangle->normal.y = (triangle->v1.z * triangle->v2.x)
-						- (triangle->v1.x * triangle->v2.z);
-	triangle->normal.z = (triangle->v1.x * triangle->v2.y)
-						- (triangle->v1.y * triangle->v2.x);
+	vec3_substract_into(&triangle->edge1, &triangle->point2, &triangle->point1);
+	vec3_substract_into(&triangle->edge2, &triangle->point3, &triangle->point1);
+	triangle->normal.x = (triangle->edge1.y * triangle->edge2.z)
+						- (triangle->edge1.z * triangle->edge2.y);
+	triangle->normal.y = (triangle->edge1.z * triangle->edge2.x)
+						- (triangle->edge1.x * triangle->edge2.z);
+	triangle->normal.z = (triangle->edge1.x * triangle->edge2.y)
+						- (triangle->edge1.y * triangle->edge2.x);
 	vec3_normalize(&triangle->normal);
-	vec3_scale_into(&triangle->rev_normal, &triangle->normal, -1.0f);
 }

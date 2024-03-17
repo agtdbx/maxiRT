@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/16 20:34:42 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 00:20:10 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	compute_objf_bounding_box(
 				t_object_file *objf);
 
 
+#include <stdio.h>
 /**
  * Compute constants from cube properties to facilitate further calculations
  * @param[out] cube
@@ -32,6 +33,9 @@ static void	compute_objf_bounding_box(
 void	object_file_compute_constants(
 			t_object_file *objf)
 {
+	printf("OBJ{vertices : %i, triangles : %i}\n",
+			objf->nb_vertices, objf->nb_triangles);
+
 	vec3_cross(&objf->x_axis, &objf->y_axis, &objf->z_axis);
 	vec3_normalize(&objf->x_axis);
 	vec3_normalize(&objf->y_axis);
@@ -67,7 +71,6 @@ static void	compute_objf_vertices(
 	}
 }
 
-#include <stdio.h>
 static void	compute_objf_triangles(
 				t_object_file *objf)
 {
@@ -76,7 +79,7 @@ static void	compute_objf_triangles(
 	i = 0;
 	while (i < objf->nb_triangles)
 	{
-		t_objf_triangle *triangle = &objf->triangles[i];
+		t_object_triangle *triangle = &objf->triangles[i];
 
 		// Get points from real vertice
 		triangle->point1 = objf->real_vertices[triangle->vertice_1];
@@ -84,14 +87,14 @@ static void	compute_objf_triangles(
 		triangle->point3 = objf->real_vertices[triangle->vertice_3];
 
 		// Compute triangle constants
-		vec3_substract_into(&triangle->v1, &triangle->point2, &triangle->point1);
-		vec3_substract_into(&triangle->v2, &triangle->point3, &triangle->point1);
-		triangle->normal.x = (triangle->v1.y * triangle->v2.z)
-							- (triangle->v1.z * triangle->v2.y);
-		triangle->normal.y = (triangle->v1.z * triangle->v2.x)
-							- (triangle->v1.x * triangle->v2.z);
-		triangle->normal.z = (triangle->v1.x * triangle->v2.y)
-							- (triangle->v1.y * triangle->v2.x);
+		vec3_substract_into(&triangle->edge1, &triangle->point2, &triangle->point1);
+		vec3_substract_into(&triangle->edge2, &triangle->point3, &triangle->point1);
+		triangle->normal.x = (triangle->edge1.y * triangle->edge2.z)
+							- (triangle->edge1.z * triangle->edge2.y);
+		triangle->normal.y = (triangle->edge1.z * triangle->edge2.x)
+							- (triangle->edge1.x * triangle->edge2.z);
+		triangle->normal.z = (triangle->edge1.x * triangle->edge2.y)
+							- (triangle->edge1.y * triangle->edge2.x);
 		vec3_normalize(&triangle->normal);
 		i++;
 	}
@@ -122,14 +125,17 @@ static void	compute_objf_bounding_box(
 	while (i < objf->nb_vertices)
 	{
 		point = objf->vertices[i];
+		vec3_scale(&point, objf->size);
 		if (min_x > point.x)
 			min_x = point.x;
 		if (max_x < point.x)
 			max_x = point.x;
+
 		if (min_y > point.y)
 			min_y = point.y;
 		if (max_y < point.y)
 			max_y = point.y;
+
 		if (min_z > point.z)
 			min_z = point.z;
 		if (max_z < point.z)
@@ -144,9 +150,9 @@ static void	compute_objf_bounding_box(
 	cube->height = max_y - min_y;
 	cube->depth = max_z - min_z;
 
-	cube->pos.x = cube->witdh / 2.0f;
-	cube->pos.y = cube->height / 2.0f;
-	cube->pos.z = cube->depth / 2.0f;
+	cube->pos.x = (max_x + min_x) / 2.0f;
+	cube->pos.y = (max_y + min_y) / 2.0f;
+	cube->pos.z = (max_z + min_z) / 2.0f;
 	vec3_add(&cube->pos, &objf->pos);
 
 	cube->x_axis = objf->x_axis;

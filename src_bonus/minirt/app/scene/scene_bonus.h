@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 19:22:43 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 00:18:50 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,8 @@ typedef struct s_triangle
 	t_vec3	point3;
 
 	t_vec3	normal;
-	t_vec3	rev_normal;
-	t_vec3	v1; // point1 to point2
-	t_vec3	v2; // point1 to point3
+	t_vec3	edge1; // point2 - point1
+	t_vec3	edge2; // point3 - point1
 }	t_triangle;
 
 void			triangle_compute_constants(
@@ -134,7 +133,7 @@ void			triangle_compute_constants(
 
 //---- OBJECT FILE------------------------------------------------------------//
 
-typedef struct s_objf_triangle
+typedef struct s_object_triangle
 {
 	int		vertice_1;
 	int		vertice_2;
@@ -144,24 +143,24 @@ typedef struct s_objf_triangle
 	t_vec3	point2;
 	t_vec3	point3;
 	t_vec3	normal;
-	t_vec3	v1; // point1 to point2
-	t_vec3	v2; // point1 to point3
-}	t_objf_triangle;
+	t_vec3	edge1; // point1 to point2
+	t_vec3	edge2; // point1 to point3
+}	t_object_triangle;
 
 typedef struct s_object_file
 {
-	t_vec3			pos;
-	t_vec3			x_axis;
-	t_vec3			y_axis;
-	t_vec3			*vertices;
-	t_vec3			*real_vertices;
-	t_objf_triangle	*triangles;
-	int				nb_vertices;
-	int				nb_triangles;
+	t_vec3				pos;
+	t_vec3				x_axis;
+	t_vec3				y_axis;
+	t_vec3				*vertices;
+	t_vec3				*real_vertices;
+	t_object_triangle	*triangles;
+	int					nb_vertices;
+	int					nb_triangles;
 
-	float			size;
-	t_vec3			z_axis;
-	t_cube			bounding_box;
+	float				size;
+	t_vec3				z_axis;
+	t_cube				bounding_box;
 }	t_object_file;
 
 void			object_file_compute_constants(
