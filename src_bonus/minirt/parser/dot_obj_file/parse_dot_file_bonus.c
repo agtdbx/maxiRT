@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 11:47:03 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/17 19:36:06 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 22:53:29 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,14 +178,6 @@ static bool	parse_face(char **save_ptr, t_parse_dot_struct *parse_dot_struct)
 			parse_dot_struct, p1 - 1, p2 -1, p3 - 1, p4 - 1);
 	}
 	else
-	{
 		parse_dot_struct_add_face_triangle(parse_dot_struct, p1 - 1, p2 - 1, p3 - 1);
-		//p4 = -1;
-	}
-
-	//parse_dot_struct_add_face_triangle(parse_dot_struct, p1 - 1, p2 - 1, p3 - 1);
-	//if (p4 != -1)
-	//	parse_dot_struct_add_face_triangle(parse_dot_struct, p1 - 1, p3 - 1, p4 - 1);
-
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 19:42:12 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 23:22:51 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,10 @@ typedef struct s_object_rectangle
 	t_vec3	point3;
 	t_vec3	point4;
 	t_vec3	normal;
+	t_vec3	x_axis; // for pixel pos
+	t_vec3	y_axis; // for pixel pos
+	float	inv_width;
+	float	inv_height;
 }	t_object_rectangle;
 
 typedef union u_object_polygon_v

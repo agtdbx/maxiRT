@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 15:49:28 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 20:13:45 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 21:46:56 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@
 
 static t_vec2	get_object_file_triangle_pixel_pos(
 					t_object_triangle const *triangle,
-					t_ray const *normal,
-					t_intersect_info const *intersect_info);
+					t_ray const *vec3_normalize_into);
 static t_vec2	get_object_file_rectangle_pixel_pos(
 					t_object_rectangle const *rectangle,
-					t_ray const *normal,
-					t_intersect_info const *intersect_info);
+					t_ray const *normal);
 
 t_vec2	get_object_file_pixel_pos(
 					t_object_file const *objf,
@@ -35,16 +33,16 @@ t_vec2	get_object_file_pixel_pos(
 
 	if (polygon->type == OBJF_TRIANGLE)
 		return (get_object_file_triangle_pixel_pos(
-					&polygon->value.as_objf_triangle, normal, intersect_info));
+					&polygon->value.as_objf_triangle, normal));
 	if (polygon->type == OBJF_RECTANGLE)
 		return (get_object_file_rectangle_pixel_pos(
-					&polygon->value.as_objf_rectangle, normal, intersect_info));
+					&polygon->value.as_objf_rectangle, normal));
+	return ((t_vec2){0});
 }
 
 static t_vec2	get_object_file_triangle_pixel_pos(
 					t_object_triangle const *triangle,
-					t_ray const *normal,
-					t_intersect_info const *intersect_info)
+					t_ray const *normal)
 {
 	t_vec2						pixel;
 	float						PCx;
@@ -79,12 +77,22 @@ static t_vec2	get_object_file_triangle_pixel_pos(
 
 static t_vec2	get_object_file_rectangle_pixel_pos(
 					t_object_rectangle const *rectangle,
-					t_ray const *normal,
-					t_intersect_info const *intersect_info)
+					t_ray const *normal)
 {
 	t_vec2	pixel;
+	t_vec3	p;
 
-	pixel.x = 0.0f;
-	pixel.y = 0.0f;
+	p = normal->pos;
+	vec3_substract(&p, &rectangle->point1);
+	if (rectangle->inv_width != 0.0f)
+		pixel.x = -vec3_dot(&rectangle->x_axis, &p) * rectangle->inv_width;
+	else
+		pixel.x = 0.0f;
+
+	if (rectangle->inv_height != 0.0f)
+		pixel.y = -vec3_dot(&rectangle->y_axis, &p) * rectangle->inv_height;
+	else
+		pixel.y = 0.0f;
+
 	return (pixel);
 }

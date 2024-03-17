@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 20:04:29 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 21:19:48 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,14 @@
 
 
 static bool	test_intersection_with_object_triangle(
-			t_ray const *ray,
-			t_object_triangle const *triangle,
-			t_intersect_info *intersect_info);
+				t_ray const *ray,
+				t_object_triangle const *triangle,
+				t_intersect_info *intersect_info);
+static bool	test_intersection_with_object_rectangle(
+				t_ray const *ray,
+				t_object_rectangle const *rectangle,
+				t_intersect_info *intersect_info);
+static bool	is_same_sign(float a, float b);
 
 /**
  * Test ray-object_file intersection.
@@ -61,18 +66,18 @@ bool	test_intersection_with_object_file(
 					intersect_test.sub_part_id = i;
 				}
 			}
-			//else if (objf->polygons[i].type == OBJF_RECTANGLE &&
-			//	test_intersection_with_object_rectangle(
-			//		ray, &objf->polygons[i].value.as_objf_rectangle,
-			//		&local_polygon_test))
-			//{
-			//	if (intersect_test.distance > local_polygon_test.distance
-			//		|| intersect_test.distance == -1.0f )
-			//	{
-			//		intersect_test.distance = local_polygon_test.distance;
-			//		intersect_test.sub_part_id = i;
-			//	}
-			//}
+			else if (objf->polygons[i].type == OBJF_RECTANGLE &&
+				test_intersection_with_object_rectangle(
+					ray, &objf->polygons[i].value.as_objf_rectangle,
+					&local_polygon_test))
+			{
+				if (intersect_test.distance > local_polygon_test.distance
+					|| intersect_test.distance == -1.0f )
+				{
+					intersect_test.distance = local_polygon_test.distance;
+					intersect_test.sub_part_id = i;
+				}
+			}
 			i++;
 		}
 		if (intersect_test.distance != -1.0f)
@@ -129,4 +134,79 @@ static bool	test_intersection_with_object_triangle(
 
 	intersect_info->sub_part_id = 0;
 	return (true);
+}
+
+
+static bool	test_intersection_with_object_rectangle(
+			t_ray const *ray,
+			t_object_rectangle const *rectangle,
+			t_intersect_info *intersect_info)
+{
+	t_vec3	vec;
+	float	denom;
+	t_vec3	q; // Intersect point with plan
+	t_vec3	p1_q;
+	t_vec3	p2_q;
+	t_vec3	p3_q;
+	t_vec3	p4_q;
+	t_vec3	p1_q_x_p2_q;
+	t_vec3	p2_q_x_p3_q;
+	t_vec3	p3_q_x_p4_q;
+	t_vec3	p4_q_x_p1_q;
+	float	o1;
+	float	o2;
+	float	o3;
+	float	o4;
+
+	denom = vec3_dot(&ray->vec, &rectangle->normal);
+	if (denom < 0.000001f)
+	{
+		vec3_substract_into(&vec, &rectangle->point1, &ray->pos);
+		intersect_info->sub_part_id = 0;
+		intersect_info->distance = vec3_dot(&vec, &rectangle->normal) / denom;
+		if (intersect_info->distance < 0.0f)
+			return (false);
+		// You touch the plan of the rectangle
+		// Get intersection point
+		q = ray->pos;
+		vec3_linear_transform(&q, intersect_info->distance, &ray->vec);
+
+		// Check q is in rectangle
+		vec3_substract_into(&p1_q, &rectangle->point1, &q);
+		vec3_substract_into(&p2_q, &rectangle->point2, &q);
+		vec3_cross(&p1_q, &p2_q, &p1_q_x_p2_q);
+		o1 = vec3_dot(&p1_q_x_p2_q, &rectangle->normal);
+		if (o1 == 0.0f)
+			return (false);
+
+		vec3_substract_into(&p3_q, &rectangle->point3, &q);
+		vec3_cross(&p2_q, &p3_q, &p2_q_x_p3_q);
+		o2 = vec3_dot(&p2_q_x_p3_q, &rectangle->normal);
+		if (o2 == 0.0f || !is_same_sign(o1, o2))
+			return (false);
+
+		vec3_substract_into(&p4_q, &rectangle->point4, &q);
+		vec3_cross(&p3_q, &p4_q, &p3_q_x_p4_q);
+		o3 = vec3_dot(&p3_q_x_p4_q, &rectangle->normal);
+		if (o3 == 0.0f || !is_same_sign(o2, o3))
+			return (false);
+
+		vec3_cross(&p4_q, &p1_q, &p4_q_x_p1_q);
+		o4 = vec3_dot(&p4_q_x_p1_q, &rectangle->normal);
+		if (o4 == 0.0f || !is_same_sign(o3, o4))
+			return (false);
+
+		return (true);
+	}
+	return (false);
+}
+
+
+static bool	is_same_sign(float a, float b)
+{
+	if (a < 0.0f && b < 0.0f)
+		return (true);
+	if (a > 0.0f && b > 0.0f)
+		return (true);
+	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:35:34 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 12:30:23 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 21:58:57 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static void	compute_normal_base(
 	else if (intersected_object->type == OBJ_TRIANGLE)
 		compute_normal_base_triangle(normal_base);
 	else if (intersected_object->type == OBJ_OBJECT_FILE)
-		compute_normal_base_object_file(normal_base);
+		compute_normal_base_object_file(normal_base,
+			&intersected_object->value.as_object_file, intersect_info);
 	else
 	{
 		normal_base[0] = (t_vec3){1.0f, 0.0f, 0.0f};

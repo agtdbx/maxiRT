@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 20:08:42 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 23:23:03 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ static void	compute_objf_triangle(
 				t_object_file *objf,
 				t_object_triangle *triangle)
 {
+	t_vec3	p2_p1;
+	t_vec3	p3_p1;
 
 	// Get points from real vertice
 	triangle->point1 = objf->real_vertices[triangle->vertice_1];
@@ -137,12 +139,11 @@ static void	compute_objf_triangle(
 	// Compute triangle constants
 	vec3_substract_into(&triangle->edge1, &triangle->point2, &triangle->point1);
 	vec3_substract_into(&triangle->edge2, &triangle->point3, &triangle->point1);
-	triangle->normal.x = (triangle->edge1.y * triangle->edge2.z)
-						- (triangle->edge1.z * triangle->edge2.y);
-	triangle->normal.y = (triangle->edge1.z * triangle->edge2.x)
-						- (triangle->edge1.x * triangle->edge2.z);
-	triangle->normal.z = (triangle->edge1.x * triangle->edge2.y)
-						- (triangle->edge1.y * triangle->edge2.x);
+
+	vec3_substract_into(&p2_p1, &triangle->point2, &triangle->point1);
+	vec3_substract_into(&p3_p1, &triangle->point3, &triangle->point1);
+	vec3_cross(&p2_p1, &p3_p1, &triangle->normal);
+
 	vec3_normalize(&triangle->normal);
 
 	// Compute pixel pos constants
@@ -181,6 +182,7 @@ static void	compute_objf_rectangle(
 {
 	t_vec3	p2_p1;
 	t_vec3	p3_p1;
+	t_vec3	p4_p1;
 
 	// Get points from real vertice
 	rectangle->point1 = objf->real_vertices[rectangle->vertice_1];
@@ -192,6 +194,24 @@ static void	compute_objf_rectangle(
 	vec3_substract_into(&p2_p1, &rectangle->point2, &rectangle->point1);
 	vec3_substract_into(&p3_p1, &rectangle->point3, &rectangle->point1);
 	vec3_cross(&p2_p1, &p3_p1, &rectangle->normal);
+	vec3_normalize(&rectangle->normal);
+
+	// Compute bases
+	vec3_substract_into(&p4_p1, &rectangle->point4, &rectangle->point1);
+	vec3_scale_into(&rectangle->x_axis, &p4_p1, -1.0f);
+	vec3_scale_into(&rectangle->y_axis, &p2_p1, -1.0f);
+	rectangle->inv_width = vec3_norm(&rectangle->x_axis);
+	if (rectangle->inv_width != 0.0f)
+	{
+		rectangle->inv_width = 1.0f / rectangle->inv_width;
+		vec3_scale(&rectangle->x_axis, rectangle->inv_width);
+	}
+	rectangle->inv_height = vec3_norm(&rectangle->y_axis);
+	if (rectangle->inv_height != 0.0f)
+	{
+		rectangle->inv_height = 1.0f / rectangle->inv_height;
+		vec3_scale(&rectangle->y_axis, rectangle->inv_height);
+	}
 }
 
 
