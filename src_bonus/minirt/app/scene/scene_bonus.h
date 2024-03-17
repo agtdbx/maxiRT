@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 12:15:32 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 13:30:00 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ typedef struct s_object_triangle
 	float	CAy; // point3.y - point1.y;
 	float	ACx; // point1.x - point3.x;
 	float	div_part; // div part for pixel pos
+	int		pixel_pos_base;
 }	t_object_triangle;
 
 typedef struct s_object_file

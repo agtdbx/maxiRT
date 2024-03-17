@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 21:29:10 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 13:02:49 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,24 @@ static const t_directive	g_directives[] = {
 	.usage = "ob <position> <orientation x vector> <orientation y vector> "
 	"<size> <obj file path> <color>",
 	.callback = parse_object_file,
+},
+{
+	.identifier = "ob-ck",
+	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path>",
+	.callback = parse_object_file_checkerboard,
+},
+{
+	.identifier = "ob-t",
+	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path> <texture path>",
+	.callback = parse_object_file_texture,
+},
+{
+	.identifier = "ob-tn",
+	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path> <texture path> <normal map path>",
+	.callback = parse_object_file_texture_and_normal,
 },
 {
 	.identifier = "#",

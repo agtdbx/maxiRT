@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 12:16:31 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 13:38:51 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,46 @@ static void	compute_objf_triangles(
 		triangle->div_part = (triangle->BCy *triangle-> ACx)
 							+ (triangle->CBx * ACy);
 		if (triangle->div_part != 0.0f)
+		{
+			triangle->pixel_pos_base = 0;
 			triangle->div_part = 1.0f / triangle->div_part;
+		}
+		else
+		{
+			triangle->BCy = triangle->point2.z - triangle->point3.z;
+			triangle->CBx = triangle->point3.x - triangle->point2.x;
+			ACy = triangle->point1.z - triangle->point3.z;
+			triangle->CAy = triangle->point3.z - triangle->point1.z;
+			triangle->ACx = triangle->point1.x - triangle->point3.x;
+
+			triangle->div_part = (triangle->BCy *triangle-> ACx)
+								+ (triangle->CBx * ACy);
+			if (triangle->div_part != 0.0f)
+			{
+				triangle->pixel_pos_base = 1;
+				triangle->div_part = 1.0f / triangle->div_part;
+			}
+			else
+			{
+				triangle->BCy = triangle->point2.y - triangle->point3.y;
+				triangle->CBx = triangle->point3.z - triangle->point2.z;
+				ACy = triangle->point1.y - triangle->point3.y;
+				triangle->CAy = triangle->point3.y - triangle->point1.y;
+				triangle->ACx = triangle->point1.z - triangle->point3.z;
+
+				triangle->div_part = (triangle->BCy *triangle-> ACx)
+									+ (triangle->CBx * ACy);
+				if (triangle->div_part != 0.0f)
+				{
+					triangle->pixel_pos_base = 2;
+					triangle->div_part = 1.0f / triangle->div_part;
+				}
+				else
+				{
+					triangle->pixel_pos_base = -1;
+				}
+			}
+		}
 		i++;
 	}
 }

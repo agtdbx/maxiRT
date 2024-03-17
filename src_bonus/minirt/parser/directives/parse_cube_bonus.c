@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_cube.c                                       :+:      :+:    :+:   */
+/*   parse_cube_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:09:16 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:00:19 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,12 @@ t_error	parse_cube_texture_and_normal(
 	if (parse_field(state, &g_png, &obj.normal_map) == FAILURE)
 	{
 		mlx_delete_texture(obj.texture);
+		return (FAILURE);
+	}
+	if (vec3_dot(&cube->x_axis, &cube->y_axis) != 0.0f)
+	{
+		mlx_delete_texture(obj.texture);
+		mlx_delete_texture(obj.normal_map);
 		return (FAILURE);
 	}
 	obj.type = OBJ_CUBE;
