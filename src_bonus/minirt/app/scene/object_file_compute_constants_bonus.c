@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 00:20:10 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 12:16:31 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static void	compute_objf_vertices(
 		// Scale points
 		vec3_scale(&objf->real_vertices[i], objf->size);
 		// Rotate points along objf axis
-		//TODO : rotate point along objf axis
+		objf->real_vertices[i] = mat_product(&objf->x_axis, &objf->y_axis,
+									&objf->z_axis, &objf->real_vertices[i]);
 		// Move points along objf position
 		vec3_add(&objf->real_vertices[i], &objf->pos);
 		i++;
@@ -75,6 +76,7 @@ static void	compute_objf_triangles(
 				t_object_file *objf)
 {
 	int	i;
+	float	ACy;
 
 	i = 0;
 	while (i < objf->nb_triangles)
@@ -96,6 +98,17 @@ static void	compute_objf_triangles(
 		triangle->normal.z = (triangle->edge1.x * triangle->edge2.y)
 							- (triangle->edge1.y * triangle->edge2.x);
 		vec3_normalize(&triangle->normal);
+
+		triangle->BCy = triangle->point2.y - triangle->point3.y;
+		triangle->CBx = triangle->point3.x - triangle->point2.x;
+		ACy = triangle->point1.y - triangle->point3.y;
+		triangle->CAy = triangle->point3.y - triangle->point1.y;
+		triangle->ACx = triangle->point1.x - triangle->point3.x;
+
+		triangle->div_part = (triangle->BCy *triangle-> ACx)
+							+ (triangle->CBx * ACy);
+		if (triangle->div_part != 0.0f)
+			triangle->div_part = 1.0f / triangle->div_part;
 		i++;
 	}
 }
@@ -124,8 +137,8 @@ static void	compute_objf_bounding_box(
 	max_z = 0;
 	while (i < objf->nb_vertices)
 	{
-		point = objf->vertices[i];
-		vec3_scale(&point, objf->size);
+		point = objf->real_vertices[i];
+		vec3_substract(&point, &objf->pos);
 		if (min_x > point.x)
 			min_x = point.x;
 		if (max_x < point.x)
@@ -155,7 +168,7 @@ static void	compute_objf_bounding_box(
 	cube->pos.z = (max_z + min_z) / 2.0f;
 	vec3_add(&cube->pos, &objf->pos);
 
-	cube->x_axis = objf->x_axis;
-	cube->y_axis = objf->y_axis;
+	cube->x_axis = (t_vec3){1.0f, 0.0f, 0.0f};
+	cube->y_axis = (t_vec3){0.0f, 1.0f, 0.0f};
 	cube_compute_constants(cube);
 }

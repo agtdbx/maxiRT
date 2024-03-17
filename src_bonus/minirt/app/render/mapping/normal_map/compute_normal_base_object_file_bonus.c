@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   compute_normal_ray_on_object_file_bonus.c          :+:      :+:    :+:   */
+/*   compute_normal_base_object_file_bonus.c            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/05 20:39:11 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 12:26:05 by auguste          ###   ########.fr       */
+/*   Created: 2023/07/06 16:44:47 by aderouba          #+#    #+#             */
+/*   Updated: 2024/03/17 12:27:32 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app_bonus.h"
 
-#include "minirt/app/scene/scene_bonus.h"
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 
-void	compute_normal_ray_on_object_file(
-				t_object const *object_file,
-				t_ray const *ray,
-				t_intersect_info const *intersect_info,
-				t_ray *normal)
+void	compute_normal_base_object_file(
+				t_vec3 normal_base[3])
 {
-	t_object_file const *const	geometry = &object_file->value.as_object_file;
-
-	normal->pos = ray->pos;
-	vec3_linear_transform(&normal->pos, intersect_info->distance, &ray->vec);
-	normal->vec = geometry->triangles[intersect_info->sub_part_id].normal;
+	if (normal_base[2].x != 0.0f || normal_base[2].y != 0.0f)
+		normal_base[1] = (t_vec3){normal_base[2].y, -normal_base[2].x, 0.0f};
+	else
+		normal_base[1] = (t_vec3){0.0f, -1.0f, 0.0f};
+	vec3_cross(&normal_base[2], &normal_base[1], &normal_base[0]);
+	vec3_normalize(&normal_base[0]);
+	vec3_normalize(&normal_base[1]);
 }

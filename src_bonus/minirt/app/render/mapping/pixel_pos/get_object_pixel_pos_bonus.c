@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:58:24 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/11 16:02:07 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 12:22:46 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,8 @@ t_vec2	get_object_pixel_pos(
 	else if (object->type == OBJ_TRIANGLE)
 		return (get_triangle_pixel_pos(
 				&object->value.as_triangle, normal));
+	else if (object->type == OBJ_OBJECT_FILE)
+		return (get_object_file_pixel_pos(
+				&object->value.as_object_file, normal, intersect_info));
 	return ((t_vec2){0});
 }

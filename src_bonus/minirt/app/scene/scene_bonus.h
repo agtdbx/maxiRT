@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 00:18:50 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 12:15:32 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,11 @@ typedef struct s_triangle
 	t_vec3	normal;
 	t_vec3	edge1; // point2 - point1
 	t_vec3	edge2; // point3 - point1
+	float	BCy; // point2.y - point3.y;
+	float	CBx; // point3.x - point2.x;
+	float	CAy; // point3.y - point1.y;
+	float	ACx; // point1.x - point3.x;
+	float	div_part; // div part for pixel pos
 }	t_triangle;
 
 void			triangle_compute_constants(
@@ -145,6 +150,11 @@ typedef struct s_object_triangle
 	t_vec3	normal;
 	t_vec3	edge1; // point1 to point2
 	t_vec3	edge2; // point1 to point3
+	float	BCy; // point2.y - point3.y;
+	float	CBx; // point3.x - point2.x;
+	float	CAy; // point3.y - point1.y;
+	float	ACx; // point1.x - point3.x;
+	float	div_part; // div part for pixel pos
 }	t_object_triangle;
 
 typedef struct s_object_file

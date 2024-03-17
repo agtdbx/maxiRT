@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 00:38:49 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 12:35:06 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ static bool	test_intersection_with_object_triangle(
 	float	inv_det;
 	float	u;
 	float	v;
+
+	if (vec3_dot(&ray->vec, &triangle->normal) > 0.0f)
+		return (false);
 
 	vec3_cross(&ray->vec, &triangle->edge2, &ray_cross_e2);
 	det = vec3_dot(&triangle->edge1, &ray_cross_e2);

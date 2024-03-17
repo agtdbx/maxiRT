@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 20:07:43 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 12:27:37 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,6 +347,10 @@ t_vec2			get_cube_pixel_pos(
 t_vec2			get_triangle_pixel_pos(
 					t_triangle const *triangle,
 					t_ray const *normal);
+t_vec2			get_object_file_pixel_pos(
+					t_object_file const *objf,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info);
 
 t_color			get_base_color_object(
 					t_object const *intersected_object,
@@ -378,6 +382,8 @@ void			compute_normal_base_cube(
 					t_cube const *cube,
 					t_intersect_info const *intersect_info);
 void			compute_normal_base_triangle(
+					t_vec3 normal_base[3]);
+void			compute_normal_base_object_file(
 					t_vec3 normal_base[3]);
 void			apply_normal_map(
 					mlx_texture_t const *normal_map,

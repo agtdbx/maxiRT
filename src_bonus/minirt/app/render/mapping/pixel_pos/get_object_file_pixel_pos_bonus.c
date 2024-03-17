@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_triangle_pixel_pos_bonus.c                     :+:      :+:    :+:   */
+/*   get_object_file_pixel_pos_bonus.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/06 15:48:59 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 12:17:24 by auguste          ###   ########.fr       */
+/*   Created: 2023/07/06 15:49:28 by aderouba          #+#    #+#             */
+/*   Updated: 2024/03/17 12:19:51 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 
-t_vec2	get_triangle_pixel_pos(
-					t_triangle const *triangle,
-					t_ray const *normal)
+t_vec2	get_object_file_pixel_pos(
+					t_object_file const *objf,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info)
 {
-	t_vec2		pixel;
-	float const	PCx = normal->pos.x - triangle->point3.x;
-	float const	PCy = normal->pos.y - triangle->point3.y;
+	t_vec2						pixel;
+	t_object_triangle	*const	triangle =
+							&objf->triangles[intersect_info->sub_part_id];
+	float const					PCx = normal->pos.x - triangle->point3.x;
+	float const					PCy = normal->pos.y - triangle->point3.y;
 
 	if (triangle->div_part == 0.0f)
 	{
