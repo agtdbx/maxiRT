@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:53:38 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 19:36:31 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 14:58:43 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ bool	object_panel_draw(
 		should_redraw |= cylinder_panel_draw(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_TRIANGLE)
 		should_redraw |= triangle_panel_draw(mlx, menu);
+	if (menu->object_panel.object_type == OBJ_OBJECT_FILE)
+		should_redraw |= object_file_panel_draw(mlx, menu);
 	return (should_redraw);
 }
 #include <stdio.h>

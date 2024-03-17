@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:49:54 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 18:56:41 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 14:59:45 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void	object_panel_hide(
 	sphere_panel_hide(menu);
 	cylinder_panel_hide(menu);
 	triangle_panel_hide(menu);
+	object_file_panel_hide(menu);
 }

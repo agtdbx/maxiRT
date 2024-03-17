@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 19:03:29 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:01:47 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	object_panel_init(
 	sphere_panel_init(mlx, menu);
 	cylinder_panel_init(mlx, menu);
 	triangle_panel_init(mlx, menu);
+	object_file_panel_init(mlx, menu);
 }
 
 static void	object_title_init(
@@ -70,4 +71,7 @@ static void	object_title_init(
 	panel->triangle_title = mlx_put_string(mlx, "-- Triangle --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->triangle_title->enabled = false;
+	panel->object_file_title = mlx_put_string(mlx, "-- Object file --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->object_file_title->enabled = false;
 }

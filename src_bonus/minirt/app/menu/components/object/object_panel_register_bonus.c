@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:51 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 19:16:25 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:00:56 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,10 @@ static void	_register_object(
 	{
 		triangle_panel_register(menu, &object->value.as_triangle);
 		triangle_panel_show(menu);
+	}
+	else if (object->type == OBJ_OBJECT_FILE)
+	{
+		object_file_panel_register(menu, &object->value.as_object_file);
+		object_file_panel_show(menu);
 	}
 }

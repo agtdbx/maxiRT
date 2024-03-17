@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:54:11 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 19:10:09 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:01:24 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,6 @@ void	object_panel_show(
 		cylinder_panel_show(menu);
 	if (menu->object_panel.object_type == OBJ_TRIANGLE)
 		triangle_panel_show(menu);
+	if (menu->object_panel.object_type == OBJ_OBJECT_FILE)
+		object_file_panel_show(menu);
 }

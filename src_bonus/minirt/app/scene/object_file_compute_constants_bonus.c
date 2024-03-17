@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 14:38:55 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:13:27 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 
+static void	axis_checker(
+				t_object_file *objf);
 static void	compute_objf_vertices(
 				t_object_file *objf);
 static void	compute_objf_triangles(
@@ -49,6 +51,8 @@ void	object_file_compute_constants(
 	printf("OBJ{vertices : %i, triangles : %i}\n",
 			objf->nb_vertices, objf->nb_triangles);
 
+	axis_checker(objf);
+
 	vec3_cross(&objf->x_axis, &objf->y_axis, &objf->z_axis);
 	vec3_normalize(&objf->x_axis);
 	vec3_normalize(&objf->y_axis);
@@ -62,6 +66,19 @@ void	object_file_compute_constants(
 
 	// Compute bounding box
 	compute_objf_bounding_box(objf);
+}
+
+
+static void	axis_checker(
+				t_object_file *objf)
+{
+	if (vec3_dot(&objf->x_axis, &objf->y_axis) != 0.0f)
+	{
+		if (vec3_dot(&objf->x_axis, &objf->z_axis) != 0.0f)
+			vec3_cross(&objf->y_axis, &objf->z_axis, &objf->x_axis);
+		else
+			vec3_cross(&objf->x_axis, &objf->z_axis, &objf->y_axis);
+	}
 }
 
 

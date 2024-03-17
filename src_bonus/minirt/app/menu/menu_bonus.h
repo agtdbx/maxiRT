@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:55:17 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 19:40:43 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:01:53 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,28 @@ typedef struct s_triangle_panel
 
 }	t_triangle_panel;
 
+typedef struct s_object_file_panel
+{
+	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
+
+	t_vec3_label	x_axis_label;
+	t_button		x_axis_label_button_x;
+	t_button		x_axis_label_button_y;
+	t_button		x_axis_label_button_z;
+
+	t_vec3_label	y_axis_label;
+	t_button		y_axis_label_button_x;
+	t_button		y_axis_label_button_y;
+	t_button		y_axis_label_button_z;
+
+	t_float_label	size_label;
+	t_button		size_label_button;
+
+}	t_object_file_panel;
+
 typedef struct s_object_panel
 {
 	bool				is_enabled;
@@ -195,6 +217,7 @@ typedef struct s_object_panel
 	mlx_image_t			*sphere_title;
 	mlx_image_t			*cylinder_title;
 	mlx_image_t			*triangle_title;
+	mlx_image_t			*object_file_title;
 
 	t_color_label		color_label;
 	t_button			color_label_button_r;
@@ -216,6 +239,7 @@ typedef struct s_object_panel
 	t_sphere_panel		sphere_label;
 	t_cylinder_panel	cylinder_panel;
 	t_triangle_panel	triangle_panel;
+	t_object_file_panel	object_file_panel;
 
 }	t_object_panel;
 
@@ -458,6 +482,22 @@ bool			triangle_panel_draw(
 void			triangle_panel_register(
 					t_menu *menu,
 					t_triangle *triangle);
+
+// object_file_panel
+
+void			object_file_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			object_file_panel_show(
+					t_menu *menu);
+void			object_file_panel_hide(
+					t_menu *menu);
+bool			object_file_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			object_file_panel_register(
+					t_menu *menu,
+					t_object_file *objf);
 
 //---- LIB --------------------------------------------------------------------#
 
