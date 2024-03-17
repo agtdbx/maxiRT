@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 13:38:51 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 14:38:55 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,22 @@ static void	compute_objf_vertices(
 				t_object_file *objf);
 static void	compute_objf_triangles(
 				t_object_file *objf);
+static void	compute_objf_triangle_pixel_pos_constants(
+				t_object_triangle *triangle,
+				float ax, float ay,
+				float bx, float by,
+				float cx, float cy,
+				int pixel_pos_base);
 static void	compute_objf_bounding_box(
 				t_object_file *objf);
-
+static void	calculate_bounding_box_bounds(
+				t_object_file *objf,
+				float	bounds_x[2],
+				float	bounds_y[2],
+				float	bounds_z[2]);
+static void	set_min_max(
+				float *nb,
+				float bounds[2]);
 
 #include <stdio.h>
 /**
@@ -76,7 +89,6 @@ static void	compute_objf_triangles(
 				t_object_file *objf)
 {
 	int	i;
-	float	ACy;
 
 	i = 0;
 	while (i < objf->nb_triangles)
@@ -99,53 +111,31 @@ static void	compute_objf_triangles(
 							- (triangle->edge1.y * triangle->edge2.x);
 		vec3_normalize(&triangle->normal);
 
-		triangle->BCy = triangle->point2.y - triangle->point3.y;
-		triangle->CBx = triangle->point3.x - triangle->point2.x;
-		ACy = triangle->point1.y - triangle->point3.y;
-		triangle->CAy = triangle->point3.y - triangle->point1.y;
-		triangle->ACx = triangle->point1.x - triangle->point3.x;
-
-		triangle->div_part = (triangle->BCy *triangle-> ACx)
-							+ (triangle->CBx * ACy);
-		if (triangle->div_part != 0.0f)
+		// Compute pixel pos constants
+		compute_objf_triangle_pixel_pos_constants(
+			triangle,
+			triangle->point1.x, triangle->point1.y,
+			triangle->point2.x, triangle->point2.y,
+			triangle->point3.x, triangle->point3.y,
+			0);
+		if (triangle->div_part == 0.0f)
 		{
-			triangle->pixel_pos_base = 0;
-			triangle->div_part = 1.0f / triangle->div_part;
-		}
-		else
-		{
-			triangle->BCy = triangle->point2.z - triangle->point3.z;
-			triangle->CBx = triangle->point3.x - triangle->point2.x;
-			ACy = triangle->point1.z - triangle->point3.z;
-			triangle->CAy = triangle->point3.z - triangle->point1.z;
-			triangle->ACx = triangle->point1.x - triangle->point3.x;
-
-			triangle->div_part = (triangle->BCy *triangle-> ACx)
-								+ (triangle->CBx * ACy);
-			if (triangle->div_part != 0.0f)
+			compute_objf_triangle_pixel_pos_constants(
+			triangle,
+			triangle->point1.x, triangle->point1.z,
+			triangle->point2.x, triangle->point2.z,
+			triangle->point3.x, triangle->point3.z,
+			1);
+			if (triangle->div_part == 0.0f)
 			{
-				triangle->pixel_pos_base = 1;
-				triangle->div_part = 1.0f / triangle->div_part;
-			}
-			else
-			{
-				triangle->BCy = triangle->point2.y - triangle->point3.y;
-				triangle->CBx = triangle->point3.z - triangle->point2.z;
-				ACy = triangle->point1.y - triangle->point3.y;
-				triangle->CAy = triangle->point3.y - triangle->point1.y;
-				triangle->ACx = triangle->point1.z - triangle->point3.z;
-
-				triangle->div_part = (triangle->BCy *triangle-> ACx)
-									+ (triangle->CBx * ACy);
-				if (triangle->div_part != 0.0f)
-				{
-					triangle->pixel_pos_base = 2;
-					triangle->div_part = 1.0f / triangle->div_part;
-				}
-				else
-				{
+				compute_objf_triangle_pixel_pos_constants(
+				triangle,
+				triangle->point1.z, triangle->point1.y,
+				triangle->point2.z, triangle->point2.y,
+				triangle->point3.z, triangle->point3.y,
+				2);
+				if (triangle->div_part == 0.0f)
 					triangle->pixel_pos_base = -1;
-				}
 			}
 		}
 		i++;
@@ -153,61 +143,92 @@ static void	compute_objf_triangles(
 }
 
 
+static void	compute_objf_triangle_pixel_pos_constants(
+				t_object_triangle *triangle,
+				float ax, float ay,
+				float bx, float by,
+				float cx, float cy,
+				int pixel_pos_base)
+{
+	float	ACy;
+
+	triangle->BCy = by - cy;
+	triangle->CBx = cx - bx;
+	ACy = ay - cy;
+	triangle->CAy = cy - ay;
+	triangle->ACx = ax - cx;
+
+	triangle->div_part = (triangle->BCy * triangle->ACx)
+						+ (triangle->CBx * ACy);
+	if (triangle->div_part != 0.0f)
+	{
+		triangle->pixel_pos_base = pixel_pos_base;
+		triangle->div_part = 1.0f / triangle->div_part;
+	}
+}
+
+
 static void	compute_objf_bounding_box(
 				t_object_file *objf)
 {
-	float	min_x;
-	float	min_y;
-	float	min_z;
-	float	max_x;
-	float	max_y;
-	float	max_z;
-	int		i;
-	t_vec3	point;
+	float	bounds_x[2];
+	float	bounds_y[2];
+	float	bounds_z[2];
 	t_cube	*cube;
 
 	// Get mins and max
-	i = 0;
-	min_x = 0;
-	max_y = 0;
-	min_z = 0;
-	max_x = 0;
-	min_y = 0;
-	max_z = 0;
-	while (i < objf->nb_vertices)
-	{
-		point = objf->real_vertices[i];
-		vec3_substract(&point, &objf->pos);
-		if (min_x > point.x)
-			min_x = point.x;
-		if (max_x < point.x)
-			max_x = point.x;
-
-		if (min_y > point.y)
-			min_y = point.y;
-		if (max_y < point.y)
-			max_y = point.y;
-
-		if (min_z > point.z)
-			min_z = point.z;
-		if (max_z < point.z)
-			max_z = point.z;
-		i++;
-	}
+	calculate_bounding_box_bounds(objf, bounds_x, bounds_y, bounds_z);
 
 	// Calculate cube info
 	cube = &objf->bounding_box;
 
-	cube->witdh = max_x - min_x;
-	cube->height = max_y - min_y;
-	cube->depth = max_z - min_z;
+	cube->witdh = bounds_x[1] - bounds_x[0];
+	cube->height = bounds_y[1] - bounds_y[0];
+	cube->depth = bounds_z[1] - bounds_z[0];
 
-	cube->pos.x = (max_x + min_x) / 2.0f;
-	cube->pos.y = (max_y + min_y) / 2.0f;
-	cube->pos.z = (max_z + min_z) / 2.0f;
+	cube->pos.x = (bounds_x[1] + bounds_x[0]) / 2.0f;
+	cube->pos.y = (bounds_y[1] + bounds_y[0]) / 2.0f;
+	cube->pos.z = (bounds_z[1] + bounds_z[0]) / 2.0f;
 	vec3_add(&cube->pos, &objf->pos);
 
 	cube->x_axis = (t_vec3){1.0f, 0.0f, 0.0f};
 	cube->y_axis = (t_vec3){0.0f, 1.0f, 0.0f};
 	cube_compute_constants(cube);
+}
+
+static void	calculate_bounding_box_bounds(
+				t_object_file *objf,
+				float	bounds_x[2],
+				float	bounds_y[2],
+				float	bounds_z[2])
+{
+	int		i;
+	t_vec3	point;
+
+	i = 0;
+	bounds_x[0] = 0;
+	bounds_y[0] = 0;
+	bounds_z[0] = 0;
+	bounds_x[1] = 0;
+	bounds_y[1] = 0;
+	bounds_z[1] = 0;
+	while (i < objf->nb_vertices)
+	{
+		point = objf->real_vertices[i];
+		vec3_substract(&point, &objf->pos);
+		set_min_max(&point.x, bounds_x);
+		set_min_max(&point.y, bounds_y);
+		set_min_max(&point.z, bounds_z);
+		i++;
+	}
+}
+
+static void	set_min_max(
+				float *nb,
+				float bounds[2])
+{
+	if (bounds[0] > *nb)
+		bounds[0] = *nb;
+	if (bounds[1] < *nb)
+		bounds[1] = *nb;
 }
