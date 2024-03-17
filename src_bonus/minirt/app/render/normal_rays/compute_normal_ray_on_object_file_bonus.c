@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 20:39:11 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 12:26:05 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 20:09:48 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,10 @@ void	compute_normal_ray_on_object_file(
 
 	normal->pos = ray->pos;
 	vec3_linear_transform(&normal->pos, intersect_info->distance, &ray->vec);
-	normal->vec = geometry->triangles[intersect_info->sub_part_id].normal;
+	if (geometry->polygons[intersect_info->sub_part_id].type == OBJF_TRIANGLE)
+		normal->vec = geometry->polygons[intersect_info->sub_part_id]
+						.value.as_objf_triangle.normal;
+	else if (geometry->polygons[intersect_info->sub_part_id].type == OBJF_RECTANGLE)
+		normal->vec = geometry->polygons[intersect_info->sub_part_id]
+						.value.as_objf_rectangle.normal;
 }

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:30:35 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 20:39:04 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:47:48 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static void	loc_del_objects(
 		(*objects)->value.as_object_file.vertices = NULL;
 		free((*objects)->value.as_object_file.real_vertices);
 		(*objects)->value.as_object_file.real_vertices = NULL;
-		free((*objects)->value.as_object_file.triangles);
-		(*objects)->value.as_object_file.triangles = NULL;
+		free((*objects)->value.as_object_file.polygons);
+		(*objects)->value.as_object_file.polygons = NULL;
 	}
 	ft_memdel(objects);
 }

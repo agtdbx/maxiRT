@@ -6,15 +6,13 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 11:47:03 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/17 18:24:05 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:36:06 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/parser/fast_get_next_line/fast_get_next_line_bonus.h"
 #include "minirt/parser/dot_obj_file/dot_obj_file_bonus.h"
 #include "libft/libft.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 static bool	parse_line(char *line, t_parse_dot_struct *parse_dot_struct);
 static bool	parse_vertice(char **save_ptr, t_parse_dot_struct *parse_dot_struct);
@@ -31,7 +29,7 @@ int	parse_dot_file(int fd, t_parse_dot_struct *parse_dot_struct)
 	char	*line;
 	int		line_number;
 
-	line = fast_get_next_line(fd);
+	line = ft_gnl(fd);
 	if (line == NULL)
 		return (0);
 	line_number = 1;
@@ -45,7 +43,7 @@ int	parse_dot_file(int fd, t_parse_dot_struct *parse_dot_struct)
 		}
 		free(line);
 		line_number++;
-		line = fast_get_next_line(fd);
+		line = ft_gnl(fd);
 	}
 	return (PARSE_DOT_FILE_SUCCESS);
 }
@@ -176,12 +174,18 @@ static bool	parse_face(char **save_ptr, t_parse_dot_struct *parse_dot_struct)
 		tok = ft_strtok_r(NULL, " \n\t\r", save_ptr);
 		if (tok != NULL)
 			return (false);
+		parse_dot_struct_add_face_rectangle(
+			parse_dot_struct, p1 - 1, p2 -1, p3 - 1, p4 - 1);
 	}
 	else
-		p4 = -1;
+	{
+		parse_dot_struct_add_face_triangle(parse_dot_struct, p1 - 1, p2 - 1, p3 - 1);
+		//p4 = -1;
+	}
 
-	parse_dot_struct_add_face(parse_dot_struct, p1 - 1, p2 - 1, p3 - 1);
-	if (p4 != -1)
-		parse_dot_struct_add_face(parse_dot_struct, p1 - 1, p3 - 1, p4 - 1);
+	//parse_dot_struct_add_face_triangle(parse_dot_struct, p1 - 1, p2 - 1, p3 - 1);
+	//if (p4 != -1)
+	//	parse_dot_struct_add_face_triangle(parse_dot_struct, p1 - 1, p3 - 1, p4 - 1);
+
 	return (true);
 }

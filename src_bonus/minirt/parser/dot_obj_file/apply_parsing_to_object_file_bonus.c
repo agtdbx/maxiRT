@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:22:57 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/17 00:23:30 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:47:18 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ bool	apply_parsing_to_object_file(
 		parse_dot_struct_free(parse_dot_struct);
 		return (false);
 	}
-	objf->triangles = malloc(sizeof(t_object_triangle) * parse_dot_struct->nb_faces);
-	if (objf->triangles == NULL)
+	objf->polygons = malloc(sizeof(t_object_polygon) * parse_dot_struct->nb_faces);
+	if (objf->polygons == NULL)
 	{
 		free(objf->vertices);
 		free(objf->real_vertices);
@@ -87,18 +87,34 @@ static void	fill_faces(
 			t_object_file *const objf,
 			t_parse_dot_struct *parse_dot_struct)
 {
-	t_face	*actual;
-	int			i;
+	t_object_triangle	*objf_triangle;
+	t_object_rectangle	*objf_rectangle;
+	t_face				*actual;
+	int					i;
 
 	i = 0;
 	actual = parse_dot_struct->faces;
 	while (actual != NULL)
 	{
-		objf->triangles[i].vertice_1 = actual->p1;
-		objf->triangles[i].vertice_2 = actual->p2;
-		objf->triangles[i].vertice_3 = actual->p3;
+		if (actual->type == FACE_TRIANGLE)
+		{
+			objf->polygons[i].type = OBJF_TRIANGLE;
+			objf_triangle = &objf->polygons[i].value.as_objf_triangle;
+			objf_triangle->vertice_1 = actual->p1;
+			objf_triangle->vertice_2 = actual->p2;
+			objf_triangle->vertice_3 = actual->p3;
+		}
+		else if (actual->type == FACE_RECTANGLE)
+		{
+			objf->polygons[i].type = OBJF_RECTANGLE;
+			objf_rectangle = &objf->polygons[i].value.as_objf_rectangle;
+			objf_rectangle->vertice_1 = actual->p1;
+			objf_rectangle->vertice_2 = actual->p2;
+			objf_rectangle->vertice_3 = actual->p3;
+			objf_rectangle->vertice_4 = actual->p4;
+		}
 		actual = actual->next;
 		i++;
 	}
-	objf->nb_triangles = parse_dot_struct->nb_faces;
+	objf->nb_polygons = parse_dot_struct->nb_faces;
 }

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 13:40:23 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:42:12 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,12 @@ void			triangle_compute_constants(
 
 //---- OBJECT FILE------------------------------------------------------------//
 
+typedef enum e_object_polygon_t
+{
+	OBJF_TRIANGLE,
+	OBJF_RECTANGLE
+}	t_object_polygon_t;
+
 typedef struct s_object_triangle
 {
 	int		vertice_1;
@@ -159,6 +165,33 @@ typedef struct s_object_triangle
 	int		pixel_pos_base;
 }	t_object_triangle;
 
+typedef struct s_object_rectangle
+{
+	int		vertice_1;
+	int		vertice_2;
+	int		vertice_3;
+	int		vertice_4;
+
+	t_vec3	point1;
+	t_vec3	point2;
+	t_vec3	point3;
+	t_vec3	point4;
+	t_vec3	normal;
+}	t_object_rectangle;
+
+typedef union u_object_polygon_v
+{
+	t_object_triangle		as_objf_triangle;
+	t_object_rectangle		as_objf_rectangle;
+}	t_object_polygon_v;
+
+
+typedef struct s_object_polygon
+{
+	t_object_polygon_t	type;
+	t_object_polygon_v	value;
+}	t_object_polygon;
+
 typedef struct s_object_file
 {
 	t_vec3				pos;
@@ -166,9 +199,9 @@ typedef struct s_object_file
 	t_vec3				y_axis;
 	t_vec3				*vertices;
 	t_vec3				*real_vertices;
-	t_object_triangle	*triangles;
+	t_object_polygon	*polygons;
 	int					nb_vertices;
-	int					nb_triangles;
+	int					nb_polygons;
 
 	float				size;
 	t_vec3				z_axis;

@@ -4,6 +4,12 @@
 # include "minirt/app/scene/scene_bonus.h"
 # define PARSE_DOT_FILE_SUCCESS -1
 
+typedef	enum e_face_t
+{
+	FACE_TRIANGLE,
+	FACE_RECTANGLE
+}	t_face_t;
+
 typedef	struct s_vertice
 {
 	float				x;
@@ -18,6 +24,8 @@ typedef	struct s_face
 	int				p1;
 	int				p2;
 	int				p3;
+	int				p4;
+	t_face_t		type;
 
 	struct s_face	*next;
 }	t_face;
@@ -36,9 +44,12 @@ void	parse_dot_struct_add_init(
 bool	parse_dot_struct_add_vertice(
 			t_parse_dot_struct *parse_dot_struct,
 			float x, float y, float z);
-bool	parse_dot_struct_add_face(
+bool	parse_dot_struct_add_face_triangle(
 			t_parse_dot_struct *parse_dot_struct,
 			int p1, int p2, int p3);
+bool	parse_dot_struct_add_face_rectangle(
+			t_parse_dot_struct *parse_dot_struct,
+			int p1, int p2, int p3, int p4);
 void	parse_dot_struct_free(
 			t_parse_dot_struct *parse_dot_struct);
 

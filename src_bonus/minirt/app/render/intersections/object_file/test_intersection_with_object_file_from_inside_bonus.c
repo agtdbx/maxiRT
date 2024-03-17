@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 15:22:57 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 20:06:30 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,38 @@ bool	test_intersection_with_object_file_from_inside(
 			t_intersect_info *intersect_info)
 {
 	t_intersect_info	intersect_test;
-	t_intersect_info	local_triangle_test;
+	t_intersect_info	local_polygon_test;
 	int	i;
 
 	i = 0;
 	intersect_test.distance = -1.0f;
 	intersect_test.sub_part_id = 0;
-	while (i < objf->nb_triangles)
+	while (i < objf->nb_polygons)
 	{
-		local_triangle_test.distance = -1.0f;
-		local_triangle_test.sub_part_id = 0;
-		if (test_intersection_with_object_triangle_reverse(
-				ray, &objf->triangles[i], &local_triangle_test))
+		local_polygon_test.distance = -1.0f;
+		local_polygon_test.sub_part_id = 0;
+		if (objf->polygons[i].type == OBJF_TRIANGLE &&
+			test_intersection_with_object_triangle_reverse(
+				ray, &objf->polygons[i].value.as_objf_triangle, &local_polygon_test))
 		{
-			if (intersect_test.distance > local_triangle_test.distance
+			if (intersect_test.distance > local_polygon_test.distance
 				|| intersect_test.distance == -1.0f )
 			{
-				intersect_test.distance = local_triangle_test.distance;
+				intersect_test.distance = local_polygon_test.distance;
 				intersect_test.sub_part_id = i;
 			}
 		}
+		//else if (objf->polygons[i].type == OBJF_RECTANGLE &&
+		//	test_intersection_with_object_rectangle_reverse(
+		//		ray, &objf->polygons[i].value.as_objf_rectangle, &local_polygon_test))
+		//{
+		//	if (intersect_test.distance > local_polygon_test.distance
+		//		|| intersect_test.distance == -1.0f )
+		//	{
+		//		intersect_test.distance = local_polygon_test.distance;
+		//		intersect_test.sub_part_id = i;
+		//	}
+		//}
 		i++;
 	}
 	if (intersect_test.distance != -1.0f)

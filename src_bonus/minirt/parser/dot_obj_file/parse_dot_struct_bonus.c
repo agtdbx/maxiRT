@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:34:56 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/16 16:57:37 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 19:32:43 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	parse_dot_struct_add_vertice(
 }
 
 
-bool	parse_dot_struct_add_face(
+bool	parse_dot_struct_add_face_triangle(
 			t_parse_dot_struct *parse_dot_struct,
 			int p1, int p2, int p3)
 {
@@ -82,6 +82,47 @@ bool	parse_dot_struct_add_face(
 	face->p1 = p1;
 	face->p2 = p2;
 	face->p3 = p3;
+	face->p4 = -1;
+	face->type = FACE_TRIANGLE;
+	face->next = NULL;
+
+	// Add the new face at the parse_dot_struct
+	parse_dot_struct->nb_faces++;
+	tmp = parse_dot_struct->faces;
+	if (tmp == NULL)
+	{
+		parse_dot_struct->faces = face;
+		return (true);
+	}
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = face;
+	return (true);
+}
+
+
+bool	parse_dot_struct_add_face_rectangle(
+			t_parse_dot_struct *parse_dot_struct,
+			int p1, int p2, int p3, int p4)
+{
+	t_face	*face;
+	t_face	*tmp;
+
+	if (parse_dot_struct == NULL)
+		return (false);
+
+	// Create the new face
+	face = malloc(sizeof(t_face));
+	if (face == NULL)
+	{
+		parse_dot_struct_free(parse_dot_struct);
+		return (false);
+	}
+	face->p1 = p1;
+	face->p2 = p2;
+	face->p3 = p3;
+	face->p4 = p4;
+	face->type = FACE_RECTANGLE;
 	face->next = NULL;
 
 	// Add the new face at the parse_dot_struct
