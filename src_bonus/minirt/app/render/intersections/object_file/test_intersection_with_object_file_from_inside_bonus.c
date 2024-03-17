@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_intersection_with_object_file_bonus.c         :+:      :+:    :+:   */
+/*   test_intersection_with_object_file_from_ins        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 15:21:34 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:22:57 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 
 
-static bool	test_intersection_with_object_triangle(
+static bool	test_intersection_with_object_triangle_reverse(
 			t_ray const *ray,
 			t_object_triangle const *triangle,
 			t_intersect_info *intersect_info);
@@ -29,9 +29,9 @@ static bool	test_intersection_with_object_triangle(
  * @param[in] ray Normalized ray
  * @param[in] objf The object_file to intersect
  * @param[out] distance From ray origin to intersection point
- * @returns Wether ray intersects with object_file
+ * @returns Wether ray intersects with object_file from inside
  */
-bool	test_intersection_with_object_file(
+bool	test_intersection_with_object_file_from_inside(
 			t_ray const *ray,
 			t_object_file const *objf,
 			t_intersect_info *intersect_info)
@@ -40,39 +40,36 @@ bool	test_intersection_with_object_file(
 	t_intersect_info	local_triangle_test;
 	int	i;
 
-	if (test_intersection_with_cube(ray, &objf->bounding_box, &intersect_test))
+	i = 0;
+	intersect_test.distance = -1.0f;
+	intersect_test.sub_part_id = 0;
+	while (i < objf->nb_triangles)
 	{
-		i = 0;
-		intersect_test.distance = -1.0f;
-		intersect_test.sub_part_id = 0;
-		while (i < objf->nb_triangles)
+		local_triangle_test.distance = -1.0f;
+		local_triangle_test.sub_part_id = 0;
+		if (test_intersection_with_object_triangle_reverse(
+				ray, &objf->triangles[i], &local_triangle_test))
 		{
-			local_triangle_test.distance = -1.0f;
-			local_triangle_test.sub_part_id = 0;
-			if (test_intersection_with_object_triangle(
-					ray, &objf->triangles[i], &local_triangle_test))
+			if (intersect_test.distance > local_triangle_test.distance
+				|| intersect_test.distance == -1.0f )
 			{
-				if (intersect_test.distance > local_triangle_test.distance
-					|| intersect_test.distance == -1.0f )
-				{
-					intersect_test.distance = local_triangle_test.distance;
-					intersect_test.sub_part_id = i;
-				}
+				intersect_test.distance = local_triangle_test.distance;
+				intersect_test.sub_part_id = i;
 			}
-			i++;
 		}
-		if (intersect_test.distance != -1.0f)
-		{
-			intersect_info->distance = intersect_test.distance;
-			intersect_info->sub_part_id = intersect_test.sub_part_id;
-			return (true);
-		}
+		i++;
+	}
+	if (intersect_test.distance != -1.0f)
+	{
+		intersect_info->distance = intersect_test.distance;
+		intersect_info->sub_part_id = intersect_test.sub_part_id;
+		return (true);
 	}
 	return (false);
 }
 
 
-static bool	test_intersection_with_object_triangle(
+static bool	test_intersection_with_object_triangle_reverse(
 			t_ray const *ray,
 			t_object_triangle const *triangle,
 			t_intersect_info *intersect_info)
@@ -85,7 +82,7 @@ static bool	test_intersection_with_object_triangle(
 	float	u;
 	float	v;
 
-	if (vec3_dot(&ray->vec, &triangle->normal) > 0.0f)
+	if (vec3_dot(&ray->vec, &triangle->normal) < 0.0f)
 		return (false);
 
 	vec3_cross(&ray->vec, &triangle->edge2, &ray_cross_e2);

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 12:27:37 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:23:19 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,10 @@ bool			test_intersection_with_triangle(
 					t_triangle const *triangle,
 					t_intersect_info *intersect_info);
 bool			test_intersection_with_object_file(
+					t_ray const *ray,
+					t_object_file const *objf,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_object_file_from_inside(
 					t_ray const *ray,
 					t_object_file const *objf,
 					t_intersect_info *intersect_info);

@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/17 15:02:59 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/17 15:24:05 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,6 +143,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closest_intersections_bonus.c \
 				src_bonus/minirt/app/render/intersections/intersect_loop_without_param_obj_bonus.c \
 				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_file_bonus.c \
+				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_file_from_inside_bonus.c \
 				src_bonus/minirt/app/render/intersections/plane/test_intersection_with_plane_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside_bonus.c \

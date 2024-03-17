@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 16:56:52 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 19:50:23 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:23:33 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,11 @@ static bool	do_intern_intersection(
 	{
 		return (test_intersection_with_cube_from_inside(
 				refracted_ray, &object->value.as_cube, intersect_info));
+	}
+	else if (object->type == OBJ_OBJECT_FILE)
+	{
+		return (test_intersection_with_object_file_from_inside(
+				refracted_ray, &object->value.as_object_file, intersect_info));
 	}
 	return (false);
 }
