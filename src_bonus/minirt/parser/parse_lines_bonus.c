@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_lines.c                                      :+:      :+:    :+:   */
+/*   parse_lines_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:43:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 15:26:49 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/03/17 18:16:50 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 #include "minirt/app/scene/scene_bonus.h"
 
+#include "minirt/parser/fast_get_next_line/fast_get_next_line_bonus.h"
+
 static t_error	_get_line(
 					int fd,
 					t_parser_state *state);
@@ -27,7 +29,7 @@ static bool		_is_blank(
 
 /**
  * Parses each lines, one at a time.
- * 
+ *
  * @param[in] fd File descriptor of config file
  * @param[in] filename For error reports
  * @param[out] scene Scene to fill up with parsed data
@@ -60,7 +62,7 @@ t_error	parse_lines(
 
 /**
  * Wrapper around gnl that removes trailing newline, and report errors.
- * 
+ *
  * @param[in] fd File descriptor of config file
  * @param[out] state Parser state handle
  * @returns SUCCESS or FAILURE whether parsing has has been succesful or not
@@ -72,7 +74,8 @@ static t_error	_get_line(
 	char	*line;
 
 	errno = 0;
-	line = ft_gnl(fd);
+	//line = ft_gnl(fd);
+	line = fast_get_next_line(fd);
 	if (errno != 0)
 	{
 		perror("Error\nfatal");
@@ -86,7 +89,7 @@ static t_error	_get_line(
 
 /**
  * Check if line is blank. Directive parser is not called in that case.
- * 
+ *
  * @param[in] line The line to check
  * @returns Answer
  */

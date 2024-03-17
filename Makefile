@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/17 15:24:05 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/17 18:38:45 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -224,12 +224,14 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/parser/directives/parse_sphere_bonus.c \
 				src_bonus/minirt/parser/directives/parse_spotlight_bonus.c \
 				src_bonus/minirt/parser/directives/parse_triangle_bonus.c \
-				src_bonus/minirt/parser/error_logs/put_directive_error_bonus.c \
-				src_bonus/minirt/parser/error_logs/put_field_error_bonus.c \
-				src_bonus/minirt/parser/error_logs/put_unknown_directive_error_bonus.c \
 				src_bonus/minirt/parser/dot_obj_file/apply_parsing_to_object_file_bonus.c \
 				src_bonus/minirt/parser/dot_obj_file/parse_dot_file_bonus.c \
 				src_bonus/minirt/parser/dot_obj_file/parse_dot_struct_bonus.c \
+				src_bonus/minirt/parser/error_logs/put_directive_error_bonus.c \
+				src_bonus/minirt/parser/error_logs/put_field_error_bonus.c \
+				src_bonus/minirt/parser/error_logs/put_unknown_directive_error_bonus.c \
+				src_bonus/minirt/parser/fast_get_next_line/fast_get_next_line_bonus.c \
+				src_bonus/minirt/parser/fast_get_next_line/fast_get_next_line_utils_bonus.c \
 				src_bonus/minirt/parser/fields/parse_brightness_bonus.c \
 				src_bonus/minirt/parser/fields/parse_color_bonus.c \
 				src_bonus/minirt/parser/fields/parse_diameter_bonus.c \
@@ -374,6 +376,8 @@ SRCS		:=	src/minirt/app/app_loop.c \
 				src/minirt/parser/error_logs/put_directive_error.c \
 				src/minirt/parser/error_logs/put_field_error.c \
 				src/minirt/parser/error_logs/put_unknown_directive_error.c \
+				src/minirt/parser/fast_get_next_line/fast_get_next_line.c \
+				src/minirt/parser/fast_get_next_line/fast_get_next_line_utils.c \
 				src/minirt/parser/fields/parse_brightness.c \
 				src/minirt/parser/fields/parse_color.c \
 				src/minirt/parser/fields/parse_diameter.c \

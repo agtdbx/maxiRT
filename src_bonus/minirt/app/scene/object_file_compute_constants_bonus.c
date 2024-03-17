@@ -6,14 +6,13 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/17 15:13:27 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/17 18:24:59 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/scene/scene_bonus.h"
 
 #include <math.h>
-#include <stdio.h>
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 
