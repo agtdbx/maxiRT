@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 23:22:51 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/18 22:54:38 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,22 +196,85 @@ typedef struct s_object_polygon
 	t_object_polygon_v	value;
 }	t_object_polygon;
 
+// For binary tree
+typedef struct s_object_face
+{
+	t_vec3	pos;
+	t_vec3	normal;
+
+	t_vec3	point_ur;
+	t_vec3	point_ul;
+	t_vec3	point_dr;
+	t_vec3	point_dl;
+
+	float	inv_width;
+	float	inv_height;
+
+}	t_object_face;
+
+typedef struct s_object_bounding_box
+{
+	float			min_x;
+	float			min_y;
+	float			min_z;
+	float			max_x;
+	float			max_y;
+	float			max_z;
+
+	t_object_face	front;
+	t_object_face	back;
+	t_object_face	left;
+	t_object_face	right;
+	t_object_face	up;
+	t_object_face	down;
+
+}	t_object_bounding_box;
+
+typedef struct s_object_binary_polygon
+{
+	t_object_polygon				*polygon;
+
+	struct s_object_binary_polygon	*next;
+
+}	t_object_binary_polygon;
+
+typedef struct s_object_binary_part
+{
+	struct s_object_binary_part	*child_1;
+	struct s_object_binary_part	*child_2;
+
+	t_object_bounding_box		*bounding_box;
+	t_object_binary_polygon		*polygons;
+
+}	t_object_binary_part;
+
 typedef struct s_object_file
 {
-	t_vec3				pos;
-	t_vec3				x_axis;
-	t_vec3				y_axis;
-	t_vec3				*vertices;
-	t_vec3				*real_vertices;
-	t_object_polygon	*polygons;
-	int					nb_vertices;
-	int					nb_polygons;
+	t_vec3					pos;
+	t_vec3					x_axis;
+	t_vec3					y_axis;
+	t_vec3					*vertices;
+	t_vec3					*real_vertices;
+	t_object_polygon		*polygons;
+	int						nb_vertices;
+	int						nb_polygons;
 
-	float				size;
-	t_vec3				z_axis;
-	t_cube				bounding_box;
+	float					size;
+	t_vec3					z_axis;
+	t_cube					bounding_box;
+
+	t_object_binary_part	*binary_partition;
+
 }	t_object_file;
 
+void			compute_objf_triangle(
+					t_object_file *objf,
+					t_object_triangle *triangle);
+void			compute_objf_rectangle(
+					t_object_file *objf,
+					t_object_rectangle *rectangle);
+void			compute_objf_bounding_box(
+					t_object_file *objf);
 void			object_file_compute_constants(
 					t_object_file *objf);
 

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 21:59:48 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/18 22:45:56 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ bool			test_intersection_with_obj(
 					t_ray const *ray,
 					t_object const *object,
 					t_intersect_info *intersect_info);
+
+/// sphere intersections
+
 bool			test_intersection_with_sphere(
 					t_ray const *ray,
 					t_sphere const *sphere,
@@ -136,10 +139,16 @@ bool			test_intersection_with_sphere_from_inside(
 					t_ray const *ray,
 					t_sphere const *sphere,
 					t_intersect_info *intersect_info);
+
+/// plane intersections
+
 bool			test_intersection_with_plane(
 					t_ray const *ray,
 					t_plane const *plane,
 					t_intersect_info *intersect_info);
+
+/// cylinder intersections
+
 bool			test_intersection_with_cylinder(
 					t_ray const *ray,
 					t_cylinder const *cylinder,
@@ -148,6 +157,9 @@ bool			test_intersection_with_cylinder_from_inside(
 					t_ray const *ray,
 					t_cylinder const *cylinder,
 					t_intersect_info *intersect_info);
+
+/// cone intersections
+
 bool			test_intersection_with_cone(
 					t_ray const *ray,
 					t_cone const *cone,
@@ -156,6 +168,9 @@ bool			test_intersection_with_cone_from_inside(
 					t_ray const *ray,
 					t_cone const *cone,
 					t_intersect_info *intersect_info);
+
+/// cube intersections
+
 bool			compute_intersection_distance(
 					t_intersect_info *intersect_info,
 					float abc[3]);
@@ -218,10 +233,16 @@ bool			intersection_inside_with_back(
 					t_ray const *ray,
 					t_cube const *cube,
 					t_intersect_info *intersect_info);
+
+/// triangle intersections
+
 bool			test_intersection_with_triangle(
 					t_ray const *ray,
 					t_triangle const *triangle,
 					t_intersect_info *intersect_info);
+
+/// object_file intersections
+
 bool			test_intersection_with_object_file(
 					t_ray const *ray,
 					t_object_file const *objf,
@@ -230,6 +251,28 @@ bool			test_intersection_with_object_file_from_inside(
 					t_ray const *ray,
 					t_object_file const *objf,
 					t_intersect_info *intersect_info);
+bool			test_intersection_with_object_triangle(
+					t_ray const *ray,
+					t_object_triangle const *triangle,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_object_triangle_reverse(
+					t_ray const *ray,
+					t_object_triangle const *triangle,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_object_rectangle(
+					t_ray const *ray,
+					t_object_rectangle const *rectangle,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_object_rectangle_reverse(
+					t_ray const *ray,
+					t_object_rectangle const *rectangle,
+					t_intersect_info *intersect_info);
+bool			test_intersection_with_object_bounding_box(
+					t_ray const *ray,
+					t_object_bounding_box const *bounding_box);
+bool			point_inside_object_bounding_box(
+					t_object_bounding_box *bounding_box,
+					t_vec3 *point);
 
 t_color			intersect_loop_without_param_obj(
 					t_object const *object,

@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/17 18:38:45 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/18 22:53:23 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,8 +142,11 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closer_spotlight_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closest_intersections_bonus.c \
 				src_bonus/minirt/app/render/intersections/intersect_loop_without_param_obj_bonus.c \
+				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_bounding_box_bonus.c \
 				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_file_bonus.c \
 				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_file_from_inside_bonus.c \
+				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_rectangle_bonus.c \
+				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_triangle_bonus.c \
 				src_bonus/minirt/app/render/intersections/plane/test_intersection_with_plane_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_bonus.c \
 				src_bonus/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside_bonus.c \
@@ -183,11 +186,14 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/render_ray_from_camera_bonus.c \
 				src_bonus/minirt/app/render/render_ray_on_object_bonus.c \
 				src_bonus/minirt/app/render/transparency/compute_refracted_color_bonus.c \
+				src_bonus/minirt/app/scene/object_file_compute_constants/compute_object_bounding_box_bonus.c \
+				src_bonus/minirt/app/scene/object_file_compute_constants/compute_object_rectangle_bonus.c \
+				src_bonus/minirt/app/scene/object_file_compute_constants/compute_object_triangle_bonus.c \
+				src_bonus/minirt/app/scene/object_file_compute_constants/object_file_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/camera_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/cone_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/cube_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/cylinder_compute_constants_bonus.c \
-				src_bonus/minirt/app/scene/object_file_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/plane_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/scene_add_object_bonus.c \
 				src_bonus/minirt/app/scene/scene_del_bonus.c \
