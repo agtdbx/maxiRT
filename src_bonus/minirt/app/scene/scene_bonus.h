@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/18 22:54:38 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/20 21:38:53 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,13 +199,12 @@ typedef struct s_object_polygon
 // For binary tree
 typedef struct s_object_face
 {
-	t_vec3	pos;
 	t_vec3	normal;
 
-	t_vec3	point_ur;
-	t_vec3	point_ul;
-	t_vec3	point_dr;
-	t_vec3	point_dl;
+	t_vec3	point_ru;
+	t_vec3	point_lu;
+	t_vec3	point_rd;
+	t_vec3	point_ld;
 
 	float	inv_width;
 	float	inv_height;
@@ -234,6 +233,8 @@ typedef struct s_object_binary_polygon
 {
 	t_object_polygon				*polygon;
 
+	int								polygon_id;
+
 	struct s_object_binary_polygon	*next;
 
 }	t_object_binary_polygon;
@@ -243,7 +244,7 @@ typedef struct s_object_binary_part
 	struct s_object_binary_part	*child_1;
 	struct s_object_binary_part	*child_2;
 
-	t_object_bounding_box		*bounding_box;
+	t_object_bounding_box		bounding_box;
 	t_object_binary_polygon		*polygons;
 
 }	t_object_binary_part;
@@ -267,13 +268,23 @@ typedef struct s_object_file
 
 }	t_object_file;
 
+void			add_object_binary_polygons(
+					t_object_binary_polygon **polygons,
+					t_object_polygon *new_polygon,
+					int polygon_id);
+void			free_object_binary_polygons(
+					t_object_binary_polygon *polygon);
+void			create_new_object_binary_tree_part(
+					t_object_binary_part **new);
+void			free_object_binary_tree(
+					t_object_binary_part *part);
 void			compute_objf_triangle(
 					t_object_file *objf,
 					t_object_triangle *triangle);
 void			compute_objf_rectangle(
 					t_object_file *objf,
 					t_object_rectangle *rectangle);
-void			compute_objf_bounding_box(
+void			compute_objf_bounding_boxes(
 					t_object_file *objf);
 void			object_file_compute_constants(
 					t_object_file *objf);

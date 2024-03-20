@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 12:22:57 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/17 19:47:18 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/20 18:37:44 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ bool	apply_parsing_to_object_file(
 			t_object_file *const objf,
 			t_parse_dot_struct *parse_dot_struct)
 {
+	objf->vertices = NULL;
+	objf->real_vertices = NULL;
+	objf->polygons = NULL;
+	objf->binary_partition = NULL;
 	if (parse_dot_struct->nb_vertices == 0 ||
 		parse_dot_struct->nb_faces == 0)
 	{

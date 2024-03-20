@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/18 22:52:49 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/20 20:16:44 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@ static void	axis_checker(
 static void	compute_objf_vertices(
 				t_object_file *objf);
 static void	compute_objf_polygons(
-				t_object_file *objf);
-
-void	compute_objf_rectangle(
-				t_object_file *objf,
-				t_object_rectangle *rectangle);
-
-
-void	compute_objf_bounding_box(
 				t_object_file *objf);
 
 
@@ -56,8 +48,8 @@ void	object_file_compute_constants(
 	// Compute all polygons
 	compute_objf_polygons(objf);
 
-	// Compute bounding box
-	compute_objf_bounding_box(objf);
+	// Compute bounding boxes
+	compute_objf_bounding_boxes(objf);
 }
 
 

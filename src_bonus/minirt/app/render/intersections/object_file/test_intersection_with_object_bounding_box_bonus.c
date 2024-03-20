@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:02:43 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/18 22:40:08 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/20 19:55:28 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,20 @@ static bool	test_intersection_with_object_face(
  */
 bool	test_intersection_with_object_bounding_box(
 			t_ray const *ray,
-			t_object_bounding_box const *bounding_box)
+			t_object_bounding_box const *bbox)
 {
 	return (test_intersection_with_object_face(
-			ray, &bounding_box->front)
+			ray, &bbox->front)
 		|| test_intersection_with_object_face(
-			ray, &bounding_box->back)
+			ray, &bbox->back)
 		|| test_intersection_with_object_face(
-			ray, &bounding_box->left)
+			ray, &bbox->left)
 		|| test_intersection_with_object_face(
-			ray, &bounding_box->right)
+			ray, &bbox->right)
 		|| test_intersection_with_object_face(
-			ray, &bounding_box->up)
+			ray, &bbox->up)
 		|| test_intersection_with_object_face(
-			ray, &bounding_box->down));
+			ray, &bbox->down));
 }
 
 
@@ -75,7 +75,7 @@ static bool	test_intersection_with_object_face(
 	denom = vec3_dot(&ray->vec, &face->normal);
 	if (denom < 0.000001f)
 	{
-		vec3_substract_into(&vec, &face->point_ul, &ray->pos);
+		vec3_substract_into(&vec, &face->point_lu, &ray->pos);
 		distance = vec3_dot(&vec, &face->normal) / denom;
 		if (distance < 0.0f)
 			return (false);
@@ -85,20 +85,20 @@ static bool	test_intersection_with_object_face(
 		vec3_linear_transform(&q, distance, &ray->vec);
 
 		// Check q is in face
-		vec3_substract_into(&p1_q, &face->point_ul, &q);
-		vec3_substract_into(&p2_q, &face->point_dl, &q);
+		vec3_substract_into(&p1_q, &face->point_lu, &q);
+		vec3_substract_into(&p2_q, &face->point_ld, &q);
 		vec3_cross(&p1_q, &p2_q, &p1_q_x_p2_q);
 		o1 = vec3_dot(&p1_q_x_p2_q, &face->normal);
 		if (o1 == 0.0f)
 			return (false);
 
-		vec3_substract_into(&p3_q, &face->point_dr, &q);
+		vec3_substract_into(&p3_q, &face->point_rd, &q);
 		vec3_cross(&p2_q, &p3_q, &p2_q_x_p3_q);
 		o2 = vec3_dot(&p2_q_x_p3_q, &face->normal);
 		if (o2 == 0.0f || !is_same_sign(o1, o2))
 			return (false);
 
-		vec3_substract_into(&p4_q, &face->point_ur, &q);
+		vec3_substract_into(&p4_q, &face->point_ru, &q);
 		vec3_cross(&p3_q, &p4_q, &p3_q_x_p4_q);
 		o3 = vec3_dot(&p3_q_x_p4_q, &face->normal);
 		if (o3 == 0.0f || !is_same_sign(o2, o3))

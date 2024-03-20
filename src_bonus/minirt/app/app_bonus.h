@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/18 22:45:56 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/20 20:17:06 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,10 +269,7 @@ bool			test_intersection_with_object_rectangle_reverse(
 					t_intersect_info *intersect_info);
 bool			test_intersection_with_object_bounding_box(
 					t_ray const *ray,
-					t_object_bounding_box const *bounding_box);
-bool			point_inside_object_bounding_box(
-					t_object_bounding_box *bounding_box,
-					t_vec3 *point);
+					t_object_bounding_box const *bbox);
 
 t_color			intersect_loop_without_param_obj(
 					t_object const *object,

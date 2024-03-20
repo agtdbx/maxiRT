@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/18 22:53:23 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/20 18:57:27 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -189,6 +189,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/scene/object_file_compute_constants/compute_object_bounding_box_bonus.c \
 				src_bonus/minirt/app/scene/object_file_compute_constants/compute_object_rectangle_bonus.c \
 				src_bonus/minirt/app/scene/object_file_compute_constants/compute_object_triangle_bonus.c \
+				src_bonus/minirt/app/scene/object_file_compute_constants/object_binary_tree_bonus.c \
 				src_bonus/minirt/app/scene/object_file_compute_constants/object_file_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/camera_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/cone_compute_constants_bonus.c \
