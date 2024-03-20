@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:51:50 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/20 23:13:03 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/20 23:15:34 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 
-#define MIN_POLYGONS_PER_BBOX 1000
+#define MIN_POLYGONS_PER_BBOX 900
 
 static void	calculate_bounding_box_bounds(
 				t_object_file *objf,
@@ -294,8 +294,13 @@ static void	fill_objf_bbox_tree(
 	}
 
 	// Free the useless polygons chain list (now polygons are in childs)
-	free_object_binary_polygons(part->polygons);
-	part->polygons = NULL;
+	if (child_1_polygons <= MIN_POLYGONS_PER_BBOX ||
+		child_2_polygons <= MIN_POLYGONS_PER_BBOX)
+	{
+		free_object_binary_polygons(part->polygons);
+		part->polygons = NULL;
+		printf("Oui\n");
+	}
 
 	if (child_1_polygons > MIN_POLYGONS_PER_BBOX)
 		fill_objf_bbox_tree(child_1, axe);
