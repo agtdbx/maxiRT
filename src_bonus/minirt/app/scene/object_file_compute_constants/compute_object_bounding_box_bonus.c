@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:51:50 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/20 23:15:34 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/21 19:35:50 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 
-#define MIN_POLYGONS_PER_BBOX 900
+#define MIN_SIZE_BBOX 1.0f
 
 static void	calculate_bounding_box_bounds(
 				t_object_file *objf,
@@ -44,6 +44,8 @@ static bool is_polygon_inside_object_bounding_box(
 static bool	is_point_inside_object_bounding_box(
 				t_object_bounding_box *bbox,
 				t_vec3 const *point);
+static bool	is_bbox_too_small(
+				t_object_bounding_box *bbox);
 
 void	compute_objf_bounding_boxes(
 				t_object_file *objf)
@@ -51,29 +53,12 @@ void	compute_objf_bounding_boxes(
 	float	bounds_x[2];
 	float	bounds_y[2];
 	float	bounds_z[2];
-	//t_cube	*cube;
 
 	// Get mins and max
 	calculate_bounding_box_bounds(objf, bounds_x, bounds_y, bounds_z);
 
 	// Calcultate bounding boxes in binary tree
 	compute_objf_binary_tree(objf, bounds_x, bounds_y, bounds_z);
-
-	// Calculate cube info
-	//cube = &objf->bounding_box;
-
-	//cube->witdh = bounds_x[1] - bounds_x[0];
-	//cube->height = bounds_y[1] - bounds_y[0];
-	//cube->depth = bounds_z[1] - bounds_z[0];
-
-	//cube->pos.x = (bounds_x[1] + bounds_x[0]) / 2.0f;
-	//cube->pos.y = (bounds_y[1] + bounds_y[0]) / 2.0f;
-	//cube->pos.z = (bounds_z[1] + bounds_z[0]) / 2.0f;
-	//vec3_add(&cube->pos, &objf->pos);
-
-	//cube->x_axis = (t_vec3){1.0f, 0.0f, 0.0f};
-	//cube->y_axis = (t_vec3){0.0f, 1.0f, 0.0f};
-	//cube_compute_constants(cube);
 }
 
 static void	calculate_bounding_box_bounds(
@@ -147,13 +132,15 @@ static void	compute_objf_binary_tree(
 	}
 
 	axe = 'x';
-	if (objf->nb_polygons > MIN_POLYGONS_PER_BBOX)
+	if (objf->binary_partition->polygons != NULL
+		&& objf->nb_polygons > 0
+		&& ! is_bbox_too_small(&objf->binary_partition->bounding_box))
 	{
 		fill_objf_bbox_tree(objf->binary_partition, axe);
 	}
 }
 
-#include <stdio.h>
+
 static void	fill_objf_bbox_tree(
 				t_object_binary_part *part,
 				char axe)
@@ -165,16 +152,9 @@ static void	fill_objf_bbox_tree(
 	t_object_binary_part	*child_2;
 	t_object_binary_polygon	*actual;
 
-	if (part->polygons == NULL)
+	if (part->polygons == NULL
+		|| is_bbox_too_small(&part->bounding_box))
 		return ;
-
-	if ((part->bounding_box.max_x - part->bounding_box.min_x) < 0.1f
-		|| (part->bounding_box.max_y - part->bounding_box.min_y) < 0.1f
-		|| (part->bounding_box.max_z - part->bounding_box.min_z) < 0.1f)
-	{
-		printf("non\n");
-		return ;
-	}
 
 	create_new_object_binary_tree_part(&child_1);
 	if (child_1 == NULL)
@@ -294,19 +274,14 @@ static void	fill_objf_bbox_tree(
 	}
 
 	// Free the useless polygons chain list (now polygons are in childs)
-	if (child_1_polygons <= MIN_POLYGONS_PER_BBOX ||
-		child_2_polygons <= MIN_POLYGONS_PER_BBOX)
-	{
-		free_object_binary_polygons(part->polygons);
-		part->polygons = NULL;
-		printf("Oui\n");
-	}
+	free_object_binary_polygons(part->polygons);
+	part->polygons = NULL;
 
-	if (child_1_polygons > MIN_POLYGONS_PER_BBOX)
-		fill_objf_bbox_tree(child_1, axe);
+	part->child_1 = child_1;
+	part->child_2 = child_2;
 
-	if (child_2_polygons > MIN_POLYGONS_PER_BBOX)
-		fill_objf_bbox_tree(child_2, axe);
+	fill_objf_bbox_tree(child_1, axe);
+	fill_objf_bbox_tree(child_2, axe);
 }
 
 static void	compute_bounding_box_constants(
@@ -452,4 +427,13 @@ static bool	is_in_bound(
 				float nb)
 {
 	return (min <= nb && nb <= max);
+}
+
+
+static bool	is_bbox_too_small(
+				t_object_bounding_box *bbox)
+{
+	return ((bbox->max_x - bbox->min_x) < MIN_SIZE_BBOX
+		|| (bbox->max_y - bbox->min_y) < MIN_SIZE_BBOX
+		|| (bbox->max_z - bbox->min_z) < MIN_SIZE_BBOX);
 }

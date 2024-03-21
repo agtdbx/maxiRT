@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/20 23:00:14 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/21 19:02:15 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ bool	test_intersection_with_object_file(
 			t_object_file const *objf,
 			t_intersect_info *intersect_info)
 {
+	intersect_info->distance = -1.0f;
 	if (objf->binary_partition != NULL)
 		return (intersect_with_binary_part(
 					ray, objf->binary_partition, intersect_info));
@@ -54,10 +55,14 @@ static bool	intersect_with_binary_part(
 	if (part != NULL
 		&& test_intersection_with_object_bounding_box(ray, &part->bounding_box))
 	{
-
+		if (part->child_1 != NULL || part->child_2 != NULL)
+		{
+			return (intersect_with_binary_part(ray, part->child_1, intersect_info)
+					|| intersect_with_binary_part(ray, part->child_2, intersect_info));
+		}
 		// If there is polygons, stop recursion and test intersection
 		// with all polygons
-		if (part->polygons != NULL)
+		else if (part->polygons != NULL)
 		{
 			intersect_test.distance = -1.0f;
 			actual = part->polygons;
@@ -98,19 +103,16 @@ static bool	intersect_with_binary_part(
 
 			if (intersect_test.distance != -1.0f)
 			{
-				intersect_info->distance = intersect_test.distance;
-				intersect_info->sub_part_id = intersect_test.sub_part_id;
+				if (intersect_info->distance == -1.0f
+					|| intersect_info->distance > intersect_test.distance)
+				{
+					intersect_info->distance = intersect_test.distance;
+					intersect_info->sub_part_id = intersect_test.sub_part_id;
+				}
 				return (true);
 			}
 
 			return (false);
-		}
-		else
-		{
-			return (intersect_with_binary_part(
-						ray, part->child_1, intersect_info)
-					|| intersect_with_binary_part(
-						ray, part->child_2, intersect_info));
 		}
 	}
 	return (false);

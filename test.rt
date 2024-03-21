@@ -12,8 +12,8 @@ sp   2,0,0  1.5 255,0,0
 pl  0,-5,0  0,1,0  255,255,255
 
 # ob-tn  -2,0,0  1,0,0  0,1,0  1  obj/cube.obj  imgs/gravel_texture.png  imgs/gravel_normal.png
-# ob  0,0,0  1,0,0  0,1,0  1  obj/cube.obj  255,255,255
+ob  0,0,0  1,0,0  0,1,0  1  obj/cube.obj  255,255,255
 
-ob  -1,0,0  -1,0,0  0,1,0  0.5  obj/Mario64.obj  255,255,255
+# ob  -1,0,0  -1,0,0  0,1,0  0.5  obj/Mario64.obj  255,255,255
 
 # ob  -1,0,0  -1,0,0  0,1,0  0.05  obj/Teapot.obj  255,255,255
