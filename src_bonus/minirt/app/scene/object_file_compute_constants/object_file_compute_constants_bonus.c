@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/21 19:33:53 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/21 19:44:48 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,80 +26,80 @@ static void	compute_objf_polygons(
 
 #include <stdio.h>
 
-static void	print_polygon(
-				t_object_polygon *polygon)
-{
-	if (polygon == NULL)
-		printf("[POLY NULL]\n");
-	else if (polygon->type == OBJ_TRIANGLE)
-		printf("tri  |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f|\n",
-			polygon->value.as_objf_triangle.point1.x,
-			polygon->value.as_objf_triangle.point1.y,
-			polygon->value.as_objf_triangle.point1.z,
-			polygon->value.as_objf_triangle.point2.x,
-			polygon->value.as_objf_triangle.point2.y,
-			polygon->value.as_objf_triangle.point2.z,
-			polygon->value.as_objf_triangle.point3.x,
-			polygon->value.as_objf_triangle.point3.y,
-			polygon->value.as_objf_triangle.point3.z);
-	else
-		printf("rect |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f|\n",
-			polygon->value.as_objf_rectangle.point1.x,
-			polygon->value.as_objf_rectangle.point1.y,
-			polygon->value.as_objf_rectangle.point1.z,
-			polygon->value.as_objf_rectangle.point2.x,
-			polygon->value.as_objf_rectangle.point2.y,
-			polygon->value.as_objf_rectangle.point2.z,
-			polygon->value.as_objf_rectangle.point3.x,
-			polygon->value.as_objf_rectangle.point3.y,
-			polygon->value.as_objf_rectangle.point3.z,
-			polygon->value.as_objf_rectangle.point4.x,
-			polygon->value.as_objf_rectangle.point4.y,
-			polygon->value.as_objf_rectangle.point4.z);
-}
+//static void	print_polygon(
+//				t_object_polygon *polygon)
+//{
+//	if (polygon == NULL)
+//		printf("[POLY NULL]\n");
+//	else if (polygon->type == OBJ_TRIANGLE)
+//		printf("tri  |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f|\n",
+//			polygon->value.as_objf_triangle.point1.x,
+//			polygon->value.as_objf_triangle.point1.y,
+//			polygon->value.as_objf_triangle.point1.z,
+//			polygon->value.as_objf_triangle.point2.x,
+//			polygon->value.as_objf_triangle.point2.y,
+//			polygon->value.as_objf_triangle.point2.z,
+//			polygon->value.as_objf_triangle.point3.x,
+//			polygon->value.as_objf_triangle.point3.y,
+//			polygon->value.as_objf_triangle.point3.z);
+//	else
+//		printf("rect |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f|\n",
+//			polygon->value.as_objf_rectangle.point1.x,
+//			polygon->value.as_objf_rectangle.point1.y,
+//			polygon->value.as_objf_rectangle.point1.z,
+//			polygon->value.as_objf_rectangle.point2.x,
+//			polygon->value.as_objf_rectangle.point2.y,
+//			polygon->value.as_objf_rectangle.point2.z,
+//			polygon->value.as_objf_rectangle.point3.x,
+//			polygon->value.as_objf_rectangle.point3.y,
+//			polygon->value.as_objf_rectangle.point3.z,
+//			polygon->value.as_objf_rectangle.point4.x,
+//			polygon->value.as_objf_rectangle.point4.y,
+//			polygon->value.as_objf_rectangle.point4.z);
+//}
 
-static void	print_polygons_list(
-				t_object_binary_polygon *polygons)
-{
-	t_object_binary_polygon *actual;
+//static void	print_polygons_list(
+//				t_object_binary_polygon *polygons)
+//{
+//	t_object_binary_polygon *actual;
 
-	printf("POLYGONS :\n");
-	actual = polygons;
-	if (actual == NULL)
-	{
-		printf("{NULL}\n");
-		return ;
-	}
+//	printf("POLYGONS :\n");
+//	actual = polygons;
+//	if (actual == NULL)
+//	{
+//		printf("{NULL}\n");
+//		return ;
+//	}
 
-	while (actual)
-	{
-		print_polygon(actual->polygon);
-		actual = actual->next;
-	}
-}
+//	while (actual)
+//	{
+//		print_polygon(actual->polygon);
+//		actual = actual->next;
+//	}
+//}
 
-static void	print_tree_part(
-				t_object_binary_part *part)
-{
-	if (part == NULL)
-	{
-		printf("PART NULL\n");
-		return ;
-	}
-	printf("PART OK\n");
+//static void	print_tree_part(
+//				t_object_binary_part *part)
+//{
+//	if (part == NULL)
+//	{
+//		printf("PART NULL\n");
+//		return ;
+//	}
+//	printf("PART OK\n");
 
-	if (part->child_1 == NULL)
-		printf("CHILD 1 NULL\n");
-	else
-		printf("CHILD 1 OK\n");
+//	if (part->child_1 == NULL)
+//		printf("CHILD 1 NULL\n");
+//	else
+//		printf("CHILD 1 OK\n");
 
-	if (part->child_2 == NULL)
-		printf("CHILD 2 NULL\n");
-	else
-		printf("CHILD 2 OK\n");
+//	if (part->child_2 == NULL)
+//		printf("CHILD 2 NULL\n");
+//	else
+//		printf("CHILD 2 OK\n");
 
-	print_polygons_list(part->polygons);
-}
+//	print_polygons_list(part->polygons);
+//}
 
 
 /**
@@ -129,7 +129,7 @@ void	object_file_compute_constants(
 	// Compute bounding boxes
 	compute_objf_bounding_boxes(objf);
 
-	print_tree_part(objf->binary_partition);
+	//print_tree_part(objf->binary_partition);
 }
 
 

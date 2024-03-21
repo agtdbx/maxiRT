@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/21 19:02:15 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/21 23:01:54 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ bool	test_intersection_with_object_file(
 			t_object_file const *objf,
 			t_intersect_info *intersect_info)
 {
+
 	intersect_info->distance = -1.0f;
 	if (objf->binary_partition != NULL)
 		return (intersect_with_binary_part(
@@ -47,6 +48,10 @@ static bool	intersect_with_binary_part(
 				t_object_binary_part const *part,
 				t_intersect_info *intersect_info)
 {
+	bool					collid1;
+	bool					collid2;
+	t_intersect_info		child1;
+	t_intersect_info		child2;
 	t_intersect_info		intersect_test;
 	t_intersect_info		local_polygon_test;
 	t_object_binary_polygon	*actual;
@@ -57,8 +62,34 @@ static bool	intersect_with_binary_part(
 	{
 		if (part->child_1 != NULL || part->child_2 != NULL)
 		{
-			return (intersect_with_binary_part(ray, part->child_1, intersect_info)
-					|| intersect_with_binary_part(ray, part->child_2, intersect_info));
+			child1.distance = -1.0f;
+			child2.distance = -1.0f;
+			collid1 = intersect_with_binary_part(ray, part->child_1, &child1);
+			collid2 = intersect_with_binary_part(ray, part->child_2, &child2);
+
+			if (!collid1 && !collid2)
+				return (false);
+			if (collid1 && !collid2)
+			{
+				intersect_info->distance = child1.distance;
+				intersect_info->sub_part_id = child1.sub_part_id;
+				return (true);
+			}
+			if (!collid1 && collid2)
+			{
+				intersect_info->distance = child2.distance;
+				intersect_info->sub_part_id = child2.sub_part_id;
+				return (true);
+			}
+			if (child1.distance < child2.distance)
+			{
+				intersect_info->distance = child1.distance;
+				intersect_info->sub_part_id = child1.sub_part_id;
+				return (true);
+			}
+			intersect_info->distance = child2.distance;
+			intersect_info->sub_part_id = child2.sub_part_id;
+			return (true);
 		}
 		// If there is polygons, stop recursion and test intersection
 		// with all polygons
@@ -76,7 +107,7 @@ static bool	intersect_with_binary_part(
 							ray, &actual->polygon->value.as_objf_triangle,
 							&local_polygon_test))
 					{
-						if (intersect_test.distance == -1.0f
+						if (intersect_test.distance <= 0.0f
 							|| local_polygon_test.distance < intersect_test.distance)
 						{
 							intersect_test.distance = local_polygon_test.distance;
@@ -90,7 +121,7 @@ static bool	intersect_with_binary_part(
 							ray, &actual->polygon->value.as_objf_rectangle,
 							&local_polygon_test))
 					{
-						if (intersect_test.distance == -1.0f
+						if (intersect_test.distance <= 0.0f
 							|| local_polygon_test.distance < intersect_test.distance)
 						{
 							intersect_test.distance = local_polygon_test.distance;
@@ -101,10 +132,10 @@ static bool	intersect_with_binary_part(
 				actual = actual->next;
 			}
 
-			if (intersect_test.distance != -1.0f)
+			if (intersect_test.distance > 0.0f)
 			{
-				if (intersect_info->distance == -1.0f
-					|| intersect_info->distance > intersect_test.distance)
+				if (intersect_info->distance <= 0.0f
+					|| intersect_test.distance < intersect_info->distance)
 				{
 					intersect_info->distance = intersect_test.distance;
 					intersect_info->sub_part_id = intersect_test.sub_part_id;
@@ -117,57 +148,3 @@ static bool	intersect_with_binary_part(
 	}
 	return (false);
 }
-
-//bool	test_intersection_with_object_file(
-//			t_ray const *ray,
-//			t_object_file const *objf,
-//			t_intersect_info *intersect_info)
-//{
-//	t_intersect_info	intersect_test;
-//	t_intersect_info	local_polygon_test;
-//	int	i;
-
-//	if (test_intersection_with_cube(ray, &objf->bounding_box, &intersect_test))
-//	{
-//		i = 0;
-//		intersect_test.distance = -1.0f;
-//		intersect_test.sub_part_id = 0;
-//		while (i < objf->nb_polygons)
-//		{
-//			local_polygon_test.distance = -1.0f;
-//			local_polygon_test.sub_part_id = 0;
-//			if (objf->polygons[i].type == OBJF_TRIANGLE &&
-//				test_intersection_with_object_triangle(
-//					ray, &objf->polygons[i].value.as_objf_triangle,
-//					&local_polygon_test))
-//			{
-//				if (intersect_test.distance > local_polygon_test.distance
-//					|| intersect_test.distance == -1.0f )
-//				{
-//					intersect_test.distance = local_polygon_test.distance;
-//					intersect_test.sub_part_id = i;
-//				}
-//			}
-//			else if (objf->polygons[i].type == OBJF_RECTANGLE &&
-//				test_intersection_with_object_rectangle(
-//					ray, &objf->polygons[i].value.as_objf_rectangle,
-//					&local_polygon_test))
-//			{
-//				if (intersect_test.distance > local_polygon_test.distance
-//					|| intersect_test.distance == -1.0f )
-//				{
-//					intersect_test.distance = local_polygon_test.distance;
-//					intersect_test.sub_part_id = i;
-//				}
-//			}
-//			i++;
-//		}
-//		if (intersect_test.distance != -1.0f)
-//		{
-//			intersect_info->distance = intersect_test.distance;
-//			intersect_info->sub_part_id = intersect_test.sub_part_id;
-//			return (true);
-//		}
-//	}
-//	return (false);
-//}
