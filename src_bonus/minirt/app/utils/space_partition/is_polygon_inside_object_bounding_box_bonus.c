@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:49:50 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/23 15:22:12 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/23 18:59:51 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ static bool is_triangle_inside_object_bounding_box(
 	float boxhalfsize[3];
 	float triverts[3][3];
 
-	boxhalfsize[0] = (bbox->max_x - bbox->min_x) / 2.0f;
-	boxhalfsize[1] = (bbox->max_y - bbox->min_y) / 2.0f;
-	boxhalfsize[2] = (bbox->max_z - bbox->min_z) / 2.0f;
+	boxhalfsize[0] = bbox->half_width;
+	boxhalfsize[1] = bbox->half_height;
+	boxhalfsize[2] = bbox->half_depth;
 
-	boxcenter[0] = bbox->min_x + boxhalfsize[0];
-	boxcenter[1] = bbox->min_y + boxhalfsize[1];
-	boxcenter[2] = bbox->min_z + boxhalfsize[2];
+	boxcenter[0] = bbox->center.x;
+	boxcenter[1] = bbox->center.y;
+	boxcenter[2] = bbox->center.z;
 
 	triverts[0][0] = p1->x;
 	triverts[0][1] = p1->y;

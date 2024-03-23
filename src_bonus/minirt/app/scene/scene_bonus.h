@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/23 15:25:55 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/23 18:57:46 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,12 +156,18 @@ typedef struct s_bouding_box_face
 
 typedef struct s_bounding_box
 {
-	float	min_x;
-	float	min_y;
-	float	min_z;
-	float	max_x;
-	float	max_y;
-	float	max_z;
+	float				min_x;
+	float				min_y;
+	float				min_z;
+	float				max_x;
+	float				max_y;
+	float				max_z;
+
+	float				half_width;
+	float				half_height;
+	float				half_depth;
+
+	t_vec3				center;
 
 	t_bouding_box_face	front;
 	t_bouding_box_face	back;
@@ -171,6 +177,9 @@ typedef struct s_bounding_box
 	t_bouding_box_face	down;
 
 }	t_bounding_box;
+
+void			compute_bounding_box_constants(
+					t_bounding_box *bbox);
 
 //---- OBJECT FILE------------------------------------------------------------//
 
