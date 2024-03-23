@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/20 18:57:27 by auguste          ###   ########.fr        #
+#    Updated: 2024/03/23 15:19:06 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,6 +125,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/menu/menu_update_position_bonus.c \
 				src_bonus/minirt/app/render/create_ray_from_pixel_coords_bonus.c \
 				src_bonus/minirt/app/render/illumination/compute_illumination_bonus.c \
+				src_bonus/minirt/app/render/intersections/bounding_box/test_intersection_with_bounding_box_bonus.c \
 				src_bonus/minirt/app/render/intersections/compute_intersection_distance_bonus.c \
 				src_bonus/minirt/app/render/intersections/compute_intersection_distance_from_inside_bonus.c \
 				src_bonus/minirt/app/render/intersections/cone/test_intersection_with_cone_bonus.c \
@@ -142,7 +143,6 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closer_spotlight_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closest_intersections_bonus.c \
 				src_bonus/minirt/app/render/intersections/intersect_loop_without_param_obj_bonus.c \
-				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_bounding_box_bonus.c \
 				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_file_bonus.c \
 				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_file_from_inside_bonus.c \
 				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_rectangle_bonus.c \
@@ -219,6 +219,8 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_scale_into_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_substract_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_substract_into_bonus.c \
+				src_bonus/minirt/app/utils/space_partition/is_polygon_inside_object_bounding_box_bonus.c \
+				src_bonus/minirt/app/utils/space_partition/is_triangle_inside_cube_bonus.c \
 				src_bonus/minirt_bonus.c \
 				src_bonus/minirt/parser/directives/parse_ambient_light_bonus.c \
 				src_bonus/minirt/parser/directives/parse_camera_bonus.c \

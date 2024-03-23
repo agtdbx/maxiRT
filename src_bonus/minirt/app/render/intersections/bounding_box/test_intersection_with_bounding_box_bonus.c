@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_intersection_with_object_bounding_box_        :+:      :+:    :+:   */
+/*   test_intersection_with_bounding_box_bonus.c        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:02:43 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/20 19:55:28 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/23 15:26:28 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,40 +20,40 @@
 static bool	is_same_sign(
 				float a,
 				float b);
-static bool	test_intersection_with_object_face(
+static bool	test_intersection_with_bouding_box_face(
 			t_ray const *ray,
-			t_object_face const *face);
+			t_bouding_box_face const *face);
 
 /**
- * Test ray-object_face intersection.
+ * Test ray-object_bouding_box_face intersection.
  *
  * @param[in] ray Normalized ray
- * @param[in] bounding_box The object_bounding_box to intersect
+ * @param[in] bounding_box The bounding_box to intersect
  * @param[out] distance From ray origin to intersection point
  * @returns Wether ray intersects with object_bounding_box
  */
-bool	test_intersection_with_object_bounding_box(
+bool	test_intersection_with_bounding_box(
 			t_ray const *ray,
-			t_object_bounding_box const *bbox)
+			t_bounding_box const *bbox)
 {
-	return (test_intersection_with_object_face(
+	return (test_intersection_with_bouding_box_face(
 			ray, &bbox->front)
-		|| test_intersection_with_object_face(
+		|| test_intersection_with_bouding_box_face(
 			ray, &bbox->back)
-		|| test_intersection_with_object_face(
+		|| test_intersection_with_bouding_box_face(
 			ray, &bbox->left)
-		|| test_intersection_with_object_face(
+		|| test_intersection_with_bouding_box_face(
 			ray, &bbox->right)
-		|| test_intersection_with_object_face(
+		|| test_intersection_with_bouding_box_face(
 			ray, &bbox->up)
-		|| test_intersection_with_object_face(
+		|| test_intersection_with_bouding_box_face(
 			ray, &bbox->down));
 }
 
 
-static bool	test_intersection_with_object_face(
+static bool	test_intersection_with_bouding_box_face(
 			t_ray const *ray,
-			t_object_face const *face)
+			t_bouding_box_face const *face)
 {
 	float	denom;
 	float	distance;

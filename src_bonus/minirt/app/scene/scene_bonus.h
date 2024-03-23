@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/21 22:16:48 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/23 15:25:55 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "minirt/app/canvas/canvas_bonus.h"
 # include "minirt/app/utils/color/color_bonus.h"
 # include "minirt/app/utils/geometry/geometry_bonus.h"
+
 
 //---- SPHERE ----------------------------------------------------------------//
 
@@ -137,6 +138,40 @@ typedef struct s_triangle
 void			triangle_compute_constants(
 					t_triangle *triangle);
 
+//---- BOUNDING_BOX ----------------------------------------------------------//
+
+typedef struct s_bouding_box_face
+{
+	t_vec3	normal;
+
+	t_vec3	point_ru;
+	t_vec3	point_lu;
+	t_vec3	point_rd;
+	t_vec3	point_ld;
+
+	float	inv_width;
+	float	inv_height;
+
+}	t_bouding_box_face;
+
+typedef struct s_bounding_box
+{
+	float	min_x;
+	float	min_y;
+	float	min_z;
+	float	max_x;
+	float	max_y;
+	float	max_z;
+
+	t_bouding_box_face	front;
+	t_bouding_box_face	back;
+	t_bouding_box_face	left;
+	t_bouding_box_face	right;
+	t_bouding_box_face	up;
+	t_bouding_box_face	down;
+
+}	t_bounding_box;
+
 //---- OBJECT FILE------------------------------------------------------------//
 
 typedef enum e_object_polygon_t
@@ -196,39 +231,6 @@ typedef struct s_object_polygon
 	t_object_polygon_v	value;
 }	t_object_polygon;
 
-// For binary tree
-typedef struct s_object_face
-{
-	t_vec3	normal;
-
-	t_vec3	point_ru;
-	t_vec3	point_lu;
-	t_vec3	point_rd;
-	t_vec3	point_ld;
-
-	float	inv_width;
-	float	inv_height;
-
-}	t_object_face;
-
-typedef struct s_object_bounding_box
-{
-	float			min_x;
-	float			min_y;
-	float			min_z;
-	float			max_x;
-	float			max_y;
-	float			max_z;
-
-	t_object_face	front;
-	t_object_face	back;
-	t_object_face	left;
-	t_object_face	right;
-	t_object_face	up;
-	t_object_face	down;
-
-}	t_object_bounding_box;
-
 typedef struct s_object_binary_polygon
 {
 	t_object_polygon				*polygon;
@@ -244,7 +246,7 @@ typedef struct s_object_binary_part
 	struct s_object_binary_part	*child_1;
 	struct s_object_binary_part	*child_2;
 
-	t_object_bounding_box		bounding_box;
+	t_bounding_box				bounding_box;
 	t_object_binary_polygon		*polygons;
 
 }	t_object_binary_part;

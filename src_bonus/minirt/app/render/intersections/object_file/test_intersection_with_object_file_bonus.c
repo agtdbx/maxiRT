@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/21 23:01:54 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/23 15:21:00 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static bool	intersect_with_binary_part(
 
 	// If ray collid with bounding box
 	if (part != NULL
-		&& test_intersection_with_object_bounding_box(ray, &part->bounding_box))
+		&& test_intersection_with_bounding_box(ray, &part->bounding_box))
 	{
 		if (part->child_1 != NULL || part->child_2 != NULL)
 		{
