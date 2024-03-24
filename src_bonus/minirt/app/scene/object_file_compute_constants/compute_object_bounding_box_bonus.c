@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:51:50 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/23 15:42:33 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/24 12:44:34 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include "minirt/app/utils/space_partition/space_partition.h"
 
-#define MIN_SIZE_BBOX 0.05f
+#define MIN_SIZE_BBOX 0.1f
 
 static void	calculate_bounding_box_bounds(
 				t_object_file *objf,
@@ -136,8 +136,6 @@ static void	fill_objf_bbox_tree(
 				t_object_binary_part *part,
 				char axe)
 {
-	int						child_1_polygons;
-	int						child_2_polygons;
 	float					mid_axe;
 	t_object_binary_part	*child_1;
 	t_object_binary_part	*child_2;
@@ -239,8 +237,6 @@ static void	fill_objf_bbox_tree(
 	compute_bounding_box_constants(&child_2->bounding_box);
 
 	// Iterate thought each polygon of main tree part
-	child_1_polygons = 0;
-	child_2_polygons = 0;
 	actual = part->polygons;
 
 	while (actual)
@@ -250,7 +246,6 @@ static void	fill_objf_bbox_tree(
 		{
 			add_object_binary_polygons(
 				&child_1->polygons, actual->polygon, actual->polygon_id);
-			child_1_polygons++;
 		}
 
 		if (is_polygon_inside_bounding_box(
@@ -258,7 +253,6 @@ static void	fill_objf_bbox_tree(
 		{
 			add_object_binary_polygons(
 				&child_2->polygons, actual->polygon, actual->polygon_id);
-			child_2_polygons++;
 		}
 
 		actual = actual->next;

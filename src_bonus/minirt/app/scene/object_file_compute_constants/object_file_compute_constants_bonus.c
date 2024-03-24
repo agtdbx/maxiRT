@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/21 19:44:48 by auguste          ###   ########.fr       */
+/*   Updated: 2024/03/24 11:22:35 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,19 @@ void	object_file_compute_constants(
 	vec3_normalize(&objf->x_axis);
 	vec3_normalize(&objf->y_axis);
 	vec3_normalize(&objf->z_axis);
+	printf("axis done, start of vertices compute\n");
 
 	// Compute all vertices
 	compute_objf_vertices(objf);
+	printf("vertices done, start of polygons compute\n");
 
 	// Compute all polygons
 	compute_objf_polygons(objf);
+	printf("polygons done, start of bounding box tree compute\n");
 
 	// Compute bounding boxes
 	compute_objf_bounding_boxes(objf);
+	printf("bounding vox tree done\n");
 
 	//print_tree_part(objf->binary_partition);
 }

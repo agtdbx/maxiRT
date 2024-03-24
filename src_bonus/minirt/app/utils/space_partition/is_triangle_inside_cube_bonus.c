@@ -18,116 +18,85 @@
 
 #include <math.h>
 
+static bool	ax_is_test_x01(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v2,
+				t_bounding_box const *bbox);
+static bool	ax_is_test_x2(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v1,
+				t_bounding_box const *bbox);
+static bool	ax_is_test_y02(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v2,
+				t_bounding_box const *bbox);
+static bool	ax_is_test_y1(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v1,
+				t_bounding_box const *bbox);
+static bool	ax_is_test_z12(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v1,
+				t_vec3 const *v2,
+				t_bounding_box const *bbox);
+static bool	ax_is_test_z0(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v1,
+				t_bounding_box const *bbox);
+static bool	plane_box_overlap(
+				t_vec3 const *normal,
+				float d,
+				t_bounding_box const *bbox);
+static void	find_min_max(
+				float x0,
+				float x1,
+				float x2,
+				float *min,
+				float *max);
 
-// static bool	plane_box_overlap();
 
-
-// bool	is_triangle_collide_cube(
-// 			t_vec3	*box_center,
-// 			float	box_half_witdh)
-// {
-
-// }
-
-// int triBoxOverlap(float boxcenter[3],float boxhalfsize[3],float triverts[3][3])
-
-
-#define X 0
-#define Y 1
-#define Z 2
-
-#define CROSS(dest,v1,v2) \
-					dest[0]=v1[1]*v2[2]-v1[2]*v2[1]; \
-					dest[1]=v1[2]*v2[0]-v1[0]*v2[2]; \
-					dest[2]=v1[0]*v2[1]-v1[1]*v2[0];
-
-#define DOT(v1,v2) (v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2])
-
-#define SUB(dest,v1,v2) \
-					dest[0]=v1[0]-v2[0]; \
-					dest[1]=v1[1]-v2[1]; \
-					dest[2]=v1[2]-v2[2];
-
-#define FINDMINMAX(x0,x1,x2,min,max) \
-	min = max = x0;	 \
-	if(x1<min) min=x1;\
-	if(x1>max) max=x1;\
-	if(x2<min) min=x2;\
-	if(x2>max) max=x2;
-
-int planeBoxOverlap(float normal[3],float d, float maxbox[3])
+bool	is_triangle_collide_cube(
+			t_vec3 const *p1,
+			t_vec3 const *p2,
+			t_vec3 const *p3,
+			t_vec3 const *normal,
+			t_bounding_box const *bbox)
 {
-	int q;
-	float vmin[3],vmax[3];
-	for(q=X;q<=Z;q++)
-	{
-		if(normal[q]>0.0f)
-		{
-			vmin[q]=-maxbox[q];
-			vmax[q]=maxbox[q];
-		}
-		else
-		{
-			vmin[q]=maxbox[q];
-			vmax[q]=-maxbox[q];
-		}
-	}
-	if(DOT(normal,vmin)+d>0.0f) return 0;
-	if(DOT(normal,vmax)+d>=0.0f) return 1;
-
-	return 0;
-}
-
-
-/*======================== X-tests ========================*/
-#define AXISTEST_X01(a, b, fa, fb)						 \
-		p0 = a*v0[Y] - b*v0[Z];										\
-		p2 = a*v2[Y] - b*v2[Z];										\
-				if(p0<p2) {min=p0; max=p2;} else {min=p2; max=p0;} \
-		rad = fa * boxhalfsize[Y] + fb * boxhalfsize[Z];	 \
-		if(min>rad || max<-rad) return 0;
-
-#define AXISTEST_X2(a, b, fa, fb)							\
-		p0 = a*v0[Y] - b*v0[Z];										\
-		p1 = a*v1[Y] - b*v1[Z];										\
-				if(p0<p1) {min=p0; max=p1;} else {min=p1; max=p0;} \
-		rad = fa * boxhalfsize[Y] + fb * boxhalfsize[Z];	 \
-		if(min>rad || max<-rad) return 0;
-
-/*======================== Y-tests ========================*/
-#define AXISTEST_Y02(a, b, fa, fb)						 \
-		p0 = -a*v0[X] + b*v0[Z];									 \
-		p2 = -a*v2[X] + b*v2[Z];											 \
-				if(p0<p2) {min=p0; max=p2;} else {min=p2; max=p0;} \
-		rad = fa * boxhalfsize[X] + fb * boxhalfsize[Z];	 \
-		if(min>rad || max<-rad) return 0;
-
-#define AXISTEST_Y1(a, b, fa, fb)							\
-		p0 = -a*v0[X] + b*v0[Z];									 \
-		p1 = -a*v1[X] + b*v1[Z];											 \
-				if(p0<p1) {min=p0; max=p1;} else {min=p1; max=p0;} \
-		rad = fa * boxhalfsize[X] + fb * boxhalfsize[Z];	 \
-		if(min>rad || max<-rad) return 0;
-
-/*======================== Z-tests ========================*/
-
-#define AXISTEST_Z12(a, b, fa, fb)						 \
-		p1 = a*v1[X] - b*v1[Y];										\
-		p2 = a*v2[X] - b*v2[Y];										\
-				if(p2<p1) {min=p2; max=p1;} else {min=p1; max=p2;} \
-		rad = fa * boxhalfsize[X] + fb * boxhalfsize[Y];	 \
-		if(min>rad || max<-rad) return 0;
-
-#define AXISTEST_Z0(a, b, fa, fb)							\
-		p0 = a*v0[X] - b*v0[Y];								\
-		p1 = a*v1[X] - b*v1[Y];										\
-				if(p0<p1) {min=p0; max=p1;} else {min=p1; max=p0;} \
-		rad = fa * boxhalfsize[X] + fb * boxhalfsize[Y];	 \
-		if(min>rad || max<-rad) return 0;
-
-int triBoxOverlap(float boxcenter[3],float boxhalfsize[3],float triverts[3][3])
-{
-
+	t_vec3	v0;
+	t_vec3	v1;
+	t_vec3	v2;
+	t_vec3	e0;
+	t_vec3	e1;
+	t_vec3	e2;
+	float	fex;
+	float	fey;
+	float	fez;
+	float	min;
+	float	max;
+	float	d;
 	/*		use separating axis theorem to test overlap between triangle and box */
 	/*		need to test for overlap in these directions: */
 	/*		1) the {x,y,z}-directions (actually, since we use the AABB of the triangle */
@@ -135,68 +104,319 @@ int triBoxOverlap(float boxcenter[3],float boxhalfsize[3],float triverts[3][3])
 	/*		2) normal of the triangle */
 	/*		3) crossproduct(edge from tri, {x,y,z}-directin) */
 	/*			 this gives 3x3=9 more tests */
-	 float v0[3],v1[3],v2[3];
-	 float min,max,d,p0,p1,p2,rad,fex,fey,fez;
-	 float normal[3],e0[3],e1[3],e2[3];
 
-	 /* This is the fastest branch on Sun */
-	 /* move everything so that the boxcenter is in (0,0,0) */
-	 SUB(v0,triverts[0],boxcenter);
-	 SUB(v1,triverts[1],boxcenter);
-	 SUB(v2,triverts[2],boxcenter);
+	// Point pos in box center coordonate
+	vec3_substract_into(&v0, p1, &bbox->center);
+	vec3_substract_into(&v1, p2, &bbox->center);
+	vec3_substract_into(&v2, p3, &bbox->center);
 
-	 /* compute triangle edges */
-	 SUB(e0,v1,v0);			/* tri edge 0 */
-	 SUB(e1,v2,v1);			/* tri edge 1 */
-	 SUB(e2,v0,v2);			/* tri edge 2 */
+	// Compute edges of triangles
+	vec3_substract_into(&e0, &v1, &v0);
+	vec3_substract_into(&e1, &v2, &v1);
+	vec3_substract_into(&e2, &v0, &v2);
 
-	 /* Bullet 3:	*/
-	 /*	test the 9 tests first (this was faster) */
-	 fex = fabs(e0[X]);
-	 fey = fabs(e0[Y]);
-	 fez = fabs(e0[Z]);
-	 AXISTEST_X01(e0[Z], e0[Y], fez, fey);
-	 AXISTEST_Y02(e0[Z], e0[X], fez, fex);
-	 AXISTEST_Z12(e0[Y], e0[X], fey, fex);
+	/* Bullet 3:	*/
+	/*	test the 9 tests first (this was faster) */
+	fex = fabs(e0.x);
+	fey = fabs(e0.y);
+	fez = fabs(e0.z);
+	if (!ax_is_test_x01(e0.z, e0.y, fez, fey, &v0, &v2, bbox))
+		return (false);
+	if (!ax_is_test_y02(e0.z, e0.x, fez, fex, &v0, &v2, bbox))
+		return (false);
+	if (!ax_is_test_z12(e0.y, e0.x, fey, fex, &v1, &v2, bbox))
+		return (false);
 
-	 fex = fabs(e1[X]);
-	 fey = fabs(e1[Y]);
-	 fez = fabs(e1[Z]);
-	 AXISTEST_X01(e1[Z], e1[Y], fez, fey);
-	 AXISTEST_Y02(e1[Z], e1[X], fez, fex);
-	 AXISTEST_Z0(e1[Y], e1[X], fey, fex);
+	fex = fabs(e1.x);
+	fey = fabs(e1.y);
+	fez = fabs(e1.z);
+	if (!ax_is_test_x01(e1.z, e1.y, fez, fey, &v0, &v2, bbox))
+		return (false);
+	if (!ax_is_test_y02(e1.z, e1.x, fez, fex, &v0, &v2, bbox))
+		return (false);
+	if (!ax_is_test_z0(e1.y, e1.x, fey, fex, &v0, &v1, bbox))
+		return (false);
 
-	 fex = fabs(e2[X]);
-	 fey = fabs(e2[Y]);
-	 fez = fabs(e2[Z]);
-	 AXISTEST_X2(e2[Z], e2[Y], fez, fey);
-	 AXISTEST_Y1(e2[Z], e2[X], fez, fex);
-	 AXISTEST_Z12(e2[Y], e2[X], fey, fex);
+	fex = fabs(e2.x);
+	fey = fabs(e2.y);
+	fez = fabs(e2.z);
+	if (!ax_is_test_x2(e2.z, e2.y, fez, fey, &v0, &v1, bbox))
+		return (false);
+	if (!ax_is_test_y1(e2.z, e2.x, fez, fex, &v0, &v1, bbox))
+		return (false);
+	if (!ax_is_test_z12(e2.y, e2.x, fey, fex, &v1, &v2, bbox))
+		return (false);
 
-	 /* Bullet 1: */
-	 /*	first test overlap in the {x,y,z}-directions */
-	 /*	find min, max of the triangle each direction, and test for overlap in */
-	 /*	that direction -- this is equivalent to testing a minimal AABB around */
-	 /*	the triangle against the AABB */
+	/* Bullet 1: */
+	/*	first test overlap in the {x,y,z}-directions */
+	/*	find min, max of the triangle each direction, and test for overlap in */
+	/*	that direction -- this is equivalent to testing a minimal AABB around */
+	/*	the triangle against the AABB */
 
-	 /* test in X-direction */
-	 FINDMINMAX(v0[X],v1[X],v2[X],min,max);
-	 if(min>boxhalfsize[X] || max<-boxhalfsize[X]) return 0;
+	/* test in X-direction */
+	find_min_max(v0.x, v1.x, v2.x, &min, &max);
+	if (min > bbox->half_width || max < -bbox->half_width)
+		return (false);
 
-	 /* test in Y-direction */
-	 FINDMINMAX(v0[Y],v1[Y],v2[Y],min,max);
-	 if(min>boxhalfsize[Y] || max<-boxhalfsize[Y]) return 0;
+	/* test in Y-direction */
+	find_min_max(v0.y, v1.y, v2.y, &min, &max);
+	if (min > bbox->half_height || max < -bbox->half_height)
+		return (false);
 
-	 /* test in Z-direction */
-	 FINDMINMAX(v0[Z],v1[Z],v2[Z],min,max);
-	 if(min>boxhalfsize[Z] || max<-boxhalfsize[Z]) return 0;
+	/* test in Z-direction */
+	find_min_max(v0.z, v1.z, v2.z, &min, &max);
+	if (min > bbox->half_depth || max < -bbox->half_depth)
+		return (false);
 
-	 /* Bullet 2: */
-	 /*	test if the box intersects the plane of the triangle */
-	 /*	compute plane equation of triangle: normal*x+d=0 */
-	 CROSS(normal,e0,e1);
-	 d=-DOT(normal,v0);	/* plane eq: normal.x+d=0 */
-	 if(!planeBoxOverlap(normal,d,boxhalfsize)) return 0;
+	/* Bullet 2: */
+	/*	test if the box intersects the plane of the triangle */
+	/*	compute plane equation of triangle: normal*x+d=0 */
+	d = vec3_dot(normal, &v0);
+	if (!plane_box_overlap(normal, d, bbox))
+		return (false);
 
-	 return 1;	 /* box and triangle overlaps */
+	return (true);
+}
+
+
+static void	set_min_max(
+				float nb1,
+				float nb2,
+				float *min,
+				float *max)
+{
+	if (nb1 < nb2)
+	{
+		*min = nb1;
+		*max = nb2;
+	}
+	else
+	{
+		*min = nb2;
+		*max = nb1;
+	}
+}
+
+
+static bool	ax_is_test_x01(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v2,
+				t_bounding_box const *bbox)
+{
+	float	p0;
+	float	p2;
+	float	min;
+	float	max;
+	float	rad;
+
+	p0 = a * v0->y - b * v0->z;
+	p2 = a * v2->y - b * v2->z;
+
+	set_min_max(p0, p2, &min, &max);
+
+	rad = fa * bbox->half_height + fb * bbox->half_depth;
+	if (min > rad || max < -rad)
+		return (false);
+	return (true);
+}
+
+
+static bool	ax_is_test_x2(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v1,
+				t_bounding_box const *bbox)
+{
+	float	p0;
+	float	p1;
+	float	min;
+	float	max;
+	float	rad;
+
+	p0 = (a * v0->y) - (b * v0->z);
+	p1 = (a * v1->y) - (b * v1->z);
+	set_min_max(p0, p1, &min, &max);
+	rad = (fa * bbox->half_height) + (fb * bbox->half_depth);
+	if (min > rad || max < -rad)
+		return (false);
+	return (true);
+}
+
+
+static bool	ax_is_test_y02(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v2,
+				t_bounding_box const *bbox)
+{
+	float	p0;
+	float	p2;
+	float	min;
+	float	max;
+	float	rad;
+
+	p0 = -(a * v0->x) + (b * v0->z);
+	p2 = -(a * v2->x) + (b * v2->z);
+	set_min_max(p0, p2, &min, &max);
+	rad = (fa * bbox->half_width) + (fb * bbox->half_depth);
+	if (min > rad || max < -rad)
+		return (false);
+	return (true);
+}
+
+
+static bool	ax_is_test_y1(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v1,
+				t_bounding_box const *bbox)
+{
+	float	p0;
+	float	p1;
+	float	min;
+	float	max;
+	float	rad;
+
+	p0 = -(a * v0->x) + (b * v0->z);
+	p1 = -(a * v1->x) + (b * v1->z);
+	set_min_max(p0, p1, &min, &max);
+	rad = (fa * bbox->half_width) + (fb * bbox->half_depth);
+	if (min > rad || max < -rad)
+		return (false);
+	return (true);
+}
+
+
+static bool	ax_is_test_z12(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v1,
+				t_vec3 const *v2,
+				t_bounding_box const *bbox)
+{
+	float	p1;
+	float	p2;
+	float	min;
+	float	max;
+	float	rad;
+
+	p1 = (a * v1->x) - (b * v1->y);
+	p2 = (a * v2->x) - (b * v2->y);
+	set_min_max(p1, p2, &min, &max);
+	rad = (fa * bbox->half_width) + (fb * bbox->half_height);
+	if (min > rad || max < -rad)
+		return (false);
+	return (true);
+}
+
+
+static bool	ax_is_test_z0(
+				float a,
+				float b,
+				float fa,
+				float fb,
+				t_vec3 const *v0,
+				t_vec3 const *v1,
+				t_bounding_box const *bbox)
+{
+	float	p0;
+	float	p1;
+	float	min;
+	float	max;
+	float	rad;
+
+	p0 = (a * v0->x) - (b * v0->y);
+	p1 = (a * v1->x) - (b * v1->y);
+	set_min_max(p0, p1, &min, &max);
+	rad = (fa * bbox->half_width) + (fb * bbox->half_height);
+	if (min > rad || max < -rad)
+		return (false);
+	return (true);
+}
+
+
+static bool	plane_box_overlap(
+				t_vec3 const *normal,
+				float d,
+				t_bounding_box const *bbox)
+{
+	t_vec3	vmin;
+	t_vec3	vmax;
+
+	if (normal->x > 0.0f)
+	{
+		vmin.x = -bbox->half_width;
+		vmax.x = bbox->half_width;
+	}
+	else
+	{
+		vmin.x = bbox->half_width;
+		vmax.x = -bbox->half_width;
+	}
+
+	if (normal->y > 0.0f)
+	{
+		vmin.y = -bbox->half_height;
+		vmax.y = bbox->half_height;
+	}
+	else
+	{
+		vmin.y = bbox->half_height;
+		vmax.y = -bbox->half_height;
+	}
+
+	if (normal->z > 0.0f)
+	{
+		vmin.z = -bbox->half_depth;
+		vmax.z = bbox->half_depth;
+	}
+	else
+	{
+		vmin.z = bbox->half_depth;
+		vmax.z = -bbox->half_depth;
+	}
+
+	if (vec3_dot(normal, &vmin) + d > 0.0f)
+		return (false);
+
+	if (vec3_dot(normal, &vmax) + d >= 0.0f)
+		return (true);
+
+	return (false);
+}
+
+
+static void	find_min_max(
+				float x0,
+				float x1,
+				float x2,
+				float *min,
+				float *max)
+{
+	*min = x0;
+	*max = x0;
+
+	if (x1 < *min)
+		*min = x1;
+	if (x2 < *min)
+		*min = x2;
+	if (x1 > *max)
+		*max = x1;
+	if (x2 > *max)
+		*max = x2;
 }
