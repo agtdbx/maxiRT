@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:25:15 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/23 15:21:00 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:43:59 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static bool	intersect_with_binary_part(
 				t_object_binary_part const *part,
 				t_intersect_info *intersect_info)
 {
-	bool					collid1;
-	bool					collid2;
-	t_intersect_info		child1;
-	t_intersect_info		child2;
-	t_intersect_info		intersect_test;
-	t_intersect_info		local_polygon_test;
-	t_object_binary_polygon	*actual;
+	int					i;
+	bool				collid1;
+	bool				collid2;
+	t_intersect_info	child1;
+	t_intersect_info	child2;
+	t_intersect_info	intersect_test;
+	t_intersect_info	local_polygon_test;
 
 	// If ray collid with bounding box
 	if (part != NULL
@@ -96,40 +96,40 @@ static bool	intersect_with_binary_part(
 		else if (part->polygons != NULL)
 		{
 			intersect_test.distance = -1.0f;
-			actual = part->polygons;
+			i = 0;
 
-			while (actual != NULL)
+			while (part->polygons[i].polygon_id != -1)
 			{
 				local_polygon_test.distance = -1.0f;
-				if (actual->polygon->type == OBJF_TRIANGLE)
+				if (part->polygons[i].polygon->type == OBJF_TRIANGLE)
 				{
 					if (test_intersection_with_object_triangle(
-							ray, &actual->polygon->value.as_objf_triangle,
+							ray, &part->polygons[i].polygon->value.as_objf_triangle,
 							&local_polygon_test))
 					{
 						if (intersect_test.distance <= 0.0f
 							|| local_polygon_test.distance < intersect_test.distance)
 						{
 							intersect_test.distance = local_polygon_test.distance;
-							intersect_test.sub_part_id = actual->polygon_id;
+							intersect_test.sub_part_id = part->polygons[i].polygon_id;
 						}
 					}
 				}
-				else if (actual->polygon->type == OBJF_RECTANGLE)
+				else if (part->polygons[i].polygon->type == OBJF_RECTANGLE)
 				{
 					if (test_intersection_with_object_rectangle(
-							ray, &actual->polygon->value.as_objf_rectangle,
+							ray, &part->polygons[i].polygon->value.as_objf_rectangle,
 							&local_polygon_test))
 					{
 						if (intersect_test.distance <= 0.0f
 							|| local_polygon_test.distance < intersect_test.distance)
 						{
 							intersect_test.distance = local_polygon_test.distance;
-							intersect_test.sub_part_id = actual->polygon_id;
+							intersect_test.sub_part_id = part->polygons[i].polygon_id;
 						}
 					}
 				}
-				actual = actual->next;
+				i++;
 			}
 
 			if (intersect_test.distance > 0.0f)

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/20 17:14:23 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:46:35 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,11 +243,9 @@ typedef struct s_object_polygon
 
 typedef struct s_object_binary_polygon
 {
-	t_object_polygon				*polygon;
+	t_object_polygon	*polygon;
 
-	int								polygon_id;
-
-	struct s_object_binary_polygon	*next;
+	int					polygon_id;
 
 }	t_object_binary_polygon;
 
@@ -281,13 +279,15 @@ typedef struct s_object_file
 }	t_object_file;
 
 void			add_object_binary_polygons(
-					t_object_binary_polygon **polygons,
+					t_object_binary_polygon *polygons,
 					t_object_polygon *new_polygon,
-					int polygon_id);
+					int polygon_id,
+					int nb_polygons_parent);
 void			free_object_binary_polygons(
-					t_object_binary_polygon *polygon);
+					t_object_binary_polygon *polygons);
 void			create_new_object_binary_tree_part(
-					t_object_binary_part **new);
+					t_object_binary_part **new,
+					int nb_polygons_parent);
 void			free_object_binary_tree(
 					t_object_binary_part *part);
 void			compute_objf_triangle(

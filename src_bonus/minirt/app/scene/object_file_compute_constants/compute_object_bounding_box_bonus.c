@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:51:50 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/24 12:44:34 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:47:37 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	compute_objf_binary_tree(
 				float	bounds_z[2]);
 static void	fill_objf_bbox_tree(
 				t_object_binary_part *part,
-				char axe);
+				char axe,
+				int nb_polygons_parent);
 static bool	is_bbox_too_small(
 				t_bounding_box *bbox);
 
@@ -100,7 +101,7 @@ static void	compute_objf_binary_tree(
 		free_object_binary_tree(objf->binary_partition);
 		objf->binary_partition = NULL;
 	}
-	create_new_object_binary_tree_part(&objf->binary_partition);
+	create_new_object_binary_tree_part(&objf->binary_partition, objf->nb_polygons);
 	if (objf->binary_partition == NULL)
 		return ;
 
@@ -117,8 +118,8 @@ static void	compute_objf_binary_tree(
 	while (i < objf->nb_polygons)
 	{
 		add_object_binary_polygons(
-			&objf->binary_partition->polygons,
-			&objf->polygons[i], i);
+			objf->binary_partition->polygons,
+			&objf->polygons[i], i, objf->nb_polygons);
 		i++;
 	}
 
@@ -127,28 +128,31 @@ static void	compute_objf_binary_tree(
 		&& objf->nb_polygons > 0
 		&& ! is_bbox_too_small(&objf->binary_partition->bounding_box))
 	{
-		fill_objf_bbox_tree(objf->binary_partition, axe);
+		fill_objf_bbox_tree(objf->binary_partition, axe, objf->nb_polygons);
 	}
 }
 
 
 static void	fill_objf_bbox_tree(
 				t_object_binary_part *part,
-				char axe)
+				char axe,
+				int nb_polygons_parent)
 {
+	int						i;
+	int						nb_polygons_child1;
+	int						nb_polygons_child2;
 	float					mid_axe;
 	t_object_binary_part	*child_1;
 	t_object_binary_part	*child_2;
-	t_object_binary_polygon	*actual;
 
-	if (part->polygons == NULL || part->polygons->next == NULL
+	if (nb_polygons_parent < 2
 		|| is_bbox_too_small(&part->bounding_box))
 		return ;
 
-	create_new_object_binary_tree_part(&child_1);
+	create_new_object_binary_tree_part(&child_1, nb_polygons_parent);
 	if (child_1 == NULL)
 		return ;
-	create_new_object_binary_tree_part(&child_2);
+	create_new_object_binary_tree_part(&child_2, nb_polygons_parent);
 	if (child_2 == NULL)
 	{
 		free_object_binary_tree(child_1);
@@ -236,26 +240,32 @@ static void	fill_objf_bbox_tree(
 	compute_bounding_box_constants(&child_1->bounding_box);
 	compute_bounding_box_constants(&child_2->bounding_box);
 
-	// Iterate thought each polygon of main tree part
-	actual = part->polygons;
+	i = 0;
+	nb_polygons_child1 = 0;
+	nb_polygons_child2 = 0;
 
-	while (actual)
+	// Iterate thought each polygon of main tree part
+	while (i < nb_polygons_parent)
 	{
 		if (is_polygon_inside_bounding_box(
-				&child_1->bounding_box, actual->polygon))
+				&child_1->bounding_box, part->polygons[i].polygon))
 		{
 			add_object_binary_polygons(
-				&child_1->polygons, actual->polygon, actual->polygon_id);
+				child_1->polygons, part->polygons[i].polygon,
+				part->polygons[i].polygon_id, nb_polygons_parent);
+			nb_polygons_child1++;
 		}
 
 		if (is_polygon_inside_bounding_box(
-				&child_2->bounding_box, actual->polygon))
+				&child_2->bounding_box, part->polygons[i].polygon))
 		{
 			add_object_binary_polygons(
-				&child_2->polygons, actual->polygon, actual->polygon_id);
+				child_2->polygons, part->polygons[i].polygon,
+				part->polygons[i].polygon_id, nb_polygons_parent);
+			nb_polygons_child2++;
 		}
 
-		actual = actual->next;
+		i++;
 	}
 
 	// Free the useless polygons chain list (now polygons are in childs)
@@ -265,8 +275,8 @@ static void	fill_objf_bbox_tree(
 	part->child_1 = child_1;
 	part->child_2 = child_2;
 
-	fill_objf_bbox_tree(child_1, axe);
-	fill_objf_bbox_tree(child_2, axe);
+	fill_objf_bbox_tree(child_1, axe, nb_polygons_child1);
+	fill_objf_bbox_tree(child_2, axe, nb_polygons_child2);
 }
 
 

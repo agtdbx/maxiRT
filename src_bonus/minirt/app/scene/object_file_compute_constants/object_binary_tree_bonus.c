@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:38:22 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/20 21:39:01 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:43:23 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 #include <stdlib.h>
 
 void	create_new_object_binary_tree_part(
-			t_object_binary_part **new)
+			t_object_binary_part **new,
+			int nb_polygons_parent)
 {
+	int	i;
+
 	*new = malloc(sizeof(t_object_binary_part));
 
 	if (*new == NULL)
@@ -27,7 +30,23 @@ void	create_new_object_binary_tree_part(
 
 	(*new)->child_1 = NULL;
 	(*new)->child_2 = NULL;
-	(*new)->polygons = NULL;
+	(*new)->polygons = malloc(sizeof(t_object_binary_polygon) * (nb_polygons_parent + 1));
+	if ((*new)->polygons == NULL)
+	{
+		free(*new);
+		*new = NULL;
+		return ;
+	}
+
+	i = 0;
+	while (i < nb_polygons_parent)
+	{
+		(*new)->polygons[i].polygon_id = -1;
+		(*new)->polygons[i].polygon = NULL;
+		i++;
+	}
+	(*new)->polygons[i].polygon_id = -1;
+	(*new)->polygons[i].polygon = NULL;
 }
 
 void	free_object_binary_tree(
@@ -46,44 +65,29 @@ void	free_object_binary_tree(
 
 
 void	add_object_binary_polygons(
-			t_object_binary_polygon **polygons,
+			t_object_binary_polygon *polygons,
 			t_object_polygon *new_polygon,
-			int polygon_id)
+			int polygon_id,
+			int nb_polygons_parent)
 {
-	t_object_binary_polygon *new;
-	t_object_binary_polygon *actual;
+	int	i;
 
-	new = malloc(sizeof(t_object_binary_polygon));
-	if (new == NULL)
-		return ;
-
-	new->next = NULL;
-	new->polygon = new_polygon;
-	new->polygon_id = polygon_id;
-
-	if (*polygons == NULL)
+	i = 0;
+	while (i < nb_polygons_parent)
 	{
-		*polygons = new;
-		return ;
+		if (polygons[i].polygon_id == -1)
+		{
+			polygons[i].polygon = new_polygon;
+			polygons[i].polygon_id = polygon_id;
+			return ;
+		}
+		i++;
 	}
-
-	actual = *polygons;
-	while (actual->next != NULL)
-		actual = actual->next;
-
-	actual->next = new;
 }
 
 
 void	free_object_binary_polygons(
-			t_object_binary_polygon *polygon)
+			t_object_binary_polygon *polygons)
 {
-	t_object_binary_polygon *next;
-
-	while (polygon != NULL)
-	{
-		next = polygon->next;
-		free(polygon);
-		polygon = next;
-	}
+	free(polygons);
 }
