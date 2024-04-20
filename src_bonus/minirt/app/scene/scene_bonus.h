@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/23 18:57:46 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:14:23 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,7 @@ typedef struct s_object_polygon
 {
 	t_object_polygon_t	type;
 	t_object_polygon_v	value;
+	t_bounding_box		bounding_box;
 }	t_object_polygon;
 
 typedef struct s_object_binary_polygon
@@ -291,10 +292,12 @@ void			free_object_binary_tree(
 					t_object_binary_part *part);
 void			compute_objf_triangle(
 					t_object_file *objf,
-					t_object_triangle *triangle);
+					t_object_triangle *triangle,
+					t_bounding_box *bbox);
 void			compute_objf_rectangle(
 					t_object_file *objf,
-					t_object_rectangle *rectangle);
+					t_object_rectangle *rectangle,
+					t_bounding_box *bbox);
 void			compute_objf_bounding_boxes(
 					t_object_file *objf);
 void			object_file_compute_constants(

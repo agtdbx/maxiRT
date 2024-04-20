@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/03/24 11:22:35 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:15:12 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	compute_objf_vertices(
 				t_object_file *objf);
 static void	compute_objf_polygons(
 				t_object_file *objf);
-
 
 #include <stdio.h>
 
@@ -179,9 +178,15 @@ static void	compute_objf_polygons(
 	while (i < objf->nb_polygons)
 	{
 		if (objf->polygons[i].type == OBJF_TRIANGLE)
-			compute_objf_triangle(objf, &objf->polygons[i].value.as_objf_triangle);
+			compute_objf_triangle(
+				objf,
+				&objf->polygons[i].value.as_objf_triangle,
+				&objf->polygons[i].bounding_box);
 		else if (objf->polygons[i].type == OBJF_RECTANGLE)
-			compute_objf_rectangle(objf, &objf->polygons[i].value.as_objf_rectangle);
+			compute_objf_rectangle(
+				objf,
+				&objf->polygons[i].value.as_objf_rectangle,
+				&objf->polygons[i].bounding_box);
 		i++;
 	}
 }

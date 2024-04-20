@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/03/24 13:05:08 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/20 17:00:54 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -220,8 +220,8 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_scale_into_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_substract_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_substract_into_bonus.c \
+				src_bonus/minirt/app/utils/space_partition/is_bounding_box_inside_bounding_box_bonus.c \
 				src_bonus/minirt/app/utils/space_partition/is_polygon_inside_object_bounding_box_bonus.c \
-				src_bonus/minirt/app/utils/space_partition/is_triangle_inside_cube_bonus.c \
 				src_bonus/minirt_bonus.c \
 				src_bonus/minirt/parser/directives/parse_ambient_light_bonus.c \
 				src_bonus/minirt/parser/directives/parse_camera_bonus.c \
