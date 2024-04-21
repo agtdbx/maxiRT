@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere_panel_draw.c                                :+:      :+:    :+:   */
+/*   sphere_panel_draw_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 21:11:30 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:16:54 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ bool	sphere_panel_draw(
 	should_redraw |= button_draw(mlx, menu,
 			&menu->object_panel.sphere_label.diameter_label_button);
 	if (should_redraw)
-		sphere_compute_constants((t_sphere *)menu->object_panel.object_ptr);
+		sphere_compute_constants(
+			(t_sphere *)menu->object_panel.object_ptr,
+			menu->object_panel.object_bbox);
 	return (should_redraw);
 }

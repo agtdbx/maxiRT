@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   space_partition.h                                  :+:      :+:    :+:   */
+/*   set_min_max_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 14:54:25 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/21 12:04:07 by auguste          ###   ########.fr       */
+/*   Created: 2024/04/21 12:03:18 by auguste           #+#    #+#             */
+/*   Updated: 2024/04/21 12:03:59 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPACE_PARTITION_H
-# define SPACE_PARTITION_H
-
-# include "minirt/app/scene/scene_bonus.h"
-
-bool	is_polygon_inside_bounding_box(
-			const t_bounding_box *bbox,
-			const t_object_polygon *polygon);
-
-bool	is_bbox_in_bbox(
-			const t_bounding_box *bbox_out,
-			const t_bounding_box *bbox_in);
+#include "minirt/app/utils/space_partition/space_partition.h"
 
 void	set_min_max(
 			float *min,
 			float *max,
-			float *test);
-#endif
+			float *test)
+{
+	if (*min > *test)
+		*min = *test;
+	if (*max < *test)
+		*max = *test;
+}

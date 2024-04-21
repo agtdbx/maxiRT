@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:51 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 15:00:56 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 12:27:16 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	object_panel_register(
 	object_panel_hide(menu);
 	menu->light_panel.is_enabled = false;
 	menu->object_panel.is_enabled = true;
+	menu->object_panel.object_bbox = &object->bounding_box;
 	_register_common_labels(menu, object);
 	_register_object(menu, object);
 	object_panel_show(menu);

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:48:40 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/20 17:11:33 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 12:34:12 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <math.h>
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
+#include "minirt/app/utils/space_partition/space_partition.h"
 
 static void	compute_objf_triangle_pixel_pos_constants(
 				t_object_triangle *triangle,
@@ -25,10 +26,6 @@ static void	compute_objf_triangle_pixel_pos_constants(
 static void	_compute_object_triangle_bounding_box(
 				t_bounding_box *bbox,
 				t_object_triangle *triangle);
-static void	_set_min_max(
-				float *min,
-				float *max,
-				float *test);
 
 void		compute_objf_triangle(
 				t_object_file *objf,
@@ -118,22 +115,11 @@ static void	_compute_object_triangle_bounding_box(
 	bbox->min_z = triangle->point1.z;
 	bbox->max_z = triangle->point1.z;
 
-	_set_min_max(&bbox->min_x, &bbox->max_x, &triangle->point2.x);
-	_set_min_max(&bbox->min_y, &bbox->max_y, &triangle->point2.y);
-	_set_min_max(&bbox->min_z, &bbox->max_z, &triangle->point2.z);
+	set_min_max(&bbox->min_x, &bbox->max_x, &triangle->point2.x);
+	set_min_max(&bbox->min_y, &bbox->max_y, &triangle->point2.y);
+	set_min_max(&bbox->min_z, &bbox->max_z, &triangle->point2.z);
 
-	_set_min_max(&bbox->min_x, &bbox->max_x, &triangle->point3.x);
-	_set_min_max(&bbox->min_y, &bbox->max_y, &triangle->point3.y);
-	_set_min_max(&bbox->min_z, &bbox->max_z, &triangle->point3.z);
-}
-
-static void	_set_min_max(
-				float *min,
-				float *max,
-				float *test)
-{
-	if (*min > *test)
-		*min = *test;
-	if (*max < *test)
-		*max = *test;
+	set_min_max(&bbox->min_x, &bbox->max_x, &triangle->point3.x);
+	set_min_max(&bbox->min_y, &bbox->max_y, &triangle->point3.y);
+	set_min_max(&bbox->min_z, &bbox->max_z, &triangle->point3.z);
 }

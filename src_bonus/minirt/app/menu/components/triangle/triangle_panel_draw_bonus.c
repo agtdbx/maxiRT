@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/11 19:48:00 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 12:17:04 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ bool	triangle_panel_draw(
 	should_redraw |= button_draw(
 			mlx, menu, &menu->object_panel.triangle_panel.position_p3_label_button_z);
 	if (should_redraw)
-		triangle_compute_constants((t_triangle *)menu->object_panel.object_ptr);
+		triangle_compute_constants(
+			(t_triangle *)menu->object_panel.object_ptr,
+			menu->object_panel.object_bbox);
 	return (should_redraw);
 }

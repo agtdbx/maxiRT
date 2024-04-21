@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:48:40 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/20 17:15:32 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 12:34:25 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,11 @@
 #include <math.h>
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
+#include "minirt/app/utils/space_partition/space_partition.h"
 
 static void	_compute_object_rectangle_bounding_box(
 				t_bounding_box *bbox,
 				t_object_rectangle *rectangle);
-static void	_set_min_max(
-				float *min,
-				float *max,
-				float *test);
 
 void	compute_objf_rectangle(
 			t_object_file *objf,
@@ -75,26 +72,15 @@ static void	_compute_object_rectangle_bounding_box(
 	bbox->min_z = rectangle->point1.z;
 	bbox->max_z = rectangle->point1.z;
 
-	_set_min_max(&bbox->min_x, &bbox->max_x, &rectangle->point2.x);
-	_set_min_max(&bbox->min_y, &bbox->max_y, &rectangle->point2.y);
-	_set_min_max(&bbox->min_z, &bbox->max_z, &rectangle->point2.z);
+	set_min_max(&bbox->min_x, &bbox->max_x, &rectangle->point2.x);
+	set_min_max(&bbox->min_y, &bbox->max_y, &rectangle->point2.y);
+	set_min_max(&bbox->min_z, &bbox->max_z, &rectangle->point2.z);
 
-	_set_min_max(&bbox->min_x, &bbox->max_x, &rectangle->point3.x);
-	_set_min_max(&bbox->min_y, &bbox->max_y, &rectangle->point3.y);
-	_set_min_max(&bbox->min_z, &bbox->max_z, &rectangle->point3.z);
+	set_min_max(&bbox->min_x, &bbox->max_x, &rectangle->point3.x);
+	set_min_max(&bbox->min_y, &bbox->max_y, &rectangle->point3.y);
+	set_min_max(&bbox->min_z, &bbox->max_z, &rectangle->point3.z);
 
-	_set_min_max(&bbox->min_x, &bbox->max_x, &rectangle->point4.x);
-	_set_min_max(&bbox->min_y, &bbox->max_y, &rectangle->point4.y);
-	_set_min_max(&bbox->min_z, &bbox->max_z, &rectangle->point4.z);
-}
-
-static void	_set_min_max(
-				float *min,
-				float *max,
-				float *test)
-{
-	if (*min > *test)
-		*min = *test;
-	if (*max < *test)
-		*max = *test;
+	set_min_max(&bbox->min_x, &bbox->max_x, &rectangle->point4.x);
+	set_min_max(&bbox->min_y, &bbox->max_y, &rectangle->point4.y);
+	set_min_max(&bbox->min_z, &bbox->max_z, &rectangle->point4.z);
 }

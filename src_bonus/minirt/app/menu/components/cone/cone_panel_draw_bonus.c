@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cone_panel_draw.c                                  :+:      :+:    :+:   */
+/*   cone_panel_draw_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 21:08:02 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:16:11 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ bool	cone_panel_draw(
 	should_redraw |= _draw_position_and_direction_labels(mlx, menu);
 	should_redraw |= _draw_diameter_and_height_labels(mlx, menu);
 	if (should_redraw)
-		cone_compute_constants((t_cone *)menu->object_panel.object_ptr);
+		cone_compute_constants(
+			(t_cone *)menu->object_panel.object_ptr,
+			menu->object_panel.object_bbox);
 	return (should_redraw);
 }
 

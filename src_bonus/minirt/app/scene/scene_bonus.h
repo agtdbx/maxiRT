@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/20 18:46:35 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 12:26:35 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,123 +20,6 @@
 # include "minirt/app/utils/color/color_bonus.h"
 # include "minirt/app/utils/geometry/geometry_bonus.h"
 
-
-//---- SPHERE ----------------------------------------------------------------//
-
-typedef struct s_sphere
-{
-	t_vec3	pos;
-	float	diameter;
-
-	float	radius;
-	float	radius2;
-
-}	t_sphere;
-
-void			sphere_compute_constants(
-					t_sphere *sphere);
-
-//---- PLANE -----------------------------------------------------------------//
-
-typedef struct s_plane
-{
-	t_vec3	pos;
-	t_vec3	normal;
-
-	t_vec3	rev_normal;
-}	t_plane;
-
-void			plane_compute_constants(
-					t_plane *plane);
-
-//---- CYLINDER --------------------------------------------------------------//
-
-typedef struct s_cylinder
-{
-	t_vec3	pos;
-	float	diameter;
-	float	height;
-	t_vec3	axis;
-
-	t_plane	bot;
-	t_plane	top;
-	float	radius;
-	float	radius2;
-	float	half_height;
-
-}	t_cylinder;
-
-void			cylinder_compute_constants(
-					t_cylinder *cylinder);
-
-//---- CONE ------------------------------------------------------------------//
-
-typedef struct s_cone
-{
-	t_vec3	pos;
-	float	diameter;
-	float	height;
-	t_vec3	axis;
-
-	t_plane	end;
-	float	radius;
-	float	radius2;
-	float	ratio;
-}	t_cone;
-
-void			cone_compute_constants(
-					t_cone *cone);
-
-//---- CUBE ------------------------------------------------------------------//
-
-typedef struct s_cube
-{
-	t_vec3	pos;
-	float	witdh;
-	float	height;
-	float	depth;
-	t_vec3	x_axis;
-	t_vec3	y_axis;
-
-	t_vec3	z_axis;
-	t_plane	front;
-	t_plane	back;
-	t_plane	top;
-	t_plane	bot;
-	t_plane	left;
-	t_plane	right;
-	float	half_witdh;
-	float	half_height;
-	float	half_depth;
-
-}	t_cube;
-
-void			cube_compute_constants(
-					t_cube *cube);
-void			cube_compute_constants_from_menu(
-					t_cube *cube);
-
-//---- TRIANGLE --------------------------------------------------------------//
-
-typedef struct s_triangle
-{
-	t_vec3	point1;
-	t_vec3	point2;
-	t_vec3	point3;
-
-	t_vec3	normal;
-	t_vec3	edge1; // point2 - point1
-	t_vec3	edge2; // point3 - point1
-	float	BCy; // point2.y - point3.y;
-	float	CBx; // point3.x - point2.x;
-	float	CAy; // point3.y - point1.y;
-	float	ACx; // point1.x - point3.x;
-	float	div_part; // div part for pixel pos
-	int		pixel_pos_base;
-}	t_triangle;
-
-void			triangle_compute_constants(
-					t_triangle *triangle);
 
 //---- BOUNDING_BOX ----------------------------------------------------------//
 
@@ -179,6 +62,127 @@ typedef struct s_bounding_box
 }	t_bounding_box;
 
 void			compute_bounding_box_constants(
+					t_bounding_box *bbox);
+
+//---- SPHERE ----------------------------------------------------------------//
+
+typedef struct s_sphere
+{
+	t_vec3	pos;
+	float	diameter;
+
+	float	radius;
+	float	radius2;
+
+}	t_sphere;
+
+void			sphere_compute_constants(
+					t_sphere *sphere,
+					t_bounding_box *bbox);
+
+//---- PLANE -----------------------------------------------------------------//
+
+typedef struct s_plane
+{
+	t_vec3	pos;
+	t_vec3	normal;
+
+	t_vec3	rev_normal;
+}	t_plane;
+
+void			plane_compute_constants(
+					t_plane *plane,
+					t_bounding_box *bbox);
+
+//---- CYLINDER --------------------------------------------------------------//
+
+typedef struct s_cylinder
+{
+	t_vec3	pos;
+	float	diameter;
+	float	height;
+	t_vec3	axis;
+
+	t_plane	bot;
+	t_plane	top;
+	float	radius;
+	float	radius2;
+	float	half_height;
+
+}	t_cylinder;
+
+void			cylinder_compute_constants(
+					t_cylinder *cylinder,
+					t_bounding_box *bbox);
+
+//---- CONE ------------------------------------------------------------------//
+
+typedef struct s_cone
+{
+	t_vec3	pos;
+	float	diameter;
+	float	height;
+	t_vec3	axis;
+
+	t_plane	end;
+	float	radius;
+	float	radius2;
+	float	ratio;
+}	t_cone;
+
+void			cone_compute_constants(
+					t_cone *cone,
+					t_bounding_box *bbox);
+
+//---- CUBE ------------------------------------------------------------------//
+
+typedef struct s_cube
+{
+	t_vec3	pos;
+	float	witdh;
+	float	height;
+	float	depth;
+	t_vec3	x_axis;
+	t_vec3	y_axis;
+
+	t_vec3	z_axis;
+	t_plane	front;
+	t_plane	back;
+	t_plane	top;
+	t_plane	bot;
+	t_plane	left;
+	t_plane	right;
+	float	half_witdh;
+	float	half_height;
+	float	half_depth;
+
+}	t_cube;
+
+void			cube_compute_constants(
+					t_cube *cube,
+					t_bounding_box *bbox);
+
+//---- TRIANGLE --------------------------------------------------------------//
+
+typedef struct s_triangle
+{
+	t_vec3	point1;
+	t_vec3	point2;
+	t_vec3	point3;
+
+	t_vec3	normal;
+	t_vec3	edge1; // point2 - point1
+	t_vec3	edge2; // point3 - point1
+	float	BCy; // point2.y - point3.y;
+	float	CBx; // point3.x - point2.x;
+	float	CAy; // point3.y - point1.y;
+	float	ACx; // point1.x - point3.x;
+	float	div_part; // div part for pixel pos
+	int		pixel_pos_base;
+}	t_triangle;
+
+void			triangle_compute_constants(
+					t_triangle *triangle,
 					t_bounding_box *bbox);
 
 //---- OBJECT FILE------------------------------------------------------------//
@@ -272,7 +276,6 @@ typedef struct s_object_file
 
 	float					size;
 	t_vec3					z_axis;
-	t_cube					bounding_box;
 
 	t_object_binary_part	*binary_partition;
 
@@ -299,9 +302,11 @@ void			compute_objf_rectangle(
 					t_object_rectangle *rectangle,
 					t_bounding_box *bbox);
 void			compute_objf_bounding_boxes(
-					t_object_file *objf);
+					t_object_file *objf,
+					t_bounding_box *bbox);
 void			object_file_compute_constants(
-					t_object_file *objf);
+					t_object_file *objf,
+					t_bounding_box *bbox);
 
 //---- COLOR INTERFACE -------------------------------------------------------//
 
@@ -343,6 +348,7 @@ typedef struct s_object
 
 	t_color_t		color_type;
 	t_color			color;
+	t_bounding_box	bounding_box;
 	mlx_texture_t	*texture;
 	mlx_texture_t	*normal_map;
 

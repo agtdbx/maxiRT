@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:55:17 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 15:01:53 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 12:23:03 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ typedef struct s_object_panel
 	bool				is_enabled;
 	t_object_t			object_type;
 	void				*object_ptr;
+	t_bounding_box		*object_bbox;
 
 	mlx_image_t			*title;
 	mlx_image_t			*cone_title;

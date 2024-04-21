@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 14:50:46 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 12:19:53 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ bool	object_file_panel_draw(
 	should_redraw |= _draw_size_label(mlx, menu);
 	if (should_redraw)
 		object_file_compute_constants(
-			(t_object_file *)menu->object_panel.object_ptr);
+			(t_object_file *)menu->object_panel.object_ptr,
+			menu->object_panel.object_bbox);
 	return (should_redraw);
 }
 

@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/04/20 17:15:12 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 11:59:53 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ static void	compute_objf_polygons(
  * @param[out] objf
  */
 void	object_file_compute_constants(
-			t_object_file *objf)
+			t_object_file *objf,
+			t_bounding_box *bbox)
 {
 	printf("OBJ{vertices : %i, polygons : %i}\n",
 			objf->nb_vertices, objf->nb_polygons);
@@ -129,7 +130,7 @@ void	object_file_compute_constants(
 	printf("polygons done, start of bounding box tree compute\n");
 
 	// Compute bounding boxes
-	compute_objf_bounding_boxes(objf);
+	compute_objf_bounding_boxes(objf, bbox);
 	printf("bounding vox tree done\n");
 
 	//print_tree_part(objf->binary_partition);

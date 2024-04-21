@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   geometry.h                                         :+:      :+:    :+:   */
+/*   geometry_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:28:34 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 18:35:37 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/04/21 12:31:49 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ extern void		vec3_scale_into(
 extern void		vec3_add(
 					t_vec3 *restrict vec1,
 					t_vec3 const *restrict vec2);
+extern void		vec3_add_into(
+					t_vec3 *restrict dst,
+					t_vec3 const *restrict lhs,
+					t_vec3 const *restrict rhs);
 extern void		vec3_substract(
 					t_vec3 *restrict vec1,
 					t_vec3 const *restrict vec2);

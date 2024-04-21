@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/16 11:05:44 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 11:41:15 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,33 @@ static void	_compute_constants(
 	while (object_iterator != NULL)
 	{
 		if (object_iterator->type == OBJ_SPHERE)
-			sphere_compute_constants(&object_iterator->value.as_sphere);
+			sphere_compute_constants(
+				&object_iterator->value.as_sphere,
+				&object_iterator->bounding_box);
 		else if (object_iterator->type == OBJ_PLANE)
-			plane_compute_constants(&object_iterator->value.as_plane);
+			plane_compute_constants(
+				&object_iterator->value.as_plane,
+				&object_iterator->bounding_box);
 		else if (object_iterator->type == OBJ_CYLINDER)
-			cylinder_compute_constants(&object_iterator->value.as_cylinder);
+			cylinder_compute_constants(
+				&object_iterator->value.as_cylinder,
+				&object_iterator->bounding_box);
 		else if (object_iterator->type == OBJ_CONE)
-			cone_compute_constants(&object_iterator->value.as_cone);
+			cone_compute_constants(
+				&object_iterator->value.as_cone,
+				&object_iterator->bounding_box);
 		else if (object_iterator->type == OBJ_CUBE)
-			cube_compute_constants(&object_iterator->value.as_cube);
+			cube_compute_constants(
+				&object_iterator->value.as_cube,
+				&object_iterator->bounding_box);
 		else if (object_iterator->type == OBJ_TRIANGLE)
-			triangle_compute_constants(&object_iterator->value.as_triangle);
+			triangle_compute_constants(
+				&object_iterator->value.as_triangle,
+				&object_iterator->bounding_box);
 		else if (object_iterator->type == OBJ_OBJECT_FILE)
-			object_file_compute_constants(&object_iterator->value.as_object_file);
+			object_file_compute_constants(
+				&object_iterator->value.as_object_file,
+				&object_iterator->bounding_box);
 		object_iterator = object_iterator->next;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas);

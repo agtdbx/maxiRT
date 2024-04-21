@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube_panel_draw.c                                  :+:      :+:    :+:   */
+/*   cube_panel_draw_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:02:05 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:15:58 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ bool	cube_panel_draw(
 	should_redraw |= _draw_y_axis_label(mlx, menu);
 	should_redraw |= _draw_size_labels(mlx, menu);
 	if (should_redraw)
-		cube_compute_constants_from_menu(
-			(t_cube *)menu->object_panel.object_ptr);
+		cube_compute_constants(
+			(t_cube *)menu->object_panel.object_ptr,
+			menu->object_panel.object_bbox);
 	return (should_redraw);
 }
 
