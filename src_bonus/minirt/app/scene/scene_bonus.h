@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 12:26:35 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 18:08:44 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,19 +390,33 @@ void			camera_compute_constants(
 
 //---- SCENE -----------------------------------------------------------------//
 
+typedef struct s_scene_binary_part
+{
+	struct s_scene_binary_part	*child_1;
+	struct s_scene_binary_part	*child_2;
+
+	t_bounding_box				bounding_box;
+	t_object					**objects;
+
+}	t_scene_binary_part;
+
 typedef struct s_scene
 {
-	t_object	*objects;
-	t_light		*spotlights;
-	t_light		*ambient_lightning;
-	t_camera	*camera;
+	t_scene_binary_part	*binary_tree;
+	t_object			*objects;
+	t_light				*spotlights;
+	t_light				*ambient_lightning;
+	t_camera			*camera;
 }	t_scene;
 
 t_error			scene_add_object(
 					t_scene *scene,
 					t_object *obj);
+void			compute_scene_binary_tree(
+					t_scene *scene);
 
 void			scene_del(
 					t_scene *scene);
-
+void			free_scene_binary_tree(
+					t_scene_binary_part *part);
 #endif //SCENE_BONUS_H

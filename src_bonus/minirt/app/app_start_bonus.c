@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 11:41:15 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:50:14 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,20 @@ static t_error	_app_init(
 					t_app *app,
 					t_scene *scene)
 {
-	app->scene = *scene;
+	app->scene = scene;
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	app->mlx = mlx_init(g_window_width, g_window_height, g_window_title, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
-		|| menu_init(app->mlx, &app->menu, &app->scene) == FAILURE
+		|| menu_init(app->mlx, &app->menu, app->scene) == FAILURE
 		|| mlx_loop_hook(app->mlx, app_loop, app) == false)
 	{
 		mlx_terminate(app->mlx);
 		return (FAILURE);
 	}
-	_compute_constants(app->mlx, &app->menu, &app->scene, &app->canvas);
+	_compute_constants(app->mlx, &app->menu, app->scene, &app->canvas);
+	// scene->binary_tree = app->scene.binary_tree;
 	return (SUCCESS);
 }
 
@@ -117,4 +118,6 @@ static void	_compute_constants(
 		object_iterator = object_iterator->next;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas);
+	scene->binary_tree = NULL;
+	compute_scene_binary_tree(scene);
 }

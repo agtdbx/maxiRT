@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:02:43 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/23 15:26:28 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 17:28:53 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ bool	test_intersection_with_bounding_box(
 			t_ray const *ray,
 			t_bounding_box const *bbox)
 {
+	if (bbox->min_x <= ray->pos.x  && ray->pos.x <= bbox->max_x
+		&& bbox->min_y <= ray->pos.y && ray->pos.y <= bbox->max_y
+		&& bbox->min_z <= ray->pos.z && ray->pos.z <= bbox->max_z)
+		return (true);
+
 	return (test_intersection_with_bouding_box_face(
 			ray, &bbox->front)
 		|| test_intersection_with_bouding_box_face(

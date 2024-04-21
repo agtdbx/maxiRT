@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_fast_on_front_canvas.c                      :+:      :+:    :+:   */
+/*   render_fast_on_front_canvas_bonus.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 17:52:18 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 18:24:07 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:54:08 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	render_fast_on_front_canvas(
 	int32_t			pix[2];
 	t_ray			casted_ray;
 
-	_get_top_left_ray(&app->canvas, app->scene.camera, &ray[Y]);
-	casted_ray.pos = app->scene.camera->pos;
+	_get_top_left_ray(&app->canvas, app->scene->camera, &ray[Y]);
+	casted_ray.pos = app->scene->camera->pos;
 	pix[Y] = 0;
 	while (pix[Y] < app->canvas.height)
 	{
@@ -42,11 +42,11 @@ void	render_fast_on_front_canvas(
 			casted_ray.depth = 0;
 			vec3_normalize_into(&casted_ray.vec, &ray[X]);
 			img_draw_square(app->canvas.front, pix, ppr, render_ray_from_camera(
-					&app->scene, &casted_ray, app->menu.is_visible));
-			vec3_linear_transform(&ray[X], ppr, &app->scene.camera->o_x);
+					app->scene, &casted_ray, app->menu.is_visible));
+			vec3_linear_transform(&ray[X], ppr, &app->scene->camera->o_x);
 			pix[X] += ppr;
 		}
-		vec3_linear_transform(&ray[Y], ppr, &app->scene.camera->o_y);
+		vec3_linear_transform(&ray[Y], ppr, &app->scene->camera->o_y);
 		pix[Y] += ppr;
 	}
 }

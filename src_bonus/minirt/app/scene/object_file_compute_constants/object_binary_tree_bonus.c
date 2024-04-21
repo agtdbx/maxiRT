@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 18:38:22 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/20 18:43:23 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 13:15:09 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	free_object_binary_tree(
 	if (part == NULL)
 		return ;
 
-	free_object_binary_polygons(part->polygons);
+	if (part->polygons)
+		free(part->polygons);
 
 	free_object_binary_tree(part->child_1);
 	free_object_binary_tree(part->child_2);
@@ -83,11 +84,4 @@ void	add_object_binary_polygons(
 		}
 		i++;
 	}
-}
-
-
-void	free_object_binary_polygons(
-			t_object_binary_polygon *polygons)
-{
-	free(polygons);
 }

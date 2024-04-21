@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:54:25 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/21 12:04:07 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 18:14:56 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 
 # include "minirt/app/scene/scene_bonus.h"
 
-bool	is_polygon_inside_bounding_box(
-			const t_bounding_box *bbox,
-			const t_object_polygon *polygon);
-
 bool	is_bbox_in_bbox(
 			const t_bounding_box *bbox_out,
 			const t_bounding_box *bbox_in);
+
+void	compute_childs_bbox(
+			t_bounding_box *parent_bbox,
+			t_bounding_box *child1_bbox,
+			t_bounding_box *child2_bbox);
 
 void	set_min_max(
 			float *min,

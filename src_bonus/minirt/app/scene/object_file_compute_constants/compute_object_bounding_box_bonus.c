@@ -6,11 +6,13 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:51:50 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/21 12:36:46 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 18:34:14 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/scene/scene_bonus.h"
+
+#include <stdlib.h>
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 #include "minirt/app/utils/space_partition/space_partition.h"
@@ -25,7 +27,6 @@ static void	compute_objf_binary_tree(
 				t_bounding_box *bbox);
 static void	fill_objf_bbox_tree(
 				t_object_binary_part *part,
-				char axe,
 				int nb_polygons_parent);
 static bool	is_bbox_too_small(
 				t_bounding_box *bbox);
@@ -70,7 +71,6 @@ static void	compute_objf_binary_tree(
 				t_bounding_box *bbox)
 {
 	int		i;
-	char	axe;
 
 	if (objf->binary_partition != NULL)
 	{
@@ -92,25 +92,22 @@ static void	compute_objf_binary_tree(
 		i++;
 	}
 
-	axe = 'x';
 	if (objf->binary_partition->polygons != NULL
 		&& objf->nb_polygons > 0
 		&& ! is_bbox_too_small(&objf->binary_partition->bounding_box))
 	{
-		fill_objf_bbox_tree(objf->binary_partition, axe, objf->nb_polygons);
+		fill_objf_bbox_tree(objf->binary_partition, objf->nb_polygons);
 	}
 }
 
 
 static void	fill_objf_bbox_tree(
 				t_object_binary_part *part,
-				char axe,
 				int nb_polygons_parent)
 {
 	int						i;
 	int						nb_polygons_child1;
 	int						nb_polygons_child2;
-	float					mid_axe;
 	t_object_binary_part	*child_1;
 	t_object_binary_part	*child_2;
 
@@ -129,81 +126,10 @@ static void	fill_objf_bbox_tree(
 	}
 
 	// Cut main bbox in half by axe to childs have bbox
-	if (axe == 'x')
-	{
-		// Calculate mid axe
-		mid_axe = part->bounding_box.max_x - part->bounding_box.min_x;
-		mid_axe /= 2.0f;
-		mid_axe += part->bounding_box.min_x;
-
-		// Assign mins and max to childs
-		child_1->bounding_box.min_x = mid_axe;
-		child_2->bounding_box.min_x = part->bounding_box.min_x;
-		child_1->bounding_box.max_x = part->bounding_box.max_x;
-		child_2->bounding_box.max_x = mid_axe;
-
-		child_1->bounding_box.min_y = part->bounding_box.min_y;
-		child_2->bounding_box.min_y = part->bounding_box.min_y;
-		child_1->bounding_box.max_y = part->bounding_box.max_y;
-		child_2->bounding_box.max_y = part->bounding_box.max_y;
-
-		child_1->bounding_box.min_z = part->bounding_box.min_z;
-		child_2->bounding_box.min_z = part->bounding_box.min_z;
-		child_1->bounding_box.max_z = part->bounding_box.max_z;
-		child_2->bounding_box.max_z = part->bounding_box.max_z;
-
-		axe = 'y';
-	}
-	else if (axe == 'y')
-	{
-		// Calculate mid axe
-		mid_axe = part->bounding_box.max_y - part->bounding_box.min_y;
-		mid_axe /= 2.0f;
-		mid_axe += part->bounding_box.min_y;
-
-		// Assign mins and max to childs
-		child_1->bounding_box.min_x = part->bounding_box.min_x;
-		child_2->bounding_box.min_x = part->bounding_box.min_x;
-		child_1->bounding_box.max_x = part->bounding_box.max_x;
-		child_2->bounding_box.max_x = part->bounding_box.max_x;
-
-		child_1->bounding_box.min_y = mid_axe;
-		child_2->bounding_box.min_y = part->bounding_box.min_y;
-		child_1->bounding_box.max_y = part->bounding_box.max_y;
-		child_2->bounding_box.max_y = mid_axe;
-
-		child_1->bounding_box.min_z = part->bounding_box.min_z;
-		child_2->bounding_box.min_z = part->bounding_box.min_z;
-		child_1->bounding_box.max_z = part->bounding_box.max_z;
-		child_2->bounding_box.max_z = part->bounding_box.max_z;
-
-		axe = 'z';
-	}
-	else
-	{
-		// Calculate mid axe
-		mid_axe = part->bounding_box.max_z - part->bounding_box.min_z;
-		mid_axe /= 2.0f;
-		mid_axe += part->bounding_box.min_z;
-
-		// Assign mins and max to childs
-		child_1->bounding_box.min_x = part->bounding_box.min_x;
-		child_2->bounding_box.min_x = part->bounding_box.min_x;
-		child_1->bounding_box.max_x = part->bounding_box.max_x;
-		child_2->bounding_box.max_x = part->bounding_box.max_x;
-
-		child_1->bounding_box.min_y = part->bounding_box.min_y;
-		child_2->bounding_box.min_y = part->bounding_box.min_y;
-		child_1->bounding_box.max_y = part->bounding_box.max_y;
-		child_2->bounding_box.max_y = part->bounding_box.max_y;
-
-		child_1->bounding_box.min_z = mid_axe;
-		child_2->bounding_box.min_z = part->bounding_box.min_z;
-		child_1->bounding_box.max_z = part->bounding_box.max_z;
-		child_2->bounding_box.max_z = mid_axe;
-
-		axe = 'x';
-	}
+	compute_childs_bbox(
+		&part->bounding_box,
+		&child_1->bounding_box,
+		&child_2->bounding_box);
 
 	// Compute bbox constants for childs
 	compute_bounding_box_constants(&child_1->bounding_box);
@@ -216,8 +142,9 @@ static void	fill_objf_bbox_tree(
 	// Iterate thought each polygon of main tree part
 	while (i < nb_polygons_parent)
 	{
-		if (is_polygon_inside_bounding_box(
-				&child_1->bounding_box, part->polygons[i].polygon))
+		if (is_bbox_in_bbox(
+				&child_1->bounding_box,
+				&part->polygons[i].polygon->bounding_box))
 		{
 			add_object_binary_polygons(
 				child_1->polygons, part->polygons[i].polygon,
@@ -225,8 +152,9 @@ static void	fill_objf_bbox_tree(
 			nb_polygons_child1++;
 		}
 
-		if (is_polygon_inside_bounding_box(
-				&child_2->bounding_box, part->polygons[i].polygon))
+		if (is_bbox_in_bbox(
+				&child_2->bounding_box,
+				&part->polygons[i].polygon->bounding_box))
 		{
 			add_object_binary_polygons(
 				child_2->polygons, part->polygons[i].polygon,
@@ -238,14 +166,14 @@ static void	fill_objf_bbox_tree(
 	}
 
 	// Free the useless polygons chain list (now polygons are in childs)
-	free_object_binary_polygons(part->polygons);
+	free(part->polygons);
 	part->polygons = NULL;
 
 	part->child_1 = child_1;
 	part->child_2 = child_2;
 
-	fill_objf_bbox_tree(child_1, axe, nb_polygons_child1);
-	fill_objf_bbox_tree(child_2, axe, nb_polygons_child2);
+	fill_objf_bbox_tree(child_1, nb_polygons_child1);
+	fill_objf_bbox_tree(child_2, nb_polygons_child2);
 }
 
 

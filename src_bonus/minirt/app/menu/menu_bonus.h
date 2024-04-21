@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:55:17 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 12:23:03 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:48:27 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,12 +288,13 @@ typedef struct s_menu
 
 	t_light_panel	light_panel;
 	t_object_panel	object_panel;
+	t_scene			*scene;
 }	t_menu;
 
 t_error			menu_init(
 					mlx_t *mlx,
 					t_menu *menu,
-					t_scene const *scene);
+					t_scene *scene);
 void			menu_update_position(
 					mlx_t const *mlx,
 					t_menu *menu);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect_loop_without_param_obj_bonus.c           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:47:22 by aderouba          #+#    #+#             */
-/*   Updated: 2024/02/20 12:31:04 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:29:01 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

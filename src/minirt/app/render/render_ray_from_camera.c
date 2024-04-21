@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ray_from_camera.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:44:01 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/18 18:23:39 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:55:33 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

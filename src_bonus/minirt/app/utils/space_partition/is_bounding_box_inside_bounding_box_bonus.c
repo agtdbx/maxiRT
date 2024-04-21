@@ -18,10 +18,12 @@ bool	is_bbox_in_bbox(
 			const t_bounding_box *bbox_out,
 			const t_bounding_box *bbox_in)
 {
-	return (bbox_out->min_x <= bbox_in->max_x
+	if (bbox_out->min_x <= bbox_in->max_x
 			&& bbox_in->min_x <= bbox_out->max_x
 			&& bbox_out->min_y <= bbox_in->max_y
 			&& bbox_in->min_y <= bbox_out->max_y
 			&& bbox_out->min_z <= bbox_in->max_z
-			&& bbox_in->min_z <= bbox_out->max_z);
+			&& bbox_in->min_z <= bbox_out->max_z)
+		return (true);
+	return (false);
 }

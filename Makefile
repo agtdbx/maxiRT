@@ -6,7 +6,7 @@
 #    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/04/21 12:32:08 by auguste          ###   ########.fr        #
+#    Updated: 2024/04/21 14:52:31 by auguste          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -193,6 +193,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/scene/object_file_compute_constants/object_file_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/camera_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/compute_bounding_box_constants_bonus.c \
+				src_bonus/minirt/app/scene/compute_scene_binary_tree_bonus.c \
 				src_bonus/minirt/app/scene/cone_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/cube_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/cylinder_compute_constants_bonus.c \
@@ -221,8 +222,8 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_scale_into_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_substract_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_substract_into_bonus.c \
+				src_bonus/minirt/app/utils/space_partition/compute_childs_bbox_bonus.c \
 				src_bonus/minirt/app/utils/space_partition/is_bounding_box_inside_bounding_box_bonus.c \
-				src_bonus/minirt/app/utils/space_partition/is_polygon_inside_object_bounding_box_bonus.c \
 				src_bonus/minirt/app/utils/space_partition/set_min_max_bonus.c \
 				src_bonus/minirt_bonus.c \
 				src_bonus/minirt/parser/directives/parse_ambient_light_bonus.c \
@@ -415,7 +416,7 @@ CC			:=	clang									\
 CFLAGS		:=	-std=c99 -Wall -Wextra -Werror			\
 				-Wunreachable-code -Ofast				\
 
-CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES))	\
+CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES)) -g	\
 
 LDFLAGS		:=	-Llib/libft -lft						\
 				-Llib/mlx42/build -lmlx42				\

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_loop.c                                         :+:      :+:    :+:   */
+/*   app_loop_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 13:35:45 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 12:09:27 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:52:36 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static inline void	_log_fps(
 static inline void	_limit_delta_time(
 						mlx_t *mlx);
 
-/** 
+/**
  * the main loop hook
  * @param[in] data - the app handle
  */
@@ -46,11 +46,11 @@ void	app_loop(
 	_limit_delta_time(app->mlx);
 	should_render = false;
 	should_render |= _handle_user_inputs(app);
-	should_render |= menu_draw(app->mlx, &app->menu, &app->canvas, &app->scene);
+	should_render |= menu_draw(app->mlx, &app->menu, &app->canvas, app->scene);
 	render_canvas(app, should_render);
 }
 
-/** 
+/**
  * run input handlers in order
  * @param[in] app - the app handle
  * @returns Wether canvas should be rerendered
@@ -62,14 +62,14 @@ static inline bool	_handle_user_inputs(
 
 	should_render = false;
 	should_render |= handle_window_resizing(
-			app->mlx, &app->menu, &app->scene, &app->canvas);
+			app->mlx, &app->menu, app->scene, &app->canvas);
 	should_render |= handle_menu_toggling(
 			app->mlx, &app->menu);
 	should_render |= handle_translations(
-			app->mlx, app->scene.camera);
+			app->mlx, app->scene->camera);
 	should_render |= handle_rotations(
-			app->mlx, &app->canvas, app->scene.camera);
-	handle_mouse_clicks(app->mlx, &app->menu, &app->scene, &app->canvas);
+			app->mlx, &app->canvas, app->scene->camera);
+	handle_mouse_clicks(app->mlx, &app->menu, app->scene, &app->canvas);
 	return (should_render);
 }
 

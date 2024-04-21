@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 12:16:20 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 12:16:11 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:47:40 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,12 @@ bool	cone_panel_draw(
 	should_redraw |= _draw_position_and_direction_labels(mlx, menu);
 	should_redraw |= _draw_diameter_and_height_labels(mlx, menu);
 	if (should_redraw)
+	{
 		cone_compute_constants(
 			(t_cone *)menu->object_panel.object_ptr,
 			menu->object_panel.object_bbox);
+		compute_scene_binary_tree(menu->scene);
+	}
 	return (should_redraw);
 }
 

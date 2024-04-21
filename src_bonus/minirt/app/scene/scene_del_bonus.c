@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:30:35 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/20 18:44:31 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:35:51 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	scene_del(
 			mlx_delete_texture(tmp->normal_map);
 		tmp = tmp->next;
 	}
+	free_scene_binary_tree(scene->binary_tree);
 	loc_del_objects(&scene->objects);
 }
 

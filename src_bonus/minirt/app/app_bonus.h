@@ -6,7 +6,7 @@
 /*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/23 15:20:16 by auguste          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:33:56 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_app
 {
 	mlx_t		*mlx;
 	t_menu		menu;
-	t_scene		scene;
+	t_scene		*scene;
 	t_canvas	canvas;
 }	t_app;
 
@@ -119,6 +119,10 @@ int32_t			render_ray(
 t_object		*fetch_closest_intersection(
 					t_ray const *ray,
 					t_object *objects,
+					t_intersect_info *intersect_info);
+t_object		*fetch_closest_intersection_in_tree(
+					t_ray const *ray,
+					t_scene_binary_part *tree,
 					t_intersect_info *intersect_info);
 t_light			*fetch_closer_spotlight(
 					t_ray const *ray,
