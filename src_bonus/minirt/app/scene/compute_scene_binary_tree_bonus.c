@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:01:40 by auguste           #+#    #+#             */
-/*   Updated: 2024/06/15 23:35:00 by gugus            ###   ########.fr       */
+/*   Updated: 2024/06/15 23:47:41 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 #include "minirt/app/utils/space_partition/space_partition.h"
 
-#define MIN_SIZE_SCENE_BBOX 5.0f
+#define MIN_SIZE_SCENE_BBOX 2.5f
 
 static t_scene_binary_part	*_create_scene_binary_part(
 								int nb_object);
