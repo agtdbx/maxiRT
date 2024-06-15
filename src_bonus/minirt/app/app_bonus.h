@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/06/15 21:24:58 by gugus            ###   ########.fr       */
+/*   Updated: 2024/06/15 23:20:31 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,10 @@ bool			test_intersection_with_triangle(
 bool			test_intersection_with_bounding_box(
 					t_ray const *ray,
 					t_bounding_box const *bbox);
+bool			test_intersection_with_bounding_box_dist(
+					t_ray const *ray,
+					t_bounding_box const *bbox,
+					t_intersect_info *intersect_info);
 
 /// object_file intersections
 

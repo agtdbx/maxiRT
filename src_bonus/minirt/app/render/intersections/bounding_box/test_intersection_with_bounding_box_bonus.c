@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_intersection_with_bounding_box_bonus.c        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:02:43 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/21 17:28:53 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/15 23:20:13 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ static bool	is_same_sign(
 				float a,
 				float b);
 static bool	test_intersection_with_bouding_box_face(
-			t_ray const *ray,
-			t_bouding_box_face const *face);
+				t_ray const *ray,
+				t_bouding_box_face const *face,
+				t_intersect_info *intersect_info);
 
 /**
  * Test ray-object_bouding_box_face intersection.
@@ -42,23 +43,96 @@ bool	test_intersection_with_bounding_box(
 		return (true);
 
 	return (test_intersection_with_bouding_box_face(
-			ray, &bbox->front)
+			ray, &bbox->front, NULL)
 		|| test_intersection_with_bouding_box_face(
-			ray, &bbox->back)
+			ray, &bbox->back, NULL)
 		|| test_intersection_with_bouding_box_face(
-			ray, &bbox->left)
+			ray, &bbox->left, NULL)
 		|| test_intersection_with_bouding_box_face(
-			ray, &bbox->right)
+			ray, &bbox->right, NULL)
 		|| test_intersection_with_bouding_box_face(
-			ray, &bbox->up)
+			ray, &bbox->up, NULL)
 		|| test_intersection_with_bouding_box_face(
-			ray, &bbox->down));
+			ray, &bbox->down, NULL));
 }
+
+bool	test_intersection_with_bounding_box_dist(
+			t_ray const *ray,
+			t_bounding_box const *bbox,
+			t_intersect_info *intersect_info)
+{
+	bool				collide;
+	t_intersect_info	test;
+
+	collide = false;
+	intersect_info->distance = -1;
+	intersect_info->sub_part_id = 0;
+	test.distance = -1;
+	test.sub_part_id = 0;
+
+	if (test_intersection_with_bouding_box_face(
+			ray, &bbox->front, &test))
+	{
+		collide = true;
+		if (intersect_info->distance == -1
+			|| (intersect_info->distance < test.distance))
+			intersect_info->distance = test.distance;
+	}
+
+	if (test_intersection_with_bouding_box_face(
+			ray, &bbox->back, &test))
+	{
+		collide = true;
+		if (intersect_info->distance == -1
+			|| (intersect_info->distance < test.distance))
+			intersect_info->distance = test.distance;
+	}
+
+	if (test_intersection_with_bouding_box_face(
+			ray, &bbox->left, &test))
+	{
+		collide = true;
+		if (intersect_info->distance == -1
+			|| (intersect_info->distance < test.distance))
+			intersect_info->distance = test.distance;
+	}
+
+	if (test_intersection_with_bouding_box_face(
+			ray, &bbox->right, &test))
+	{
+		collide = true;
+		if (intersect_info->distance == -1
+			|| (intersect_info->distance < test.distance))
+			intersect_info->distance = test.distance;
+	}
+
+	if (test_intersection_with_bouding_box_face(
+			ray, &bbox->up, &test))
+	{
+		collide = true;
+		if (intersect_info->distance == -1
+			|| (intersect_info->distance < test.distance))
+			intersect_info->distance = test.distance;
+	}
+
+	if (test_intersection_with_bouding_box_face(
+			ray, &bbox->down, &test))
+	{
+		collide = true;
+		if (intersect_info->distance == -1
+			|| (intersect_info->distance < test.distance))
+			intersect_info->distance = test.distance;
+	}
+
+	return (collide);
+}
+
 
 
 static bool	test_intersection_with_bouding_box_face(
 			t_ray const *ray,
-			t_bouding_box_face const *face)
+			t_bouding_box_face const *face,
+			t_intersect_info *intersect_info)
 {
 	float	denom;
 	float	distance;
@@ -113,6 +187,12 @@ static bool	test_intersection_with_bouding_box_face(
 		o4 = vec3_dot(&p4_q_x_p1_q, &face->normal);
 		if (o4 == 0.0f || !is_same_sign(o3, o4))
 			return (false);
+
+		if (intersect_info != NULL)
+		{
+			intersect_info->distance = distance;
+			intersect_info->sub_part_id = 0;
+		}
 
 		return (true);
 	}
