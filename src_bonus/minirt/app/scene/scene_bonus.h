@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:43:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 18:08:44 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/15 22:27:18 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,12 +407,15 @@ typedef struct s_scene
 	t_light				*spotlights;
 	t_light				*ambient_lightning;
 	t_camera			*camera;
+	t_object			**planes;
 }	t_scene;
 
 t_error			scene_add_object(
 					t_scene *scene,
 					t_object *obj);
 void			compute_scene_binary_tree(
+					t_scene *scene);
+void			compute_scene_planes(
 					t_scene *scene);
 
 void			scene_del(

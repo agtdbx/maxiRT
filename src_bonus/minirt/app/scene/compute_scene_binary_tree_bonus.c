@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_scene_binary_tree_bonus.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:01:40 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/21 18:37:50 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/15 21:22:39 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	compute_scene_binary_tree(
 	iterator = scene->objects;
 	while (iterator)
 	{
-		// if (iterator->type != OBJ_PLANE)
-		nb_objects++;
+		if (iterator->type != OBJ_PLANE)
+			nb_objects++;
 		iterator = iterator->next;
 	}
 	if (nb_objects == 0)
@@ -82,11 +82,11 @@ void	compute_scene_binary_tree(
 	scene->binary_tree->bounding_box.max_z = -g_scene_radius;
 	while (iterator)
 	{
-		// if (iterator->type == OBJ_PLANE)
-		// {
-		// 	iterator = iterator->next;
-		// 	continue;
-		// }
+		if (iterator->type == OBJ_PLANE)
+		{
+			iterator = iterator->next;
+			continue;
+		}
 		_add_object_to_objects(
 			scene->binary_tree->objects,
 			iterator, nb_objects);

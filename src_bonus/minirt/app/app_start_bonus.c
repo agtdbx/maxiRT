@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app_start_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 20:49:18 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 15:50:14 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/15 22:29:13 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,5 @@ static void	_compute_constants(
 	handle_window_resizing(mlx, menu, scene, canvas);
 	scene->binary_tree = NULL;
 	compute_scene_binary_tree(scene);
+	compute_scene_planes(scene);
 }

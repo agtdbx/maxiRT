@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:28:10 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 16:33:56 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/15 21:24:58 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ t_object		*fetch_closest_intersection(
 					t_intersect_info *intersect_info);
 t_object		*fetch_closest_intersection_in_tree(
 					t_ray const *ray,
-					t_scene_binary_part *tree,
+					t_scene const *scene,
 					t_intersect_info *intersect_info);
 t_light			*fetch_closer_spotlight(
 					t_ray const *ray,

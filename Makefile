@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: auguste <auguste@student.42.fr>            +#+  +:+       +#+         #
+#    By: gugus <gugus@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/04/21 14:52:31 by auguste          ###   ########.fr        #
+#    Updated: 2024/06/15 22:30:33 by gugus            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -194,6 +194,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/scene/camera_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/compute_bounding_box_constants_bonus.c \
 				src_bonus/minirt/app/scene/compute_scene_binary_tree_bonus.c \
+				src_bonus/minirt/app/scene/compute_scene_planes_bonus.c \
 				src_bonus/minirt/app/scene/cone_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/cube_compute_constants_bonus.c \
 				src_bonus/minirt/app/scene/cylinder_compute_constants_bonus.c \

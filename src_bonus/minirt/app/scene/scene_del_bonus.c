@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_del_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:30:35 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 15:35:51 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/15 22:29:50 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	scene_del(
 	}
 	free_scene_binary_tree(scene->binary_tree);
 	loc_del_objects(&scene->objects);
+
+	if (scene->planes != NULL)
+	{
+		free(scene->planes);
+		scene->planes = NULL;
+	}
 }
 
 static void	loc_del_lights(
