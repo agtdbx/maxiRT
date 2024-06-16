@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:54:25 by auguste           #+#    #+#             */
-/*   Updated: 2024/06/16 12:13:39 by gugus            ###   ########.fr       */
+/*   Updated: 2024/06/16 18:29:27 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "minirt/app/scene/scene_bonus.h"
 
 # define MIN_SIZE_BBOX 0.1f
-# define MIN_SIZE_SCENE_BBOX 2.5f
+# define MIN_SIZE_SCENE_BBOX 5.0f
 
 bool	is_bbox_in_bbox(
 			const t_bounding_box *bbox_out,
