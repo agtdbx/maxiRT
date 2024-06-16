@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_object_bounding_box_bonus.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:51:50 by auguste           #+#    #+#             */
-/*   Updated: 2024/04/21 18:34:14 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/16 12:29:29 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 #include "minirt/app/utils/space_partition/space_partition.h"
 
-#define MIN_SIZE_BBOX 0.1f
-
 static void	calculate_bounding_box_bounds(
 				t_object_file *objf,
 				t_bounding_box *bbox);
@@ -28,8 +26,6 @@ static void	compute_objf_binary_tree(
 static void	fill_objf_bbox_tree(
 				t_object_binary_part *part,
 				int nb_polygons_parent);
-static bool	is_bbox_too_small(
-				t_bounding_box *bbox);
 
 
 void	compute_objf_bounding_boxes(
@@ -94,7 +90,8 @@ static void	compute_objf_binary_tree(
 
 	if (objf->binary_partition->polygons != NULL
 		&& objf->nb_polygons > 0
-		&& ! is_bbox_too_small(&objf->binary_partition->bounding_box))
+		&& ! is_bbox_too_small(&objf->binary_partition->bounding_box,
+								MIN_SIZE_BBOX))
 	{
 		fill_objf_bbox_tree(objf->binary_partition, objf->nb_polygons);
 	}
@@ -112,7 +109,7 @@ static void	fill_objf_bbox_tree(
 	t_object_binary_part	*child_2;
 
 	if (nb_polygons_parent < 2
-		|| is_bbox_too_small(&part->bounding_box))
+		|| is_bbox_too_small(&part->bounding_box, MIN_SIZE_BBOX))
 		return ;
 
 	create_new_object_binary_tree_part(&child_1, nb_polygons_parent);
@@ -174,13 +171,4 @@ static void	fill_objf_bbox_tree(
 
 	fill_objf_bbox_tree(child_1, nb_polygons_child1);
 	fill_objf_bbox_tree(child_2, nb_polygons_child2);
-}
-
-
-static bool	is_bbox_too_small(
-				t_bounding_box *bbox)
-{
-	return ((bbox->max_x - bbox->min_x) < MIN_SIZE_BBOX
-		|| (bbox->max_y - bbox->min_y) < MIN_SIZE_BBOX
-		|| (bbox->max_z - bbox->min_z) < MIN_SIZE_BBOX);
 }

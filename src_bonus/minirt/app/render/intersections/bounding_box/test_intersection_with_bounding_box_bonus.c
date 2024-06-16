@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 19:02:43 by auguste           #+#    #+#             */
-/*   Updated: 2024/06/15 23:20:13 by gugus            ###   ########.fr       */
+/*   Updated: 2024/06/16 16:34:20 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,24 @@
 
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 
-static bool	is_same_sign(
-				float a,
-				float b);
-static bool	test_intersection_with_bouding_box_face(
+static void	_test_intersection_with_bouding_box_face(
+				t_ray const *ray,
+				t_bouding_box_face const *face,
+				t_intersect_info *intersect_info,
+				bool *collide);
+static bool	_is_intersect_bouding_box_face(
 				t_ray const *ray,
 				t_bouding_box_face const *face,
 				t_intersect_info *intersect_info);
+static bool	is_same_sign(
+				float a,
+				float b);
 
 /**
  * Test ray-object_bouding_box_face intersection.
  *
  * @param[in] ray Normalized ray
  * @param[in] bounding_box The bounding_box to intersect
- * @param[out] distance From ray origin to intersection point
  * @returns Wether ray intersects with object_bounding_box
  */
 bool	test_intersection_with_bounding_box(
@@ -42,20 +46,28 @@ bool	test_intersection_with_bounding_box(
 		&& bbox->min_z <= ray->pos.z && ray->pos.z <= bbox->max_z)
 		return (true);
 
-	return (test_intersection_with_bouding_box_face(
+	return (_is_intersect_bouding_box_face(
 			ray, &bbox->front, NULL)
-		|| test_intersection_with_bouding_box_face(
+		|| _is_intersect_bouding_box_face(
 			ray, &bbox->back, NULL)
-		|| test_intersection_with_bouding_box_face(
+		|| _is_intersect_bouding_box_face(
 			ray, &bbox->left, NULL)
-		|| test_intersection_with_bouding_box_face(
+		|| _is_intersect_bouding_box_face(
 			ray, &bbox->right, NULL)
-		|| test_intersection_with_bouding_box_face(
+		|| _is_intersect_bouding_box_face(
 			ray, &bbox->up, NULL)
-		|| test_intersection_with_bouding_box_face(
+		|| _is_intersect_bouding_box_face(
 			ray, &bbox->down, NULL));
 }
 
+/**
+ * Test ray-object_bouding_box_face intersection.
+ *
+ * @param[in] ray Normalized ray
+ * @param[in] bounding_box The bounding_box to intersect
+ * @param[out] intersect_info From ray origin to intersection point
+ * @returns Wether ray intersects with object_bounding_box
+ */
 bool	test_intersection_with_bounding_box_dist(
 			t_ray const *ray,
 			t_bounding_box const *bbox,
@@ -70,69 +82,46 @@ bool	test_intersection_with_bounding_box_dist(
 	test.distance = -1;
 	test.sub_part_id = 0;
 
-	if (test_intersection_with_bouding_box_face(
-			ray, &bbox->front, &test))
-	{
-		collide = true;
-		if (intersect_info->distance == -1
-			|| (intersect_info->distance < test.distance))
-			intersect_info->distance = test.distance;
-	}
-
-	if (test_intersection_with_bouding_box_face(
-			ray, &bbox->back, &test))
-	{
-		collide = true;
-		if (intersect_info->distance == -1
-			|| (intersect_info->distance < test.distance))
-			intersect_info->distance = test.distance;
-	}
-
-	if (test_intersection_with_bouding_box_face(
-			ray, &bbox->left, &test))
-	{
-		collide = true;
-		if (intersect_info->distance == -1
-			|| (intersect_info->distance < test.distance))
-			intersect_info->distance = test.distance;
-	}
-
-	if (test_intersection_with_bouding_box_face(
-			ray, &bbox->right, &test))
-	{
-		collide = true;
-		if (intersect_info->distance == -1
-			|| (intersect_info->distance < test.distance))
-			intersect_info->distance = test.distance;
-	}
-
-	if (test_intersection_with_bouding_box_face(
-			ray, &bbox->up, &test))
-	{
-		collide = true;
-		if (intersect_info->distance == -1
-			|| (intersect_info->distance < test.distance))
-			intersect_info->distance = test.distance;
-	}
-
-	if (test_intersection_with_bouding_box_face(
-			ray, &bbox->down, &test))
-	{
-		collide = true;
-		if (intersect_info->distance == -1
-			|| (intersect_info->distance < test.distance))
-			intersect_info->distance = test.distance;
-	}
+	_test_intersection_with_bouding_box_face(
+		ray, &bbox->front, intersect_info, &collide);
+	_test_intersection_with_bouding_box_face(
+		ray, &bbox->back, intersect_info, &collide);
+	_test_intersection_with_bouding_box_face(
+		ray, &bbox->left, intersect_info, &collide);
+	_test_intersection_with_bouding_box_face(
+		ray, &bbox->right, intersect_info, &collide);
+	_test_intersection_with_bouding_box_face(
+		ray, &bbox->up, intersect_info, &collide);
+	_test_intersection_with_bouding_box_face(
+		ray, &bbox->down, intersect_info, &collide);
 
 	return (collide);
 }
 
 
+static void	_test_intersection_with_bouding_box_face(
+				t_ray const *ray,
+				t_bouding_box_face const *face,
+				t_intersect_info *intersect_info,
+				bool *collide)
+{
+	t_intersect_info	test;
 
-static bool	test_intersection_with_bouding_box_face(
-			t_ray const *ray,
-			t_bouding_box_face const *face,
-			t_intersect_info *intersect_info)
+	if (_is_intersect_bouding_box_face(
+			ray, face, &test))
+	{
+		*collide = true;
+		if (intersect_info->distance == -1
+			|| (intersect_info->distance < test.distance))
+			intersect_info->distance = test.distance;
+	}
+}
+
+
+static bool	_is_intersect_bouding_box_face(
+				t_ray const *ray,
+				t_bouding_box_face const *face,
+				t_intersect_info *intersect_info)
 {
 	float	denom;
 	float	distance;
@@ -188,6 +177,7 @@ static bool	test_intersection_with_bouding_box_face(
 		if (o4 == 0.0f || !is_same_sign(o3, o4))
 			return (false);
 
+		// Save distance if there is intersect info
 		if (intersect_info != NULL)
 		{
 			intersect_info->distance = distance;

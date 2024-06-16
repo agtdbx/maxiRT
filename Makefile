@@ -6,7 +6,7 @@
 #    By: gugus <gugus@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/06/15 22:30:33 by gugus            ###   ########.fr        #
+#    Updated: 2024/06/16 14:49:27 by gugus            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -141,6 +141,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder_bonus.c \
 				src_bonus/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder_from_inside_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closer_spotlight_bonus.c \
+				src_bonus/minirt/app/render/intersections/fetch_closest_intersection_in_tree_bonus.c \
 				src_bonus/minirt/app/render/intersections/fetch_closest_intersections_bonus.c \
 				src_bonus/minirt/app/render/intersections/intersect_loop_without_param_obj_bonus.c \
 				src_bonus/minirt/app/render/intersections/object_file/test_intersection_with_object_file_bonus.c \
@@ -224,6 +225,7 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_substract_bonus.c \
 				src_bonus/minirt/app/utils/geometry/vec3_substract_into_bonus.c \
 				src_bonus/minirt/app/utils/space_partition/compute_childs_bbox_bonus.c \
+				src_bonus/minirt/app/utils/space_partition/is_bbox_too_small_bonus.c \
 				src_bonus/minirt/app/utils/space_partition/is_bounding_box_inside_bounding_box_bonus.c \
 				src_bonus/minirt/app/utils/space_partition/set_min_max_bonus.c \
 				src_bonus/minirt_bonus.c \

@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   compute_bounding_box_constants_bonus.c             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 15:40:43 by auguste           #+#    #+#             */
-/*   Updated: 2024/03/23 18:59:29 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/16 14:30:15 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/scene/scene_bonus.h"
+
+static void	_calculate_points(
+				t_bounding_box *bbox,
+				t_vec3 points[8]);
+static void _calculate_inv_size(
+				t_bounding_box *bbox,
+				float *inv_width,
+				float *inv_height,
+				float *inv_depth);
+static void	_set_face_variable(
+				t_bouding_box_face *bbox_face,
+				t_vec3 const *normal,
+				float inv_width,
+				float inv_height,
+				t_vec3 const *point_ru,
+				t_vec3 const *point_lu,
+				t_vec3 const *point_rd,
+				t_vec3 const *point_ld);
+
 
 void	compute_bounding_box_constants(
 			t_bounding_box *bbox)
@@ -18,96 +37,111 @@ void	compute_bounding_box_constants(
 	float	inv_width;
 	float	inv_height;
 	float	inv_depth;
-	t_vec3	p_ruf;
-	t_vec3	p_luf;
-	t_vec3	p_rdf;
-	t_vec3	p_ldf;
-	t_vec3	p_rub;
-	t_vec3	p_lub;
-	t_vec3	p_rdb;
-	t_vec3	p_ldb;
+	// ruf luf rdf ldf rub lub rdb ldb
+	t_vec3	points[8];
+	t_vec3	normal;
 
 	// Calculate inv_size
-	inv_width = bbox->max_x - bbox->min_x;
-	bbox->half_width = inv_width / 2.0f;
-	if (inv_width != 0.0f)
-		inv_width = 1.0f / inv_width;
-
-	inv_height = bbox->max_y - bbox->min_y;
-	bbox->half_height = inv_height / 2.0f;
-	if (inv_height != 0.0f)
-		inv_height = 1.0f / inv_height;
-
-	inv_depth = bbox->max_z - bbox->min_z;
-	bbox->half_depth = inv_depth / 2.0f;
-	if (inv_depth != 0.0f)
-		inv_depth = 1.0f / inv_depth;
+	_calculate_inv_size(bbox, &inv_width, &inv_height, &inv_depth);
 
 	// Calculate points
+	_calculate_points(bbox, points);
+
+	// right face
+	normal = (t_vec3){1.0f, 0.0f, 0.0f};
+	_set_face_variable(
+		&bbox->right, &normal, inv_depth, inv_height,
+		&points[4], &points[0], &points[6], &points[2]);
+
+	// left face
+	normal = (t_vec3){-1.0f, 0.0f, 0.0f};
+	_set_face_variable(
+		&bbox->left, &normal, inv_depth, inv_height,
+		&points[5], &points[1], &points[7], &points[3]);
+
+	// up face
+	normal = (t_vec3){0.0f, 1.0f, 0.0f};
+	_set_face_variable(
+		&bbox->up, &normal, inv_width, inv_depth,
+		&points[4], &points[5], &points[0], &points[1]);
+
+	// down face
+	normal = (t_vec3){0.0f, -1.0f, 0.0f};
+	_set_face_variable(
+		&bbox->down, &normal, inv_width, inv_depth,
+		&points[6], &points[7], &points[2], &points[3]);
+
+	// front face
+	normal = (t_vec3){0.0f, 0.0f, 1.0f};
+	_set_face_variable(
+		&bbox->front, &normal, inv_width, inv_height,
+		&points[0], &points[1], &points[2], &points[3]);
+
+	// back face
+	normal = (t_vec3){0.0f, 0.0f, -1.0f};
+	_set_face_variable(
+		&bbox->back, &normal, inv_width, inv_height,
+		&points[4], &points[5], &points[6], &points[7]);
+}
+
+
+static void	_calculate_points(
+				t_bounding_box *bbox,
+				t_vec3 points[8])
+{
 	bbox->center.x = bbox->min_x + bbox->half_width;
 	bbox->center.y = bbox->min_y + bbox->half_height;
 	bbox->center.z = bbox->min_z + bbox->half_depth;
 
-	p_ruf = (t_vec3){bbox->max_x, bbox->max_y, bbox->max_z};
-	p_luf = (t_vec3){bbox->min_x, bbox->max_y, bbox->max_z};
-	p_rdf = (t_vec3){bbox->max_x, bbox->min_y, bbox->max_z};
-	p_ldf = (t_vec3){bbox->min_x, bbox->min_y, bbox->max_z};
-	p_rub = (t_vec3){bbox->max_x, bbox->max_y, bbox->min_z};
-	p_lub = (t_vec3){bbox->min_x, bbox->max_y, bbox->min_z};
-	p_rdb = (t_vec3){bbox->max_x, bbox->min_y, bbox->min_z};
-	p_ldb = (t_vec3){bbox->min_x, bbox->min_y, bbox->min_z};
+	points[0] = (t_vec3){bbox->max_x, bbox->max_y, bbox->max_z};
+	points[1] = (t_vec3){bbox->min_x, bbox->max_y, bbox->max_z};
+	points[2] = (t_vec3){bbox->max_x, bbox->min_y, bbox->max_z};
+	points[3] = (t_vec3){bbox->min_x, bbox->min_y, bbox->max_z};
+	points[4] = (t_vec3){bbox->max_x, bbox->max_y, bbox->min_z};
+	points[5] = (t_vec3){bbox->min_x, bbox->max_y, bbox->min_z};
+	points[6] = (t_vec3){bbox->max_x, bbox->min_y, bbox->min_z};
+	points[7] = (t_vec3){bbox->min_x, bbox->min_y, bbox->min_z};
+}
 
-	// right face
-	bbox->right.normal = (t_vec3){1.0f, 0.0f, 0.0f};
-	bbox->right.inv_width = inv_depth;
-	bbox->right.inv_height = inv_height;
-	bbox->right.point_ru = p_rub;
-	bbox->right.point_lu = p_ruf;
-	bbox->right.point_rd = p_rdb;
-	bbox->right.point_ld = p_rdf;
 
-	// left faceS
-	bbox->left.normal = (t_vec3){-1.0f, 0.0f, 0.0f};
-	bbox->left.inv_width = inv_depth;
-	bbox->left.inv_height = inv_height;
-	bbox->left.point_ru = p_lub;
-	bbox->left.point_lu = p_luf;
-	bbox->left.point_rd = p_ldb;
-	bbox->left.point_ld = p_ldf;
+static void _calculate_inv_size(
+				t_bounding_box *bbox,
+				float *inv_width,
+				float *inv_height,
+				float *inv_depth)
+{
+	*inv_width = bbox->max_x - bbox->min_x;
+	bbox->half_width = (*inv_width) / 2.0f;
+	if (*inv_width != 0.0f)
+		*inv_width = 1.0f / (*inv_width);
 
-	// up face
-	bbox->up.normal = (t_vec3){0.0f, 1.0f, 0.0f};
-	bbox->up.inv_width = inv_width;
-	bbox->up.inv_height = inv_depth;
-	bbox->up.point_ru = p_rub;
-	bbox->up.point_lu = p_lub;
-	bbox->up.point_rd = p_ruf;
-	bbox->up.point_ld = p_luf;
+	*inv_height = bbox->max_y - bbox->min_y;
+	bbox->half_height = (*inv_height) / 2.0f;
+	if (*inv_height != 0.0f)
+		*inv_height = 1.0f / (*inv_height);
 
-	// down face
-	bbox->down.normal = (t_vec3){0.0f, -1.0f, 0.0f};
-	bbox->down.inv_width = inv_width;
-	bbox->down.inv_height = inv_depth;
-	bbox->down.point_ru = p_rdb;
-	bbox->down.point_lu = p_ldb;
-	bbox->down.point_rd = p_rdf;
-	bbox->down.point_ld = p_ldf;
+	*inv_depth = bbox->max_z - bbox->min_z;
+	bbox->half_depth = (*inv_depth) / 2.0f;
+	if (*inv_depth != 0.0f)
+		*inv_depth = 1.0f / (*inv_depth);
+}
 
-	// front face
-	bbox->front.normal = (t_vec3){0.0f, 0.0f, 1.0f};
-	bbox->front.inv_width = inv_width;
-	bbox->front.inv_height = inv_height;
-	bbox->front.point_ru = p_ruf;
-	bbox->front.point_lu = p_luf;
-	bbox->front.point_rd = p_rdf;
-	bbox->front.point_ld = p_ldf;
 
-	// back face
-	bbox->back.normal = (t_vec3){0.0f, 0.0f, -1.0f};
-	bbox->back.inv_width = inv_width;
-	bbox->back.inv_height = inv_height;
-	bbox->back.point_ru = p_rub;
-	bbox->back.point_lu = p_lub;
-	bbox->back.point_rd = p_rdb;
-	bbox->back.point_ld = p_ldb;
+static void	_set_face_variable(
+				t_bouding_box_face *bbox_face,
+				t_vec3 const *normal,
+				float inv_width,
+				float inv_height,
+				t_vec3 const *point_ru,
+				t_vec3 const *point_lu,
+				t_vec3 const *point_rd,
+				t_vec3 const *point_ld)
+{
+	bbox_face->normal = *normal;
+	bbox_face->inv_width = inv_width;
+	bbox_face->inv_height = inv_height;
+	bbox_face->point_ru = *point_ru;
+	bbox_face->point_lu = *point_lu;
+	bbox_face->point_rd = *point_rd;
+	bbox_face->point_ld = *point_ld;
 }

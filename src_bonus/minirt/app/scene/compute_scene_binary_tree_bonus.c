@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 13:01:40 by auguste           #+#    #+#             */
-/*   Updated: 2024/06/15 23:47:41 by gugus            ###   ########.fr       */
+/*   Updated: 2024/06/16 12:47:18 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "minirt/app/utils/geometry/geometry_bonus.h"
 #include "minirt/app/utils/space_partition/space_partition.h"
 
-#define MIN_SIZE_SCENE_BBOX 2.5f
-
 static t_scene_binary_part	*_create_scene_binary_part(
 								int nb_object);
 static void					_add_object_to_objects(
@@ -28,8 +26,10 @@ static void					_add_object_to_objects(
 static void					_compute_scene_binary_part(
 								t_scene_binary_part *parent,
 								int nb_objects_parent);
-static bool					_is_bbox_too_small(
-								t_bounding_box *bbox);
+static void					update_scene_bbox_min_max(
+								t_scene const *scene,
+								t_object const *iterator);
+
 
 void	free_scene_binary_tree(
 			t_scene_binary_part *part)
@@ -90,18 +90,7 @@ void	compute_scene_binary_tree(
 		_add_object_to_objects(
 			scene->binary_tree->objects,
 			iterator, nb_objects);
-		if (iterator->bounding_box.min_x < scene->binary_tree->bounding_box.min_x)
-			scene->binary_tree->bounding_box.min_x = iterator->bounding_box.min_x;
-		if (iterator->bounding_box.max_x > scene->binary_tree->bounding_box.max_x)
-			scene->binary_tree->bounding_box.max_x = iterator->bounding_box.max_x;
-		if (iterator->bounding_box.min_y < scene->binary_tree->bounding_box.min_y)
-			scene->binary_tree->bounding_box.min_y = iterator->bounding_box.min_y;
-		if (iterator->bounding_box.max_y > scene->binary_tree->bounding_box.max_y)
-			scene->binary_tree->bounding_box.max_y = iterator->bounding_box.max_y;
-		if (iterator->bounding_box.min_z < scene->binary_tree->bounding_box.min_z)
-			scene->binary_tree->bounding_box.min_z = iterator->bounding_box.min_z;
-		if (iterator->bounding_box.max_z > scene->binary_tree->bounding_box.max_z)
-			scene->binary_tree->bounding_box.max_z = iterator->bounding_box.max_z;
+		update_scene_bbox_min_max(scene, iterator);
 		iterator = iterator->next;
 	}
 
@@ -109,7 +98,6 @@ void	compute_scene_binary_tree(
 
 	_compute_scene_binary_part(scene->binary_tree, nb_objects);
 }
-
 
 static t_scene_binary_part	*_create_scene_binary_part(
 								int nb_object)
@@ -161,7 +149,6 @@ static void	_add_object_to_objects(
 	}
 }
 
-#include <stdio.h>
 static void	_compute_scene_binary_part(
 				t_scene_binary_part *parent,
 				int nb_objects_parent)
@@ -172,25 +159,9 @@ static void	_compute_scene_binary_part(
 	t_scene_binary_part	*child_1;
 	t_scene_binary_part	*child_2;
 
-	printf("\nbbox : %i objects\n"
-			"       x (%+7.3f %+7.3f)\n"
-			"       y (%+7.3f %+7.3f)\n"
-			"       z (%+7.3f %+7.3f)\n",
-			nb_objects_parent,
-			parent->bounding_box.min_x,
-			parent->bounding_box.max_x,
-			parent->bounding_box.min_y,
-			parent->bounding_box.max_y,
-			parent->bounding_box.min_z,
-			parent->bounding_box.max_z);
 	if (nb_objects_parent < 10
-		|| _is_bbox_too_small(&parent->bounding_box))
-	{
-		printf("stop\n");
+		|| is_bbox_too_small(&parent->bounding_box, MIN_SIZE_SCENE_BBOX))
 		return ;
-	}
-	printf("split in 2\n");
-
 
 	child_1 = _create_scene_binary_part(nb_objects_parent);
 	if (child_1 == NULL)
@@ -249,10 +220,21 @@ static void	_compute_scene_binary_part(
 	_compute_scene_binary_part(child_2, nb_objects_child2);
 }
 
-static bool	_is_bbox_too_small(
-				t_bounding_box *bbox)
+
+static void	update_scene_bbox_min_max(
+				t_scene const *scene,
+				t_object const *iterator)
 {
-	return ((bbox->max_x - bbox->min_x) < MIN_SIZE_SCENE_BBOX
-		|| (bbox->max_y - bbox->min_y) < MIN_SIZE_SCENE_BBOX
-		|| (bbox->max_z - bbox->min_z) < MIN_SIZE_SCENE_BBOX);
+	if (iterator->bounding_box.min_x < scene->binary_tree->bounding_box.min_x)
+		scene->binary_tree->bounding_box.min_x = iterator->bounding_box.min_x;
+	if (iterator->bounding_box.max_x > scene->binary_tree->bounding_box.max_x)
+		scene->binary_tree->bounding_box.max_x = iterator->bounding_box.max_x;
+	if (iterator->bounding_box.min_y < scene->binary_tree->bounding_box.min_y)
+		scene->binary_tree->bounding_box.min_y = iterator->bounding_box.min_y;
+	if (iterator->bounding_box.max_y > scene->binary_tree->bounding_box.max_y)
+		scene->binary_tree->bounding_box.max_y = iterator->bounding_box.max_y;
+	if (iterator->bounding_box.min_z < scene->binary_tree->bounding_box.min_z)
+		scene->binary_tree->bounding_box.min_z = iterator->bounding_box.min_z;
+	if (iterator->bounding_box.max_z > scene->binary_tree->bounding_box.max_z)
+		scene->binary_tree->bounding_box.max_z = iterator->bounding_box.max_z;
 }

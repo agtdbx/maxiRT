@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_object_file_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2024/03/17 13:00:55 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/16 16:36:45 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_error	parse_object_file(
 	obj.opacity = g_object_file_default_opacity;
 	obj.reflection = g_object_file_default_reflection;
 	obj.density = g_object_file_default_density;
+	objf->pos.y += 0.001f;
 	return (scene_add_object(state->scene, &obj));
 }
 
@@ -70,6 +71,7 @@ t_error	parse_object_file_checkerboard(
 	obj.opacity = g_object_file_default_opacity;
 	obj.reflection = g_object_file_default_reflection;
 	obj.density = g_object_file_default_density;
+	objf->pos.y += 0.001f;
 	return (scene_add_object(state->scene, &obj));
 }
 
@@ -98,6 +100,7 @@ t_error	parse_object_file_texture(
 	obj.opacity = g_object_file_default_opacity;
 	obj.reflection = g_object_file_default_reflection;
 	obj.density = g_object_file_default_density;
+	objf->pos.y += 0.001f;
 	return (scene_add_object(state->scene, &obj));
 }
 
@@ -132,5 +135,6 @@ t_error	parse_object_file_texture_and_normal(
 	obj.opacity = g_object_file_default_opacity;
 	obj.reflection = g_object_file_default_reflection;
 	obj.density = g_object_file_default_density;
+	objf->pos.y += 0.001f;
 	return (scene_add_object(state->scene, &obj));
 }

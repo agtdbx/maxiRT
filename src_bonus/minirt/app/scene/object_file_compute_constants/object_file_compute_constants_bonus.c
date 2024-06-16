@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_file_compute_constants_bonus.c              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:51:32 by aderouba          #+#    #+#             */
-/*   Updated: 2024/04/21 11:59:53 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/16 11:58:08 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,84 +23,6 @@ static void	compute_objf_vertices(
 static void	compute_objf_polygons(
 				t_object_file *objf);
 
-#include <stdio.h>
-
-//static void	print_polygon(
-//				t_object_polygon *polygon)
-//{
-//	if (polygon == NULL)
-//		printf("[POLY NULL]\n");
-//	else if (polygon->type == OBJ_TRIANGLE)
-//		printf("tri  |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f|\n",
-//			polygon->value.as_objf_triangle.point1.x,
-//			polygon->value.as_objf_triangle.point1.y,
-//			polygon->value.as_objf_triangle.point1.z,
-//			polygon->value.as_objf_triangle.point2.x,
-//			polygon->value.as_objf_triangle.point2.y,
-//			polygon->value.as_objf_triangle.point2.z,
-//			polygon->value.as_objf_triangle.point3.x,
-//			polygon->value.as_objf_triangle.point3.y,
-//			polygon->value.as_objf_triangle.point3.z);
-//	else
-//		printf("rect |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f| |% .2f, % .2f, % .2f|\n",
-//			polygon->value.as_objf_rectangle.point1.x,
-//			polygon->value.as_objf_rectangle.point1.y,
-//			polygon->value.as_objf_rectangle.point1.z,
-//			polygon->value.as_objf_rectangle.point2.x,
-//			polygon->value.as_objf_rectangle.point2.y,
-//			polygon->value.as_objf_rectangle.point2.z,
-//			polygon->value.as_objf_rectangle.point3.x,
-//			polygon->value.as_objf_rectangle.point3.y,
-//			polygon->value.as_objf_rectangle.point3.z,
-//			polygon->value.as_objf_rectangle.point4.x,
-//			polygon->value.as_objf_rectangle.point4.y,
-//			polygon->value.as_objf_rectangle.point4.z);
-//}
-
-//static void	print_polygons_list(
-//				t_object_binary_polygon *polygons)
-//{
-//	t_object_binary_polygon *actual;
-
-//	printf("POLYGONS :\n");
-//	actual = polygons;
-//	if (actual == NULL)
-//	{
-//		printf("{NULL}\n");
-//		return ;
-//	}
-
-//	while (actual)
-//	{
-//		print_polygon(actual->polygon);
-//		actual = actual->next;
-//	}
-//}
-
-//static void	print_tree_part(
-//				t_object_binary_part *part)
-//{
-//	if (part == NULL)
-//	{
-//		printf("PART NULL\n");
-//		return ;
-//	}
-//	printf("PART OK\n");
-
-//	if (part->child_1 == NULL)
-//		printf("CHILD 1 NULL\n");
-//	else
-//		printf("CHILD 1 OK\n");
-
-//	if (part->child_2 == NULL)
-//		printf("CHILD 2 NULL\n");
-//	else
-//		printf("CHILD 2 OK\n");
-
-//	print_polygons_list(part->polygons);
-//}
-
-
 /**
  * Compute constants from object file properties to facilitate further
  * calculations
@@ -110,30 +32,21 @@ void	object_file_compute_constants(
 			t_object_file *objf,
 			t_bounding_box *bbox)
 {
-	printf("OBJ{vertices : %i, polygons : %i}\n",
-			objf->nb_vertices, objf->nb_polygons);
-
 	axis_checker(objf);
 
 	vec3_cross(&objf->x_axis, &objf->y_axis, &objf->z_axis);
 	vec3_normalize(&objf->x_axis);
 	vec3_normalize(&objf->y_axis);
 	vec3_normalize(&objf->z_axis);
-	printf("axis done, start of vertices compute\n");
 
 	// Compute all vertices
 	compute_objf_vertices(objf);
-	printf("vertices done, start of polygons compute\n");
 
 	// Compute all polygons
 	compute_objf_polygons(objf);
-	printf("polygons done, start of bounding box tree compute\n");
 
 	// Compute bounding boxes
 	compute_objf_bounding_boxes(objf, bbox);
-	printf("bounding vox tree done\n");
-
-	//print_tree_part(objf->binary_partition);
 }
 
 

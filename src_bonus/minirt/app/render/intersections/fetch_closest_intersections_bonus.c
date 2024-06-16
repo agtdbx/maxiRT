@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:40:24 by tdubois           #+#    #+#             */
-/*   Updated: 2024/06/15 23:40:23 by gugus            ###   ########.fr       */
+/*   Updated: 2024/06/16 14:48:27 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,12 @@
 
 #include "minirt/app/scene/scene_bonus.h"
 
-static t_object	*_fetch_closest_intersection_in_tree(
-					t_ray const *ray,
-					t_scene_binary_part *tree,
-					t_intersect_info *intersect_info);
-
 /**
  * Fetch closest object intersected by ray
  * @param[in] ray
  * @param[in] objects
- * @param[out] distance The distance to the closest object or NULL.
- * @returns A pointer to the closest object
+ * @param[out] intersect_info Info of intersect point.
+ * @returns A pointer to the closest object, or NULL if no collision.
  * or NULL if ray did not intercept any object.
  */
 t_object	*fetch_closest_intersection(
@@ -53,223 +48,4 @@ t_object	*fetch_closest_intersection(
 		objects = objects->next;
 	}
 	return (intersected_object);
-}
-
-t_object	*fetch_closest_intersection_in_tree(
-				t_ray const *ray,
-				t_scene const *scene,
-				t_intersect_info *intersect_info)
-{
-	int					i;
-	t_object			*closest_plane;
-	t_object			*closest_object;
-	t_intersect_info	intersect_planes_test;
-	t_intersect_info	intersect_planes;
-	t_intersect_info	intersect_object;
-
-	closest_plane = NULL;
-	intersect_planes.distance = -1;
-	intersect_planes.sub_part_id = 0;
-
-	// Get closest plane
-	i = 0;
-	while (scene->planes && scene->planes[i])
-	{
-		if (test_intersection_with_obj(ray, scene->planes[i], &intersect_planes_test)
-			&& (intersect_planes.distance == -1 ||
-				intersect_planes.distance < intersect_planes_test.distance))
-		{
-			intersect_planes.distance = intersect_planes_test.distance;
-			intersect_planes.sub_part_id = intersect_planes_test.sub_part_id;
-			closest_plane = scene->planes[i];
-		}
-		i++;
-	}
-
-	// Get closest object other than plan
-	closest_object = NULL;
-	if (scene->binary_tree
-		&& test_intersection_with_bounding_box(
-			ray, &scene->binary_tree->bounding_box))
-	{
-		closest_object = _fetch_closest_intersection_in_tree(
-							ray, scene->binary_tree, &intersect_object);
-	}
-
-	if (closest_plane == NULL && closest_object == NULL)
-		return (NULL);
-
-	else if (closest_plane == NULL)
-	{
-		intersect_info->distance = intersect_object.distance;
-		intersect_info->sub_part_id = intersect_object.sub_part_id;
-		return (closest_object);
-	}
-
-	else if (closest_object == NULL)
-	{
-		intersect_info->distance = intersect_planes.distance;
-		intersect_info->sub_part_id = intersect_planes.sub_part_id;
-		return (closest_plane);
-	}
-
-	else if (intersect_object.distance < intersect_planes.distance)
-	{
-		intersect_info->distance = intersect_object.distance;
-		intersect_info->sub_part_id = intersect_object.sub_part_id;
-		return (closest_object);
-	}
-
-	else
-	{
-		intersect_info->distance = intersect_planes.distance;
-		intersect_info->sub_part_id = intersect_planes.sub_part_id;
-		return (closest_plane);
-	}
-}
-
-static t_object	*_fetch_closest_intersection_in_tree(
-					t_ray const *ray,
-					t_scene_binary_part *tree,
-					t_intersect_info *intersect_info)
-{
-	int					i;
-	t_object			*collid1;
-	t_object			*collid2;
-	t_object			*closest_object;
-	t_intersect_info	intersection_child1;
-	t_intersect_info	intersection_child2;
-	t_intersect_info	intersection_object;
-
-	if (tree->child_1 != NULL || tree->child_2 != NULL)
-	{
-		// Test only child 2 is not child 1
-		if (tree->child_1 == NULL)
-		{
-			if (!test_intersection_with_bounding_box(
-					ray, &tree->child_2->bounding_box))
-				return (NULL);
-			collid2 = _fetch_closest_intersection_in_tree(
-					ray, tree->child_2, &intersection_child2);
-			if (collid2 != NULL)
-			{
-				intersect_info->distance = intersection_child2.distance;
-				intersect_info->sub_part_id = intersection_child2.sub_part_id;
-			}
-			return (collid2);
-		}
-		// Test only child 1 is not child 2
-		else if (tree->child_2 == NULL)
-		{
-			if (!test_intersection_with_bounding_box(
-					ray, &tree->child_1->bounding_box))
-				return (NULL);
-			collid1 = _fetch_closest_intersection_in_tree(
-					ray, tree->child_1, &intersection_child1);
-			if (collid1 != NULL)
-			{
-				intersect_info->distance = intersection_child1.distance;
-				intersect_info->sub_part_id = intersection_child1.sub_part_id;
-			}
-			return (collid1);
-		}
-
-		// Test only child 2 is not collid bbox child 1
-		if (!test_intersection_with_bounding_box_dist(
-				ray, &tree->child_1->bounding_box, &intersection_child1))
-		{
-			collid2 = _fetch_closest_intersection_in_tree(
-					ray, tree->child_2, &intersection_child2);
-			if (collid2 != NULL)
-			{
-				intersect_info->distance = intersection_child2.distance;
-				intersect_info->sub_part_id = intersection_child2.sub_part_id;
-			}
-			return (collid2);
-		}
-		// Test only child 1 is not collid bbox child 2
-		else if (!test_intersection_with_bounding_box_dist(
-				ray, &tree->child_2->bounding_box, &intersection_child2))
-		{
-			collid1 = _fetch_closest_intersection_in_tree(
-					ray, tree->child_1, &intersection_child1);
-			if (collid1 != NULL)
-			{
-				intersect_info->distance = intersection_child1.distance;
-				intersect_info->sub_part_id = intersection_child1.sub_part_id;
-			}
-			return (collid1);
-		}
-
-		collid1 = NULL;
-		collid2 = NULL;
-		if (intersection_child1.distance < intersection_child2.distance)
-		{
-			collid1 = _fetch_closest_intersection_in_tree(
-						ray, tree->child_1, &intersection_child1);
-			if (collid1 == NULL)
-				collid2 = _fetch_closest_intersection_in_tree(
-							ray, tree->child_2, &intersection_child2);
-		}
-		else if (intersection_child1.distance > intersection_child2.distance)
-		{
-			collid2 = _fetch_closest_intersection_in_tree(
-						ray, tree->child_2, &intersection_child2);
-			if (collid2 == NULL)
-				collid1 = _fetch_closest_intersection_in_tree(
-							ray, tree->child_1, &intersection_child1);
-		}
-		else
-		{
-			collid1 = _fetch_closest_intersection_in_tree(
-						ray, tree->child_1, &intersection_child1);
-			collid2 = _fetch_closest_intersection_in_tree(
-						ray, tree->child_2, &intersection_child2);
-		}
-
-		if (collid1 == NULL && collid2 == NULL)
-			return (NULL);
-		if (collid1 == NULL)
-		{
-			intersect_info->distance = intersection_child2.distance;
-			intersect_info->sub_part_id = intersection_child2.sub_part_id;
-			return (collid2);
-		}
-		if (collid2 == NULL)
-		{
-			intersect_info->distance = intersection_child1.distance;
-			intersect_info->sub_part_id = intersection_child1.sub_part_id;
-			return (collid1);
-		}
-		if (intersection_child1.distance < intersection_child2.distance)
-		{
-			intersect_info->distance = intersection_child1.distance;
-			intersect_info->sub_part_id = intersection_child1.sub_part_id;
-			return (collid1);
-		}
-		intersect_info->distance = intersection_child2.distance;
-		intersect_info->sub_part_id = intersection_child2.sub_part_id;
-		return (collid2);
-	}
-
-	if (tree->objects == NULL)
-		return (NULL);
-
-	i = 0;
-	closest_object = NULL;
-	intersect_info->distance = -1.0f;
-	while (tree->objects[i] != NULL)
-	{
-		if (test_intersection_with_obj(
-				ray, tree->objects[i], &intersection_object)
-			&& (intersect_info->distance == -1.0f
-				|| intersection_object.distance < intersect_info->distance))
-		{
-			intersect_info->distance = intersection_object.distance;
-			intersect_info->sub_part_id = intersection_object.sub_part_id;
-			closest_object = tree->objects[i];
-		}
-		i++;
-	}
-	return (closest_object);
 }
