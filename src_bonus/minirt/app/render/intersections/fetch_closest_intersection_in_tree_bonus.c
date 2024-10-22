@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 14:48:07 by gugus             #+#    #+#             */
-/*   Updated: 2024/06/16 18:02:42 by gugus            ###   ########.fr       */
+/*   Updated: 2024/10/22 14:05:47 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static t_object	*_fetch_closest_plane_intersection(
 	{
 		if (test_intersection_with_obj(ray, planes[i], &test)
 			&& (intersect_planes->distance == -1 ||
-				intersect_planes->distance < test.distance))
+				test.distance < intersect_planes->distance))
 		{
 			intersect_planes->distance = test.distance;
 			intersect_planes->sub_part_id = test.sub_part_id;
