@@ -6,7 +6,7 @@
 #    By: gugus <gugus@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/06/16 14:49:27 by gugus            ###   ########.fr        #
+#    Updated: 2024/10/23 20:20:50 by gugus            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -264,148 +264,233 @@ SRCS		:=	src_bonus/minirt/app/app_loop_bonus.c \
 BUILD		:=	.build_bonus
 else
 SRC			:=	src
-SRCS		:=	src/minirt/app/app_loop.c \
-				src/minirt/app/app_start.c \
+SRCS		:=	src/minirt/parser/dot_obj_file/parse_dot_struct.c \
+				src/minirt/parser/dot_obj_file/parse_dot_file.c \
+				src/minirt/parser/dot_obj_file/apply_parsing_to_object_file.c \
+				src/minirt/parser/parse_file.c \
+				src/minirt/parser/parse_field.c \
+				src/minirt/parser/fast_get_next_line/fast_get_next_line.c \
+				src/minirt/parser/fast_get_next_line/fast_get_next_line_utils.c \
+				src/minirt/parser/fields/parse_direction.c \
+				src/minirt/parser/fields/parse_fov.c \
+				src/minirt/parser/fields/parse_brightness.c \
+				src/minirt/parser/fields/parse_dot_obj_file.c \
+				src/minirt/parser/fields/parse_png.c \
+				src/minirt/parser/fields/parse_vec3.c \
+				src/minirt/parser/fields/parse_diameter.c \
+				src/minirt/parser/fields/parse_color.c \
+				src/minirt/parser/fields/parse_float.c \
+				src/minirt/parser/error_logs/put_unknown_directive_error.c \
+				src/minirt/parser/error_logs/put_directive_error.c \
+				src/minirt/parser/error_logs/put_field_error.c \
+				src/minirt/parser/directives/parse_cylinder.c \
+				src/minirt/parser/directives/parse_spotlight.c \
+				src/minirt/parser/directives/parse_cone.c \
+				src/minirt/parser/directives/parse_comment.c \
+				src/minirt/parser/directives/parse_ambient_light.c \
+				src/minirt/parser/directives/parse_cube.c \
+				src/minirt/parser/directives/parse_triangle.c \
+				src/minirt/parser/directives/parse_object_file.c \
+				src/minirt/parser/directives/parse_plane.c \
+				src/minirt/parser/directives/parse_sphere.c \
+				src/minirt/parser/directives/parse_camera.c \
+				src/minirt/parser/parse_directive.c \
+				src/minirt/parser/parse_lines.c \
 				src/minirt/app/canvas/canvas_init.c \
 				src/minirt/app/canvas/canvas_swap.c \
-				src/minirt/app/input_handlers/handle_menu_toggling.c \
-				src/minirt/app/input_handlers/handle_mouse_clicks.c \
-				src/minirt/app/input_handlers/handle_rotations.c \
-				src/minirt/app/input_handlers/handle_translations.c \
-				src/minirt/app/input_handlers/handle_window_resizing.c \
-				src/minirt/app/menu/components/ambient/ambient_label_draw.c \
-				src/minirt/app/menu/components/ambient/ambient_label_hide.c \
-				src/minirt/app/menu/components/ambient/ambient_label_init.c \
-				src/minirt/app/menu/components/ambient/ambient_label_show.c \
-				src/minirt/app/menu/components/background_draw.c \
-				src/minirt/app/menu/components/camera/camera_label_draw.c \
-				src/minirt/app/menu/components/camera/camera_label_hide.c \
-				src/minirt/app/menu/components/camera/camera_label_init.c \
-				src/minirt/app/menu/components/camera/camera_label_show.c \
-				src/minirt/app/menu/components/cylinder/cylinder_panel_draw.c \
-				src/minirt/app/menu/components/cylinder/cylinder_panel_hide.c \
+				src/minirt/app/render/transparency/compute_refracted_color.c \
+				src/minirt/app/render/create_ray_from_pixel_coords.c \
+				src/minirt/app/render/render_ray_on_object.c \
+				src/minirt/app/render/intersections/compute_intersection_distance_from_inside.c \
+				src/minirt/app/render/intersections/fetch_closest_intersections.c \
+				src/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder_from_inside.c \
+				src/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder.c \
+				src/minirt/app/render/intersections/plane/test_intersection_with_plane.c \
+				src/minirt/app/render/intersections/fetch_closer_spotlight.c \
+				src/minirt/app/render/intersections/test_intersection_with_obj.c \
+				src/minirt/app/render/intersections/cone/test_intersection_with_cone.c \
+				src/minirt/app/render/intersections/cone/test_intersection_with_cone_from_inside.c \
+				src/minirt/app/render/intersections/object_file/test_intersection_with_object_triangle.c \
+				src/minirt/app/render/intersections/object_file/test_intersection_with_object_file.c \
+				src/minirt/app/render/intersections/object_file/test_intersection_with_object_rectangle.c \
+				src/minirt/app/render/intersections/object_file/test_intersection_with_object_file_from_inside.c \
+				src/minirt/app/render/intersections/bounding_box/test_intersection_with_bounding_box.c \
+				src/minirt/app/render/intersections/intersect_loop_without_param_obj.c \
+				src/minirt/app/render/intersections/compute_intersection_distance.c \
+				src/minirt/app/render/intersections/sphere/test_intersection_with_sphere.c \
+				src/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside.c \
+				src/minirt/app/render/intersections/fetch_closest_intersection_in_tree.c \
+				src/minirt/app/render/intersections/triangle/test_intersection_with_triangle.c \
+				src/minirt/app/render/intersections/cube/intersection_inside_z.c \
+				src/minirt/app/render/intersections/cube/intersection_y.c \
+				src/minirt/app/render/intersections/cube/intersection_inside_x.c \
+				src/minirt/app/render/intersections/cube/test_intersection_with_cube.c \
+				src/minirt/app/render/intersections/cube/intersection_inside_y.c \
+				src/minirt/app/render/intersections/cube/intersection_x.c \
+				src/minirt/app/render/intersections/cube/intersection_z.c \
+				src/minirt/app/render/intersections/cube/test_intersection_with_cube_from_inside.c \
+				src/minirt/app/render/mapping/normal_map/compute_normal_map.c \
+				src/minirt/app/render/mapping/normal_map/compute_normal_base_triangle.c \
+				src/minirt/app/render/mapping/normal_map/compute_normal_base_sphere.c \
+				src/minirt/app/render/mapping/normal_map/compute_normal_base_cylinder.c \
+				src/minirt/app/render/mapping/normal_map/compute_normal_base_cone.c \
+				src/minirt/app/render/mapping/normal_map/compute_normal_base_object_file.c \
+				src/minirt/app/render/mapping/normal_map/compute_normal_base_plane.c \
+				src/minirt/app/render/mapping/normal_map/apply_normal_map.c \
+				src/minirt/app/render/mapping/normal_map/compute_normal_base_cube.c \
+				src/minirt/app/render/mapping/pixel_pos/get_plane_pixel_pos.c \
+				src/minirt/app/render/mapping/pixel_pos/get_object_file_pixel_pos.c \
+				src/minirt/app/render/mapping/pixel_pos/get_triangle_pixel_pos.c \
+				src/minirt/app/render/mapping/pixel_pos/get_cone_pixel_pos.c \
+				src/minirt/app/render/mapping/pixel_pos/get_cylinder_pixel_pos.c \
+				src/minirt/app/render/mapping/pixel_pos/get_sphere_pixel_pos.c \
+				src/minirt/app/render/mapping/pixel_pos/get_cube_pixel_pos.c \
+				src/minirt/app/render/mapping/pixel_pos/get_object_pixel_pos.c \
+				src/minirt/app/render/mapping/color/apply_texture.c \
+				src/minirt/app/render/mapping/color/get_base_color_object.c \
+				src/minirt/app/render/render_next_pixels_til_tmax_on_back_canvas.c \
+				src/minirt/app/render/reflection/reflection.c \
+				src/minirt/app/render/illumination/compute_illumination.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_object_file.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_plane.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_cone.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_triangle.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_cylinder.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_cube.c \
+				src/minirt/app/render/normal_rays/compute_normal_ray_on_sphere.c \
+				src/minirt/app/render/render_fast_on_front_canvas.c \
+				src/minirt/app/render/render_canvas.c \
+				src/minirt/app/render/render_ray_from_camera.c \
+				src/minirt/app/scene/compute_scene_binary_tree.c \
+				src/minirt/app/scene/cylinder_compute_constants.c \
+				src/minirt/app/scene/cone_compute_constants.c \
+				src/minirt/app/scene/camera_compute_constants.c \
+				src/minirt/app/scene/scene_del.c \
+				src/minirt/app/scene/scene_add_object.c \
+				src/minirt/app/scene/sphere_compute_constants.c \
+				src/minirt/app/scene/object_file_compute_constants/object_binary_tree.c \
+				src/minirt/app/scene/object_file_compute_constants/object_file_compute_constants.c \
+				src/minirt/app/scene/object_file_compute_constants/compute_object_triangle.c \
+				src/minirt/app/scene/object_file_compute_constants/compute_object_rectangle.c \
+				src/minirt/app/scene/object_file_compute_constants/compute_object_bounding_box.c \
+				src/minirt/app/scene/compute_scene_planes.c \
+				src/minirt/app/scene/cube_compute_constants.c \
+				src/minirt/app/scene/triangle_compute_constants.c \
+				src/minirt/app/scene/plane_compute_constants.c \
+				src/minirt/app/scene/compute_bounding_box_constants.c \
+				src/minirt/app/utils/drawings/img_fill.c \
+				src/minirt/app/utils/drawings/img_draw_square.c \
+				src/minirt/app/utils/drawings/img_draw_divider.c \
+				src/minirt/app/utils/geometry/vec3_cross.c \
+				src/minirt/app/utils/geometry/vec3_normalize.c \
+				src/minirt/app/utils/geometry/vec3_add_into.c \
+				src/minirt/app/utils/geometry/vec3_add.c \
+				src/minirt/app/utils/geometry/vec3_normalize_into.c \
+				src/minirt/app/utils/geometry/vec3.c \
+				src/minirt/app/utils/geometry/vec3_norm.c \
+				src/minirt/app/utils/geometry/vec3_linear_transform.c \
+				src/minirt/app/utils/geometry/vec3_dot_xyz.c \
+				src/minirt/app/utils/geometry/vec3_substract.c \
+				src/minirt/app/utils/geometry/vec3_scale_into.c \
+				src/minirt/app/utils/geometry/mat_product.c \
+				src/minirt/app/utils/geometry/vec3_scale.c \
+				src/minirt/app/utils/geometry/vec3_dot.c \
+				src/minirt/app/utils/geometry/vec3_substract_into.c \
+				src/minirt/app/utils/space_partition/compute_childs_bbox.c \
+				src/minirt/app/utils/space_partition/is_bounding_box_inside_bounding_box.c \
+				src/minirt/app/utils/space_partition/set_min_max.c \
+				src/minirt/app/utils/space_partition/is_bbox_too_small.c \
+				src/minirt/app/utils/color/color_to_int.c \
+				src/minirt/app/utils/color/color_scale.c \
 				src/minirt/app/menu/components/cylinder/cylinder_panel_init.c \
-				src/minirt/app/menu/components/cylinder/cylinder_panel_register.c \
 				src/minirt/app/menu/components/cylinder/cylinder_panel_show.c \
-				src/minirt/app/menu/components/init_labels.c \
+				src/minirt/app/menu/components/cylinder/cylinder_panel_hide.c \
+				src/minirt/app/menu/components/cylinder/cylinder_panel_register.c \
+				src/minirt/app/menu/components/cylinder/cylinder_panel_draw.c \
+				src/minirt/app/menu/components/plane/plane_panel_hide.c \
+				src/minirt/app/menu/components/plane/plane_panel_show.c \
+				src/minirt/app/menu/components/plane/plane_panel_register.c \
+				src/minirt/app/menu/components/plane/plane_panel_init.c \
+				src/minirt/app/menu/components/plane/plane_panel_draw.c \
+				src/minirt/app/menu/components/background_draw.c \
+				src/minirt/app/menu/components/cone/cone_panel_init.c \
+				src/minirt/app/menu/components/cone/cone_panel_register.c \
+				src/minirt/app/menu/components/cone/cone_panel_show.c \
+				src/minirt/app/menu/components/cone/cone_panel_hide.c \
+				src/minirt/app/menu/components/cone/cone_panel_draw.c \
+				src/minirt/app/menu/components/object_file/object_file_panel_init.c \
+				src/minirt/app/menu/components/object_file/object_file_panel_draw.c \
+				src/minirt/app/menu/components/object_file/object_file_panel_show.c \
+				src/minirt/app/menu/components/object_file/object_file_panel_register.c \
+				src/minirt/app/menu/components/object_file/object_file_panel_hide.c \
+				src/minirt/app/menu/components/light/light_panel_register.c \
+				src/minirt/app/menu/components/light/light_panel_init.c \
 				src/minirt/app/menu/components/light/light_panel_draw.c \
 				src/minirt/app/menu/components/light/light_panel_hide.c \
-				src/minirt/app/menu/components/light/light_panel_init.c \
-				src/minirt/app/menu/components/light/light_panel_register.c \
 				src/minirt/app/menu/components/light/light_panel_show.c \
-				src/minirt/app/menu/components/object/object_panel_draw.c \
-				src/minirt/app/menu/components/object/object_panel_hide.c \
 				src/minirt/app/menu/components/object/object_panel_init.c \
-				src/minirt/app/menu/components/object/object_panel_register.c \
+				src/minirt/app/menu/components/object/object_panel_hide.c \
 				src/minirt/app/menu/components/object/object_panel_show.c \
-				src/minirt/app/menu/components/plane/plane_panel_draw.c \
-				src/minirt/app/menu/components/plane/plane_panel_hide.c \
-				src/minirt/app/menu/components/plane/plane_panel_init.c \
-				src/minirt/app/menu/components/plane/plane_panel_register.c \
-				src/minirt/app/menu/components/plane/plane_panel_show.c \
-				src/minirt/app/menu/components/sphere/sphere_panel_draw.c \
+				src/minirt/app/menu/components/object/object_panel_draw.c \
+				src/minirt/app/menu/components/object/object_panel_register.c \
+				src/minirt/app/menu/components/camera/camera_label_init.c \
+				src/minirt/app/menu/components/camera/camera_label_hide.c \
+				src/minirt/app/menu/components/camera/camera_label_show.c \
+				src/minirt/app/menu/components/camera/camera_label_draw.c \
 				src/minirt/app/menu/components/sphere/sphere_panel_hide.c \
+				src/minirt/app/menu/components/sphere/sphere_panel_draw.c \
 				src/minirt/app/menu/components/sphere/sphere_panel_init.c \
 				src/minirt/app/menu/components/sphere/sphere_panel_register.c \
 				src/minirt/app/menu/components/sphere/sphere_panel_show.c \
+				src/minirt/app/menu/components/triangle/triangle_panel_hide.c \
+				src/minirt/app/menu/components/triangle/triangle_panel_register.c \
+				src/minirt/app/menu/components/triangle/triangle_panel_show.c \
+				src/minirt/app/menu/components/triangle/triangle_panel_draw.c \
+				src/minirt/app/menu/components/triangle/triangle_panel_init.c \
+				src/minirt/app/menu/components/cube/cube_panel_draw.c \
+				src/minirt/app/menu/components/cube/cube_panel_hide.c \
+				src/minirt/app/menu/components/cube/cube_panel_init.c \
+				src/minirt/app/menu/components/cube/cube_panel_show.c \
+				src/minirt/app/menu/components/cube/cube_panel_register.c \
+				src/minirt/app/menu/components/init_labels.c \
+				src/minirt/app/menu/components/ambient/ambient_label_draw.c \
+				src/minirt/app/menu/components/ambient/ambient_label_init.c \
+				src/minirt/app/menu/components/ambient/ambient_label_hide.c \
+				src/minirt/app/menu/components/ambient/ambient_label_show.c \
+				src/minirt/app/menu/lib/button/button_show.c \
 				src/minirt/app/menu/lib/button/button_draw.c \
 				src/minirt/app/menu/lib/button/button_hide.c \
 				src/minirt/app/menu/lib/button/button_init.c \
-				src/minirt/app/menu/lib/button/button_show.c \
-				src/minirt/app/menu/lib/color_label/color_label_draw.c \
-				src/minirt/app/menu/lib/color_label/color_label_hide.c \
-				src/minirt/app/menu/lib/color_label/color_label_init.c \
-				src/minirt/app/menu/lib/color_label/color_label_show.c \
-				src/minirt/app/menu/lib/float_label/float_label_draw.c \
+				src/minirt/app/menu/lib/int_label/int_label_hide.c \
+				src/minirt/app/menu/lib/int_label/int_label_show.c \
+				src/minirt/app/menu/lib/int_label/int_label_init.c \
+				src/minirt/app/menu/lib/int_label/int_label_draw.c \
+				src/minirt/app/menu/lib/float_label/float_label_show.c \
 				src/minirt/app/menu/lib/float_label/float_label_hide.c \
 				src/minirt/app/menu/lib/float_label/float_label_init.c \
-				src/minirt/app/menu/lib/float_label/float_label_show.c \
-				src/minirt/app/menu/lib/int_label/int_label_draw.c \
-				src/minirt/app/menu/lib/int_label/int_label_hide.c \
-				src/minirt/app/menu/lib/int_label/int_label_init.c \
-				src/minirt/app/menu/lib/int_label/int_label_show.c \
-				src/minirt/app/menu/lib/vec_label/vec3_label_draw.c \
-				src/minirt/app/menu/lib/vec_label/vec3_label_hide.c \
-				src/minirt/app/menu/lib/vec_label/vec3_label_init.c \
-				src/minirt/app/menu/lib/vec_label/vec3_label_show.c \
+				src/minirt/app/menu/lib/float_label/float_label_draw.c \
+				src/minirt/app/menu/lib/color_label/color_label_init.c \
+				src/minirt/app/menu/lib/color_label/color_label_draw.c \
+				src/minirt/app/menu/lib/color_label/color_label_hide.c \
+				src/minirt/app/menu/lib/color_label/color_label_show.c \
+				src/minirt/app/menu/lib/vec3_label/vec3_label_hide.c \
+				src/minirt/app/menu/lib/vec3_label/vec3_label_show.c \
+				src/minirt/app/menu/lib/vec3_label/vec3_label_draw.c \
+				src/minirt/app/menu/lib/vec3_label/vec3_label_init.c \
 				src/minirt/app/menu/menu_draw.c \
-				src/minirt/app/menu/menu_hide.c \
 				src/minirt/app/menu/menu_init.c \
-				src/minirt/app/menu/menu_show.c \
+				src/minirt/app/menu/menu_hide.c \
 				src/minirt/app/menu/menu_update_position.c \
-				src/minirt/app/render/create_ray_from_pixel_coords.c \
-				src/minirt/app/render/illumination/compute_illumination.c \
-				src/minirt/app/render/intersections/compute_intersection_distance.c \
-				src/minirt/app/render/intersections/compute_intersection_distance_from_inside.c \
-				src/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder.c \
-				src/minirt/app/render/intersections/cylinder/test_intersection_with_cylinder_from_inside.c \
-				src/minirt/app/render/intersections/fetch_closer_spotlight.c \
-				src/minirt/app/render/intersections/fetch_closest_intersections.c \
-				src/minirt/app/render/intersections/intersect_loop_without_param_obj.c \
-				src/minirt/app/render/intersections/plane/test_intersection_with_plane.c \
-				src/minirt/app/render/intersections/sphere/test_intersection_with_sphere.c \
-				src/minirt/app/render/intersections/sphere/test_intersection_with_sphere_from_inside.c \
-				src/minirt/app/render/intersections/test_intersection_with_obj.c \
-				src/minirt/app/render/normal_rays/compute_normal_ray.c \
-				src/minirt/app/render/normal_rays/compute_normal_ray_on_cylinder.c \
-				src/minirt/app/render/normal_rays/compute_normal_ray_on_plane.c \
-				src/minirt/app/render/normal_rays/compute_normal_ray_on_sphere.c \
-				src/minirt/app/render/reflection/reflection.c \
-				src/minirt/app/render/render_canvas.c \
-				src/minirt/app/render/render_fast_on_front_canvas.c \
-				src/minirt/app/render/render_next_pixels_til_tmax_on_back_canvas.c \
-				src/minirt/app/render/render_ray_from_camera.c \
-				src/minirt/app/render/render_ray_on_object.c \
-				src/minirt/app/render/transparency/compute_refracted_color.c \
-				src/minirt/app/scene/camera_compute_constants.c \
-				src/minirt/app/scene/cylinder_compute_constants.c \
-				src/minirt/app/scene/plane_compute_constants.c \
-				src/minirt/app/scene/scene_add_object.c \
-				src/minirt/app/scene/scene_del.c \
-				src/minirt/app/scene/sphere_compute_constants.c \
-				src/minirt/app/utils/color/color_scale.c \
-				src/minirt/app/utils/color/color_to_int.c \
-				src/minirt/app/utils/drawings/img_draw_divider.c \
-				src/minirt/app/utils/drawings/img_draw_square.c \
-				src/minirt/app/utils/drawings/img_fill.c \
-				src/minirt/app/utils/geometry/mat_product.c \
-				src/minirt/app/utils/geometry/vec3_add.c \
-				src/minirt/app/utils/geometry/vec3.c \
-				src/minirt/app/utils/geometry/vec3_cross.c \
-				src/minirt/app/utils/geometry/vec3_dot.c \
-				src/minirt/app/utils/geometry/vec3_dot_xyz.c \
-				src/minirt/app/utils/geometry/vec3_linear_transform.c \
-				src/minirt/app/utils/geometry/vec3_normalize.c \
-				src/minirt/app/utils/geometry/vec3_normalize_into.c \
-				src/minirt/app/utils/geometry/vec3_norm.c \
-				src/minirt/app/utils/geometry/vec3_scale.c \
-				src/minirt/app/utils/geometry/vec3_scale_into.c \
-				src/minirt/app/utils/geometry/vec3_substract.c \
-				src/minirt/app/utils/geometry/vec3_substract_into.c \
-				src/minirt.c \
-				src/minirt/parser/directives/parse_ambient_light.c \
-				src/minirt/parser/directives/parse_camera.c \
-				src/minirt/parser/directives/parse_cylinder.c \
-				src/minirt/parser/directives/parse_plane.c \
-				src/minirt/parser/directives/parse_sphere.c \
-				src/minirt/parser/directives/parse_spotlight.c \
-				src/minirt/parser/error_logs/put_directive_error.c \
-				src/minirt/parser/error_logs/put_field_error.c \
-				src/minirt/parser/error_logs/put_unknown_directive_error.c \
-				src/minirt/parser/fast_get_next_line/fast_get_next_line.c \
-				src/minirt/parser/fast_get_next_line/fast_get_next_line_utils.c \
-				src/minirt/parser/fields/parse_brightness.c \
-				src/minirt/parser/fields/parse_color.c \
-				src/minirt/parser/fields/parse_diameter.c \
-				src/minirt/parser/fields/parse_direction.c \
-				src/minirt/parser/fields/parse_float.c \
-				src/minirt/parser/fields/parse_fov.c \
-				src/minirt/parser/fields/parse_png.c \
-				src/minirt/parser/fields/parse_vec3.c \
-				src/minirt/parser/parse_directive.c \
-				src/minirt/parser/parse_field.c \
-				src/minirt/parser/parse_file.c \
-				src/minirt/parser/parse_lines.c
+				src/minirt/app/menu/menu_show.c \
+				src/minirt/app/app_start.c \
+				src/minirt/app/input_handlers/handle_rotations.c \
+				src/minirt/app/input_handlers/handle_translations.c \
+				src/minirt/app/input_handlers/handle_window_resizing.c \
+				src/minirt/app/input_handlers/handle_mouse_clicks.c \
+				src/minirt/app/input_handlers/handle_menu_toggling.c \
+				src/minirt/app/app_loop.c \
+				src/minirt.c
 BUILD		:=	.build
 endif
 

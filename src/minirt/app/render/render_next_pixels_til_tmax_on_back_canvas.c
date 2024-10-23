@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_next_pixels_til_tmax_on_back_canvas.        :+:      :+:    :+:   */
+/*   render_next_pixels_til_tmax_on_back_canvas_        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:56:46 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:29:43 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:17:21 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 		while (pixel_coords[0] < app->canvas.width)
 		{
 			_render_one_pixel_on_back_canvas(
-				&app->scene, &app->canvas, pixel_coords, app->menu.is_visible);
+				app->scene, &app->canvas, pixel_coords, app->menu.is_visible);
 			++new_pixel_rendered;
 			if (mlx_get_time() > tmax)
 			{

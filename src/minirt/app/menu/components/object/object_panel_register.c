@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_panel_register.c                            :+:      :+:    :+:   */
+/*   object_panel_register.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:51 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 14:07:36 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/04/21 12:27:16 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	object_panel_register(
 	object_panel_hide(menu);
 	menu->light_panel.is_enabled = false;
 	menu->object_panel.is_enabled = true;
+	menu->object_panel.object_bbox = &object->bounding_box;
 	_register_common_labels(menu, object);
 	_register_object(menu, object);
 	object_panel_show(menu);
@@ -58,7 +59,17 @@ static void	_register_object(
 			t_menu *menu,
 			t_object *object)
 {
-	if (object->type == OBJ_PLANE)
+	if (object->type == OBJ_CONE)
+	{
+		cone_panel_register(menu, &object->value.as_cone);
+		cone_panel_show(menu);
+	}
+	else if (object->type == OBJ_CUBE)
+	{
+		cube_panel_register(menu, &object->value.as_cube);
+		cube_panel_show(menu);
+	}
+	else if (object->type == OBJ_PLANE)
 	{
 		plane_panel_register(menu, &object->value.as_plane);
 		plane_panel_show(menu);
@@ -72,5 +83,15 @@ static void	_register_object(
 	{
 		cylinder_panel_register(menu, &object->value.as_cylinder);
 		cylinder_panel_show(menu);
+	}
+	else if (object->type == OBJ_TRIANGLE)
+	{
+		triangle_panel_register(menu, &object->value.as_triangle);
+		triangle_panel_show(menu);
+	}
+	else if (object->type == OBJ_OBJECT_FILE)
+	{
+		object_file_panel_register(menu, &object->value.as_object_file);
+		object_file_panel_show(menu);
 	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_ray_from_camera.c                           :+:      :+:    :+:   */
+/*   render_ray_from_camera.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:44:01 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 16:55:33 by auguste          ###   ########.fr       */
+/*   Updated: 2024/06/16 16:11:33 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int32_t	render_ray_from_camera(
 	t_color				pixel_color;
 	t_intersect_info	intersect_info;
 
-	intersected_object = \
-		fetch_closest_intersection(ray, scene->objects, &intersect_info);
+	intersected_object = fetch_closest_intersection_in_tree(
+							ray, scene, &intersect_info);
 	if (show_spotlights)
 	{
 		light = fetch_closer_spotlight(

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fetch_closest_intersections.c                      :+:      :+:    :+:   */
+/*   fetch_closest_intersections.c                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:40:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 19:35:57 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:48:27 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
  * Fetch closest object intersected by ray
  * @param[in] ray
  * @param[in] objects
- * @param[out] distance The distance to the closest object or NULL.
- * @returns A pointer to the closest object
+ * @param[out] intersect_info Info of intersect point.
+ * @returns A pointer to the closest object, or NULL if no collision.
  * or NULL if ray did not intercept any object.
  */
 t_object	*fetch_closest_intersection(

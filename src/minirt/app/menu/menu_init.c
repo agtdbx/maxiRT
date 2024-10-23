@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu_init.c                                        :+:      :+:    :+:   */
+/*   menu_init.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:54:53 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:26:59 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/04/21 15:48:04 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_error	_menu_init_background(
 t_error	menu_init(
 			mlx_t *mlx,
 			t_menu *menu,
-			t_scene const *scene)
+			t_scene *scene)
 {
 	if (_menu_init_background(mlx, menu) == FAILURE)
 		return (FAILURE);
@@ -39,6 +39,7 @@ t_error	menu_init(
 	object_panel_init(mlx, menu);
 	light_panel_init(mlx, menu);
 	menu_hide(menu);
+	menu->scene = scene;
 	return (SUCCESS);
 }
 

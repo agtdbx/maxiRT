@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   object_panel_init.c                                :+:      :+:    :+:   */
+/*   object_panel_init.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:54:10 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 14:08:44 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:01:47 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,13 @@ void	object_panel_init(
 	init_opacity_label(mlx, menu);
 	init_density_label(mlx, menu);
 	init_reflection_label(mlx, menu);
+	cone_panel_init(mlx, menu);
+	cube_panel_init(mlx, menu);
 	plane_panel_init(mlx, menu);
 	sphere_panel_init(mlx, menu);
 	cylinder_panel_init(mlx, menu);
+	triangle_panel_init(mlx, menu);
+	object_file_panel_init(mlx, menu);
 }
 
 static void	object_title_init(
@@ -49,6 +53,12 @@ static void	object_title_init(
 			t_object_panel *const panel)
 {
 	panel->title = NULL;
+	panel->cone_title = mlx_put_string(mlx, "-- Cone --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->cone_title->enabled = false;
+	panel->cube_title = mlx_put_string(mlx, "-- Cube --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->cube_title->enabled = false;
 	panel->plane_title = mlx_put_string(mlx, "-- Plane --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->plane_title->enabled = false;
@@ -58,4 +68,10 @@ static void	object_title_init(
 	panel->cylinder_title = mlx_put_string(mlx, "-- Cylinder --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->cylinder_title->enabled = false;
+	panel->triangle_title = mlx_put_string(mlx, "-- Triangle --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->triangle_title->enabled = false;
+	panel->object_file_title = mlx_put_string(mlx, "-- Object file --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->object_file_title->enabled = false;
 }

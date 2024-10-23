@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   app_config.h                                       :+:      :+:    :+:   */
+/*   app_config.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:42:54 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 14:14:06 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:05:46 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,26 @@ static const float		g_plane_default_density = 1.0f;
 static const float		g_cylinder_default_reflection = 0.0f;
 static const float		g_cylinder_default_opacity = 1.0f;
 static const float		g_cylinder_default_density = 1.0f;
+
+// cone
+static const float		g_cone_default_reflection = 0.0f;
+static const float		g_cone_default_opacity = 1.0f;
+static const float		g_cone_default_density = 1.0f;
+
+// cube
+static const float		g_cube_default_reflection = 0.0f;
+static const float		g_cube_default_opacity = 1.0f;
+static const float		g_cube_default_density = 1.0f;
+
+// triangle
+static const float		g_triangle_default_reflection = 0.0f;
+static const float		g_triangle_default_opacity = 1.0f;
+static const float		g_triangle_default_density = 1.0f;
+
+// object_file
+static const float		g_object_file_default_reflection = 0.0f;
+static const float		g_object_file_default_opacity = 1.0f;
+static const float		g_object_file_default_density = 1.0f;
 
 //---- MATHS -----------------------------------------------------------------//
 

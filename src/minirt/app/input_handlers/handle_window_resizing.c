@@ -24,7 +24,7 @@
 #include "minirt/app/utils/drawings/drawings.h"
 
 /**
- * Resize canvas if smaller than window, 
+ * Resize canvas if smaller than window,
  * then update camera's focal accordingly
  * and reposition menu
  *

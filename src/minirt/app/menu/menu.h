@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu.h                                             :+:      :+:    :+:   */
+/*   menu.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 17:55:17 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 14:10:39 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:48:27 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,16 +117,108 @@ typedef struct s_cylinder_panel
 	t_button		height_label_button;
 }	t_cylinder_panel;
 
+typedef struct s_cone_panel
+{
+	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
+
+	t_vec3_label	direction_label;
+	t_button		direction_label_button_x;
+	t_button		direction_label_button_y;
+	t_button		direction_label_button_z;
+
+	t_float_label	diameter_label;
+	t_button		diameter_label_button;
+
+	t_float_label	height_label;
+	t_button		height_label_button;
+}	t_cone_panel;
+
+typedef struct s_cube_panel
+{
+	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
+
+	t_vec3_label	x_axis_label;
+	t_button		x_axis_label_button_x;
+	t_button		x_axis_label_button_y;
+	t_button		x_axis_label_button_z;
+
+	t_vec3_label	y_axis_label;
+	t_button		y_axis_label_button_x;
+	t_button		y_axis_label_button_y;
+	t_button		y_axis_label_button_z;
+
+	t_float_label	width_label;
+	t_button		width_label_button;
+
+	t_float_label	height_label;
+	t_button		height_label_button;
+
+	t_float_label	depth_label;
+	t_button		depth_label_button;
+}	t_cube_panel;
+
+typedef struct s_triangle_panel
+{
+	t_vec3_label	position_p1_label;
+	t_button		position_p1_label_button_x;
+	t_button		position_p1_label_button_y;
+	t_button		position_p1_label_button_z;
+
+	t_vec3_label	position_p2_label;
+	t_button		position_p2_label_button_x;
+	t_button		position_p2_label_button_y;
+	t_button		position_p2_label_button_z;
+
+	t_vec3_label	position_p3_label;
+	t_button		position_p3_label_button_x;
+	t_button		position_p3_label_button_y;
+	t_button		position_p3_label_button_z;
+
+}	t_triangle_panel;
+
+typedef struct s_object_file_panel
+{
+	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
+
+	t_vec3_label	x_axis_label;
+	t_button		x_axis_label_button_x;
+	t_button		x_axis_label_button_y;
+	t_button		x_axis_label_button_z;
+
+	t_vec3_label	y_axis_label;
+	t_button		y_axis_label_button_x;
+	t_button		y_axis_label_button_y;
+	t_button		y_axis_label_button_z;
+
+	t_float_label	size_label;
+	t_button		size_label_button;
+
+}	t_object_file_panel;
+
 typedef struct s_object_panel
 {
 	bool				is_enabled;
 	t_object_t			object_type;
 	void				*object_ptr;
+	t_bounding_box		*object_bbox;
 
 	mlx_image_t			*title;
+	mlx_image_t			*cone_title;
+	mlx_image_t			*cube_title;
 	mlx_image_t			*plane_title;
 	mlx_image_t			*sphere_title;
 	mlx_image_t			*cylinder_title;
+	mlx_image_t			*triangle_title;
+	mlx_image_t			*object_file_title;
 
 	t_color_label		color_label;
 	t_button			color_label_button_r;
@@ -142,9 +234,13 @@ typedef struct s_object_panel
 	t_float_label		reflection_label;
 	t_button			reflection_label_button;
 
+	t_cone_panel		cone_panel;
+	t_cube_panel		cube_panel;
 	t_plane_panel		plane_panel;
 	t_sphere_panel		sphere_label;
 	t_cylinder_panel	cylinder_panel;
+	t_triangle_panel	triangle_panel;
+	t_object_file_panel	object_file_panel;
 
 }	t_object_panel;
 
@@ -192,12 +288,13 @@ typedef struct s_menu
 
 	t_light_panel	light_panel;
 	t_object_panel	object_panel;
+	t_scene			*scene;
 }	t_menu;
 
 t_error			menu_init(
 					mlx_t *mlx,
 					t_menu *menu,
-					t_scene const *scene);
+					t_scene *scene);
 void			menu_update_position(
 					mlx_t const *mlx,
 					t_menu *menu);
@@ -292,6 +389,22 @@ void			object_panel_register(
 					t_menu *menu,
 					t_object *object);
 
+/// cone_panel
+
+void			cone_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cone_panel_show(
+					t_menu *menu);
+void			cone_panel_hide(
+					t_menu *menu);
+bool			cone_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cone_panel_register(
+					t_menu *menu,
+					t_cone *cone);
+
 /// sphere_panel
 
 void			sphere_panel_init(
@@ -339,6 +452,54 @@ bool			cylinder_panel_draw(
 void			cylinder_panel_register(
 					t_menu *menu,
 					t_cylinder *cylinder);
+
+// cube_panel
+
+void			cube_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cube_panel_show(
+					t_menu *menu);
+void			cube_panel_hide(
+					t_menu *menu);
+bool			cube_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			cube_panel_register(
+					t_menu *menu,
+					t_cube *cube);
+
+// triangle_panel
+
+void			triangle_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			triangle_panel_show(
+					t_menu *menu);
+void			triangle_panel_hide(
+					t_menu *menu);
+bool			triangle_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			triangle_panel_register(
+					t_menu *menu,
+					t_triangle *triangle);
+
+// object_file_panel
+
+void			object_file_panel_init(
+					mlx_t *mlx,
+					t_menu *menu);
+void			object_file_panel_show(
+					t_menu *menu);
+void			object_file_panel_hide(
+					t_menu *menu);
+bool			object_file_panel_draw(
+					mlx_t *mlx,
+					t_menu *menu);
+void			object_file_panel_register(
+					t_menu *menu,
+					t_object_file *objf);
 
 //---- LIB --------------------------------------------------------------------#
 

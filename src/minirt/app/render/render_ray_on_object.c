@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_ray_on_object.c                             :+:      :+:    :+:   */
+/*   render_ray_on_object.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:22 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:52:39 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:11:43 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/color/color.h"
 
+static t_pixel_info	get_pixel_info(
+						t_scene const *scene,
+						t_object const *intersected_object,
+						t_ray const *ray,
+						t_intersect_info const *intersect_info);
+
 static t_color		compute_object_without_effect_color(
 						t_object const *intersected_object,
 						t_scene const *scene,
 						t_ray const *ray,
-						t_ray const *normal);
+						t_pixel_info const *pixel_info);
 
 static t_color		merge_color(
 						t_object const *object,
@@ -35,39 +41,68 @@ t_color	render_ray_on_object(
 			t_ray const *ray,
 			t_intersect_info const *intersect_info)
 {
-	t_ray	normal;
-	t_color	refracted_color;
-	t_color	reflected_color;
-	t_color	color;
+	t_pixel_info	pixel_info;
+	t_color			refracted_color;
+	t_color			reflected_color;
+	t_color			color;
 
 	if (ray->depth > 16)
 		return ((t_color){0.0, 0.0, 0.0});
-	compute_normal_ray(
-		intersected_object, ray, intersect_info, &normal);
+	pixel_info = get_pixel_info(scene, intersected_object, ray, intersect_info);
 	color = compute_object_without_effect_color(intersected_object,
-			scene, ray, &normal);
+			scene, ray, &pixel_info);
 	refracted_color = compute_refracted_color(
-			intersected_object, scene, ray, &normal);
+			intersected_object, scene, ray, &pixel_info.normal);
 	reflected_color = compute_reflected_color(
-			intersected_object, scene, ray, &normal);
+			intersected_object, scene, ray, &pixel_info.normal);
 	color = merge_color(intersected_object, &color,
 			&refracted_color, &reflected_color);
 	return (color);
+}
+
+static t_pixel_info	get_pixel_info(
+						t_scene const *scene,
+						t_object const *intersected_object,
+						t_ray const *ray,
+						t_intersect_info const *intersect_info)
+{
+	t_pixel_info	pixel_info;
+	t_ray			normal_from_map;
+	t_color			illumination;
+
+	compute_normal_ray(
+		intersected_object, ray, intersect_info, &pixel_info.normal);
+	pixel_info.pos = get_object_pixel_pos(
+			intersected_object, ray, &pixel_info.normal, intersect_info);
+	normal_from_map = pixel_info.normal;
+	compute_normal_map(
+		intersected_object, intersect_info, &pixel_info.pos, &normal_from_map);
+	if (pixel_info.normal.vec.x != normal_from_map.vec.x
+		|| pixel_info.normal.vec.y != normal_from_map.vec.y
+		|| pixel_info.normal.vec.z != normal_from_map.vec.z)
+	{
+		illumination = check_dynamic_illumination(
+				scene, intersected_object, ray, &pixel_info.normal);
+		if (illumination.r != 0.0f || illumination.g != 0.0f
+			|| illumination.g != 0.0f)
+			pixel_info.normal = normal_from_map;
+	}
+	return (pixel_info);
 }
 
 static t_color	compute_object_without_effect_color(
 					t_object const *intersected_object,
 					t_scene const *scene,
 					t_ray const *ray,
-					t_ray const *normal)
+					t_pixel_info const *pixel_info)
 {
 	t_color	illumination;
 	t_color	base_color;
 	t_color	color;
 
-	base_color = intersected_object->color;
+	base_color = get_base_color_object(intersected_object, &pixel_info->pos);
 	illumination = compute_illumination(
-			scene, intersected_object, ray, normal);
+			scene, intersected_object, ray, &pixel_info->normal);
 	if (illumination.r == 0.0f && illumination.g == 0.0f
 		&& illumination.g == 0.0f)
 		return (illumination);

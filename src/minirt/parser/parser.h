@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parser.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:53:16 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:42:24 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:02:49 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static const t_directive	g_directives[] = {
 	.callback = parse_ambient_light,
 },
 {
-	.identifier = "L",
-	.usage = "L <position> <brightness> <color>",
+	.identifier = "li",
+	.usage = "li <position> <brightness> <color>",
 	.callback = parse_spotlight,
 },
 {
@@ -39,14 +39,158 @@ static const t_directive	g_directives[] = {
 	.callback = parse_sphere,
 },
 {
+	.identifier = "sp-ck",
+	.usage = "sp-ck <position> <diameter>",
+	.callback = parse_sphere_checkerboard,
+},
+{
+	.identifier = "sp-t",
+	.usage = "sp-t <position> <diameter> <texture path>",
+	.callback = parse_sphere_texture,
+},
+{
+	.identifier = "sp-tn",
+	.usage = "sp-tn <position> <diameter> <texture path> <normal map path>",
+	.callback = parse_sphere_texture_and_normal,
+},
+{
 	.identifier = "pl",
 	.usage = "pl <position> <orientation vector> <color>",
 	.callback = parse_plane,
 },
 {
+	.identifier = "pl-ck",
+	.usage = "pl-ck <position> <orientation vector>",
+	.callback = parse_plane_checkerboard,
+},
+{
+	.identifier = "pl-t",
+	.usage = "pl-t <position> <orientation vector> "
+	"<texture path>",
+	.callback = parse_plane_texture,
+},
+{
+	.identifier = "pl-tn",
+	.usage = "pl-tn <position> <orientation vector> "
+	"<texture path> <normal map path>",
+	.callback = parse_plane_texture_and_normal,
+},
+{
 	.identifier = "cy",
 	.usage = "cy <position> <orientation vector> <diameter> <height> <color>",
 	.callback = parse_cylinder,
+},
+{
+	.identifier = "cy-ck",
+	.usage = "cy-ck <position> <orientation vector> <diameter> <height>",
+	.callback = parse_cylinder_checkerboard,
+},
+{
+	.identifier = "cy-t",
+	.usage = "cy-t <position> <orientation vector> <diameter> <height>"
+	"<texture path>",
+	.callback = parse_cylinder_texture,
+},
+{
+	.identifier = "cy-tn",
+	.usage = "cy-tn <position> <orientation vector> <diameter> <height>"
+	"<texture path> <normal map path>",
+	.callback = parse_cylinder_texture_and_normal,
+},
+{
+	.identifier = "co",
+	.usage = "co <position> <orientation vector> <diameter> <height> <color>",
+	.callback = parse_cone,
+},
+{
+	.identifier = "co-ck",
+	.usage = "co-ck <position> <orientation vector> <diameter> <height>",
+	.callback = parse_cone_checkerboard,
+},
+{
+	.identifier = "co-t",
+	.usage = "co-t <position> <orientation vector> <diameter> <height> "
+	"<texture path>",
+	.callback = parse_cone_texture,
+},
+{
+	.identifier = "co-tn",
+	.usage = "co-tn <position> <orientation vector> <diameter> <height> "
+	"<texture path> <normal map path>",
+	.callback = parse_cone_texture_and_normal,
+},
+{
+	.identifier = "cu",
+	.usage = "cu <position> <orientation x vector> <orientation y vector> "
+	"<widht> <height> <depth> <color>",
+	.callback = parse_cube,
+},
+{
+	.identifier = "cu-ck",
+	.usage = "cu-ck <position> <orientation x vector> <orientation y vector> "
+	"<widht> <height> <depth>",
+	.callback = parse_cube_checkerboard,
+},
+{
+	.identifier = "cu-t",
+	.usage = "cu-t <position> <orientation x vector> <orientation y vector> "
+	"<widht> <height> <depth> <texture path>",
+	.callback = parse_cube_texture,
+},
+{
+	.identifier = "cu-tn",
+	.usage = "cu-tn <position> <orientation x vector> <orientation y vector> "
+	"<widht> <height> <depth> <texture path> <normal map path>",
+	.callback = parse_cube_texture_and_normal,
+},
+{
+	.identifier = "tr",
+	.usage = "tr <point> <point> <point> <color>",
+	.callback = parse_triangle,
+},
+{
+	.identifier = "tr-ck",
+	.usage = "tr <point> <point> <point>",
+	.callback = parse_triangle_checkerboard,
+},
+{
+	.identifier = "tr-t",
+	.usage = "tr <point> <point> <point> <texture path>",
+	.callback = parse_triangle_texture,
+},
+{
+	.identifier = "tr-tn",
+	.usage = "tr <point> <point> <point> <texture path> <normal map path>",
+	.callback = parse_triangle_texture_and_normal,
+},
+{
+	.identifier = "ob",
+	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path> <color>",
+	.callback = parse_object_file,
+},
+{
+	.identifier = "ob-ck",
+	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path>",
+	.callback = parse_object_file_checkerboard,
+},
+{
+	.identifier = "ob-t",
+	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path> <texture path>",
+	.callback = parse_object_file_texture,
+},
+{
+	.identifier = "ob-tn",
+	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path> <texture path> <normal map path>",
+	.callback = parse_object_file_texture_and_normal,
+},
+{
+	.identifier = "#",
+	.usage = "a comment !",
+	.callback = parse_comment,
 },
 };
 
@@ -92,6 +236,12 @@ static const t_field		g_png = {
 	.identifier = "png",
 	.usage = "png file to load",
 	.callback = parse_png,
+};
+
+static const t_field		g_objf = {
+	.identifier = "objf",
+	.usage = ".obj file to load",
+	.callback = parse_dot_obj_file,
 };
 
 static const t_field		g_empty = {

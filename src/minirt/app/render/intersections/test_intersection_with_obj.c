@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_intersection_with_obj.c                       :+:      :+:    :+:   */
+/*   test_intersection_with_obj.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:34:00 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 14:00:14 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/03/16 19:55:50 by auguste          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,18 @@ bool	test_intersection_with_obj(
 	else if (object->type == OBJ_CYLINDER)
 		return (test_intersection_with_cylinder(
 				ray, &object->value.as_cylinder, intersect_info));
+	else if (object->type == OBJ_CONE)
+		return (test_intersection_with_cone(
+				ray, &object->value.as_cone, intersect_info));
+	else if (object->type == OBJ_CUBE)
+		return (test_intersection_with_cube(
+				ray, &object->value.as_cube, intersect_info));
+	else if (object->type == OBJ_TRIANGLE)
+		return (test_intersection_with_triangle(
+				ray, &object->value.as_triangle, intersect_info));
+	else if (object->type == OBJ_OBJECT_FILE)
+		return (test_intersection_with_object_file(
+				ray, &object->value.as_object_file, intersect_info));
+
 	return (false);
 }

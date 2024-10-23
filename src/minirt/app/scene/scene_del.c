@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene_del.c                                        :+:      :+:    :+:   */
+/*   scene_del.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 10:30:35 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 13:01:33 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:29:50 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/scene/scene.h"
 
 #include <stddef.h>
+#include <stdlib.h>
 
 #include "libft/libft.h"
 
@@ -38,7 +39,14 @@ void	scene_del(
 			mlx_delete_texture(tmp->normal_map);
 		tmp = tmp->next;
 	}
+	free_scene_binary_tree(scene->binary_tree);
 	loc_del_objects(&scene->objects);
+
+	if (scene->planes != NULL)
+	{
+		free(scene->planes);
+		scene->planes = NULL;
+	}
 }
 
 static void	loc_del_lights(
@@ -56,5 +64,15 @@ static void	loc_del_objects(
 	if (*objects == NULL)
 		return ;
 	loc_del_objects(&(*objects)->next);
+	if ((*objects)->type == OBJ_OBJECT_FILE)
+	{
+		free((*objects)->value.as_object_file.vertices);
+		(*objects)->value.as_object_file.vertices = NULL;
+		free((*objects)->value.as_object_file.real_vertices);
+		(*objects)->value.as_object_file.real_vertices = NULL;
+		free((*objects)->value.as_object_file.polygons);
+		(*objects)->value.as_object_file.polygons = NULL;
+		free_object_binary_tree((*objects)->value.as_object_file.binary_partition);
+	}
 	ft_memdel(objects);
 }
