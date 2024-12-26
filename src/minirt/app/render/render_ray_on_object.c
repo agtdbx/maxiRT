@@ -76,9 +76,8 @@ static t_pixel_info	get_pixel_info(
 	pixel_info.pos = get_object_pixel_pos(
 			intersected_object, ray, &pixel_info.normal, intersect_info);
 	normal_from_map = pixel_info.normal;
-	//TODO: uncomment this
-	// compute_normal_map(
-		// intersected_object, intersect_info, &pixel_info.pos, &normal_from_map);
+	compute_normal_map(
+		intersected_object, intersect_info, &pixel_info.pos, &normal_from_map);
 	if (pixel_info.normal.vec.x != normal_from_map.vec.x
 		|| pixel_info.normal.vec.y != normal_from_map.vec.y
 		|| pixel_info.normal.vec.z != normal_from_map.vec.z)

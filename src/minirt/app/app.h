@@ -404,6 +404,11 @@ void			compute_normal_ray_on_cube(
 					t_ray const *ray,
 					t_intersect_info const *intersect_info,
 					t_ray *normal);
+void			compute_normal_ray_on_skybox(
+					t_object const *skybox,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
 void			compute_normal_ray_on_triangle(
 					t_object const *triangle,
 					t_ray const *ray,
