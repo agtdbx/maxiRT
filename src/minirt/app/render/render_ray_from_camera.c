@@ -26,6 +26,11 @@ static int32_t	_render_ray_on_spotlight(
 					t_ray const *ray,
 					t_intersect_info const *intersect_info);
 
+static inline int32_t	_fetch_intersection_with_skybox(
+					t_scene const *scene,
+					t_ray const *ray,
+					t_object const *skybox,
+					t_intersect_info *intersect_info);
 /**
  * @param[in] scene
  * @param[in] ray Normalized ray from camera
@@ -52,7 +57,12 @@ int32_t	render_ray_from_camera(
 			return (_render_ray_on_spotlight(light, ray, &intersect_info));
 	}
 	if (intersected_object == NULL)
+	{
+		if (scene->skybox)
+			return _fetch_intersection_with_skybox(scene, ray,
+				scene->skybox, &intersect_info);
 		return (g_color_black);
+	}
 	pixel_color = render_ray_on_object(
 			scene, intersected_object, ray, &intersect_info);
 	return (color_to_int(&pixel_color));
@@ -80,4 +90,19 @@ static int32_t	_render_ray_on_spotlight(
 	color.g = light->color.g * light->brightness;
 	color.b = light->color.b * light->brightness;
 	return (color_to_int(&color));
+}
+
+static inline int32_t	_fetch_intersection_with_skybox(
+			t_scene const *scene,
+			t_ray const *ray,
+			t_object const *skybox,
+			t_intersect_info *intersect_info)
+{
+	t_color	pixel_color;
+
+	test_intersection_with_cube_from_inside(
+		ray, &skybox->value.as_skybox.cube, intersect_info);
+	pixel_color = render_ray_on_object(scene, skybox,
+		ray, intersect_info);
+	return (color_to_int(&pixel_color));
 }

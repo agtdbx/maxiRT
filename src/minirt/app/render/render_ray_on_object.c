@@ -25,6 +25,7 @@ static t_pixel_info	get_pixel_info(
 
 static t_color		compute_object_without_effect_color(
 						t_object const *intersected_object,
+						t_intersect_info const *intersect_info,
 						t_scene const *scene,
 						t_ray const *ray,
 						t_pixel_info const *pixel_info);
@@ -50,7 +51,7 @@ t_color	render_ray_on_object(
 		return ((t_color){0.0, 0.0, 0.0});
 	pixel_info = get_pixel_info(scene, intersected_object, ray, intersect_info);
 	color = compute_object_without_effect_color(intersected_object,
-			scene, ray, &pixel_info);
+		intersect_info, scene, ray, &pixel_info);
 	refracted_color = compute_refracted_color(
 			intersected_object, scene, ray, &pixel_info.normal);
 	reflected_color = compute_reflected_color(
@@ -75,8 +76,9 @@ static t_pixel_info	get_pixel_info(
 	pixel_info.pos = get_object_pixel_pos(
 			intersected_object, ray, &pixel_info.normal, intersect_info);
 	normal_from_map = pixel_info.normal;
-	compute_normal_map(
-		intersected_object, intersect_info, &pixel_info.pos, &normal_from_map);
+	//TODO: uncomment this
+	// compute_normal_map(
+		// intersected_object, intersect_info, &pixel_info.pos, &normal_from_map);
 	if (pixel_info.normal.vec.x != normal_from_map.vec.x
 		|| pixel_info.normal.vec.y != normal_from_map.vec.y
 		|| pixel_info.normal.vec.z != normal_from_map.vec.z)
@@ -92,6 +94,7 @@ static t_pixel_info	get_pixel_info(
 
 static t_color	compute_object_without_effect_color(
 					t_object const *intersected_object,
+					t_intersect_info const *intersect_info,
 					t_scene const *scene,
 					t_ray const *ray,
 					t_pixel_info const *pixel_info)
@@ -100,7 +103,8 @@ static t_color	compute_object_without_effect_color(
 	t_color	base_color;
 	t_color	color;
 
-	base_color = get_base_color_object(intersected_object, &pixel_info->pos);
+	base_color = get_base_color_object(intersected_object, intersect_info,
+		&pixel_info->pos);
 	illumination = compute_illumination(
 			scene, intersected_object, ray, &pixel_info->normal);
 	if (illumination.r == 0.0f && illumination.g == 0.0f

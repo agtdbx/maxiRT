@@ -185,6 +185,15 @@ void			triangle_compute_constants(
 					t_triangle *triangle,
 					t_bounding_box *bbox);
 
+//---- SKYBOX ----------------------------------------------------------------//
+
+typedef struct s_skybox
+{
+	// for each face of the cube map
+	mlx_texture_t *textures;
+	t_cube cube;
+}	t_skybox;
+
 //---- OBJECT FILE------------------------------------------------------------//
 
 typedef enum e_object_polygon_t
@@ -328,6 +337,7 @@ typedef enum e_object_t
 	OBJ_CUBE,
 	OBJ_TRIANGLE,
 	OBJ_OBJECT_FILE,
+	OBJ_SKYBOX,
 }	t_object_t;
 
 typedef union u_object_v
@@ -339,6 +349,7 @@ typedef union u_object_v
 	t_cube			as_cube;
 	t_triangle		as_triangle;
 	t_object_file	as_object_file;
+	t_skybox		as_skybox;
 }	t_object_v;
 
 typedef struct s_object
@@ -408,6 +419,7 @@ typedef struct s_scene
 	t_light				*ambient_lightning;
 	t_camera			*camera;
 	t_object			**planes;
+	t_object			*skybox;
 }	t_scene;
 
 t_error			scene_add_object(

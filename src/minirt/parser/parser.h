@@ -19,6 +19,11 @@
 
 static const t_directive	g_directives[] = {
 {
+	.identifier = "S",
+	.usage = "S <texture path>",
+	.callback = parse_skybox,
+},
+{
 	.identifier = "C",
 	.usage = "C <position> <orientation vector> <fov>",
 	.callback = parse_camera,

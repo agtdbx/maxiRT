@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_illumination.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/17 17:07:02 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/12/26 16:35:58 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,8 @@ static void	apply_shadow_to_illumination(
 			&distance_to_object, &normal);
 		pixel_pos = get_object_pixel_pos(objects, ray_to_spotlight,
 				&normal, &distance_to_object);
-		base_color = get_base_color_object(objects, &pixel_pos);
+		base_color = get_base_color_object(objects,
+			NULL, &pixel_pos);
 		illumination->r -= powf(objects->opacity,
 				1 + base_color.r * g_opacity_color_ratio);
 		illumination->g -= powf(objects->opacity,

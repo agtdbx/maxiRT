@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_add_object.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 23:28:29 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/15 13:23:11 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/12/20 00:02:01 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ t_error	scene_add_object(
 		return (FAILURE);
 	}
 	new_object->next = NULL;
-	_object_add_back(&scene->objects, new_object);
+	if (obj->type == OBJ_SKYBOX)
+		scene->skybox = new_object;
+	else
+		_object_add_back(&scene->objects, new_object);
 	return (SUCCESS);
 }
 

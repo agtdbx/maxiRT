@@ -148,6 +148,8 @@ static t_error	_compute_constants(
 	scene->binary_tree = NULL;
 	compute_scene_binary_tree(scene);
 	compute_scene_planes(scene);
+	if (scene->skybox)
+		cube_compute_constants(&scene->skybox->value.as_skybox.cube, NULL);
 	return SUCCESS;
 }
 

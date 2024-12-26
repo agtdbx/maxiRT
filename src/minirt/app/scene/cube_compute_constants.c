@@ -68,8 +68,9 @@ void	cube_compute_constants(
 	init_face(cube, &cube->bot, &rev_y_axis, cube->half_height);
 	init_face(cube, &cube->front, &cube->z_axis, cube->half_depth);
 	init_face(cube, &cube->back, &rev_z_axis, cube->half_depth);
-
-	_compute_cube_bounding_box(cube, bbox);
+	// Compute bounding box but not if skybox which doesnt have one
+	if (bbox)
+		_compute_cube_bounding_box(cube, bbox);
 }
 
 static void	axis_checker(

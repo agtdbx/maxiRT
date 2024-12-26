@@ -480,6 +480,10 @@ t_vec2			get_cone_pixel_pos(
 					t_ray const *ray,
 					t_ray const *normal,
 					t_intersect_info const *intersect_info);
+t_vec2			get_skybox_pixel_pos(
+					t_skybox const *skybox,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info);
 t_vec2			get_cube_pixel_pos(
 					t_cube const *cube,
 					t_ray const *normal,
@@ -494,6 +498,7 @@ t_vec2			get_object_file_pixel_pos(
 
 t_color			get_base_color_object(
 					t_object const *intersected_object,
+					t_intersect_info const *intersect_info,
 					t_vec2 const *pixel_pos);
 
 t_color			apply_texture(

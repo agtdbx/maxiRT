@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cube_pixel_pos.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 15:49:28 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/06 16:05:15 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/12/26 15:07:18 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@ t_vec2	get_cube_pixel_pos(
 	pixel.x += 0.5f;
 	pixel.y += 0.5f;
 	return (pixel);
+}
+
+t_vec2	get_skybox_pixel_pos(
+					t_skybox const *skybox,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info)
+{
+	return get_cube_pixel_pos(&skybox->cube, normal, intersect_info);
 }
 
 static t_vec2	get_pixel_pos_x(

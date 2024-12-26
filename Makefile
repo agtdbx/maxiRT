@@ -6,7 +6,7 @@
 #    By: damien <damien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/12/26 15:23:05 by damien           ###   ########.fr        #
+#    Updated: 2024/12/26 16:31:03 by damien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -289,6 +289,7 @@ SRCS		:=	src/minirt/parser/dot_obj_file/parse_dot_struct.c \
 				src/minirt/parser/directives/parse_comment.c \
 				src/minirt/parser/directives/parse_ambient_light.c \
 				src/minirt/parser/directives/parse_cube.c \
+				src/minirt/parser/directives/parse_skybox.c \
 				src/minirt/parser/directives/parse_triangle.c \
 				src/minirt/parser/directives/parse_object_file.c \
 				src/minirt/parser/directives/parse_plane.c \
