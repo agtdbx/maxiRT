@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   render_canvas.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/21 15:17:13 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/12/26 16:12:16 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/app.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -18,14 +17,15 @@
 #include "MLX42/MLX42.h"
 #include "libft/libft.h"
 
+#include "minirt/app/app.h"
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/utils/drawings/drawings.h"
 #include "minirt/app/utils/geometry/geometry.h"
 
 static void	_print_rendering_progress(
+				int pixel_rendered,
 				mlx_t *mlx,
-				bool is_rendering,
-				int32_t	pixel_rendered);
+				bool is_rendering);
 static void	_update_ppr(
 				double delta_time,
 				int32_t *ppr);
@@ -38,25 +38,43 @@ void	render_canvas(
 			t_app *app,
 			bool should_render_fast)
 {
-	static int32_t	pixel_rendered = 0;
+	static int32_t	task_created = 0;
 	static int32_t	pixel_per_ray = 16;
 	static bool		is_rendering = false;
 
+	if (app->render.sync.constant_calculated != 1)
+		return ;
 	if (should_render_fast)
 	{
+		if (app->render.sync.nb_tasks_remain != 0)
+		{
+			// We were generating back canvas when user moved
+			sem_init(&app->render.sync.jobs_sem, 0, 0);
+			pthread_mutex_lock(&app->render.sync.queue_mut);
+			app->render.sync.nb_tasks_remain = 0;
+			del_queue(&app->render.queue);
+			pthread_mutex_unlock(&app->render.sync.queue_mut);
+		}
 		if (is_rendering)
 			_update_ppr(app->mlx->delta_time, &pixel_per_ray);
-		render_fast_on_front_canvas(app, pixel_per_ray);
+		if (render_fast_on_front_canvas(app, pixel_per_ray) == FAILURE)
+		{
+			del_queue(&app->render.queue);
+			free(app->render.workers);
+			sem_init(&app->render.sync.jobs_sem, 0, 0);
+			app->render.sync.keep_alive = 0;
+			return ;
+		}
 		is_rendering = true;
-		pixel_rendered = 0;
+		task_created = 0;
+		app->render.sync.pixel_rendered = 0;
 		return ;
 	}
-	_print_rendering_progress(app->mlx, is_rendering, pixel_rendered);
+	_print_rendering_progress(app->render.sync.pixel_rendered, app->mlx, is_rendering);
 	if (is_rendering)
 	{
-		pixel_rendered += render_next_pixels_til_tmax_on_back_canvas(
-				app, pixel_rendered);
-		if (pixel_rendered == app->canvas.width * app->canvas.height)
+		task_created += render_next_pixels_til_tmax_on_back_canvas(app, task_created);
+		if (app->render.sync.nb_tasks_remain == 0)
 		{
 			canvas_swap(&app->canvas);
 			is_rendering = false;
@@ -65,9 +83,9 @@ void	render_canvas(
 }
 
 static void	_print_rendering_progress(
+				int pixel_rendered,
 				mlx_t *mlx,
-				bool is_rendering,
-				int32_t	pixel_rendered)
+				bool is_rendering)
 {
 	static mlx_image_t	*img = NULL;
 	float				progress_rate;

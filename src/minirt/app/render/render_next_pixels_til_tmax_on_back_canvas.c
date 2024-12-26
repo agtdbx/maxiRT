@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_next_pixels_til_tmax_on_back_canvas_        :+:      :+:    :+:   */
+/*   render_next_pixels_til_tmax_on_back_canvas.        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: auguste <auguste@student.42.fr>            +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:56:46 by tdubois           #+#    #+#             */
-/*   Updated: 2024/04/21 16:17:21 by auguste          ###   ########.fr       */
+/*   Updated: 2024/12/26 15:47:50 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@
 #include "minirt/app/canvas/canvas.h"
 #include "minirt/app/utils/geometry/geometry.h"
 
-static void	_render_one_pixel_on_back_canvas(
-				t_scene const *scene,
-				t_canvas const *canvas,
-				int32_t const coords[2],
-				bool show_spotlights);
 
 int32_t	render_next_pixels_til_tmax_on_back_canvas(
 			t_app *app,
@@ -34,6 +29,8 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 	double			tmax;
 	int32_t			pixel_coords[2];
 	int32_t			new_pixel_rendered;
+	t_ray			casted_ray;
+	t_task			*new_task;
 
 	new_pixel_rendered = 0;
 	pixel_coords[0] = pixel_rendered % app->canvas.width;
@@ -43,11 +40,22 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 	{
 		while (pixel_coords[0] < app->canvas.width)
 		{
-			_render_one_pixel_on_back_canvas(
-				app->scene, &app->canvas, pixel_coords, app->menu.is_visible);
+			casted_ray = create_ray_from_pixel_coords(app->scene->camera,
+				&app->canvas, pixel_coords);
+			casted_ray.depth = 0;
+			new_task = create_ray_task(&casted_ray, 1, pixel_coords, 1);
+			if (new_task == NULL)
+				return FAILURE;
+			pthread_mutex_lock(&app->render.sync.queue_mut);
+			push_task(
+				&app->render.queue,
+				new_task,
+				&app->render.sync.nb_tasks_remain);
+			pthread_mutex_unlock(&app->render.sync.queue_mut);
 			++new_pixel_rendered;
 			if (mlx_get_time() > tmax)
 			{
+				sem_post_value(&app->render.sync.jobs_sem, new_pixel_rendered);
 				return (new_pixel_rendered);
 			}
 			pixel_coords[0] += 1;
@@ -55,20 +63,6 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 		pixel_coords[1] += 1;
 		pixel_coords[0] = 0;
 	}
+	sem_post_value(&app->render.sync.jobs_sem, new_pixel_rendered);
 	return (new_pixel_rendered);
-}
-
-static void	_render_one_pixel_on_back_canvas(
-				t_scene const *scene,
-				t_canvas const *canvas,
-				int32_t const coords[2],
-				bool show_spotlights)
-{
-	int32_t	color;
-	t_ray	casted_ray;
-
-	casted_ray = create_ray_from_pixel_coords(scene->camera, canvas, coords);
-	casted_ray.depth = 0;
-	color = render_ray_from_camera(scene, &casted_ray, show_spotlights);
-	mlx_put_pixel(canvas->back, coords[0], coords[1], color);
 }

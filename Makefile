@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gugus <gugus@student.42.fr>                +#+  +:+       +#+         #
+#    By: damien <damien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/10/23 20:20:50 by gugus            ###   ########.fr        #
+#    Updated: 2024/12/26 15:23:05 by damien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -362,6 +362,7 @@ SRCS		:=	src/minirt/parser/dot_obj_file/parse_dot_struct.c \
 				src/minirt/app/render/render_fast_on_front_canvas.c \
 				src/minirt/app/render/render_canvas.c \
 				src/minirt/app/render/render_ray_from_camera.c \
+				src/minirt/app/render/render_multithread.c \
 				src/minirt/app/scene/compute_scene_binary_tree.c \
 				src/minirt/app/scene/cylinder_compute_constants.c \
 				src/minirt/app/scene/cone_compute_constants.c \
@@ -501,7 +502,7 @@ INCLUDES	:=	$(SRC) lib/libft/include lib/mlx42/include
 
 CC			:=	clang									\
 
-CFLAGS		:=	-std=c99 -Wall -Wextra -Werror			\
+CFLAGS		:=	-std=gnu99 -Wall -Wextra -Werror			\
 				-Wunreachable-code -Ofast				\
 
 CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES)) -g	\

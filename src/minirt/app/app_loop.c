@@ -39,6 +39,12 @@ void	app_loop(
 
 	if (mlx_is_key_down(app->mlx, MLX_KEY_ESCAPE))
 	{
+		app->render.sync.keep_alive = 0;
+		pthread_mutex_lock(&app->render.sync.queue_mut);
+		app->render.sync.nb_tasks_remain = 0;
+		pthread_mutex_unlock(&app->render.sync.queue_mut);
+		// TODO: fix
+		// join_all_threads(app->render.workers);
 		mlx_close_window(app->mlx);
 		return ;
 	}
@@ -62,7 +68,8 @@ static inline bool	_handle_user_inputs(
 
 	should_render = false;
 	should_render |= handle_window_resizing(
-			app->mlx, &app->menu, app->scene, &app->canvas);
+			app->mlx, &app->menu, app->scene,
+			&app->canvas, &app->render.sync);
 	should_render |= handle_menu_toggling(
 			app->mlx, &app->menu);
 	should_render |= handle_translations(

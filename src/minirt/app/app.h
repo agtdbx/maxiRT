@@ -15,12 +15,72 @@
 
 # include <stdbool.h>
 # include <stdint.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <semaphore.h>
 
 # include "MLX42/MLX42.h"
 
 # include "minirt/app/canvas/canvas.h"
 # include "minirt/app/menu/menu.h"
 # include "minirt/app/scene/scene.h"
+
+// multithread related structures
+
+typedef enum e_task_type
+{
+	RAY_CAST,
+	COMPUTE_CONST
+}	t_task_type;
+
+typedef struct s_task
+{
+	t_task_type		type;
+	// compute constant (bounding box, ...)
+	t_object		*object;
+	// ray cast
+	int				back_canvas;
+	int32_t			ppr;
+	t_ray			ray;
+	int32_t			pixels[2];
+	struct s_task	*next;
+}	t_task;
+
+
+typedef struct s_worker
+{
+	pthread_t		thid;
+	struct s_render	*render;
+}	t_worker;
+
+
+typedef struct s_sync
+{
+	pthread_mutex_t		scene_mut;
+	pthread_mutex_t		canvas_mut[2];
+	// keep track of active threads
+	pthread_mutex_t		active_threads_mut;
+	// use to check and add job in queue
+	pthread_mutex_t		queue_mut;
+	pthread_cond_t		finish_jobs_cond;
+	// increment/decrement each time a task is added/removed
+	sem_t				jobs_sem;
+	int					nb_active_threads;
+	int					nb_tasks_remain;
+	int					pixel_rendered;
+	volatile int		keep_alive;
+	int					constant_calculated;
+}	t_sync;
+
+typedef struct s_render
+{
+	t_worker	*workers;
+	t_sync		sync;
+	t_scene		*scene;
+	t_canvas	*canvas;
+	t_menu		*menu;
+	t_task		*queue;
+}	t_render;
 
 //**** APP MODEL *************************************************************//
 
@@ -32,6 +92,7 @@ typedef struct s_app
 	t_menu		menu;
 	t_scene		*scene;
 	t_canvas	canvas;
+	t_render	render;
 }	t_app;
 
 //---- INTERSECTION STRUCT ---------------------------------------------------//
@@ -57,7 +118,8 @@ bool			handle_window_resizing(
 					mlx_t *mlx,
 					t_menu *menu,
 					t_scene *scene,
-					t_canvas *canvas);
+					t_canvas *canvas,
+					t_sync *sync);
 bool			handle_translations(
 					mlx_t *mlx,
 					t_camera *camera);
@@ -74,12 +136,36 @@ void			handle_mouse_clicks(
 					t_scene *scene,
 					t_canvas *canvas);
 
+// multithread
+
+t_task			*init_tasks_queue();
+void			del_queue(t_task **queue);
+void			push_task(t_task **queue,
+					t_task *new_task, 
+					int *nb_task_remain);
+t_task			*pop_task(
+					t_task **queue,
+					pthread_mutex_t *queue_mutex,
+					int *nb_tasks_remain);
+
+t_task			*create_ray_task(
+					t_ray *ray,
+					int32_t ppr,
+					int32_t pix[2],
+					int back_canvas);
+long			get_nb_threads();
+t_error			threads_init(t_app *app);
+void			sem_post_value(sem_t *sem, int value);
+void			wait_jobs_finish(t_render *render);
+void			del_mut_cond_sem(t_sync *sync);
+void			join_all_threads(t_worker *workers);
+
 /// rendering core
 
 void			render_canvas(
 					t_app *app,
 					bool should_render);
-void			render_fast_on_front_canvas(
+t_error			render_fast_on_front_canvas(
 					t_app *app,
 					int32_t ppr);
 int32_t			render_next_pixels_til_tmax_on_back_canvas(

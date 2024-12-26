@@ -22,13 +22,21 @@ static void	_get_top_left_ray(
 				t_camera const *camera,
 				t_vec3 *top_left_vec);
 
-void	render_fast_on_front_canvas(
+t_error	render_fast_on_front_canvas(
 			t_app *app,
 			int32_t ppr)
 {
-	t_vec3			ray[2];
-	int32_t			pix[2];
-	t_ray			casted_ray;
+	t_vec3	ray[2];
+	int32_t	pix[2];
+	t_ray	casted_ray;
+	t_task	*new_task;
+
+	if (app->render.queue == NULL)
+	{
+		app->render.queue = init_tasks_queue();
+		if (app->render.queue == NULL)
+			return FAILURE;
+	}
 
 	_get_top_left_ray(&app->canvas, app->scene->camera, &ray[Y]);
 	casted_ray.pos = app->scene->camera->pos;
@@ -41,14 +49,55 @@ void	render_fast_on_front_canvas(
 		{
 			casted_ray.depth = 0;
 			vec3_normalize_into(&casted_ray.vec, &ray[X]);
-			img_draw_square(app->canvas.front, pix, ppr, render_ray_from_camera(
-					app->scene, &casted_ray, app->menu.is_visible));
+			new_task = create_ray_task(&casted_ray, ppr, pix, 0);
+			if (new_task == NULL)
+				return FAILURE;
+			pthread_mutex_lock(&app->render.sync.queue_mut);
+			push_task(
+				&app->render.queue,
+				new_task,
+				&app->render.sync.nb_tasks_remain);
+			pthread_mutex_unlock(&app->render.sync.queue_mut);
+			sem_post(&app->render.sync.jobs_sem);
 			vec3_linear_transform(&ray[X], ppr, &app->scene->camera->o_x);
 			pix[X] += ppr;
 		}
 		vec3_linear_transform(&ray[Y], ppr, &app->scene->camera->o_y);
 		pix[Y] += ppr;
 	}
+	wait_jobs_finish(&app->render);
+	return SUCCESS;
+}
+
+void	wait_jobs_finish(t_render *render)
+{
+	pthread_mutex_lock(&render->sync.queue_mut);
+	while (render->sync.nb_tasks_remain)
+		pthread_cond_wait(&render->sync.finish_jobs_cond, &render->sync.queue_mut);
+	pthread_mutex_unlock(&render->sync.queue_mut);
+	render->sync.nb_tasks_remain = 0;
+}
+
+t_task	*create_ray_task(
+			t_ray *ray,
+			int32_t ppr,
+			int32_t pix[2],
+			int back_canvas)
+{
+	t_task	*new_task;
+
+	new_task = malloc(sizeof(t_task));
+	if (new_task == NULL)
+		return NULL;
+	ft_memset(new_task, 0, sizeof(t_task));
+	new_task->ray = *ray;
+	new_task->type = RAY_CAST;
+	new_task->back_canvas = back_canvas;
+	new_task->ppr = ppr;
+	new_task->pixels[0] = pix[0];
+	new_task->pixels[1] = pix[1];
+	new_task->object = NULL;
+	return new_task;
 }
 
 /**

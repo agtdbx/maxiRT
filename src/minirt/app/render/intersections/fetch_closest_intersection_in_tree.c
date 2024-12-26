@@ -211,10 +211,13 @@ static void	_compute_childs_collisions(
 			*collid1 = _fetch_closest_intersection_in_tree(
 						ray, tree->child_1, intersect_child1);
 	}
-	*collid1 = _fetch_closest_intersection_in_tree(
+	else
+	{
+		*collid1 = _fetch_closest_intersection_in_tree(
 					ray, tree->child_1, intersect_child1);
-	*collid2 = _fetch_closest_intersection_in_tree(
+		*collid2 = _fetch_closest_intersection_in_tree(
 					ray, tree->child_2, intersect_child2);
+	}
 }
 
 
