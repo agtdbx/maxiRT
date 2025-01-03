@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:56:46 by tdubois           #+#    #+#             */
-/*   Updated: 2024/12/26 15:47:50 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/03 18:47:57 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 #include "minirt/app/canvas/canvas.h"
 #include "minirt/app/utils/geometry/geometry.h"
 
-
 int32_t	render_next_pixels_til_tmax_on_back_canvas(
 			t_app *app,
 			int32_t pixel_rendered)
@@ -29,8 +28,9 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 	double			tmax;
 	int32_t			pixel_coords[2];
 	int32_t			new_pixel_rendered;
-	t_ray			casted_ray;
+	t_ray				casted_ray;
 	t_task			*new_task;
+	int					value;
 
 	new_pixel_rendered = 0;
 	pixel_coords[0] = pixel_rendered % app->canvas.width;
@@ -55,7 +55,9 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 			++new_pixel_rendered;
 			if (mlx_get_time() > tmax)
 			{
-				sem_post_value(&app->render.sync.jobs_sem, new_pixel_rendered);
+				sem_getvalue(&app->render.sync.jobs_sem, &value);
+				if (value == 0)
+					sem_post(&app->render.sync.jobs_sem);
 				return (new_pixel_rendered);
 			}
 			pixel_coords[0] += 1;
@@ -63,6 +65,5 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 		pixel_coords[1] += 1;
 		pixel_coords[0] = 0;
 	}
-	sem_post_value(&app->render.sync.jobs_sem, new_pixel_rendered);
 	return (new_pixel_rendered);
 }

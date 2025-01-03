@@ -15,6 +15,7 @@
 
 # include <stdbool.h>
 # include <stdint.h>
+# include <pthread.h>
 
 # include "MLX42/MLX42.h"
 # include "libft/libft.h"
@@ -306,6 +307,7 @@ bool			menu_draw(
 					mlx_t *mlx,
 					t_menu *menu,
 					t_canvas *canvas,
+					pthread_rwlock_t *scene_mut,
 					t_scene const *scene);
 
 //---- COMPONENTS -------------------------------------------------------------#

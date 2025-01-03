@@ -13,6 +13,7 @@
 #include "minirt/app/app.h"
 
 #include <errno.h>
+#include <pthread.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
@@ -142,7 +143,7 @@ static t_error	_compute_constants(
 		object_iterator = object_iterator->next;
 		nb_objects++;
 	}
-	sem_post_value(&render->sync.jobs_sem, nb_objects);
+	sem_post(&render->sync.jobs_sem);
 	wait_jobs_finish(render);
 	handle_window_resizing(mlx, menu, scene, canvas, &render->sync);
 	scene->binary_tree = NULL;
@@ -158,10 +159,14 @@ static t_error	_init_mutex_cond_sem(t_render *render)
 	if (pthread_mutex_init(&render->sync.queue_mut, NULL) != 0 ||
 		pthread_mutex_init(&render->sync.canvas_mut[FRONT_CANVAS], NULL) != 0 ||
 		pthread_mutex_init(&render->sync.canvas_mut[BACK_CANVAS], NULL) != 0 ||
-		pthread_mutex_init(&render->sync.scene_mut, NULL) != 0 ||
 		pthread_mutex_init(&render->sync.active_threads_mut, NULL) != 0)
 	{
 		perror("pthread_mutex_init() error");
+		return FAILURE;
+	}
+	if (pthread_rwlock_init(&render->sync.scene_mut, NULL))
+	{
+		perror("pthread_rwlock_init() error");
 		return FAILURE;
 	}
 	if (pthread_cond_init(&render->sync.finish_jobs_cond, NULL) != 0)

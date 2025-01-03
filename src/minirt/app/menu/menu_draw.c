@@ -20,6 +20,7 @@ bool	menu_draw(
 			mlx_t *mlx,
 			t_menu *menu,
 			t_canvas *canvas,
+			pthread_rwlock_t *scene_mut,
 			t_scene const *scene)
 {
 	bool	should_redraw;
@@ -29,7 +30,9 @@ bool	menu_draw(
 	should_redraw = false;
 	should_redraw |= camera_label_draw(mlx, menu, canvas, scene);
 	should_redraw |= ambient_label_draw(mlx, menu);
+	pthread_rwlock_wrlock(scene_mut);
 	should_redraw |= object_panel_draw(mlx, menu);
+	pthread_rwlock_unlock(scene_mut);
 	should_redraw |= light_panel_draw(mlx, menu);
 	return (should_redraw);
 }
