@@ -41,10 +41,9 @@ void	app_loop(
 	{
 		app->render.sync.keep_alive = 0;
 		pthread_mutex_lock(&app->render.sync.queue_mut);
-		app->render.sync.nb_tasks_remain = 0;
+		del_queue(&app->render.queue);
 		pthread_mutex_unlock(&app->render.sync.queue_mut);
-		// TODO: fix
-		// join_all_threads(app->render.workers);
+		join_all_threads(app->render.workers);
 		mlx_close_window(app->mlx);
 		return ;
 	}
@@ -52,7 +51,8 @@ void	app_loop(
 	_limit_delta_time(app->mlx);
 	should_render = false;
 	should_render |= _handle_user_inputs(app);
-	should_render |= menu_draw(app->mlx, &app->menu, &app->canvas, app->scene);
+	should_render |= menu_draw(app->mlx, &app->menu, &app->canvas,
+			&app->render.sync.scene_mut, app->scene);
 	render_canvas(app, should_render);
 }
 

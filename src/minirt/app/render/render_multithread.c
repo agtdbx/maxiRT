@@ -6,13 +6,14 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:39:43 by damien            #+#    #+#             */
-/*   Updated: 2024/12/26 16:05:24 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/03 22:19:44 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
 #include "minirt/app/utils/drawings/drawings.h"
 
+#include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <semaphore.h>
@@ -20,6 +21,7 @@
 
 #define FRONT_CANVAS 0
 #define BACK_CANVAS 1
+#define BATCH_SIZE 64
 
 long	get_nb_threads()
 {
@@ -37,6 +39,8 @@ void	join_all_threads(t_worker *workers)
 	long	nb_threads;
 
 	nb_threads = get_nb_threads();
+	for (i = 0; i < nb_threads - 1; i++)
+		sem_post(&workers[i].render->sync.jobs_sem);
 	for (i = 0; i < nb_threads - 1; i++)
 		pthread_join(workers[i].thid, NULL);
 }
@@ -86,6 +90,7 @@ void	task_cast_ray(t_worker *worker, t_task *task)
 		task->ppr,
 		render_ray_from_camera(
 			worker->render->scene,
+			&worker->render->sync.scene_mut,
 			&task->ray,
 			worker->render->menu->is_visible
 		)
@@ -125,18 +130,12 @@ void	task_compute_const(t_task *task)
 			&task->object->bounding_box);
 }
 
-void	sem_post_value(sem_t *sem, int value)
-{
-	int	i;
-
-	for (i = 0; i < value; i++)
-		sem_post(sem);
-}
-
 void	*render_routine(void *data)
 {
 	t_worker	*worker;
-	t_task		*task;
+	t_task		*task_lst;
+	t_task		*tmp;
+	int				value, count;
 
 	worker = (t_worker *)data;
 	while (worker->render->sync.keep_alive != 0)
@@ -147,30 +146,40 @@ void	*render_routine(void *data)
 		pthread_mutex_lock(&worker->render->sync.active_threads_mut);
 		worker->render->sync.nb_active_threads++;
 		pthread_mutex_unlock(&worker->render->sync.active_threads_mut);
-		task = pop_task(
+		task_lst = pop_task_lst(
 			&worker->render->queue,
 			&worker->render->sync.queue_mut,
-			&worker->render->sync.nb_tasks_remain);
-		if (task == NULL || !worker->render->sync.keep_alive)
-			continue;
-		switch (task->type)
+			&worker->render->sync.nb_tasks_remain,
+			&worker->render->sync.jobs_sem);
+		if (task_lst == NULL)
 		{
-			case COMPUTE_CONST:
-				task_compute_const(task);
-				break ;
-			default:
-				task_cast_ray(worker, task);
-				break ;
-		}
-		free(task);
-		task = NULL;
-		pthread_mutex_lock(&worker->render->sync.active_threads_mut);
-		worker->render->sync.nb_active_threads--;
-		if (worker->render->sync.nb_active_threads == 0)
-		{
-			if (worker->render->sync.nb_tasks_remain == 0)
+			sem_getvalue(&worker->render->sync.jobs_sem, &value);
+			if (--worker->render->sync.nb_active_threads == 0)
 				pthread_cond_signal(&worker->render->sync.finish_jobs_cond);
+			continue ;
 		}
+		count = 0 ;
+		while (task_lst)
+		{
+			switch (task_lst->type)
+			{
+				case COMPUTE_CONST:
+					task_compute_const(task_lst);
+					break ;
+				default:
+					task_cast_ray(worker, task_lst);
+					break ;
+			}
+			tmp = task_lst;
+			task_lst = task_lst->next;
+			count++;
+			free(tmp);
+		}
+		task_lst = NULL;
+		pthread_mutex_lock(&worker->render->sync.active_threads_mut);
+		if (--worker->render->sync.nb_active_threads == 0 &&
+				worker->render->sync.nb_tasks_remain == 0)
+			pthread_cond_signal(&worker->render->sync.finish_jobs_cond);
 		pthread_mutex_unlock(&worker->render->sync.active_threads_mut);
 	}
 	return NULL;
@@ -232,25 +241,53 @@ t_error	threads_init(t_app *app)
 
 void	push_task(t_task **queue, t_task *new_task, int *nb_task_remain)
 {
+	if (*queue == NULL)
+	{
+		*queue = new_task;
+		new_task->next = NULL;
+		(*nb_task_remain)++;
+		return ;
+	}
 	new_task->next = *queue;
 	*queue = new_task;
 	(*nb_task_remain)++;
 }
 
-t_task	*pop_task(t_task **queue, pthread_mutex_t *queue_mutex, int *nb_tasks_remain)
+t_task	*pop_task_lst(t_task **queue, pthread_mutex_t *queue_mutex,
+	int *nb_tasks_remain, sem_t *jobs_sem)
 {
 	t_task	*head;
+	t_task	*tmp;
+	int			count;
 
 	pthread_mutex_lock(queue_mutex);
-	head = *queue;
-	if (head)
-		*queue = (*queue)->next;
-	else
+	if (*nb_tasks_remain == 0 || !*queue)
 	{
 		pthread_mutex_unlock(queue_mutex);
 		return NULL;
 	}
-	(*nb_tasks_remain)--;
+	head = *queue;
+	count = 0;
+	while (*queue && count < BATCH_SIZE)
+	{
+		*queue = (*queue)->next;
+		if (*queue)
+		{
+			count++;
+			(*nb_tasks_remain)--;
+		}
+	}
+	if (!*queue)
+		*nb_tasks_remain = 0;
+	if (*nb_tasks_remain > 0)
+		sem_post(jobs_sem);
+	tmp = head;
+	while (count > 1)
+	{
+		tmp = tmp->next;
+		count--;
+	}
+	tmp->next = NULL;
 	pthread_mutex_unlock(queue_mutex);
 	return head;
 }

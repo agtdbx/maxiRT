@@ -34,6 +34,7 @@ static int32_t	_render_ray_on_spotlight(
  */
 int32_t	render_ray_from_camera(
 			t_scene const *scene,
+			pthread_rwlock_t *scene_mut,
 			t_ray const *ray,
 			bool show_spotlights)
 {
@@ -42,8 +43,10 @@ int32_t	render_ray_from_camera(
 	t_color				pixel_color;
 	t_intersect_info	intersect_info;
 
+	pthread_rwlock_rdlock(scene_mut);
 	intersected_object = fetch_closest_intersection_in_tree(
 							ray, scene, &intersect_info);
+	pthread_rwlock_unlock(scene_mut);
 	if (show_spotlights)
 	{
 		light = fetch_closer_spotlight(

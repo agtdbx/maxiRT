@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2024/12/26 16:12:16 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/03 18:46:18 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ static bool	_is_under_10_fps(
 static bool	_is_over_25_fps(
 				double delta_time);
 
+static inline	void reset_task_queue(t_render *render)
+{
+	// We were generating back canvas when user moved
+	sem_init(&render->sync.jobs_sem, 0, 0);
+	pthread_mutex_lock(&render->sync.queue_mut);
+	render->sync.nb_tasks_remain = 0;
+	del_queue(&render->queue);
+	pthread_mutex_unlock(&render->sync.queue_mut);
+}
+
 void	render_canvas(
 			t_app *app,
 			bool should_render_fast)
@@ -47,14 +57,7 @@ void	render_canvas(
 	if (should_render_fast)
 	{
 		if (app->render.sync.nb_tasks_remain != 0)
-		{
-			// We were generating back canvas when user moved
-			sem_init(&app->render.sync.jobs_sem, 0, 0);
-			pthread_mutex_lock(&app->render.sync.queue_mut);
-			app->render.sync.nb_tasks_remain = 0;
-			del_queue(&app->render.queue);
-			pthread_mutex_unlock(&app->render.sync.queue_mut);
-		}
+			reset_task_queue(&app->render);
 		if (is_rendering)
 			_update_ppr(app->mlx->delta_time, &pixel_per_ray);
 		if (render_fast_on_front_canvas(app, pixel_per_ray) == FAILURE)

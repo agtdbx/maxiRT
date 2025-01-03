@@ -21,7 +21,6 @@ static void	_get_top_left_ray(
 				t_canvas const *canvas,
 				t_camera const *camera,
 				t_vec3 *top_left_vec);
-
 t_error	render_fast_on_front_canvas(
 			t_app *app,
 			int32_t ppr)
@@ -37,7 +36,6 @@ t_error	render_fast_on_front_canvas(
 		if (app->render.queue == NULL)
 			return FAILURE;
 	}
-
 	_get_top_left_ray(&app->canvas, app->scene->camera, &ray[Y]);
 	casted_ray.pos = app->scene->camera->pos;
 	pix[Y] = 0;
@@ -52,19 +50,17 @@ t_error	render_fast_on_front_canvas(
 			new_task = create_ray_task(&casted_ray, ppr, pix, 0);
 			if (new_task == NULL)
 				return FAILURE;
-			pthread_mutex_lock(&app->render.sync.queue_mut);
 			push_task(
 				&app->render.queue,
 				new_task,
 				&app->render.sync.nb_tasks_remain);
-			pthread_mutex_unlock(&app->render.sync.queue_mut);
-			sem_post(&app->render.sync.jobs_sem);
 			vec3_linear_transform(&ray[X], ppr, &app->scene->camera->o_x);
 			pix[X] += ppr;
 		}
 		vec3_linear_transform(&ray[Y], ppr, &app->scene->camera->o_y);
 		pix[Y] += ppr;
 	}
+	sem_post(&app->render.sync.jobs_sem);
 	wait_jobs_finish(&app->render);
 	return SUCCESS;
 }
