@@ -6,7 +6,7 @@
 #    By: damien <damien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2024/12/26 23:15:50 by damien           ###   ########.fr        #
+#    Updated: 2025/01/03 22:25:01 by damien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -503,7 +503,7 @@ INCLUDES	:=	$(SRC) lib/libft/include lib/mlx42/include
 
 CC			:=	clang									\
 
-CFLAGS		:=	-std=c99 -Wall -Wextra -Werror			\
+CFLAGS		:=	-std=gnu99 -Wall -Wextra -Werror			\
 				-Wunreachable-code -Ofast				\
 
 CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES)) -g	\

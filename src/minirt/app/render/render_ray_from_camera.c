@@ -16,10 +16,14 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <time.h>
+#include <stdlib.h>
 
 #include "minirt/app/app_config.h"
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/utils/color/color.h"
+
+#define SAMPLE_SIZE 9
 
 static int32_t	_render_ray_on_spotlight(
 					t_light const *light,
@@ -27,10 +31,12 @@ static int32_t	_render_ray_on_spotlight(
 					t_intersect_info const *intersect_info);
 
 static inline int32_t	_fetch_intersection_with_skybox(
-					t_scene const *scene,
-					t_ray const *ray,
-					t_object const *skybox,
-					t_intersect_info *intersect_info);
+			t_canvas *canvas,
+			int *pixels,
+			t_scene const *scene,
+			t_ray const *ray,
+			t_object const *skybox,
+			t_intersect_info *intersect_info);
 /**
  * @param[in] scene
  * @param[in] ray Normalized ray from camera
@@ -38,6 +44,8 @@ static inline int32_t	_fetch_intersection_with_skybox(
  * @return color The resulting color
  */
 int32_t	render_ray_from_camera(
+			t_canvas *canvas,
+			t_task *task,
 			t_scene const *scene,
 			pthread_rwlock_t *scene_mut,
 			t_ray const *ray,
@@ -62,7 +70,7 @@ int32_t	render_ray_from_camera(
 	if (intersected_object == NULL)
 	{
 		if (scene->skybox)
-			return _fetch_intersection_with_skybox(scene, ray,
+			return _fetch_intersection_with_skybox(canvas, task->pixels, scene, ray,
 				scene->skybox, &intersect_info);
 		return (g_color_black);
 	}
@@ -95,17 +103,66 @@ static int32_t	_render_ray_on_spotlight(
 	return (color_to_int(&color));
 }
 
+static t_color	sample_color_around_pixel(const t_scene *scene, t_canvas *canvas,
+	const t_object *skybox, t_intersect_info *intersect_info, int *pixels)
+{
+	int		i;
+	double	random;
+	double	neighbours_pixel[2];
+	t_color	samples_colors[SAMPLE_SIZE] = {{0, 0, 0}};
+	t_color	average_color = {0, 0, 0};
+	t_ray	new_ray;
+	int		effective_sample_size;
+
+	effective_sample_size = SAMPLE_SIZE;
+	for (i = 0; i < SAMPLE_SIZE; i++)
+	{
+		random = ((double)rand() / (double)RAND_MAX) * 2.0 - 1.0;
+		neighbours_pixel[0] = (pixels[0] /+ random);
+		random = ((double)rand() / (double)RAND_MAX) * 2.0f - 1.0;
+		neighbours_pixel[1] = (pixels[1] + random);
+
+		new_ray = create_ray_from_pixel_coords(scene->camera, canvas, neighbours_pixel);
+		new_ray.depth = 0;
+		if (!test_intersection_with_cube_from_inside(
+			&new_ray, &skybox->value.as_skybox.cube, intersect_info))
+		{
+			effective_sample_size--;
+			continue ;
+		}
+		samples_colors[i] = render_ray_on_object(scene, skybox,
+			&new_ray, intersect_info);
+	}
+	for (i = 0; i < SAMPLE_SIZE; i++)
+	{
+		average_color.r += samples_colors[i].r;
+		average_color.g += samples_colors[i].g;
+		average_color.b += samples_colors[i].b;
+	}
+	average_color.r /= effective_sample_size;
+	average_color.g /= effective_sample_size;
+	average_color.b /= effective_sample_size;
+	return average_color;
+}
+
 static inline int32_t	_fetch_intersection_with_skybox(
+			t_canvas *canvas,
+			int *pixels,
 			t_scene const *scene,
 			t_ray const *ray,
 			t_object const *skybox,
 			t_intersect_info *intersect_info)
 {
-	t_color	pixel_color;
-
-	test_intersection_with_cube_from_inside(
-		ray, &skybox->value.as_skybox.cube, intersect_info);
-	pixel_color = render_ray_on_object(scene, skybox,
-		ray, intersect_info);
+	t_color		pixel_color = {0, 0, 0};
+	t_color		sample_color = {0, 0, 0};
+	
+	sample_color = sample_color_around_pixel(scene, canvas, skybox, intersect_info, pixels);
+	if (!test_intersection_with_cube_from_inside(
+			ray, &skybox->value.as_skybox.cube, intersect_info))
+		return (color_to_int(&sample_color));
+	pixel_color = render_ray_on_object(scene, skybox, ray, intersect_info);
+	pixel_color.r = (pixel_color.r +  sample_color.r) / 2;
+	pixel_color.g = (pixel_color.g +  sample_color.g) / 2;
+	pixel_color.b = (pixel_color.b +  sample_color.b) / 2;
 	return (color_to_int(&pixel_color));
 }

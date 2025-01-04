@@ -90,7 +90,6 @@ static t_pixel_info	get_pixel_info(
 	}
 	return (pixel_info);
 }
-
 static t_color	compute_object_without_effect_color(
 					t_object const *intersected_object,
 					t_intersect_info const *intersect_info,
@@ -104,6 +103,13 @@ static t_color	compute_object_without_effect_color(
 
 	base_color = get_base_color_object(intersected_object, intersect_info,
 		&pixel_info->pos);
+	if (intersected_object->type == OBJ_SKYBOX)
+	{
+		base_color.r = base_color.r * (200.0f / 255.0f);
+		base_color.g = base_color.g * (200.0f / 255.0f);
+		base_color.b = base_color.b * (200.0f / 255.0f);
+		return base_color;
+	}
 	illumination = compute_illumination(
 			scene, intersected_object, ray, &pixel_info->normal);
 	if (illumination.r == 0.0f && illumination.g == 0.0f

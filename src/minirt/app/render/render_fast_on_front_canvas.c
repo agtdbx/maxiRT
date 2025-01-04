@@ -26,7 +26,7 @@ t_error	render_fast_on_front_canvas(
 			int32_t ppr)
 {
 	t_vec3	ray[2];
-	int32_t	pix[2];
+	double	pix[2];
 	t_ray	casted_ray;
 	t_task	*new_task;
 
@@ -77,7 +77,7 @@ void	wait_jobs_finish(t_render *render)
 t_task	*create_ray_task(
 			t_ray *ray,
 			int32_t ppr,
-			int32_t pix[2],
+			double pix[2],
 			int back_canvas)
 {
 	t_task	*new_task;

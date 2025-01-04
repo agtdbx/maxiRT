@@ -22,7 +22,7 @@
 t_ray	create_ray_from_pixel_coords(
 			t_camera const *camera,
 			t_canvas const *canvas,
-			int32_t const coords[2])
+			double const coords[2])
 {
 	t_ray	casted_ray;
 

@@ -96,7 +96,7 @@ t_task			*pop_task_lst(
 t_task			*create_ray_task(
 					t_ray *ray,
 					int32_t ppr,
-					int32_t pix[2],
+					double pix[2],
 					int back_canvas);
 long			get_nb_threads();
 t_error			threads_init(t_app *app);
@@ -116,6 +116,8 @@ int32_t			render_next_pixels_til_tmax_on_back_canvas(
 					t_app *app,
 					int32_t pixel_rendered);
 int32_t			render_ray_from_camera(
+					t_canvas *canvas,
+					t_task *task,
 					t_scene const *scene,
 					pthread_rwlock_t *scene_mut,
 					t_ray const *ray,
@@ -124,7 +126,7 @@ int32_t			render_ray_from_camera(
 t_ray			create_ray_from_pixel_coords(
 					t_camera const *camera,
 					t_canvas const *canvas,
-					int32_t const coords[2]);
+					double const coords[2]);
 
 /// raytracing
 

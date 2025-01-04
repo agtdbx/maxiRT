@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:36:53 by damien            #+#    #+#             */
-/*   Updated: 2024/12/26 23:13:41 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/04 01:14:57 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static t_error	extract_faces_textures(t_object *obj)
 		int	x;
 		int	y;
 	} faces[NB_FACES] = {
-		{0, 0},
+		{2 * face_width, face_height},
 		{0, face_height},
 		{face_width, 0},
 		{face_width, 2 * face_height},

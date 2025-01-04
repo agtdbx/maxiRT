@@ -17,6 +17,8 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdlib.h>
 
 #include "MLX42/MLX42.h"
 #include "libft/libft.h"
@@ -72,6 +74,7 @@ static t_error	_app_init(
 	app->mlx = mlx_init(g_window_width, g_window_height, g_window_title, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
+	srand(time(NULL));
 	_init_render(app);
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
 		|| menu_init(app->mlx, &app->menu, app->scene) == FAILURE

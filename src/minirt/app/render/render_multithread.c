@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:39:43 by damien            #+#    #+#             */
-/*   Updated: 2025/01/03 22:19:44 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/03 23:25:20 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	task_cast_ray(t_worker *worker, t_task *task)
 		task->pixels,
 		task->ppr,
 		render_ray_from_camera(
+			worker->render->canvas,
+			task,
 			worker->render->scene,
 			&worker->render->sync.scene_mut,
 			&task->ray,

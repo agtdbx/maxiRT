@@ -38,7 +38,12 @@ t_color	intersect_loop_without_param_obj(
 	obj = scene->objects;
 	closest_obj = get_closest_object(obj, object, ray, &intersect_info);
 	if (closest_obj == NULL)
-		return ((t_color){0});
+	{
+		new_ray = *ray;
+		new_ray.depth += 1;
+		return render_ray_on_object(scene, scene->skybox,
+			&new_ray, &intersect_info);
+	}
 	new_ray = *ray;
 	new_ray.depth += 1;
 	return (render_ray_on_object(scene, closest_obj, &new_ray, &intersect_info));

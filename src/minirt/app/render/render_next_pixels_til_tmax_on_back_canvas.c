@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:56:46 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/03 18:47:57 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/04 00:08:36 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 			int32_t pixel_rendered)
 {
 	double			tmax;
-	int32_t			pixel_coords[2];
+	double			pixel_coords[2];
 	int32_t			new_pixel_rendered;
 	t_ray				casted_ray;
 	t_task			*new_task;
