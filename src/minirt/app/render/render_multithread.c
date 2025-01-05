@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 15:39:43 by damien            #+#    #+#             */
-/*   Updated: 2025/01/03 22:19:44 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/05 16:01:59 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,44 +98,13 @@ void	task_cast_ray(t_worker *worker, t_task *task)
 	worker->render->sync.pixel_rendered += task->ppr;
 }
 
-void	task_compute_const(t_task *task)
-{
-	if (task->object->type == OBJ_SPHERE)
-		sphere_compute_constants(
-			&task->object->value.as_sphere,
-			&task->object->bounding_box);
-	else if (task->object->type == OBJ_PLANE)
-		plane_compute_constants(
-			&task->object->value.as_plane,
-			&task->object->bounding_box);
-	else if (task->object->type == OBJ_CYLINDER)
-		cylinder_compute_constants(
-			&task->object->value.as_cylinder,
-			&task->object->bounding_box);
-	else if (task->object->type == OBJ_CONE)
-		cone_compute_constants(
-			&task->object->value.as_cone,
-			&task->object->bounding_box);
-	else if (task->object->type == OBJ_CUBE)
-		cube_compute_constants(
-			&task->object->value.as_cube,
-			&task->object->bounding_box);
-	else if (task->object->type == OBJ_TRIANGLE)
-		triangle_compute_constants(
-			&task->object->value.as_triangle,
-			&task->object->bounding_box);
-	else if (task->object->type == OBJ_OBJECT_FILE)
-		object_file_compute_constants(
-			&task->object->value.as_object_file,
-			&task->object->bounding_box);
-}
 
 void	*render_routine(void *data)
 {
 	t_worker	*worker;
 	t_task		*task_lst;
 	t_task		*tmp;
-	int				value, count;
+	int			value, count;
 
 	worker = (t_worker *)data;
 	while (worker->render->sync.keep_alive != 0)
@@ -161,15 +130,7 @@ void	*render_routine(void *data)
 		count = 0 ;
 		while (task_lst)
 		{
-			switch (task_lst->type)
-			{
-				case COMPUTE_CONST:
-					task_compute_const(task_lst);
-					break ;
-				default:
-					task_cast_ray(worker, task_lst);
-					break ;
-			}
+			task_cast_ray(worker, task_lst);
 			tmp = task_lst;
 			task_lst = task_lst->next;
 			count++;
@@ -271,18 +232,15 @@ t_task	*pop_task_lst(t_task **queue, pthread_mutex_t *queue_mutex,
 	while (*queue && count < BATCH_SIZE)
 	{
 		*queue = (*queue)->next;
-		if (*queue)
-		{
-			count++;
-			(*nb_tasks_remain)--;
-		}
+		count++;
+		(*nb_tasks_remain)--;
 	}
 	if (!*queue)
 		*nb_tasks_remain = 0;
 	if (*nb_tasks_remain > 0)
 		sem_post(jobs_sem);
 	tmp = head;
-	while (count > 1)
+	while (tmp->next && count > 1)
 	{
 		tmp = tmp->next;
 		count--;

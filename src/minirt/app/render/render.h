@@ -7,16 +7,8 @@
 # include <pthread.h>
 # include <stdint.h>
 
-typedef enum e_task_type
-{
-	RAY_CAST,
-	COMPUTE_CONST
-}	t_task_type;
-
 typedef struct s_task
 {
-	t_task_type		type;
-	// compute constant (bounding box, ...)
 	t_object		*object;
 	// ray cast
 	int				back_canvas;
@@ -49,7 +41,6 @@ typedef struct s_sync
 	int					nb_tasks_remain;
 	int					pixel_rendered;
 	volatile int		keep_alive;
-	int					constant_calculated;
 }	t_sync;
 
 typedef struct s_render
