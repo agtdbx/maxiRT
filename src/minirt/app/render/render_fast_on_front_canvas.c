@@ -21,6 +21,7 @@ static void	_get_top_left_ray(
 				t_canvas const *canvas,
 				t_camera const *camera,
 				t_vec3 *top_left_vec);
+
 t_error	render_fast_on_front_canvas(
 			t_app *app,
 			int32_t ppr)
@@ -30,12 +31,6 @@ t_error	render_fast_on_front_canvas(
 	t_ray	casted_ray;
 	t_task	*new_task;
 
-	if (app->render.queue == NULL)
-	{
-		app->render.queue = init_tasks_queue();
-		if (app->render.queue == NULL)
-			return FAILURE;
-	}
 	_get_top_left_ray(&app->canvas, app->scene->camera, &ray[Y]);
 	casted_ray.pos = app->scene->camera->pos;
 	pix[Y] = 0;
@@ -87,7 +82,6 @@ t_task	*create_ray_task(
 		return NULL;
 	ft_memset(new_task, 0, sizeof(t_task));
 	new_task->ray = *ray;
-	new_task->type = RAY_CAST;
 	new_task->back_canvas = back_canvas;
 	new_task->ppr = ppr;
 	new_task->pixels[0] = pix[0];

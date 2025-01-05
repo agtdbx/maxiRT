@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/03 18:46:18 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/05 15:52:21 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void	render_canvas(
 	static int32_t	pixel_per_ray = 16;
 	static bool		is_rendering = false;
 
-	if (app->render.sync.constant_calculated != 1)
-		return ;
 	if (should_render_fast)
 	{
 		if (app->render.sync.nb_tasks_remain != 0)

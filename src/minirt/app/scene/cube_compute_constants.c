@@ -42,7 +42,8 @@ static void	_compute_cube_bounding_box(
  */
 void	cube_compute_constants(
 			t_cube *cube,
-			t_bounding_box *bbox)
+			t_bounding_box *bbox,
+			int is_skybox)
 {
 	t_vec3	rev_x_axis;
 	t_vec3	rev_y_axis;
@@ -62,6 +63,13 @@ void	cube_compute_constants(
 	cube->half_witdh = cube->witdh / 2.0f;
 	cube->half_height = cube->height / 2.0f;
 	cube->half_depth = cube->depth / 2.0f;
+	// to get rid of bands between faces when cube is very large
+	if (is_skybox)
+	{
+		cube->half_witdh -= 10;
+		cube->half_height -= 10;
+		cube->half_depth -= 10;
+	}
 	init_face(cube, &cube->right, &cube->x_axis, cube->half_witdh);
 	init_face(cube, &cube->left, &rev_x_axis, cube->half_witdh);
 	init_face(cube, &cube->top, &cube->y_axis, cube->half_height);

@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:36:53 by damien            #+#    #+#             */
-/*   Updated: 2025/01/04 01:14:57 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/04 15:29:44 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #define X 0
 #define Y 1
 #define NB_FACES 6
-#define SKYBOX_WIDTH 1000000.0f
-#define SKYBOX_HEIGHT 1000000.0f
-#define SKYBOX_DEPTH 1000000.0f
+#define SKYBOX_WIDTH 10000.0f
+#define SKYBOX_HEIGHT 10000.0f
+#define SKYBOX_DEPTH 10000.0f
 
 static t_error	extract_faces_textures(t_object *obj);
 

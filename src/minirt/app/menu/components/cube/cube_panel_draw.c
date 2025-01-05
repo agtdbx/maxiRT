@@ -45,7 +45,8 @@ bool	cube_panel_draw(
 	{
 		cube_compute_constants(
 			(t_cube *)menu->object_panel.object_ptr,
-			menu->object_panel.object_bbox);
+			menu->object_panel.object_bbox,
+			0);
 		compute_scene_binary_tree(menu->scene);
 	}
 	return (should_redraw);

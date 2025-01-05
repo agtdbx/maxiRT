@@ -13,11 +13,9 @@
 #include "minirt/app/app.h"
 
 #include <errno.h>
-#include <pthread.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 #include <stdlib.h>
 
 #include "MLX42/MLX42.h"
@@ -87,7 +85,6 @@ static t_error	_app_init(
 	if (_compute_constants(app->mlx, &app->menu, app->scene, &app->canvas,
 		&app->render) == FAILURE)
 		return (FAILURE);
-	app->render.sync.constant_calculated = 1;
 	return (SUCCESS);
 }
 
@@ -108,13 +105,12 @@ static t_error	_init_render(t_app *app)
 		free(app->render.workers);
 		return FAILURE;
 	}
-	app->render.queue = init_tasks_queue();
+	app->render.queue = NULL;
 	app->render.sync = (t_sync){
 		.nb_active_threads = 0,
 		.nb_tasks_remain = 0,
 		.pixel_rendered = 0,
 		.keep_alive = 1,
-		.constant_calculated = 0,
 	};
 	app->render.canvas = &app->canvas;
 	app->render.scene = app->scene;
@@ -130,30 +126,50 @@ static t_error	_compute_constants(
 				t_render *render)
 {
 	t_object	*object_iterator;
-	t_task		*task;
 	int			nb_objects = 0;
 
 	object_iterator = scene->objects;
 	while (object_iterator != NULL)
 	{
-		task = malloc(sizeof(t_task));
-		if (task == NULL)
-			return FAILURE;
-		task->object = object_iterator;
-		task->type = COMPUTE_CONST;
-		push_task(&render->queue, task,
-			&render->sync.nb_tasks_remain);
+		if (object_iterator->type == OBJ_SPHERE)
+		sphere_compute_constants(
+			&object_iterator->value.as_sphere,
+			&object_iterator->bounding_box);
+		else if (object_iterator->type == OBJ_PLANE)
+			plane_compute_constants(
+				&object_iterator->value.as_plane,
+				&object_iterator->bounding_box);
+		else if (object_iterator->type == OBJ_CYLINDER)
+			cylinder_compute_constants(
+				&object_iterator->value.as_cylinder,
+				&object_iterator->bounding_box);
+		else if (object_iterator->type == OBJ_CONE)
+			cone_compute_constants(
+				&object_iterator->value.as_cone,
+				&object_iterator->bounding_box);
+		else if (object_iterator->type == OBJ_CUBE)
+			cube_compute_constants(
+				&object_iterator->value.as_cube,
+				&object_iterator->bounding_box,
+				0);
+		else if (object_iterator->type == OBJ_TRIANGLE)
+			triangle_compute_constants(
+				&object_iterator->value.as_triangle,
+				&object_iterator->bounding_box);
+		else if (object_iterator->type == OBJ_OBJECT_FILE)
+			object_file_compute_constants(
+				&object_iterator->value.as_object_file,
+				&object_iterator->bounding_box);
 		object_iterator = object_iterator->next;
 		nb_objects++;
 	}
-	sem_post(&render->sync.jobs_sem);
-	wait_jobs_finish(render);
 	handle_window_resizing(mlx, menu, scene, canvas, &render->sync);
 	scene->binary_tree = NULL;
 	compute_scene_binary_tree(scene);
 	compute_scene_planes(scene);
 	if (scene->skybox)
-		cube_compute_constants(&scene->skybox->value.as_skybox.cube, NULL);
+		cube_compute_constants(&scene->skybox->value.as_skybox.cube,
+			NULL, 1);
 	return SUCCESS;
 }
 

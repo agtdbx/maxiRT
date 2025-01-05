@@ -160,7 +160,8 @@ typedef struct s_cube
 
 void			cube_compute_constants(
 					t_cube *cube,
-					t_bounding_box *bbox);
+					t_bounding_box *bbox,
+					int is_skybox);
 
 //---- TRIANGLE --------------------------------------------------------------//
 
