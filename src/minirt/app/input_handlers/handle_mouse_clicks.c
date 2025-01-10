@@ -27,7 +27,7 @@ static void	_handle_clicks_on_canvas(
 				t_menu *menu,
 				t_scene *scene,
 				t_canvas const *canvas,
-				double const pix[2]);
+				int32_t const pix[2]);
 
 void	handle_mouse_clicks(
 			mlx_t *mlx,
@@ -46,7 +46,7 @@ void	handle_mouse_clicks(
 	mlx_get_mouse_pos(mlx, &pix[0], &pix[1]);
 	if (_has_clicked_on_canvas(canvas, pix))
 	{
-		_handle_clicks_on_canvas(menu, scene, canvas, (double *)pix);
+		_handle_clicks_on_canvas(menu, scene, canvas, pix);
 		return ;
 	}
 }
@@ -69,14 +69,17 @@ static void	_handle_clicks_on_canvas(
 				t_menu *menu,
 				t_scene *scene,
 				t_canvas const *canvas,
-				double const pix[2])
+				int32_t const pix[2])
 {
 	t_ray				ray;
 	t_intersect_info	info;
 	t_object			*object;
 	t_light				*light;
+	double				dpix[2];
 
-	ray = create_ray_from_pixel_coords(scene->camera, canvas, (double *)pix);
+	dpix[0] = pix[0];
+	dpix[1] = pix[1];
+	ray = create_ray_from_pixel_coords(scene->camera, canvas, dpix);
 	object = fetch_closest_intersection(&ray, scene->objects, &info);
 	light = fetch_closer_spotlight(&ray, scene->spotlights, &info);
 	if (light != NULL)
