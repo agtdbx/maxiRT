@@ -23,6 +23,7 @@
 
 #include "minirt/app/app_config.h"
 #include "minirt/app/scene/scene.h"
+#include "minirt/app/encode/encode.h"
 
 #define FRONT_CANVAS 0
 #define BACK_CANVAS 1
@@ -31,13 +32,14 @@ static t_error	_app_init(
 					t_app *app,
 					t_scene *scene);
 static t_error	_init_render(t_app *app);
-static t_error	_compute_constants(
+static void		_compute_constants(
 					mlx_t *mlx,
 					t_menu *menu,
 					t_scene *scene,
 					t_canvas *canvas,
 					t_render *render);
 static t_error	_init_mutex_cond_sem(t_render *render);
+static void		_app_end(t_app *app);
 
 t_error	app_start(
 			t_scene *scene)
@@ -51,7 +53,7 @@ t_error	app_start(
 		render_canvas(&app, true);
 		mlx_loop(app.mlx);
 		mlx_terminate(app.mlx);
-		free(app.render.workers);
+		_app_end(&app);
 		return (SUCCESS);
 	}
 	if (mlx_errno != MLX_SUCCESS)
@@ -63,10 +65,23 @@ t_error	app_start(
 	return (FAILURE);
 }
 
+static void _app_end(t_app *app)
+{
+	app->render.sync.keep_alive = 0;
+	pthread_mutex_lock(&app->render.sync.queue_mut);
+	del_queue(&app->render.queue);
+	pthread_mutex_unlock(&app->render.sync.queue_mut);
+	join_all_threads(app->render.workers);
+	del_mut_cond_sem(&app->render.sync);
+	free_encoder_context(&app->encoder);
+	free(app->render.workers);
+}
+
 static t_error	_app_init(
 					t_app *app,
 					t_scene *scene)
 {
+	create_records_dir();
 	app->scene = scene;
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	app->mlx = mlx_init(g_window_width, g_window_height, g_window_title, true);
@@ -75,6 +90,7 @@ static t_error	_app_init(
 	srand(time(NULL));
 	_init_render(app);
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
+		|| init_encoder(&app->encoder, app->canvas.render_icon) == FAILURE
 		|| menu_init(app->mlx, &app->menu, app->scene) == FAILURE
 		|| threads_init(app) == FAILURE
 		|| mlx_loop_hook(app->mlx, app_loop, app) == false)
@@ -82,9 +98,8 @@ static t_error	_app_init(
 		mlx_terminate(app->mlx);
 		return (FAILURE);
 	}
-	if (_compute_constants(app->mlx, &app->menu, app->scene, &app->canvas,
-		&app->render) == FAILURE)
-		return (FAILURE);
+	_compute_constants(app->mlx, &app->menu, app->scene, &app->canvas,
+		&app->render);
 	return (SUCCESS);
 }
 
@@ -118,7 +133,7 @@ static t_error	_init_render(t_app *app)
 	return SUCCESS;
 }
 
-static t_error	_compute_constants(
+static void	_compute_constants(
 				mlx_t *mlx,
 				t_menu *menu,
 				t_scene *scene,
@@ -132,7 +147,7 @@ static t_error	_compute_constants(
 	while (object_iterator != NULL)
 	{
 		if (object_iterator->type == OBJ_SPHERE)
-		sphere_compute_constants(
+			sphere_compute_constants(
 			&object_iterator->value.as_sphere,
 			&object_iterator->bounding_box);
 		else if (object_iterator->type == OBJ_PLANE)
@@ -170,7 +185,6 @@ static t_error	_compute_constants(
 	if (scene->skybox)
 		cube_compute_constants(&scene->skybox->value.as_skybox.cube,
 			NULL, 1);
-	return SUCCESS;
 }
 
 static t_error	_init_mutex_cond_sem(t_render *render)

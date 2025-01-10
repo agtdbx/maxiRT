@@ -6,7 +6,7 @@
 #    By: damien <damien@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/31 15:41:02 by tdubois           #+#    #+#              #
-#    Updated: 2025/01/03 22:25:01 by damien           ###   ########.fr        #
+#    Updated: 2025/01/10 11:01:24 by damien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -382,6 +382,7 @@ SRCS		:=	src/minirt/parser/dot_obj_file/parse_dot_struct.c \
 				src/minirt/app/scene/plane_compute_constants.c \
 				src/minirt/app/scene/compute_bounding_box_constants.c \
 				src/minirt/app/utils/drawings/img_fill.c \
+				src/minirt/app/utils/drawings/img_draw_circle.c \
 				src/minirt/app/utils/drawings/img_draw_square.c \
 				src/minirt/app/utils/drawings/img_draw_divider.c \
 				src/minirt/app/utils/geometry/vec3_cross.c \
@@ -486,6 +487,8 @@ SRCS		:=	src/minirt/parser/dot_obj_file/parse_dot_struct.c \
 				src/minirt/app/menu/menu_update_position.c \
 				src/minirt/app/menu/menu_show.c \
 				src/minirt/app/app_start.c \
+				src/minirt/app/encode/encode.c \
+				src/minirt/app/input_handlers/handle_recording.c \
 				src/minirt/app/input_handlers/handle_rotations.c \
 				src/minirt/app/input_handlers/handle_translations.c \
 				src/minirt/app/input_handlers/handle_window_resizing.c \
@@ -510,7 +513,8 @@ CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES)) -g	\
 
 LDFLAGS		:=	-Llib/libft -lft						\
 				-Llib/mlx42/build -lmlx42				\
-				-ldl -lglfw -pthread -lm				\
+				-ldl -lglfw -pthread -lm -lavcodec -lavutil \
+				-lswscale
 
 ifdef DEBUG
 CFLAGS		+=	-gdwarf-4 -Wno-unused-function

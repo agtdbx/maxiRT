@@ -23,6 +23,7 @@
 # include "minirt/app/canvas/canvas.h"
 # include "minirt/app/menu/menu.h"
 # include "minirt/app/scene/scene.h"
+# include "minirt/app/encode/encode.h"
 
 // multithread related structures
 
@@ -37,6 +38,7 @@ typedef struct s_app
 	t_scene		*scene;
 	t_canvas	canvas;
 	t_render	render;
+	t_encode	encoder;
 }	t_app;
 
 //---- INTERSECTION STRUCT ---------------------------------------------------//

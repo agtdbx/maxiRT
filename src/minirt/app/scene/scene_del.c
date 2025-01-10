@@ -17,6 +17,8 @@
 
 #include "libft/libft.h"
 
+#define NB_CUBE_FACES 6
+
 static void	loc_del_lights(
 				t_light **lights);
 static void	loc_del_objects(
@@ -25,6 +27,7 @@ static void	loc_del_objects(
 void	scene_del(
 			t_scene *scene)
 {
+	int			i;
 	t_object	*tmp;
 
 	ft_memdel(&scene->camera);
@@ -42,6 +45,14 @@ void	scene_del(
 	free_scene_binary_tree(scene->binary_tree);
 	loc_del_objects(&scene->objects);
 
+	if (scene->skybox)
+	{
+		for (i = 0; i < NB_CUBE_FACES; i++)
+			free(scene->skybox->value.as_skybox.textures[i].pixels);
+		free(scene->skybox->value.as_skybox.textures);
+		mlx_delete_texture(scene->skybox->texture);
+		free(scene->skybox);
+	}
 	if (scene->planes != NULL)
 	{
 		free(scene->planes);

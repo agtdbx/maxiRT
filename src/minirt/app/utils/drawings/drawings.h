@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:01:33 by tdubois           #+#    #+#             */
-/*   Updated: 2024/12/19 11:38:31 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/10 00:30:26 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,11 @@ void	img_draw_divider(
 			mlx_image_t *img,
 			uint32_t y,
 			int32_t color);
+
+void	img_draw_circle(
+			mlx_image_t *img,
+			const int32_t coords[2],
+			int radius,
+			int color);
 
 #endif // DRAWINGS_H

@@ -19,6 +19,7 @@
 #include "MLX42/MLX42.h"
 
 #include "minirt/app/menu/menu.h"
+#include "minirt/app/encode/encode.h"
 
 static inline bool	_handle_user_inputs(
 						t_app *app);
@@ -39,11 +40,6 @@ void	app_loop(
 
 	if (mlx_is_key_down(app->mlx, MLX_KEY_ESCAPE))
 	{
-		app->render.sync.keep_alive = 0;
-		pthread_mutex_lock(&app->render.sync.queue_mut);
-		del_queue(&app->render.queue);
-		pthread_mutex_unlock(&app->render.sync.queue_mut);
-		join_all_threads(app->render.workers);
 		mlx_close_window(app->mlx);
 		return ;
 	}
@@ -53,6 +49,9 @@ void	app_loop(
 	should_render |= _handle_user_inputs(app);
 	should_render |= menu_draw(app->mlx, &app->menu, &app->canvas,
 			&app->render.sync.scene_mut, app->scene);
+	if (app->encoder.is_recording
+		&& encode_frame(app->canvas.front, &app->encoder) == FAILURE)
+		mlx_close_window(app->mlx);
 	render_canvas(app, should_render);
 }
 
@@ -65,11 +64,21 @@ static inline bool	_handle_user_inputs(
 						t_app *app)
 {
 	bool	should_render;
+	t_error	err;
 
 	should_render = false;
+	handle_recording(
+		app->mlx,
+		app->canvas.render_icon,
+		&app->encoder,
+		&err);
+	if (err == FAILURE)
+		return (should_render);
 	should_render |= handle_window_resizing(
 			app->mlx, &app->menu, app->scene,
 			&app->canvas, &app->render.sync);
+	if (should_render && app->encoder.is_recording)
+		close_recording(&app->encoder, app->canvas.render_icon);
 	should_render |= handle_menu_toggling(
 			app->mlx, &app->menu);
 	should_render |= handle_translations(

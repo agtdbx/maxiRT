@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   canvas.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 01:36:02 by tdubois           #+#    #+#             */
-/*   Updated: 2023/06/09 16:00:55 by tdubois          ###   ########.fr       */
+/*   Updated: 2025/01/10 00:26:35 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_canvas
 {
 	mlx_image_t	*front;
 	mlx_image_t	*back;
+	mlx_image_t	*render_icon;
 
 	int32_t		width;
 	int32_t		width_div_2;
