@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 23:16:49 by damien            #+#    #+#             */
-/*   Updated: 2025/01/10 11:00:21 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/10 15:50:32 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	start_recording(mlx_image_t *record_icon, t_encode *encoder, t_error *err)
 		fprintf(stderr, "Could not open %s\n", filename);
 		*err = FAILURE;
 	}
-	record_icon->instances->z = 1;
+	mlx_set_instance_depth(&record_icon->instances[0], 2);
 	encoder->is_recording = true;
 }
 
@@ -104,7 +104,7 @@ void	close_recording(t_encode *encoder, mlx_image_t *record_icon)
 {
 	static uint8_t	endcode[] = { 0, 0, 1, 0xb7 };
 
-	record_icon->instances->z = -1;
+	mlx_set_instance_depth(&record_icon->instances[0], 0);
 	encode(encoder->c, NULL, encoder->pkt, encoder->f);
 	fwrite(endcode, 1, sizeof(endcode), encoder->f);
 	free_encoder_context(encoder);
@@ -115,7 +115,7 @@ t_error	init_encoder(t_encode *encoder, mlx_image_t *record_icon)
 {
 	const AVCodec			*codec;
 	int						ret;
-	static const int32_t	coords[2] = {1900, 20};
+	static const int32_t	coords[2] = {20, 990};
 
 	img_draw_circle(record_icon, coords, 10, 0xFF0000FF);
 	encoder->is_recording = false;

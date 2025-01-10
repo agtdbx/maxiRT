@@ -66,6 +66,7 @@ static inline bool	_handle_user_inputs(
 	bool	should_render;
 	t_error	err;
 
+	err = SUCCESS;
 	should_render = false;
 	handle_recording(
 		app->mlx,

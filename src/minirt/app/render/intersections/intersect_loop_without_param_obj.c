@@ -41,8 +41,10 @@ t_color	intersect_loop_without_param_obj(
 	{
 		new_ray = *ray;
 		new_ray.depth += 1;
-		return render_ray_on_object(scene, scene->skybox,
+		if (scene->skybox)
+			return render_ray_on_object(scene, scene->skybox,
 			&new_ray, &intersect_info);
+		return (t_color){0};
 	}
 	new_ray = *ray;
 	new_ray.depth += 1;
