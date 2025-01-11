@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_multithread.c                               :+:      :+:    :+:   */
+/*   join_threads.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 15:39:43 by damien            #+#    #+#             */
-/*   Updated: 2025/01/11 10:31:32 by damien           ###   ########.fr       */
+/*   Created: 2025/01/11 10:30:35 by damien            #+#    #+#             */
+/*   Updated: 2025/01/11 10:30:45 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/app.h"
-#include "minirt/app/utils/drawings/drawings.h"
+#include "minirt/app/render/multithread/multithread.h"
 
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <semaphore.h>
-#include <unistd.h>
+void	join_all_threads(t_worker *workers)
+{
+	int		i;
+	long	nb_threads;
 
-#define FRONT_CANVAS 0
-#define BACK_CANVAS 1
-#define BATCH_SIZE 64
-
+	nb_threads = get_nb_threads();
+	for (i = 0; i < nb_threads - 1; i++)
+		sem_post(&workers[i].render->sync.jobs_sem);
+	for (i = 0; i < nb_threads - 1; i++)
+		pthread_join(workers[i].thid, NULL);
+}

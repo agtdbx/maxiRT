@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_multithread.c                               :+:      :+:    :+:   */
+/*   get_nb_threads.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 15:39:43 by damien            #+#    #+#             */
-/*   Updated: 2025/01/11 10:31:32 by damien           ###   ########.fr       */
+/*   Created: 2025/01/11 10:29:35 by damien            #+#    #+#             */
+/*   Updated: 2025/01/11 10:57:25 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/app.h"
-#include "minirt/app/utils/drawings/drawings.h"
+#include "minirt/app/render/multithread/multithread.h"
 
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <semaphore.h>
 #include <unistd.h>
 
-#define FRONT_CANVAS 0
-#define BACK_CANVAS 1
-#define BATCH_SIZE 64
+long	get_nb_threads()
+{
+	static long	nb_threads = 0;
 
+	if (nb_threads == 0)
+		nb_threads = sysconf(_SC_NPROCESSORS_ONLN);
+	return (nb_threads);
+}

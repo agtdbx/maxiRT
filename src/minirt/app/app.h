@@ -19,7 +19,7 @@
 
 # include "MLX42/MLX42.h"
 
-# include "minirt/app/render/render.h"
+# include "minirt/app/render/multithread/multithread.h"
 # include "minirt/app/canvas/canvas.h"
 # include "minirt/app/menu/menu.h"
 # include "minirt/app/scene/scene.h"
@@ -82,30 +82,6 @@ void			handle_mouse_clicks(
 					t_scene *scene,
 					t_canvas *canvas);
 
-// multithread
-
-t_task			*init_tasks_queue();
-void			del_queue(t_task **queue);
-void			push_task(t_task **queue,
-					t_task *new_task, 
-					int *nb_task_remain);
-t_task			*pop_task_lst(
-					t_task **queue,
-					pthread_mutex_t *queue_mutex,
-					int *nb_tasks_remain,
-					sem_t *jobs_sem);
-
-t_task			*create_ray_task(
-					t_ray *ray,
-					int32_t ppr,
-					double pix[2],
-					int back_canvas);
-long			get_nb_threads();
-t_error			threads_init(t_app *app);
-void			wait_jobs_finish(t_render *render);
-void			del_mut_cond_sem(t_sync *sync);
-void			join_all_threads(t_worker *workers);
-
 /// rendering core
 
 void			render_canvas(
@@ -117,12 +93,12 @@ t_error			render_fast_on_front_canvas(
 int32_t			render_next_pixels_til_tmax_on_back_canvas(
 					t_app *app,
 					int32_t pixel_rendered);
+
 int32_t			render_ray_from_camera(
 					t_canvas *canvas,
 					t_task *task,
 					t_scene const *scene,
 					pthread_rwlock_t *scene_mut,
-					t_ray const *ray,
 					bool show_spotlights);
 
 t_ray			create_ray_from_pixel_coords(

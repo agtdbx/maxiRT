@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/05 15:52:21 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/11 10:39:57 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/utils/drawings/drawings.h"
 #include "minirt/app/utils/geometry/geometry.h"
+#include "minirt/app/render/multithread/multithread.h"
 
 static void	_print_rendering_progress(
 				int pixel_rendered,
@@ -33,16 +34,6 @@ static bool	_is_under_10_fps(
 				double delta_time);
 static bool	_is_over_25_fps(
 				double delta_time);
-
-static inline	void reset_task_queue(t_render *render)
-{
-	// We were generating back canvas when user moved
-	sem_init(&render->sync.jobs_sem, 0, 0);
-	pthread_mutex_lock(&render->sync.queue_mut);
-	render->sync.nb_tasks_remain = 0;
-	del_queue(&render->queue);
-	pthread_mutex_unlock(&render->sync.queue_mut);
-}
 
 void	render_canvas(
 			t_app *app,

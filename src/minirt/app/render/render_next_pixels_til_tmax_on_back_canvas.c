@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:56:46 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/04 00:08:36 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/11 10:40:34 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/canvas/canvas.h"
 #include "minirt/app/utils/geometry/geometry.h"
+#include "minirt/app/render/multithread/multithread.h"
 
 int32_t	render_next_pixels_til_tmax_on_back_canvas(
 			t_app *app,

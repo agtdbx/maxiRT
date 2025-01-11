@@ -13,6 +13,7 @@
 #include "minirt/app/app.h"
 
 #include "minirt/app/utils/drawings/drawings.h"
+#include "minirt/app/render/multithread/multithread.h"
 
 #define X 0
 #define Y 1
@@ -58,36 +59,6 @@ t_error	render_fast_on_front_canvas(
 	sem_post(&app->render.sync.jobs_sem);
 	wait_jobs_finish(&app->render);
 	return SUCCESS;
-}
-
-void	wait_jobs_finish(t_render *render)
-{
-	pthread_mutex_lock(&render->sync.queue_mut);
-	while (render->sync.nb_tasks_remain)
-		pthread_cond_wait(&render->sync.finish_jobs_cond, &render->sync.queue_mut);
-	pthread_mutex_unlock(&render->sync.queue_mut);
-	render->sync.nb_tasks_remain = 0;
-}
-
-t_task	*create_ray_task(
-			t_ray *ray,
-			int32_t ppr,
-			double pix[2],
-			int back_canvas)
-{
-	t_task	*new_task;
-
-	new_task = malloc(sizeof(t_task));
-	if (new_task == NULL)
-		return NULL;
-	ft_memset(new_task, 0, sizeof(t_task));
-	new_task->ray = *ray;
-	new_task->back_canvas = back_canvas;
-	new_task->ppr = ppr;
-	new_task->pixels[0] = pix[0];
-	new_task->pixels[1] = pix[1];
-	new_task->object = NULL;
-	return new_task;
 }
 
 /**

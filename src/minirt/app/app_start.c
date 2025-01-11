@@ -24,6 +24,7 @@
 #include "minirt/app/app_config.h"
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/encode/encode.h"
+#include "minirt/app/render/multithread/multithread.h"
 
 #define FRONT_CANVAS 0
 #define BACK_CANVAS 1
@@ -31,14 +32,12 @@
 static t_error	_app_init(
 					t_app *app,
 					t_scene *scene);
-static t_error	_init_render(t_app *app);
 static void		_compute_constants(
 					mlx_t *mlx,
 					t_menu *menu,
 					t_scene *scene,
 					t_canvas *canvas,
 					t_render *render);
-static t_error	_init_mutex_cond_sem(t_render *render);
 static void		_app_end(t_app *app);
 
 t_error	app_start(
@@ -81,18 +80,17 @@ static t_error	_app_init(
 					t_app *app,
 					t_scene *scene)
 {
-	create_records_dir();
 	app->scene = scene;
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	app->mlx = mlx_init(g_window_width, g_window_height, g_window_title, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
 	srand(time(NULL));
-	_init_render(app);
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
+		|| init_multithread(&app->render, app->canvas, app->scene, app->menu) == FAILURE
 		|| init_encoder(&app->encoder, app->canvas.render_icon) == FAILURE
 		|| menu_init(app->mlx, &app->menu, app->scene) == FAILURE
-		|| threads_init(app) == FAILURE
+		|| fill_and_start_threads(&app->render) == FAILURE
 		|| mlx_loop_hook(app->mlx, app_loop, app) == false)
 	{
 		mlx_terminate(app->mlx);
@@ -101,36 +99,6 @@ static t_error	_app_init(
 	_compute_constants(app->mlx, &app->menu, app->scene, &app->canvas,
 		&app->render);
 	return (SUCCESS);
-}
-
-static t_error	_init_render(t_app *app)
-{
-	long	nb_threads;
-
-	nb_threads = get_nb_threads();
-	app->render.workers = malloc((nb_threads - 1) * sizeof(t_worker));
-	if (app->render.workers == NULL)
-	{
-		free(app->render.queue);
-		return FAILURE;
-	}
-	if (_init_mutex_cond_sem(&app->render) == FAILURE)
-	{
-		free(app->render.queue);
-		free(app->render.workers);
-		return FAILURE;
-	}
-	app->render.queue = NULL;
-	app->render.sync = (t_sync){
-		.nb_active_threads = 0,
-		.nb_tasks_remain = 0,
-		.pixel_rendered = 0,
-		.keep_alive = 1,
-	};
-	app->render.canvas = &app->canvas;
-	app->render.scene = app->scene;
-	app->render.menu = &app->menu;
-	return SUCCESS;
 }
 
 static void	_compute_constants(
@@ -187,30 +155,3 @@ static void	_compute_constants(
 			NULL, 1);
 }
 
-static t_error	_init_mutex_cond_sem(t_render *render)
-{
-	if (pthread_mutex_init(&render->sync.queue_mut, NULL) != 0 ||
-		pthread_mutex_init(&render->sync.canvas_mut[FRONT_CANVAS], NULL) != 0 ||
-		pthread_mutex_init(&render->sync.canvas_mut[BACK_CANVAS], NULL) != 0 ||
-		pthread_mutex_init(&render->sync.active_threads_mut, NULL) != 0)
-	{
-		perror("pthread_mutex_init() error");
-		return FAILURE;
-	}
-	if (pthread_rwlock_init(&render->sync.scene_mut, NULL))
-	{
-		perror("pthread_rwlock_init() error");
-		return FAILURE;
-	}
-	if (pthread_cond_init(&render->sync.finish_jobs_cond, NULL) != 0)
-	{
-		perror("pthread_cond_init() error");
-		return FAILURE;
-	}
-	if (sem_init(&render->sync.jobs_sem, 0, 0) != 0)
-	{
-		perror("sem_init() error");
-		return FAILURE;
-	}
-	return SUCCESS;
-}

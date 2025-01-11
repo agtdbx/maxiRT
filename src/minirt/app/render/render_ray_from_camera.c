@@ -55,7 +55,6 @@ int32_t	render_ray_from_camera(
 			t_task *task,
 			t_scene const *scene,
 			pthread_rwlock_t *scene_mut,
-			t_ray const *ray,
 			bool show_spotlights)
 {
 	t_object const		*intersected_object;
@@ -65,24 +64,24 @@ int32_t	render_ray_from_camera(
 
 	pthread_rwlock_rdlock(scene_mut);
 	intersected_object = fetch_closest_intersection_in_tree(
-							ray, scene, &intersect_info);
+							&task->ray, scene, &intersect_info);
 	pthread_rwlock_unlock(scene_mut);
 	if (show_spotlights)
 	{
 		light = fetch_closer_spotlight(
-				ray, scene->spotlights, &intersect_info);
+				&task->ray, scene->spotlights, &intersect_info);
 		if (light != NULL)
-			return (_render_ray_on_spotlight(light, ray, &intersect_info));
+			return (_render_ray_on_spotlight(light, &task->ray, &intersect_info));
 	}
 	if (intersected_object == NULL)
 	{
 		if (scene->skybox)
-			return _fetch_intersection_with_skybox(canvas, task->pixels, scene, ray,
+			return _fetch_intersection_with_skybox(canvas, task->pixels, scene, &task->ray,
 				scene->skybox, &intersect_info);
 		return (g_color_black);
 	}
 	pixel_color = render_ray_on_object(
-			scene, intersected_object, ray, &intersect_info);
+			scene, intersected_object, &task->ray, &intersect_info);
 	return (color_to_int(&pixel_color));
 }
 
