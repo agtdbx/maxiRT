@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:02:20 by damien            #+#    #+#             */
-/*   Updated: 2025/01/11 10:56:37 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:31:36 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ typedef struct s_sync
 	int					nb_active_threads;
 	int					nb_tasks_remain;
 	int					pixel_rendered;
-	volatile int		keep_alive;
+	volatile bool		reset_render;
+	volatile bool		keep_alive;
 }	t_sync;
 
 typedef struct s_render
@@ -62,7 +63,7 @@ typedef struct s_render
 	t_sync		sync;
 	t_scene		*scene;
 	t_canvas	*canvas;
-	struct s_menu *menu;
+	t_menu		*menu;
 	t_task		*queue;
 }	t_render;
 
@@ -70,9 +71,9 @@ typedef struct s_render
 
 t_error	init_multithread(
 	t_render *render,
-	t_canvas canvas,
+	t_canvas *canvas,
 	t_scene *scene,
-	t_menu menu);
+	t_menu *menu);
 
 t_error	fill_and_start_threads(t_render *render);
 

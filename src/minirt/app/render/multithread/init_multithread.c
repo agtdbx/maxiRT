@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 09:59:27 by damien            #+#    #+#             */
-/*   Updated: 2025/01/11 10:57:18 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:32:08 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static t_error	_start_threads(t_render *render, long nb_threads);
 
 t_error	init_multithread(
 	t_render *render,
-	t_canvas canvas,
+	t_canvas *canvas,
 	t_scene *scene,
-	t_menu menu)
+	t_menu *menu)
 {
 	long	nb_threads;
 
@@ -49,11 +49,12 @@ t_error	init_multithread(
 		.nb_active_threads = 0,
 		.nb_tasks_remain = 0,
 		.pixel_rendered = 0,
-		.keep_alive = 1,
+		.keep_alive = true,
+		.reset_render = false
 	};
-	render->canvas = &canvas;
+	render->canvas = canvas;
 	render->scene = scene;
-	render->menu = &menu;
+	render->menu = menu;
 	return SUCCESS;
 }
 

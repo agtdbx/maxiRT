@@ -56,6 +56,7 @@ t_error	render_fast_on_front_canvas(
 		vec3_linear_transform(&ray[Y], ppr, &app->scene->camera->o_y);
 		pix[Y] += ppr;
 	}
+	app->render.sync.reset_render = false;
 	sem_post(&app->render.sync.jobs_sem);
 	wait_jobs_finish(&app->render);
 	return SUCCESS;

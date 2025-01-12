@@ -84,7 +84,7 @@ void			handle_mouse_clicks(
 
 /// rendering core
 
-void			render_canvas(
+t_error			render_canvas(
 					t_app *app,
 					bool should_render);
 t_error			render_fast_on_front_canvas(

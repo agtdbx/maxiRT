@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:14:33 by damien            #+#    #+#             */
-/*   Updated: 2025/01/11 10:50:21 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:30:25 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,42 +65,46 @@ t_task	*pop_task_lst(
 {
 	t_task	*head;
 	t_task	*tmp;
-	int		count;
+	t_task	*prev;
+	int		i;
 
 	pthread_mutex_lock(queue_mutex);
-	if (*nb_tasks_remain == 0 || !*queue)
+	if (!*queue)
 	{
+		*nb_tasks_remain = 0;
 		pthread_mutex_unlock(queue_mutex);
 		return NULL;
 	}
 	head = *queue;
-	count = 0;
-	while (*queue && count < BATCH_SIZE)
+	tmp = *queue;
+	for (i = 0; i < BATCH_SIZE; i++)
 	{
-		*queue = (*queue)->next;
-		count++;
-		(*nb_tasks_remain)--;
-	}
-	if (!*queue)
-		*nb_tasks_remain = 0;
-	if (*nb_tasks_remain > 0)
-		sem_post(jobs_sem);
-	tmp = head;
-	while (tmp->next && count > 1)
-	{
+		if (tmp == NULL)
+			break;
+		prev = tmp;
 		tmp = tmp->next;
-		count--;
 	}
-	tmp->next = NULL;
+	if (prev)
+	{
+		prev->next = NULL;
+		*queue = tmp;
+		*nb_tasks_remain -= i;
+		if (*nb_tasks_remain > 0)
+			sem_post(jobs_sem);
+	}
+	else
+	{
+		*queue = NULL;
+		*nb_tasks_remain = 0;
+	}
 	pthread_mutex_unlock(queue_mutex);
 	return head;
 }
 
 void	reset_task_queue(t_render *render)
 {
-	sem_init(&render->sync.jobs_sem, 0, 0);
+	render->sync.reset_render = true;
 	pthread_mutex_lock(&render->sync.queue_mut);
-	render->sync.nb_tasks_remain = 0;
 	del_queue(&render->queue);
 	pthread_mutex_unlock(&render->sync.queue_mut);
 }

@@ -52,7 +52,8 @@ void	app_loop(
 	if (app->encoder.is_recording
 		&& encode_frame(app->canvas.front, &app->encoder) == FAILURE)
 		mlx_close_window(app->mlx);
-	render_canvas(app, should_render);
+	if (render_canvas(app, should_render) == FAILURE)
+		mlx_close_window(app->mlx);
 }
 
 /**

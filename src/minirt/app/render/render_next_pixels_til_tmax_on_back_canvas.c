@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:56:46 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/11 10:40:34 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/12 10:10:56 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 
 	new_pixel_rendered = 0;
 	pixel_coords[0] = pixel_rendered % app->canvas.width;
-	pixel_coords[1] = pixel_rendered / app->canvas.width;
+	pixel_coords[1] = (double)pixel_rendered / app->canvas.width;
 	tmax = mlx_get_time() - app->mlx->delta_time + 0.15;
 	while (pixel_coords[1] < app->canvas.height)
 	{

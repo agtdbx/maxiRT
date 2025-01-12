@@ -49,9 +49,7 @@ t_error	app_start(
 	mlx_errno = 0;
 	if (_app_init(&app, scene) == SUCCESS)
 	{
-		render_canvas(&app, true);
 		mlx_loop(app.mlx);
-		mlx_terminate(app.mlx);
 		_app_end(&app);
 		return (SUCCESS);
 	}
@@ -67,10 +65,9 @@ t_error	app_start(
 static void _app_end(t_app *app)
 {
 	app->render.sync.keep_alive = 0;
-	pthread_mutex_lock(&app->render.sync.queue_mut);
-	del_queue(&app->render.queue);
-	pthread_mutex_unlock(&app->render.sync.queue_mut);
 	join_all_threads(app->render.workers);
+	mlx_terminate(app->mlx);
+	del_queue(&app->render.queue);
 	del_mut_cond_sem(&app->render.sync);
 	free_encoder_context(&app->encoder);
 	free(app->render.workers);
@@ -87,9 +84,9 @@ static t_error	_app_init(
 		return (FAILURE);
 	srand(time(NULL));
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
-		|| init_multithread(&app->render, app->canvas, app->scene, app->menu) == FAILURE
 		|| init_encoder(&app->encoder, app->canvas.render_icon) == FAILURE
 		|| menu_init(app->mlx, &app->menu, app->scene) == FAILURE
+		|| init_multithread(&app->render, &app->canvas, app->scene, &app->menu) == FAILURE
 		|| fill_and_start_threads(&app->render) == FAILURE
 		|| mlx_loop_hook(app->mlx, app_loop, app) == false)
 	{

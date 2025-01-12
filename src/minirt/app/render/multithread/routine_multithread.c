@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:13:15 by damien            #+#    #+#             */
-/*   Updated: 2025/01/11 10:51:14 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:31:50 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@
 
 static void	_consume_tasks(t_worker *worker, t_task *task_lst);
 static void	_send_signal_if_jobs_finish(t_sync *sync);
+static void	_free_tasks(t_task *task);
 
 void	*render_routine(void *data)
 {
 	t_worker	*worker;
 	t_task		*task_lst;
-	int			value;
 
 	worker = (t_worker *)data;
 	while (worker->render->sync.keep_alive != 0)
 	{
 		sem_wait(&worker->render->sync.jobs_sem);
-		if (!worker->render->sync.keep_alive)
-			break;
+		if (!worker->render->sync.keep_alive
+			|| worker->render->sync.reset_render)
+			continue ;
 		pthread_mutex_lock(&worker->render->sync.active_threads_mut);
 		worker->render->sync.nb_active_threads++;
 		pthread_mutex_unlock(&worker->render->sync.active_threads_mut);
@@ -37,11 +38,14 @@ void	*render_routine(void *data)
 			&worker->render->sync.queue_mut,
 			&worker->render->sync.nb_tasks_remain,
 			&worker->render->sync.jobs_sem);
-		if (task_lst == NULL)
+		if (task_lst == NULL || !worker->render->sync.keep_alive
+			|| worker->render->sync.reset_render)
 		{
-			sem_getvalue(&worker->render->sync.jobs_sem, &value);
-			if (--worker->render->sync.nb_active_threads == 0)
-				pthread_cond_signal(&worker->render->sync.finish_jobs_cond);
+			pthread_mutex_lock(&worker->render->sync.active_threads_mut);
+			worker->render->sync.nb_active_threads--;
+			pthread_mutex_unlock(&worker->render->sync.active_threads_mut);
+			if (task_lst != NULL)
+				_free_tasks(task_lst);
 			continue ;
 		}
 		_consume_tasks(worker, task_lst);
@@ -50,11 +54,24 @@ void	*render_routine(void *data)
 	return NULL;
 }
 
+static void	_free_tasks(t_task *task)
+{
+	t_task	*tmp;
+
+	while (task)
+	{
+		tmp = task;
+		task = task->next;
+		free(tmp);
+	}
+	task = NULL;
+}
+
 static void	_send_signal_if_jobs_finish(t_sync *sync)
 {
 	pthread_mutex_lock(&sync->active_threads_mut);
 	if (--sync->nb_active_threads == 0 &&
-			sync->nb_tasks_remain == 0)
+			sync->nb_tasks_remain == 0 && !sync->reset_render)
 		pthread_cond_signal(&sync->finish_jobs_cond);
 	pthread_mutex_unlock(&sync->active_threads_mut);
 }

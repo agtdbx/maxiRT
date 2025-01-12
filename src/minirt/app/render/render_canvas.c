@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/11 10:39:57 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/12 19:23:10 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	_is_under_10_fps(
 static bool	_is_over_25_fps(
 				double delta_time);
 
-void	render_canvas(
+t_error	render_canvas(
 			t_app *app,
 			bool should_render_fast)
 {
@@ -50,17 +50,11 @@ void	render_canvas(
 		if (is_rendering)
 			_update_ppr(app->mlx->delta_time, &pixel_per_ray);
 		if (render_fast_on_front_canvas(app, pixel_per_ray) == FAILURE)
-		{
-			del_queue(&app->render.queue);
-			free(app->render.workers);
-			sem_init(&app->render.sync.jobs_sem, 0, 0);
-			app->render.sync.keep_alive = 0;
-			return ;
-		}
+			return FAILURE;
 		is_rendering = true;
 		task_created = 0;
 		app->render.sync.pixel_rendered = 0;
-		return ;
+		return SUCCESS;
 	}
 	_print_rendering_progress(app->render.sync.pixel_rendered, app->mlx, is_rendering);
 	if (is_rendering)
@@ -72,6 +66,7 @@ void	render_canvas(
 			is_rendering = false;
 		}
 	}
+	return SUCCESS;
 }
 
 static void	_print_rendering_progress(
