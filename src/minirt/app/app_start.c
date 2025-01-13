@@ -28,6 +28,8 @@
 
 #define FRONT_CANVAS 0
 #define BACK_CANVAS 1
+#define MIN_WIDTH 100
+#define MIN_HEIGHT 100
 
 static t_error	_app_init(
 					t_app *app,
@@ -49,6 +51,12 @@ t_error	app_start(
 	mlx_errno = 0;
 	if (_app_init(&app, scene) == SUCCESS)
 	{
+		mlx_set_window_limit(
+			app.mlx,
+			MIN_WIDTH,
+			MIN_HEIGHT,
+			g_window_width,
+			g_window_height);
 		mlx_loop(app.mlx);
 		_app_end(&app);
 		return (SUCCESS);

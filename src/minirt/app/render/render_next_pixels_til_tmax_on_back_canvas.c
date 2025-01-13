@@ -37,6 +37,9 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 	pixel_coords[0] = pixel_rendered % app->canvas.width;
 	pixel_coords[1] = (double)pixel_rendered / app->canvas.width;
 	tmax = mlx_get_time() - app->mlx->delta_time + 0.15;
+	sem_getvalue(&app->render.sync.jobs_sem, &value);
+	if (value == 0)
+		sem_post(&app->render.sync.jobs_sem);
 	while (pixel_coords[1] < app->canvas.height)
 	{
 		while (pixel_coords[0] < app->canvas.width)

@@ -45,7 +45,7 @@ t_error	render_canvas(
 
 	if (should_render_fast)
 	{
-		if (app->render.sync.nb_tasks_remain != 0)
+		if (app->render.sync.reset_render != 0)
 			reset_task_queue(&app->render);
 		if (is_rendering)
 			_update_ppr(app->mlx->delta_time, &pixel_per_ray);

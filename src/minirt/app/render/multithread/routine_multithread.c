@@ -83,6 +83,11 @@ static void	_consume_tasks(t_worker *worker, t_task *task_lst)
 	while (task_lst)
 	{
 		task_cast_ray(worker, task_lst);
+		if (worker->render->sync.reset_render)
+		{
+			_free_tasks(task_lst);
+			return ;
+		}
 		tmp = task_lst;
 		task_lst = task_lst->next;
 		free(tmp);

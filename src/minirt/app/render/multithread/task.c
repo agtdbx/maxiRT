@@ -33,6 +33,7 @@ void	task_cast_ray(t_worker *worker, t_task *task)
 		img_mutex = &worker->render->sync.canvas_mut[FRONT_CANVAS];
 	}
 	img_draw_square(
+		&worker->render->sync,
 		img_mutex,
 		img,
 		task->pixels,

@@ -68,7 +68,7 @@ static bool	_draw_left_button(
 
 	if (pos_button[0] <= pos_click[0] && pos_click[0] < pos_button[0] + 20)
 	{
-		img_draw_square(NULL, button->img, pos_inside_img, 20, 0x666666FF);
+		img_draw_square(NULL, NULL, button->img, pos_inside_img, 20, 0x666666FF);
 		if (button->min < *button->f)
 		{
 			if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
@@ -79,7 +79,7 @@ static bool	_draw_left_button(
 		}
 		return (false);
 	}
-	img_draw_square(NULL, button->img, pos_inside_img, 20, 0x333333FF);
+	img_draw_square(NULL, NULL, button->img, pos_inside_img, 20, 0x333333FF);
 	return (false);
 }
 
@@ -93,7 +93,7 @@ static bool	_draw_right_button(
 
 	if (pos_button[0] <= pos_click[0] && pos_click[0] < pos_button[0] + 20)
 	{
-		img_draw_square(NULL, button->img, pos_inside_img, 20, 0x666666FF);
+		img_draw_square(NULL, NULL, button->img, pos_inside_img, 20, 0x666666FF);
 		if (*button->f < button->max)
 		{
 			if (mlx_is_key_down(mlx, MLX_KEY_LEFT_CONTROL))
@@ -104,6 +104,6 @@ static bool	_draw_right_button(
 		}
 		return (false);
 	}
-	img_draw_square(NULL, button->img, pos_inside_img, 20, 0x333333FF);
+	img_draw_square(NULL, NULL, button->img, pos_inside_img, 20, 0x333333FF);
 	return (false);
 }

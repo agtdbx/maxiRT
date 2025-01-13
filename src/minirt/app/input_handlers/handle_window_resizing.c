@@ -47,6 +47,7 @@ bool	handle_window_resizing(
 	{
 		pthread_mutex_lock(&sync->canvas_mut[FRONT_CANVAS]);
 		mlx_resize_image(canvas->front, width, height);
+		sync->reset_render = 1;
 		pthread_mutex_unlock(&sync->canvas_mut[FRONT_CANVAS]);
 		pthread_mutex_lock(&sync->canvas_mut[BACK_CANVAS]);
 		mlx_resize_image(canvas->back, width, height);

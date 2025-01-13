@@ -17,12 +17,14 @@
 # include <pthread.h>
 
 # include "MLX42/MLX42.h"
+# include "minirt/app/render/multithread/multithread.h"
 
 void	img_fill(
 			mlx_image_t *img,
 			int32_t color);
 
 void	img_draw_square(
+			t_sync *sync,
 			pthread_mutex_t *img_mutex,
 			mlx_image_t *img,
 			int32_t const coords[2],
