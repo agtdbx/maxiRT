@@ -505,7 +505,7 @@ SRCS		:=	src/minirt/parser/dot_obj_file/parse_dot_struct.c \
 BUILD		:=	.build
 endif
 
-INCLUDES	:=	$(SRC) lib/libft/include lib/mlx42/include
+INCLUDES	:=	$(SRC) lib/libft/include lib/mlx42/include lib/ffmpeg/include
 
 #==============================================================================#
 #==== COMPILATION =============================================================#
@@ -519,8 +519,8 @@ CPPFLAGS	:=	-MP -MMD $(addprefix -I,$(INCLUDES)) -g	\
 
 LDFLAGS		:=	-Llib/libft -lft						\
 				-Llib/mlx42/build -lmlx42				\
-				-ldl -lglfw -pthread -lm -lavcodec -lavutil \
-				-lswscale
+				-ldl -lglfw -pthread -lm \
+				-Llib/ffmpeg -lswresample -lavcodec -lavutil -lswscale
 
 ifdef DEBUG
 CFLAGS		+=	-gdwarf-4 -Wno-unused-function
@@ -543,6 +543,9 @@ DIRS	:=	$(sort $(shell dirname $(BUILD) $(OBJS)))
 
 all: | $(LIBMLX42)					#build mlx42 once (and first)
 all: objs libft $(NAME)				#build other targets every time needed
+
+run: all
+	export LD_LIBRARY_PATH=./lib/ffmpeg  && ./$(NAME) $(ARGS)
 
 libft:								#libft may be updated during development,
 	$(MAKE) -C lib/libft			#hence it's made a phony target

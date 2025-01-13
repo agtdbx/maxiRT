@@ -13,14 +13,9 @@
 #ifndef ENCODE_H
 # define ENCODE_H
 
-#include <stdio.h>
-#include <libavcodec/avcodec.h>
-#include <libavutil/imgutils.h>
-#include <libswscale/swscale.h>
-
 #include "MLX42/MLX42.h"
 #include "libft/libft.h"
-
+#include <libavcodec/avcodec.h>
 #include "minirt/app/scene/scene.h"
 
 typedef struct s_encode

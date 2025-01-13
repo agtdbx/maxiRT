@@ -14,8 +14,8 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+
 #include <libavcodec/avcodec.h>
-#include <libavutil/imgutils.h>
 #include <libswscale/swscale.h>
 
 #include "MLX42/MLX42.h"
