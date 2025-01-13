@@ -100,7 +100,7 @@ static t_error	encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
 	return SUCCESS;
 }
 
-void	close_recording(t_encode *encoder, mlx_image_t *record_icon)
+void	close_recording(t_encode *encoder, mlx_image_t *record_icon, int32_t width, int32_t height)
 {
 	static uint8_t	endcode[] = { 0, 0, 1, 0xb7 };
 
@@ -108,10 +108,10 @@ void	close_recording(t_encode *encoder, mlx_image_t *record_icon)
 	encode(encoder->c, NULL, encoder->pkt, encoder->f);
 	fwrite(endcode, 1, sizeof(endcode), encoder->f);
 	free_encoder_context(encoder);
-	init_encoder(encoder, record_icon);
+	init_encoder(encoder, record_icon, width, height);
 }
 
-t_error	init_encoder(t_encode *encoder, mlx_image_t *record_icon)
+t_error	init_encoder(t_encode *encoder, mlx_image_t *record_icon, int32_t width, int32_t height)
 {
 	const AVCodec			*codec;
 	int						ret;
@@ -136,8 +136,8 @@ t_error	init_encoder(t_encode *encoder, mlx_image_t *record_icon)
 	if (!encoder->pkt)
 		return FAILURE;
 	encoder->c->bit_rate = 400000;
-	encoder->c->width = 1920;
-	encoder->c->height = 1011;
+	encoder->c->width = width;
+	encoder->c->height = height;
 	encoder->c->time_base= (AVRational){1,25};
 	encoder->c->framerate = (AVRational){25, 1};
 	encoder->c->gop_size = 10;
@@ -165,8 +165,8 @@ t_error	init_encoder(t_encode *encoder, mlx_image_t *record_icon)
 		return FAILURE;
 	}
 	encoder->sws_context = sws_getContext(
-		1920,
-		1011,
+		width,
+		height,
 		AV_PIX_FMT_RGBA,
 		encoder->c->width,
 		encoder->c->height,

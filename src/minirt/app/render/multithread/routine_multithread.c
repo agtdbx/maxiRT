@@ -41,11 +41,11 @@ void	*render_routine(void *data)
 		if (task_lst == NULL || !worker->render->sync.keep_alive
 			|| worker->render->sync.reset_render)
 		{
+			if (task_lst != NULL)
+				_free_tasks(task_lst);
 			pthread_mutex_lock(&worker->render->sync.active_threads_mut);
 			worker->render->sync.nb_active_threads--;
 			pthread_mutex_unlock(&worker->render->sync.active_threads_mut);
-			if (task_lst != NULL)
-				_free_tasks(task_lst);
 			continue ;
 		}
 		_consume_tasks(worker, task_lst);

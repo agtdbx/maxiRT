@@ -24,8 +24,6 @@ void	img_fill(
 			int32_t color);
 
 void	img_draw_square(
-			t_sync *sync,
-			pthread_mutex_t *img_mutex,
 			mlx_image_t *img,
 			int32_t const coords[2],
 			int32_t size,

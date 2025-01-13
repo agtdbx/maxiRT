@@ -21,6 +21,7 @@ void	task_cast_ray(t_worker *worker, t_task *task)
 {
 	mlx_image_t		*img;
 	pthread_mutex_t	*img_mutex;
+	uint32_t		pixel_color;
 
 	if (task->back_canvas == 1)
 	{
@@ -32,20 +33,17 @@ void	task_cast_ray(t_worker *worker, t_task *task)
 		img = worker->render->canvas->front;
 		img_mutex = &worker->render->sync.canvas_mut[FRONT_CANVAS];
 	}
-	img_draw_square(
-		&worker->render->sync,
-		img_mutex,
-		img,
-		task->pixels,
-		task->ppr,
-		render_ray_from_camera(
-			worker->render->canvas,
-			task,
-			worker->render->scene,
-			&worker->render->sync.scene_mut,
-			worker->render->menu->is_visible
-		)
+	pixel_color = render_ray_from_camera(
+		worker->render->canvas,
+		task,
+		worker->render->scene,
+		&worker->render->sync.scene_mut,
+		worker->render->menu->is_visible
 	);
+	pthread_mutex_lock(img_mutex);
+	if (!worker->render->sync.reset_render)
+		img_draw_square(img, task->pixels, task->ppr, pixel_color);
+	pthread_mutex_unlock(img_mutex);
 	worker->render->sync.pixel_rendered += task->ppr;
 }
 

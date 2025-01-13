@@ -80,7 +80,7 @@ static inline bool	_handle_user_inputs(
 			app->mlx, &app->menu, app->scene,
 			&app->canvas, &app->render.sync);
 	if (should_render && app->encoder.is_recording)
-		close_recording(&app->encoder, app->canvas.render_icon);
+		close_recording(&app->encoder, app->canvas.render_icon, app->mlx->width, app->mlx->height);
 	should_render |= handle_menu_toggling(
 			app->mlx, &app->menu);
 	should_render |= handle_translations(

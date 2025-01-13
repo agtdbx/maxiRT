@@ -22,8 +22,6 @@
 #define Y 1
 
 void	img_draw_square(
-			t_sync *sync,
-			pthread_mutex_t *img_mutex,
 			mlx_image_t *img,
 			int32_t const coords[2],
 			int32_t size,
@@ -34,13 +32,6 @@ void	img_draw_square(
 	register int	x;
 	register int	y;
 
-	if (img_mutex)
-		pthread_mutex_lock(img_mutex);
-	if (sync && sync->reset_render)
-	{
-		pthread_mutex_unlock(img_mutex);
-		return ;
-	}
 	y = coords[Y];
 	while (y < max_y)
 	{
@@ -52,6 +43,4 @@ void	img_draw_square(
 		}
 		++y;
 	}
-	if (img_mutex)
-		pthread_mutex_unlock(img_mutex);
 }

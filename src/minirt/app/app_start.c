@@ -91,8 +91,9 @@ static t_error	_app_init(
 	if (app->mlx == NULL)
 		return (FAILURE);
 	srand(time(NULL));
+	create_records_dir();
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
-		|| init_encoder(&app->encoder, app->canvas.render_icon) == FAILURE
+		|| init_encoder(&app->encoder, app->canvas.render_icon, app->mlx->width, app->mlx->height) == FAILURE
 		|| menu_init(app->mlx, &app->menu, app->scene) == FAILURE
 		|| init_multithread(&app->render, &app->canvas, app->scene, &app->menu) == FAILURE
 		|| fill_and_start_threads(&app->render) == FAILURE

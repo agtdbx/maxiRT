@@ -32,9 +32,9 @@ typedef struct s_encode
 
 void		create_records_dir();
 t_error		encode_frame(mlx_image_t *img, t_encode *encoder);
-void		close_recording(t_encode *encoder, mlx_image_t *record_icon);
+void		close_recording(t_encode *encoder, mlx_image_t *record_icon, int32_t width, int32_t height);
 void		start_recording(mlx_image_t *record_icon, t_encode *encoder, t_error *err);
-t_error		init_encoder(t_encode *encoder, mlx_image_t *record_icon);
+t_error		init_encoder(t_encode *encoder, mlx_image_t *record_icon, int32_t width, int32_t height);
 void		free_encoder_context(t_encode *encoder);
 void		handle_recording(mlx_t *mlx, mlx_image_t *record_icon, t_encode *encoder, t_error *err);
 
