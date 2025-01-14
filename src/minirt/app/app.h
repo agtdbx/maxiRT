@@ -120,8 +120,7 @@ t_color			render_ray_on_object(
 					t_intersect_info const *intersect_info);
 t_color			render_ray_on_sky_box(
 					t_scene const *scene,
-					t_ray const *ray,
-					t_intersect_info *intersect_info);
+					t_ray const *ray);
 int32_t			render_ray(
 					t_scene const *scene,
 					t_object const *obj,

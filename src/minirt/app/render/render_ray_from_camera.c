@@ -35,16 +35,7 @@ static int32_t	_render_ray_on_spotlight(
 
 static inline int32_t	_fetch_intersection_with_skybox(
 			t_scene const *scene,
-			t_ray const *ray,
-			t_object const *skybox,
-			t_intersect_info *intersect_info);
-
-// static t_color	sample_color_around_pixel(
-// 					const t_scene *scene,
-// 					t_canvas *canvas,
-// 					const t_object *skybox,
-// 					t_intersect_info *intersect_info,
-// 					int *pixels);
+			t_ray const *ray);
 
 /**
  * @param[in] scene
@@ -77,8 +68,7 @@ int32_t	render_ray_from_camera(
 	if (intersected_object == NULL)
 	{
 		if (scene->skybox)
-			return _fetch_intersection_with_skybox(
-						scene, &task->ray, scene->skybox, &intersect_info);
+			return _fetch_intersection_with_skybox(scene, &task->ray);
 		return (g_color_black);
 	}
 	pixel_color = render_ray_on_object(
@@ -112,16 +102,10 @@ static int32_t	_render_ray_on_spotlight(
 
 static inline int32_t	_fetch_intersection_with_skybox(
 			t_scene const *scene,
-			t_ray const *ray,
-			t_object const *skybox,
-			t_intersect_info *intersect_info)
+			t_ray const *ray)
 {
 	t_color		pixel_color = {0, 0, 0};
-	t_color		sample_color = {0, 0, 0};
 
-	if (!test_intersection_with_cube_from_inside(
-			ray, &skybox->value.as_skybox.cube, intersect_info))
-		return (color_to_int(&sample_color));
-	pixel_color = render_ray_on_sky_box(scene, ray, intersect_info);
+	pixel_color = render_ray_on_sky_box(scene, ray);
 	return (color_to_int(&pixel_color));
 }

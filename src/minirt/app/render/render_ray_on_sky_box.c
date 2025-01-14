@@ -26,21 +26,21 @@ static t_color	_apply_face_texture(
  */
 t_color	render_ray_on_sky_box(
 			t_scene const *scene,
-			t_ray const *ray,
-			t_intersect_info *intersect_info)
+			t_ray const *ray)
 {
 	t_pixel_info	pixel_info;
 	t_color			color;
 
+	t_intersect_info	intersect_info;
 	if (!test_intersection_with_cube_from_inside(
-			ray, &scene->skybox->value.as_skybox.cube, intersect_info))
+			ray, &scene->skybox->value.as_skybox.cube, &intersect_info))
 		return ((t_color){0});
-	compute_normal_ray(scene->skybox, ray, intersect_info, &pixel_info.normal);
+	compute_normal_ray(scene->skybox, ray, &intersect_info, &pixel_info.normal);
 	pixel_info.pos = get_object_pixel_pos(
-						scene->skybox, ray, &pixel_info.normal, intersect_info);
+						scene->skybox, ray, &pixel_info.normal, &intersect_info);
 
 	color = _apply_face_texture(scene->skybox->value.as_skybox.textures,
-								intersect_info, &pixel_info.pos);
+								&intersect_info, &pixel_info.pos);
 	return (color);
 }
 
