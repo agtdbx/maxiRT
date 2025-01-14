@@ -25,7 +25,6 @@ static t_pixel_info	get_pixel_info(
 
 static t_color		compute_object_without_effect_color(
 						t_object const *intersected_object,
-						t_intersect_info const *intersect_info,
 						t_scene const *scene,
 						t_ray const *ray,
 						t_pixel_info const *pixel_info);
@@ -51,7 +50,7 @@ t_color	render_ray_on_object(
 		return ((t_color){0.0, 0.0, 0.0});
 	pixel_info = get_pixel_info(scene, intersected_object, ray, intersect_info);
 	color = compute_object_without_effect_color(
-				intersected_object, intersect_info, scene, ray, &pixel_info);
+				intersected_object, scene, ray, &pixel_info);
 	refracted_color = compute_refracted_color(
 			intersected_object, scene, ray, &pixel_info.normal);
 	reflected_color = compute_reflected_color(
@@ -93,7 +92,6 @@ static t_pixel_info	get_pixel_info(
 
 static t_color	compute_object_without_effect_color(
 					t_object const *intersected_object,
-					t_intersect_info const *intersect_info,
 					t_scene const *scene,
 					t_ray const *ray,
 					t_pixel_info const *pixel_info)
@@ -102,10 +100,7 @@ static t_color	compute_object_without_effect_color(
 	t_color	base_color;
 	t_color	color;
 
-	base_color = get_base_color_object(intersected_object, intersect_info,
-		&pixel_info->pos);
-	if (intersected_object->type == OBJ_SKYBOX)
-		return (base_color);
+	base_color = get_base_color_object(intersected_object, &pixel_info->pos);
 	illumination = compute_illumination(
 			scene, intersected_object, ray, &pixel_info->normal);
 	if (illumination.r == 0.0f && illumination.g == 0.0f

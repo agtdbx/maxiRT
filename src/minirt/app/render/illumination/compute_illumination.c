@@ -217,7 +217,7 @@ static void	apply_shadow_to_illumination(
 			&distance_to_object, &normal);
 		pixel_pos = get_object_pixel_pos(objects, ray_to_spotlight,
 				&normal, &distance_to_object);
-		base_color = get_base_color_object(objects, NULL, &pixel_pos);
+		base_color = get_base_color_object(objects, &pixel_pos);
 		illumination->r -= powf(objects->opacity,
 				1 + base_color.r * g_opacity_color_ratio);
 		illumination->g -= powf(objects->opacity,
