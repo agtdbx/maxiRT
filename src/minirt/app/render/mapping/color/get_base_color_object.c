@@ -53,8 +53,10 @@ static t_color	apply_checkboard(float w, float h, t_vec2 const *pixel_pos)
 	return (res);
 }
 
-static t_color	_apply_face_texture(mlx_texture_t *textures,
-	t_intersect_info const *intersect_info, t_vec2 const *pixel_pos)
+static t_color	_apply_face_texture(
+					mlx_texture_t *textures,
+					t_intersect_info const *intersect_info,
+					t_vec2 const *pixel_pos)
 {
 	switch(intersect_info->sub_part_id)
 	{

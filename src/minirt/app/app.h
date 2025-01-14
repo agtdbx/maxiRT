@@ -95,7 +95,6 @@ int32_t			render_next_pixels_til_tmax_on_back_canvas(
 					int32_t pixel_rendered);
 
 int32_t			render_ray_from_camera(
-					t_canvas *canvas,
 					t_task *task,
 					t_scene const *scene,
 					pthread_rwlock_t *scene_mut,
@@ -119,6 +118,10 @@ t_color			render_ray_on_object(
 					t_object const *intersected_object,
 					t_ray const *ray,
 					t_intersect_info const *intersect_info);
+t_color			render_ray_on_sky_box(
+					t_scene const *scene,
+					t_ray const *ray,
+					t_intersect_info *intersect_info);
 int32_t			render_ray(
 					t_scene const *scene,
 					t_object const *obj,

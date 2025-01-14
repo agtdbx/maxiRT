@@ -34,7 +34,6 @@ void	task_cast_ray(t_worker *worker, t_task *task)
 		img_mutex = &worker->render->sync.canvas_mut[FRONT_CANVAS];
 	}
 	pixel_color = render_ray_from_camera(
-		worker->render->canvas,
 		task,
 		worker->render->scene,
 		&worker->render->sync.scene_mut,
