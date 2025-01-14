@@ -388,7 +388,6 @@ SRCS		:=	src/minirt/parser/dot_obj_file/parse_dot_struct.c \
 				src/minirt/app/scene/plane_compute_constants.c \
 				src/minirt/app/scene/compute_bounding_box_constants.c \
 				src/minirt/app/utils/drawings/img_fill.c \
-				src/minirt/app/utils/drawings/img_draw_circle.c \
 				src/minirt/app/utils/drawings/img_draw_square.c \
 				src/minirt/app/utils/drawings/img_draw_divider.c \
 				src/minirt/app/utils/geometry/vec3_cross.c \

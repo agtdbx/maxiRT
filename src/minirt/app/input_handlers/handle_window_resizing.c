@@ -23,6 +23,9 @@
 
 #define FRONT_CANVAS 0
 #define BACK_CANVAS 1
+#define RECORD_ICON_X_POS 20
+#define Y 1
+#define RED_COLOR 0xFF0000FF
 
 /**
  * Resize canvas if smaller than window,
@@ -42,9 +45,14 @@ bool	handle_window_resizing(
 {
 	int32_t const	width = mlx->width - menu->is_visible * g_menu_width;
 	int32_t const	height = mlx->height;
+	static int		coords_record_icon[2] = {RECORD_ICON_X_POS, 0};
 
 	if (canvas->width != width || canvas->height != height)
 	{
+		coords_record_icon[Y] =  height - 40;
+		mlx_resize_image(canvas->record_icon, width, height);
+		img_fill(canvas->record_icon, 0x00000000);
+		img_draw_square(canvas->record_icon, coords_record_icon, 20, RED_COLOR);
 		pthread_mutex_lock(&sync->canvas_mut[FRONT_CANVAS]);
 		mlx_resize_image(canvas->front, width, height);
 		sync->reset_render = 1;

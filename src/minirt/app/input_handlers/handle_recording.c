@@ -21,7 +21,7 @@ void	handle_recording(mlx_t *mlx, mlx_image_t *record_icon, t_encode *encoder, t
 		time_elapsed += mlx->delta_time;
 		if (time_elapsed < 1)
 			return ;
-		encoder->is_recording ? close_recording(encoder, record_icon, mlx) :
+		encoder->is_recording ? close_recording(encoder, record_icon) :
 			start_recording(record_icon, encoder, err, mlx);
 		time_elapsed = 0;
 		encoder->frame_counter = 0;

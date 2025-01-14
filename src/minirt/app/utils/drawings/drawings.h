@@ -34,10 +34,4 @@ void	img_draw_divider(
 			uint32_t y,
 			int32_t color);
 
-void	img_draw_circle(
-			mlx_image_t *img,
-			const int32_t coords[2],
-			int radius,
-			int color);
-
 #endif // DRAWINGS_H

@@ -23,10 +23,6 @@
 #include "minirt/app/utils/drawings/drawings.h"
 
 #define MAX_FILENAME_SIZE 256
-#define RECORD_ICON_X_POS 20
-#define RADIUS_RECORD_ICON 10.0
-#define RED_COLOR 0xFF0000FF
-#define Y 1
 
 static void set_path_record_file(char *filename)
 {
@@ -36,32 +32,29 @@ static void set_path_record_file(char *filename)
 	timestamp = time(NULL);
 	date = localtime(&timestamp);
 	strftime(filename, MAX_FILENAME_SIZE,
-		"../records/record_%d_%m_%Y+%H:%M:%S.avi", date);
+		"./records/record_%d_%m_%Y+%H:%M:%S.avi", date);
 }
 
 void	start_recording(mlx_image_t *record_icon, t_encode *encoder, t_error *err, mlx_t *mlx)
 {
-	char			filename[MAX_FILENAME_SIZE] = {0};
-	static int		coords_record_icon[2] = {RECORD_ICON_X_POS, 0};
+	char	filename[MAX_FILENAME_SIZE] = {0};
 
 	create_records_dir();
 	set_path_record_file(filename);
-	coords_record_icon[Y] =  mlx->height - 20;
-	img_draw_circle(record_icon, coords_record_icon, RADIUS_RECORD_ICON, RED_COLOR);
 	if (encoder->c && (encoder->c->width != mlx->width || encoder->c->height != mlx->height))
 	{
 		free_encoder_context(encoder);
-		init_encoder(encoder, record_icon, mlx->width, mlx->height);
+		init_encoder(encoder, mlx->width, mlx->height);
 	}
 	else if (!encoder->c)
-		init_encoder(encoder, record_icon, mlx->width, mlx->height);
+		init_encoder(encoder, mlx->width, mlx->height);
 	encoder->f = fopen(filename, "wb");
 	if (!encoder->f)
 	{
 		fprintf(stderr, "Could not open %s\n", filename);
 		*err = FAILURE;
 	}
-	mlx_set_instance_depth(&record_icon->instances[0], 3);
+	mlx_set_instance_depth(&record_icon->instances[0], 4);
 	encoder->is_recording = true;
 }
 
@@ -114,7 +107,7 @@ static t_error	encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
 	return SUCCESS;
 }
 
-t_error	close_recording(t_encode *encoder, mlx_image_t *record_icon, mlx_t *mlx)
+t_error	close_recording(t_encode *encoder, mlx_image_t *record_icon)
 {
 	static uint8_t	endcode[] = { 0, 0, 1, 0xb7 };
 
@@ -123,21 +116,15 @@ t_error	close_recording(t_encode *encoder, mlx_image_t *record_icon, mlx_t *mlx)
 	fwrite(endcode, 1, sizeof(endcode), encoder->f);
 	encoder->is_recording = false;
 	free_encoder_context(encoder);
-	mlx_delete_image(mlx, record_icon);
-	record_icon = mlx_new_image(mlx, mlx->width, mlx->height);
-	if (mlx_image_to_window(mlx, record_icon, 0, 0) == -1)
-		return (FAILURE);
 	mlx_set_instance_depth(&record_icon->instances[0], 0);
 	return SUCCESS;
 }
 
-t_error	init_encoder(t_encode *encoder, mlx_image_t *record_icon, int32_t width, int32_t height)
+t_error	init_encoder(t_encode *encoder, int32_t width, int32_t height)
 {
 	const AVCodec			*codec;
 	int						ret;
-	static const int32_t	coords[2] = {20, 990};
 
-	img_draw_circle(record_icon, coords, 10, 0xFF0000FF);
 	encoder->is_recording = false;
 	encoder->frame_counter = 0;
 	codec = avcodec_find_encoder(AV_CODEC_ID_MPEG1VIDEO);
@@ -217,6 +204,6 @@ void	create_records_dir()
 {
 	static struct stat	st;
 
-	if (stat("../records/", &st) == -1)
-		mkdir("../records", 0777);
+	if (stat("./records/", &st) == -1)
+		mkdir("./records", 0777);
 }
