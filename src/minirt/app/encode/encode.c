@@ -206,11 +206,9 @@ t_error	encode_frame(mlx_image_t *img, t_encode *encoder)
 		fprintf(stderr, "Error making frame writable\n");
 		return FAILURE;
 	}
-	fflush(stdout);
 	sws_scale(encoder->sws_context, (const uint8_t * const *)&img->pixels,
 		src_stride, 0, img->height,
 			encoder->frame->data, encoder->frame->linesize);
-	encoder->frame->pts = encoder->frame_counter++;
 	return encode(encoder->c, encoder->frame, encoder->pkt, encoder->f);
 }
 
