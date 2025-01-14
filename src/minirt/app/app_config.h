@@ -17,11 +17,9 @@
 
 //---- WINDOW ----------------------------------------------------------------//
 
-static const char		*g_window_title = "maxiRT";
-// static const int32_t	g_window_width = 1920;
-// static const int32_t	g_window_height = 1080;
-static const int32_t	g_window_width = 1600;
-static const int32_t	g_window_height = 900;
+# define WINDOW_TITLE "maxiRT"
+static const int32_t	g_window_width = 1920;
+static const int32_t	g_window_height = 1080;
 
 //---- MENU ------------------------------------------------------------------//
 

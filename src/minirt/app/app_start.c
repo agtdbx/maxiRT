@@ -88,7 +88,7 @@ static t_error	_app_init(
 {
 	app->scene = scene;
 	mlx_set_setting(MLX_MAXIMIZED, true);
-	app->mlx = mlx_init(g_window_width, g_window_height, g_window_title, true);
+	app->mlx = mlx_init(g_window_width, g_window_height, WINDOW_TITLE, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
 	srand(time(NULL));
