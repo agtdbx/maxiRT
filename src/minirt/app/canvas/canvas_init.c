@@ -21,10 +21,10 @@ t_error	canvas_init(
 			mlx_t *mlx,
 			t_canvas *canvas)
 {
-	canvas->render_icon = mlx_new_image(mlx, mlx->width, mlx->height);
-	if (mlx_image_to_window(mlx, canvas->render_icon, 0, 0) == -1)
+	canvas->record_icon = mlx_new_image(mlx, mlx->width, mlx->height);
+	if (mlx_image_to_window(mlx, canvas->record_icon, 0, 0) == -1)
 		return (FAILURE);
-	mlx_set_instance_depth(&canvas->render_icon->instances[0], 0);
+	mlx_set_instance_depth(&canvas->record_icon->instances[0], 0);
 	canvas->front = mlx_new_image(mlx, mlx->width, mlx->height);
 	if (canvas->front == NULL)
 		return (FAILURE);

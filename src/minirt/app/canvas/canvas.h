@@ -22,7 +22,7 @@ typedef struct s_canvas
 {
 	mlx_image_t	*front;
 	mlx_image_t	*back;
-	mlx_image_t	*render_icon;
+	mlx_image_t	*record_icon;
 
 	int32_t		width;
 	int32_t		width_div_2;

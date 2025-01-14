@@ -20,15 +20,14 @@
 
 void	img_draw_circle(mlx_image_t *img, const int32_t coords[2], int radius, int color)
 {
-	double i, angle, x, y;
+	double	i, x, y;
 
 	for (; radius > 0; radius--)
 	{
 		for (i = 0; i < 360; i += 0.1)
 		{
-			angle = i;
-			x = radius * cos(angle * g_pi_div_180);
-			y = radius * sin(angle * g_pi_div_180);
+			x = radius * cos(i * g_pi_div_180);
+			y = radius * sin(i * g_pi_div_180);
 			mlx_put_pixel(img, coords[X] + x, coords[Y] + y, color);
 		}
 	}

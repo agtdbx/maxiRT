@@ -77,7 +77,6 @@ static void _app_end(t_app *app)
 	mlx_terminate(app->mlx);
 	del_queue(&app->render.queue);
 	del_mut_cond_sem(&app->render.sync);
-	free_encoder_context(&app->encoder);
 	free(app->render.workers);
 }
 
@@ -91,9 +90,8 @@ static t_error	_app_init(
 	if (app->mlx == NULL)
 		return (FAILURE);
 	srand(time(NULL));
-	create_records_dir();
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
-		|| init_encoder(&app->encoder, app->canvas.render_icon, app->mlx->width, app->mlx->height) == FAILURE
+		|| init_encoder(&app->encoder, app->canvas.record_icon, app->mlx->width, app->mlx->height) == FAILURE
 		|| menu_init(app->mlx, &app->menu, app->scene) == FAILURE
 		|| init_multithread(&app->render, &app->canvas, app->scene, &app->menu) == FAILURE
 		|| fill_and_start_threads(&app->render) == FAILURE

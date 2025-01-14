@@ -71,7 +71,7 @@ static inline bool	_handle_user_inputs(
 	should_render = false;
 	handle_recording(
 		app->mlx,
-		app->canvas.render_icon,
+		app->canvas.record_icon,
 		&app->encoder,
 		&err);
 	if (err == FAILURE)
@@ -80,7 +80,7 @@ static inline bool	_handle_user_inputs(
 			app->mlx, &app->menu, app->scene,
 			&app->canvas, &app->render.sync);
 	if (should_render && app->encoder.is_recording)
-		close_recording(&app->encoder, app->canvas.render_icon, app->mlx->width, app->mlx->height);
+		close_recording(&app->encoder, app->canvas.record_icon, app->mlx);
 	should_render |= handle_menu_toggling(
 			app->mlx, &app->menu);
 	should_render |= handle_translations(
