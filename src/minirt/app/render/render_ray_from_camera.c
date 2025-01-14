@@ -23,8 +23,6 @@
 #include "minirt/app/scene/scene.h"
 #include "minirt/app/utils/color/color.h"
 
-#define SAMPLE_SIZE 9
-#define MAX_SAMPLE_SIZE 64
 #define X 0
 #define Y 1
 

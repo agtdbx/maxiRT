@@ -91,7 +91,6 @@ static t_error	_app_init(
 	app->mlx = mlx_init(g_window_width, g_window_height, WINDOW_TITLE, true);
 	if (app->mlx == NULL)
 		return (FAILURE);
-	srand(time(NULL));
 	if (canvas_init(app->mlx, &app->canvas) == FAILURE
 		|| init_encoder(&app->encoder, app->mlx->width, app->mlx->height) == FAILURE
 		|| menu_init(app->mlx, &app->menu, app->scene) == FAILURE
@@ -115,7 +114,6 @@ static void	_compute_constants(
 				t_render *render)
 {
 	t_object	*object_iterator;
-	int			nb_objects = 0;
 
 	object_iterator = scene->objects;
 	while (object_iterator != NULL)
@@ -143,7 +141,6 @@ static void	_compute_constants(
 			object_file_compute_constants(
 				&object_iterator->value.as_object_file);
 		object_iterator = object_iterator->next;
-		nb_objects++;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas, &render->sync);
 	if (scene->skybox)

@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:13:15 by damien            #+#    #+#             */
-/*   Updated: 2025/01/12 19:31:50 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/14 22:07:53 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	_send_signal_if_jobs_finish(t_sync *sync)
 {
 	pthread_mutex_lock(&sync->active_threads_mut);
 	if (--sync->nb_active_threads == 0 &&
-			sync->nb_tasks_remain == 0 && !sync->reset_render)
+			sync->nb_tasks_remain == 0)
 		pthread_cond_signal(&sync->finish_jobs_cond);
 	pthread_mutex_unlock(&sync->active_threads_mut);
 }
@@ -100,5 +100,4 @@ void	wait_jobs_finish(t_render *render)
 	while (render->sync.nb_tasks_remain)
 		pthread_cond_wait(&render->sync.finish_jobs_cond, &render->sync.queue_mut);
 	pthread_mutex_unlock(&render->sync.queue_mut);
-	render->sync.nb_tasks_remain = 0;
 }
