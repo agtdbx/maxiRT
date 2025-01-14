@@ -22,15 +22,15 @@ set_target_properties(MaxiRT PROPERTIES
 )
 
 target_include_directories(MaxiRT PRIVATE src)
-target_compile_options(MaxiRT PRIVATE 
-    -Wall -Wextra -Werror 
+target_compile_options(MaxiRT PRIVATE
+    -Wall -Wextra -Werror
     -std=gnu99 -Wunreachable-code -Ofast
 )
 target_link_directories(MaxiRT PRIVATE lib/ffmpeg)
-target_link_options(MaxiRT PRIVATE 
-    -Ofast -flto 
+target_link_options(MaxiRT PRIVATE
+    -Ofast -flto
 )
-target_link_libraries(MaxiRT 
+target_link_libraries(MaxiRT
     libft
     mlx42 dl glfw pthread m
     ffmpeg swresample avcodec avutil swscale
