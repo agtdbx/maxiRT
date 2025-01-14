@@ -63,8 +63,8 @@ int32_t	render_ray_from_camera(
 	t_intersect_info	intersect_info;
 
 	pthread_rwlock_rdlock(scene_mut);
-	intersected_object = fetch_closest_intersection_in_tree(
-							&task->ray, scene, &intersect_info);
+	intersected_object = fetch_closest_intersection(
+							&task->ray, scene->objects, &intersect_info);
 	pthread_rwlock_unlock(scene_mut);
 	if (show_spotlights)
 	{

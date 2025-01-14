@@ -122,42 +122,31 @@ static void	_compute_constants(
 	{
 		if (object_iterator->type == OBJ_SPHERE)
 			sphere_compute_constants(
-			&object_iterator->value.as_sphere,
-			&object_iterator->bounding_box);
+			&object_iterator->value.as_sphere);
 		else if (object_iterator->type == OBJ_PLANE)
 			plane_compute_constants(
-				&object_iterator->value.as_plane,
-				&object_iterator->bounding_box);
+				&object_iterator->value.as_plane);
 		else if (object_iterator->type == OBJ_CYLINDER)
 			cylinder_compute_constants(
-				&object_iterator->value.as_cylinder,
-				&object_iterator->bounding_box);
+				&object_iterator->value.as_cylinder);
 		else if (object_iterator->type == OBJ_CONE)
 			cone_compute_constants(
-				&object_iterator->value.as_cone,
-				&object_iterator->bounding_box);
+				&object_iterator->value.as_cone);
 		else if (object_iterator->type == OBJ_CUBE)
 			cube_compute_constants(
 				&object_iterator->value.as_cube,
-				&object_iterator->bounding_box,
 				0);
 		else if (object_iterator->type == OBJ_TRIANGLE)
 			triangle_compute_constants(
-				&object_iterator->value.as_triangle,
-				&object_iterator->bounding_box);
+				&object_iterator->value.as_triangle);
 		else if (object_iterator->type == OBJ_OBJECT_FILE)
 			object_file_compute_constants(
-				&object_iterator->value.as_object_file,
-				&object_iterator->bounding_box);
+				&object_iterator->value.as_object_file);
 		object_iterator = object_iterator->next;
 		nb_objects++;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas, &render->sync);
-	scene->binary_tree = NULL;
-	compute_scene_binary_tree(scene);
-	compute_scene_planes(scene);
 	if (scene->skybox)
-		cube_compute_constants(&scene->skybox->value.as_skybox.cube,
-			NULL, 1);
+		cube_compute_constants(&scene->skybox->value.as_skybox.cube, 1);
 }
 

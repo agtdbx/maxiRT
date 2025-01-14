@@ -42,7 +42,6 @@ void	scene_del(
 			mlx_delete_texture(tmp->normal_map);
 		tmp = tmp->next;
 	}
-	free_scene_binary_tree(scene->binary_tree);
 	loc_del_objects(&scene->objects);
 
 	if (scene->skybox)

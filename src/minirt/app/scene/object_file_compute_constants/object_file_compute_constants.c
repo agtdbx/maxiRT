@@ -29,8 +29,7 @@ static void	compute_objf_polygons(
  * @param[out] objf
  */
 void	object_file_compute_constants(
-			t_object_file *objf,
-			t_bounding_box *bbox)
+			t_object_file *objf)
 {
 	axis_checker(objf);
 
@@ -46,7 +45,7 @@ void	object_file_compute_constants(
 	compute_objf_polygons(objf);
 
 	// Compute bounding boxes
-	compute_objf_bounding_boxes(objf, bbox);
+	compute_objf_bounding_boxes(objf);
 }
 
 
