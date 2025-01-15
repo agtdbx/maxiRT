@@ -63,16 +63,25 @@ void	free_encoder_context(t_encode *encoder)
 	if (encoder->is_recording)
 		fclose(encoder->f);
 	if (encoder->sws_context)
+	{
 		sws_freeContext(encoder->sws_context);
+		encoder->sws_context = NULL;
+	}
 	if (encoder->c)
 	{
 		avcodec_free_context(&encoder->c);
 		encoder->c = NULL;
 	}
 	if (encoder->frame)
+	{
 		av_frame_free(&encoder->frame);
+		encoder->frame = NULL;
+	}
 	if (encoder->pkt)
+	{
 		av_packet_free(&encoder->pkt);
+		encoder->pkt = NULL;
+	}
 }
 
 /**
