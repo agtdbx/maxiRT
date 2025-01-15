@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_skybox.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:36:53 by damien            #+#    #+#             */
-/*   Updated: 2025/01/04 15:29:44 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/15 10:57:57 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "minirt/app/app_config.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #define X 0
 #define Y 1
@@ -42,6 +43,11 @@ t_error	parse_skybox(t_parser_state *state)
 {
 	t_object	obj;
 
+	if (state->scene->skybox != NULL)
+	{
+		put_directive_error(state, NULL, "More than one S directive");
+		return FAILURE;
+	}
 	if (parse_field(state, &g_png, &obj.texture) == FAILURE)
 		return (FAILURE);
 	obj.type = OBJ_SKYBOX;
@@ -58,7 +64,10 @@ t_error	parse_skybox(t_parser_state *state)
 	obj.reflection = g_cube_default_reflection;
 	obj.normal_map = NULL;
 	if (_extract_faces_textures(&obj) == FAILURE)
+	{
+		perror("Error\nFatal");
 		return (FAILURE);
+	}
 	return (scene_add_object(state->scene, &obj));
 }
 

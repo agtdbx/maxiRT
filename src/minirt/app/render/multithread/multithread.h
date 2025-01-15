@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multithread.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:02:20 by damien            #+#    #+#             */
-/*   Updated: 2025/01/12 19:31:36 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/15 11:02:28 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	*render_routine(void *data);
 void	wait_jobs_finish(t_render *render);
 
 // Task queue
-
-t_task	*init_tasks_queue();
 
 void	del_queue(t_task **queue);
 

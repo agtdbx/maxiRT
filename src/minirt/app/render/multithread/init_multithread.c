@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   init_multithread.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 09:59:27 by damien            #+#    #+#             */
-/*   Updated: 2025/01/12 19:32:08 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/15 11:06:52 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/app.h"
 #include "minirt/app/render/multithread/multithread.h"
 
 #include "libft/libft.h"
@@ -35,6 +34,7 @@ t_error	init_multithread(
 	render->workers = malloc((nb_threads - 1) * sizeof(t_worker));
 	if (render->workers == NULL)
 	{
+		perror("Error\nFatal");
 		free(render->queue);
 		return FAILURE;
 	}

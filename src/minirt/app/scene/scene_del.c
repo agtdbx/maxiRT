@@ -23,11 +23,12 @@ static void	loc_del_lights(
 				t_light **lights);
 static void	loc_del_objects(
 				t_object **objects);
+static void	_del_skybox(
+				t_object *skybox);
 
 void	scene_del(
 			t_scene *scene)
 {
-	int			i;
 	t_object	*tmp;
 
 	ft_memdel(&scene->camera);
@@ -43,20 +44,24 @@ void	scene_del(
 		tmp = tmp->next;
 	}
 	loc_del_objects(&scene->objects);
-
 	if (scene->skybox)
-	{
-		for (i = 0; i < NB_CUBE_FACES; i++)
-			free(scene->skybox->value.as_skybox.textures[i].pixels);
-		free(scene->skybox->value.as_skybox.textures);
-		mlx_delete_texture(scene->skybox->texture);
-		free(scene->skybox);
-	}
+		_del_skybox(scene->skybox);
 	if (scene->planes != NULL)
 	{
 		free(scene->planes);
 		scene->planes = NULL;
 	}
+}
+
+static void	_del_skybox(t_object *skybox)
+{
+	int	i;
+
+	for (i = 0; i < NB_CUBE_FACES; i++)
+		free(skybox->value.as_skybox.textures[i].pixels);
+	free(skybox->value.as_skybox.textures);
+	mlx_delete_texture(skybox->texture);
+	free(skybox);
 }
 
 static void	loc_del_lights(

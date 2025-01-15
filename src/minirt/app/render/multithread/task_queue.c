@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   task_queue.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:14:33 by damien            #+#    #+#             */
-/*   Updated: 2025/01/12 19:30:25 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/15 11:02:32 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/utils/drawings/drawings.h"
 #include "minirt/app/render/multithread/multithread.h"
 
 #include <stdlib.h>
@@ -19,16 +18,6 @@
 #define BACK_CANVAS 1
 #define BATCH_SIZE 64
 
-t_task	*init_tasks_queue()
-{
-	t_task	*lst;
-
-	lst = malloc(sizeof(t_task));
-	if (lst == NULL)
-		return NULL;
-	lst->next = NULL;
-	return lst;
-}
 
 void	del_queue(t_task **queue)
 {

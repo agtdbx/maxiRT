@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   task.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 10:36:44 by damien            #+#    #+#             */
-/*   Updated: 2025/01/11 10:53:39 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/15 11:00:57 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ t_task	*create_ray_task(
 
 	new_task = malloc(sizeof(t_task));
 	if (new_task == NULL)
+	{
+		perror("Error\nFatal");
 		return NULL;
+	}
 	ft_memset(new_task, 0, sizeof(t_task));
 	new_task->ray = *ray;
 	new_task->back_canvas = back_canvas;
