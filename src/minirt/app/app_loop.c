@@ -71,6 +71,7 @@ static inline bool	_handle_user_inputs(
 	should_render = false;
 	handle_recording(
 		app->mlx,
+		app->menu,
 		app->canvas.record_icon,
 		&app->encoder,
 		&err);
@@ -79,10 +80,10 @@ static inline bool	_handle_user_inputs(
 	should_render |= handle_window_resizing(
 			app->mlx, &app->menu, app->scene,
 			&app->canvas, &app->render.sync);
-	if (should_render && app->encoder.is_recording)
-		close_recording(&app->encoder, app->canvas.record_icon);
 	should_render |= handle_menu_toggling(
 			app->mlx, &app->menu);
+	if (should_render && app->encoder.is_recording)
+		close_recording(&app->encoder, app->canvas.record_icon);
 	should_render |= handle_translations(
 			app->mlx, app->scene->camera);
 	should_render |= handle_rotations(
