@@ -130,6 +130,10 @@ t_error	parse_sphere(
 			t_parser_state *state);
 t_error	parse_sphere_checkerboard(
 			t_parser_state *state);
+t_error	parse_sphere_sinusoide(
+			t_parser_state *state);
+t_error	parse_sphere_perlin_noise(
+			t_parser_state *state);
 t_error	parse_sphere_texture(
 			t_parser_state *state);
 t_error	parse_sphere_texture_and_normal(

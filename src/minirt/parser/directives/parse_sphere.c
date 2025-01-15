@@ -59,6 +59,48 @@ t_error	parse_sphere_checkerboard(
 	return (scene_add_object(state->scene, &obj));
 }
 
+t_error	parse_sphere_sinusoide(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_sphere *const	sphere = &obj.value.as_sphere;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_SPHERE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_SINUSOIDE;
+	obj.normal_map = NULL;
+	obj.opacity = g_sphere_default_opacity;
+	obj.reflection = g_sphere_default_reflection;
+	obj.density = g_sphere_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_sphere_perlin_noise(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_sphere *const	sphere = &obj.value.as_sphere;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &sphere->pos) == FAILURE
+		|| parse_field(state, &g_diameter, &sphere->diameter) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_SPHERE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_PERLIN_NOISE;
+	obj.normal_map = NULL;
+	obj.opacity = g_sphere_default_opacity;
+	obj.reflection = g_sphere_default_reflection;
+	obj.density = g_sphere_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
 t_error	parse_sphere_texture(
 			t_parser_state *state)
 {

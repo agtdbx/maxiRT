@@ -49,6 +49,16 @@ static const t_directive	g_directives[] = {
 	.callback = parse_sphere_checkerboard,
 },
 {
+	.identifier = "sp-sn",
+	.usage = "sp-sn <position> <diameter>",
+	.callback = parse_sphere_sinusoide,
+},
+{
+	.identifier = "sp-pn",
+	.usage = "sp-pn <position> <diameter>",
+	.callback = parse_sphere_perlin_noise,
+},
+{
 	.identifier = "sp-t",
 	.usage = "sp-t <position> <diameter> <texture path>",
 	.callback = parse_sphere_texture,

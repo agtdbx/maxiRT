@@ -316,6 +316,8 @@ typedef enum e_color_t
 {
 	C_COLOR,
 	C_CHECKBOARD,
+	C_SINUSOIDE,
+	C_PERLIN_NOISE,
 	C_TEXTURE,
 }	t_color_t;
 
