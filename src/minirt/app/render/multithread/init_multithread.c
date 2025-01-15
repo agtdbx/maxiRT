@@ -6,7 +6,7 @@
 /*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 09:59:27 by damien            #+#    #+#             */
-/*   Updated: 2025/01/15 11:06:52 by dguillau         ###   ########.fr       */
+/*   Updated: 2025/01/15 11:12:44 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft/libft.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #define FRONT_CANVAS 0
 #define BACK_CANVAS 1
