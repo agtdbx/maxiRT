@@ -171,6 +171,9 @@ t_error	parse_cube_texture(
 t_error	parse_cube_texture_and_normal(
 			t_parser_state *state);
 
+t_error	parse_skybox(
+			t_parser_state *state);
+
 t_error	parse_triangle(
 			t_parser_state *state);
 t_error	parse_triangle_checkerboard(

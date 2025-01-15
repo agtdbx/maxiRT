@@ -231,6 +231,8 @@ static bool	_return_closest_objf_polygon(
 	if (part->polygons == NULL)
 		return (false);
 
+	intersect_test.distance = -1.0;
+	intersect_test.sub_part_id = 0;
 	_get_clostest_objf_polygons(ray, part, &intersect_test);
 
 	if (intersect_test.distance > 0.0f)

@@ -15,12 +15,17 @@
 
 # include <stdbool.h>
 # include <stdint.h>
+# include <stdlib.h>
 
 # include "MLX42/MLX42.h"
 
+# include "minirt/app/render/multithread/multithread.h"
 # include "minirt/app/canvas/canvas.h"
 # include "minirt/app/menu/menu.h"
 # include "minirt/app/scene/scene.h"
+# include "minirt/app/encode/encode.h"
+
+// multithread related structures
 
 //**** APP MODEL *************************************************************//
 
@@ -32,6 +37,8 @@ typedef struct s_app
 	t_menu		menu;
 	t_scene		*scene;
 	t_canvas	canvas;
+	t_render	render;
+	t_encode	encoder;
 }	t_app;
 
 //---- INTERSECTION STRUCT ---------------------------------------------------//
@@ -57,7 +64,8 @@ bool			handle_window_resizing(
 					mlx_t *mlx,
 					t_menu *menu,
 					t_scene *scene,
-					t_canvas *canvas);
+					t_canvas *canvas,
+					t_sync *sync);
 bool			handle_translations(
 					mlx_t *mlx,
 					t_camera *camera);
@@ -76,24 +84,26 @@ void			handle_mouse_clicks(
 
 /// rendering core
 
-void			render_canvas(
+t_error			render_canvas(
 					t_app *app,
 					bool should_render);
-void			render_fast_on_front_canvas(
+t_error			render_fast_on_front_canvas(
 					t_app *app,
 					int32_t ppr);
 int32_t			render_next_pixels_til_tmax_on_back_canvas(
 					t_app *app,
 					int32_t pixel_rendered);
+
 int32_t			render_ray_from_camera(
+					t_task *task,
 					t_scene const *scene,
-					t_ray const *ray,
+					pthread_rwlock_t *scene_mut,
 					bool show_spotlights);
 
 t_ray			create_ray_from_pixel_coords(
 					t_camera const *camera,
 					t_canvas const *canvas,
-					int32_t const coords[2]);
+					double const coords[2]);
 
 /// raytracing
 
@@ -108,6 +118,9 @@ t_color			render_ray_on_object(
 					t_object const *intersected_object,
 					t_ray const *ray,
 					t_intersect_info const *intersect_info);
+t_color			render_ray_on_sky_box(
+					t_scene const *scene,
+					t_ray const *ray);
 int32_t			render_ray(
 					t_scene const *scene,
 					t_object const *obj,
@@ -318,6 +331,11 @@ void			compute_normal_ray_on_cube(
 					t_ray const *ray,
 					t_intersect_info const *intersect_info,
 					t_ray *normal);
+void			compute_normal_ray_on_skybox(
+					t_object const *skybox,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
 void			compute_normal_ray_on_triangle(
 					t_object const *triangle,
 					t_ray const *ray,
@@ -392,6 +410,10 @@ t_vec2			get_cylinder_pixel_pos(
 t_vec2			get_cone_pixel_pos(
 					t_cone const *cone,
 					t_ray const *ray,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info);
+t_vec2			get_skybox_pixel_pos(
+					t_skybox const *skybox,
 					t_ray const *normal,
 					t_intersect_info const *intersect_info);
 t_vec2			get_cube_pixel_pos(

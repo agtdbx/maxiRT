@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   img_draw_square.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:45:10 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/07 15:36:35 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/12/26 15:33:55 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/utils/drawings/drawings.h"
 
+#include <pthread.h>
 #include <stdint.h>
 
 #include "MLX42/MLX42.h"

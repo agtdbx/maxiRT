@@ -31,7 +31,6 @@ void	object_panel_register(
 	object_panel_hide(menu);
 	menu->light_panel.is_enabled = false;
 	menu->object_panel.is_enabled = true;
-	menu->object_panel.object_bbox = &object->bounding_box;
 	_register_common_labels(menu, object);
 	_register_object(menu, object);
 	object_panel_show(menu);

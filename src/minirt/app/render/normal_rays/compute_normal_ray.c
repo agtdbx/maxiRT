@@ -38,6 +38,8 @@ void	compute_normal_ray(
 		compute_normal_ray_on_cone(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_CUBE)
 		compute_normal_ray_on_cube(object, ray, intersect_info, normal);
+	else if (object->type == OBJ_SKYBOX)
+		compute_normal_ray_on_skybox(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_TRIANGLE)
 		compute_normal_ray_on_triangle(object, ray, intersect_info, normal);
 	else if (object->type == OBJ_OBJECT_FILE)

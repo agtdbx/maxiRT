@@ -38,9 +38,7 @@ bool	sphere_panel_draw(
 	if (should_redraw)
 	{
 		sphere_compute_constants(
-			(t_sphere *)menu->object_panel.object_ptr,
-			menu->object_panel.object_bbox);
-		compute_scene_binary_tree(menu->scene);
+			(t_sphere *)menu->object_panel.object_ptr);
 	}
 	return (should_redraw);
 }

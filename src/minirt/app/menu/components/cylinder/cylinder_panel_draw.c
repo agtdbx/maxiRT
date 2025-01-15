@@ -36,9 +36,7 @@ bool	cylinder_panel_draw(
 	if (should_redraw)
 	{
 		cylinder_compute_constants(
-			(t_cylinder *)menu->object_panel.object_ptr,
-			menu->object_panel.object_bbox);
-		compute_scene_binary_tree(menu->scene);
+			(t_cylinder *)menu->object_panel.object_ptr);
 	}
 	return (should_redraw);
 }

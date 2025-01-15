@@ -43,6 +43,9 @@ t_vec2	get_object_pixel_pos(
 	else if (object->type == OBJ_CUBE)
 		return (get_cube_pixel_pos(
 				&object->value.as_cube, normal, intersect_info));
+	else if (object->type == OBJ_SKYBOX)
+		return (get_skybox_pixel_pos(
+				&object->value.as_skybox, normal, intersect_info));
 	else if (object->type == OBJ_TRIANGLE)
 		return (get_triangle_pixel_pos(
 				&object->value.as_triangle, normal));

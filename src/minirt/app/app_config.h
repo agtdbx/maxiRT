@@ -17,7 +17,7 @@
 
 //---- WINDOW ----------------------------------------------------------------//
 
-static const char		*g_window_title = "maxiRT";
+# define WINDOW_TITLE "maxiRT"
 static const int32_t	g_window_width = 1920;
 static const int32_t	g_window_height = 1080;
 

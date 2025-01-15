@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 20:01:33 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/07 15:19:55 by tdubois          ###   ########.fr       */
+/*   Updated: 2025/01/10 00:30:26 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define DRAWINGS_H
 
 # include <stdint.h>
+# include <pthread.h>
 
 # include "MLX42/MLX42.h"
+# include "minirt/app/render/multithread/multithread.h"
 
 void	img_fill(
 			mlx_image_t *img,

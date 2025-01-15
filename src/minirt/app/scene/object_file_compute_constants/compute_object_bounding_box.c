@@ -29,14 +29,15 @@ static void	fill_objf_bbox_tree(
 
 
 void	compute_objf_bounding_boxes(
-				t_object_file *objf,
-				t_bounding_box *bbox)
+				t_object_file *objf)
 {
+	t_bounding_box	bbox;
+
 	// Get mins and max
-	calculate_bounding_box_bounds(objf, bbox);
+	calculate_bounding_box_bounds(objf, &bbox);
 
 	// Calcultate bounding boxes in binary tree
-	compute_objf_binary_tree(objf, bbox);
+	compute_objf_binary_tree(objf, &bbox);
 }
 
 static void	calculate_bounding_box_bounds(

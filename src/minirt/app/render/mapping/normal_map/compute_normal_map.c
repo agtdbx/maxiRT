@@ -29,6 +29,8 @@ void	compute_normal_map(
 
 	if (intersected_object->normal_map == NULL)
 		return ;
+	normal_base[0] = (t_vec3){1.0f, 0.0f, 0.0f};
+	normal_base[1] = (t_vec3){0.0f, 1.0f, 0.0f};
 	normal_base[2] = normal->vec;
 	compute_normal_base(intersected_object, intersect_info, normal_base);
 	apply_normal_map(intersected_object->normal_map, pixel_pos, normal);

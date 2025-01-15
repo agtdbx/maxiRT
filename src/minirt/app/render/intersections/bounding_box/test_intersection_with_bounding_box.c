@@ -73,14 +73,11 @@ bool	test_intersection_with_bounding_box_dist(
 			t_bounding_box const *bbox,
 			t_intersect_info *intersect_info)
 {
-	bool				collide;
-	t_intersect_info	test;
+	bool	collide;
 
 	collide = false;
 	intersect_info->distance = -1;
 	intersect_info->sub_part_id = 0;
-	test.distance = -1;
-	test.sub_part_id = 0;
 
 	_test_intersection_with_bouding_box_face(
 		ray, &bbox->front, intersect_info, &collide);

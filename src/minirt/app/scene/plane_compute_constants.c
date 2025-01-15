@@ -21,19 +21,9 @@
  * @param[out] plane
  */
 void	plane_compute_constants(
-			t_plane *plane,
-			t_bounding_box *bbox)
+			t_plane *plane)
 {
 	vec3_normalize(&plane->normal);
 	plane->rev_normal = plane->normal;
 	vec3_scale(&plane->rev_normal, -1.0f);
-
-	bbox->min_x = plane->pos.x - ((1.0f - plane->normal.x) * g_scene_radius);
-	bbox->max_x = plane->pos.x + ((1.0f - plane->normal.x) * g_scene_radius);
-	bbox->min_y = plane->pos.y - ((1.0f - plane->normal.y) * g_scene_radius);
-	bbox->max_y = plane->pos.y + ((1.0f - plane->normal.y) * g_scene_radius);
-	bbox->min_z = plane->pos.z - ((1.0f - plane->normal.z) * g_scene_radius);
-	bbox->max_z = plane->pos.z + ((1.0f - plane->normal.z) * g_scene_radius);
-
-	compute_bounding_box_constants(bbox);
 }

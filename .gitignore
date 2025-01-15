@@ -1,9 +1,18 @@
+### CMake ###
+/build/
 
+### Clangd ###
 /.cache
-/.vscode
+
+### VSCode ###
+/.vscode/*
+!/.vscode/extensions.json
+
+### Make ###
 /.build*
 
-/compile_commands.json
-/compile_flags.txt
-/miniRT
-/maxiRT
+### Compilation ###
+/rt
+
+### Records folder ###
+/records

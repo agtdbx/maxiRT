@@ -49,8 +49,8 @@ t_color	render_ray_on_object(
 	if (ray->depth > 16)
 		return ((t_color){0.0, 0.0, 0.0});
 	pixel_info = get_pixel_info(scene, intersected_object, ray, intersect_info);
-	color = compute_object_without_effect_color(intersected_object,
-			scene, ray, &pixel_info);
+	color = compute_object_without_effect_color(
+				intersected_object, scene, ray, &pixel_info);
 	refracted_color = compute_refracted_color(
 			intersected_object, scene, ray, &pixel_info.normal);
 	reflected_color = compute_reflected_color(

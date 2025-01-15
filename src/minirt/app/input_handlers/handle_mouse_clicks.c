@@ -75,8 +75,11 @@ static void	_handle_clicks_on_canvas(
 	t_intersect_info	info;
 	t_object			*object;
 	t_light				*light;
+	double				dpix[2];
 
-	ray = create_ray_from_pixel_coords(scene->camera, canvas, pix);
+	dpix[0] = pix[0];
+	dpix[1] = pix[1];
+	ray = create_ray_from_pixel_coords(scene->camera, canvas, dpix);
 	object = fetch_closest_intersection(&ray, scene->objects, &info);
 	light = fetch_closer_spotlight(&ray, scene->spotlights, &info);
 	if (light != NULL)

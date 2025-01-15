@@ -41,9 +41,7 @@ bool	plane_panel_draw(
 	if (should_redraw)
 	{
 		plane_compute_constants(
-			(t_plane *)menu->object_panel.object_ptr,
-			menu->object_panel.object_bbox);
-		compute_scene_binary_tree(menu->scene);
+			(t_plane *)menu->object_panel.object_ptr);
 	}
 	return (should_redraw);
 }

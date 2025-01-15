@@ -77,8 +77,7 @@ typedef struct s_sphere
 }	t_sphere;
 
 void			sphere_compute_constants(
-					t_sphere *sphere,
-					t_bounding_box *bbox);
+					t_sphere *sphere);
 
 //---- PLANE -----------------------------------------------------------------//
 
@@ -91,8 +90,7 @@ typedef struct s_plane
 }	t_plane;
 
 void			plane_compute_constants(
-					t_plane *plane,
-					t_bounding_box *bbox);
+					t_plane *plane);
 
 //---- CYLINDER --------------------------------------------------------------//
 
@@ -112,8 +110,7 @@ typedef struct s_cylinder
 }	t_cylinder;
 
 void			cylinder_compute_constants(
-					t_cylinder *cylinder,
-					t_bounding_box *bbox);
+					t_cylinder *cylinder);
 
 //---- CONE ------------------------------------------------------------------//
 
@@ -131,8 +128,7 @@ typedef struct s_cone
 }	t_cone;
 
 void			cone_compute_constants(
-					t_cone *cone,
-					t_bounding_box *bbox);
+					t_cone *cone);
 
 //---- CUBE ------------------------------------------------------------------//
 
@@ -160,7 +156,7 @@ typedef struct s_cube
 
 void			cube_compute_constants(
 					t_cube *cube,
-					t_bounding_box *bbox);
+					int is_skybox);
 
 //---- TRIANGLE --------------------------------------------------------------//
 
@@ -182,8 +178,16 @@ typedef struct s_triangle
 }	t_triangle;
 
 void			triangle_compute_constants(
-					t_triangle *triangle,
-					t_bounding_box *bbox);
+					t_triangle *triangle);
+
+//---- SKYBOX ----------------------------------------------------------------//
+
+typedef struct s_skybox
+{
+	// for each face of the cube map
+	mlx_texture_t *textures;
+	t_cube cube;
+}	t_skybox;
 
 //---- OBJECT FILE------------------------------------------------------------//
 
@@ -302,11 +306,9 @@ void			compute_objf_rectangle(
 					t_object_rectangle *rectangle,
 					t_bounding_box *bbox);
 void			compute_objf_bounding_boxes(
-					t_object_file *objf,
-					t_bounding_box *bbox);
+					t_object_file *objf);
 void			object_file_compute_constants(
-					t_object_file *objf,
-					t_bounding_box *bbox);
+					t_object_file *objf);
 
 //---- COLOR INTERFACE -------------------------------------------------------//
 
@@ -328,6 +330,7 @@ typedef enum e_object_t
 	OBJ_CUBE,
 	OBJ_TRIANGLE,
 	OBJ_OBJECT_FILE,
+	OBJ_SKYBOX,
 }	t_object_t;
 
 typedef union u_object_v
@@ -339,6 +342,7 @@ typedef union u_object_v
 	t_cube			as_cube;
 	t_triangle		as_triangle;
 	t_object_file	as_object_file;
+	t_skybox		as_skybox;
 }	t_object_v;
 
 typedef struct s_object
@@ -348,7 +352,6 @@ typedef struct s_object
 
 	t_color_t		color_type;
 	t_color			color;
-	t_bounding_box	bounding_box;
 	mlx_texture_t	*texture;
 	mlx_texture_t	*normal_map;
 
@@ -390,36 +393,21 @@ void			camera_compute_constants(
 
 //---- SCENE -----------------------------------------------------------------//
 
-typedef struct s_scene_binary_part
-{
-	struct s_scene_binary_part	*child_1;
-	struct s_scene_binary_part	*child_2;
-
-	t_bounding_box				bounding_box;
-	t_object					**objects;
-
-}	t_scene_binary_part;
-
 typedef struct s_scene
 {
-	t_scene_binary_part	*binary_tree;
 	t_object			*objects;
 	t_light				*spotlights;
 	t_light				*ambient_lightning;
 	t_camera			*camera;
 	t_object			**planes;
+	t_object			*skybox;
 }	t_scene;
 
 t_error			scene_add_object(
 					t_scene *scene,
 					t_object *obj);
-void			compute_scene_binary_tree(
-					t_scene *scene);
-void			compute_scene_planes(
-					t_scene *scene);
 
 void			scene_del(
 					t_scene *scene);
-void			free_scene_binary_tree(
-					t_scene_binary_part *part);
+
 #endif //SCENE_H

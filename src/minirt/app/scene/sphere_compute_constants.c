@@ -21,18 +21,8 @@
  * @param[out] sphere
  */
 void	sphere_compute_constants(
-			t_sphere *sphere,
-			t_bounding_box *bbox)
+			t_sphere *sphere)
 {
 	sphere->radius = sphere->diameter / 2.0f;
 	sphere->radius2 = powf(sphere->radius, 2.0f);
-
-	bbox->min_x = sphere->pos.x - sphere->radius;
-	bbox->max_x = sphere->pos.x + sphere->radius;
-	bbox->min_y = sphere->pos.y - sphere->radius;
-	bbox->max_y = sphere->pos.y + sphere->radius;
-	bbox->min_z = sphere->pos.z - sphere->radius;
-	bbox->max_z = sphere->pos.z + sphere->radius;
-
-	compute_bounding_box_constants(bbox);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_base_color_object.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 12:52:20 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/05 20:46:22 by aderouba         ###   ########.fr       */
+/*   Updated: 2024/12/26 16:39:08 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ t_color	get_base_color_object(
 	else if (intersected_object->color_type == C_CHECKBOARD)
 		return (apply_checkboard(8.0f, 8.0f, pixel_pos));
 	else
+	{
 		return (apply_texture(intersected_object->texture, pixel_pos));
+	}
 }
 
 static t_color	apply_checkboard(float w, float h, t_vec2 const *pixel_pos)

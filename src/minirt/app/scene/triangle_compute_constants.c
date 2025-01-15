@@ -23,16 +23,13 @@ static void	_compute_triangle_pixel_pos_constants(
 				float bx, float by,
 				float cx, float cy,
 				int pixel_pos_base);
-static void	_compute_object_triangle_bounding_box(
-				t_bounding_box *bbox,
-				t_triangle *triangle);
+
 /**
  * Compute constants from triangle properties to facilitate further calculations
  * @param[out] triangle
  */
 void	triangle_compute_constants(
-			t_triangle *triangle,
-			t_bounding_box *bbox)
+			t_triangle *triangle)
 {
 	vec3_substract_into(&triangle->edge1, &triangle->point2, &triangle->point1);
 	vec3_substract_into(&triangle->edge2, &triangle->point3, &triangle->point1);
@@ -71,7 +68,6 @@ void	triangle_compute_constants(
 				triangle->pixel_pos_base = -1;
 		}
 	}
-	_compute_object_triangle_bounding_box(bbox, triangle);
 }
 
 
@@ -97,26 +93,4 @@ static void	_compute_triangle_pixel_pos_constants(
 		triangle->pixel_pos_base = pixel_pos_base;
 		triangle->div_part = 1.0f / triangle->div_part;
 	}
-}
-
-static void	_compute_object_triangle_bounding_box(
-				t_bounding_box *bbox,
-				t_triangle *triangle)
-{
-	bbox->min_x = triangle->point1.x;
-	bbox->max_x = triangle->point1.x;
-	bbox->min_y = triangle->point1.y;
-	bbox->max_y = triangle->point1.y;
-	bbox->min_z = triangle->point1.z;
-	bbox->max_z = triangle->point1.z;
-
-	set_min_max(&bbox->min_x, &bbox->max_x, &triangle->point2.x);
-	set_min_max(&bbox->min_y, &bbox->max_y, &triangle->point2.y);
-	set_min_max(&bbox->min_z, &bbox->max_z, &triangle->point2.z);
-
-	set_min_max(&bbox->min_x, &bbox->max_x, &triangle->point3.x);
-	set_min_max(&bbox->min_y, &bbox->max_y, &triangle->point3.y);
-	set_min_max(&bbox->min_z, &bbox->max_z, &triangle->point3.z);
-
-	compute_bounding_box_constants(bbox);
 }

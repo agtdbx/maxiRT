@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_unknown_directive_error.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdubois <tdubois@student.42angouleme.fr>   +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:27:24 by tdubois           #+#    #+#             */
-/*   Updated: 2023/04/28 15:18:16 by tdubois          ###   ########.fr       */
+/*   Updated: 2024/12/12 09:34:17 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static const char	g_directive_error_msg[] = \
 	"Error"											"\n"
 	"%s:"											"\n"
 	"row %03zi> %.*s" RED"%s"NC "%s"				"\n"
-	"col %03ti> " RED"%s"NC ": Unkown directive"	"\n"
+	"col %03ti> " RED"%s"NC ": Unknown directive"	"\n"
 	"Pick directive from list:"						"\n";
 
 void	put_unknown_directive_error(
