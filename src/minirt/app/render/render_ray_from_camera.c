@@ -102,7 +102,7 @@ static inline int32_t	_fetch_intersection_with_skybox(
 			t_scene const *scene,
 			t_ray const *ray)
 {
-	t_color		pixel_color = {0, 0, 0};
+	t_color		pixel_color = {0, 0, 0, 1};
 
 	pixel_color = render_ray_on_sky_box(scene, ray);
 	return (color_to_int(&pixel_color));

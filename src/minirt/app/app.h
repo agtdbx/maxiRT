@@ -373,7 +373,8 @@ t_color			compute_refracted_color(
 					t_object const *object,
 					t_scene const *scene,
 					t_ray const *ray,
-					t_ray const *normal);
+					t_ray const *normal,
+					bool force_transparency);
 
 // reflection
 

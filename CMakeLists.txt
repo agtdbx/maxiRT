@@ -24,7 +24,7 @@ set_target_properties(MaxiRT PROPERTIES
 target_include_directories(MaxiRT PRIVATE src)
 target_compile_options(MaxiRT PRIVATE
     -Wall -Wextra -Werror
-    -std=gnu99 -Wunreachable-code -Ofast
+    -std=gnu99 -Wunreachable-code -Ofast -g # TODO: REMOVE -g
 )
 target_link_directories(MaxiRT PRIVATE lib/ffmpeg)
 target_link_options(MaxiRT PRIVATE

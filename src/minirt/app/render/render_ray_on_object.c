@@ -33,7 +33,8 @@ static t_color		merge_color(
 						t_object const *object,
 						t_color const *in_color,
 						t_color const *refracted_color,
-						t_color const *reflected_color);
+						t_color const *reflected_color,
+						bool force_transparency);
 
 t_color	render_ray_on_object(
 			t_scene const *scene,
@@ -45,18 +46,23 @@ t_color	render_ray_on_object(
 	t_color			refracted_color;
 	t_color			reflected_color;
 	t_color			color;
+	bool			force_transparency;
 
 	if (ray->depth > 16)
-		return ((t_color){0.0, 0.0, 0.0});
+		return ((t_color){0});
 	pixel_info = get_pixel_info(scene, intersected_object, ray, intersect_info);
 	color = compute_object_without_effect_color(
 				intersected_object, scene, ray, &pixel_info);
+	force_transparency = false;
+	if (color.a == -1.0f)
+		force_transparency = true;
 	refracted_color = compute_refracted_color(
-			intersected_object, scene, ray, &pixel_info.normal);
+			intersected_object, scene, ray, &pixel_info.normal, force_transparency);
 	reflected_color = compute_reflected_color(
 			intersected_object, scene, ray, &pixel_info.normal);
 	color = merge_color(intersected_object, &color,
-			&refracted_color, &reflected_color);
+							&refracted_color, &reflected_color,
+							force_transparency);
 	return (color);
 }
 
@@ -109,6 +115,7 @@ static t_color	compute_object_without_effect_color(
 	color.r = base_color.r * (illumination.r / 255.0f);
 	color.g = base_color.g * (illumination.g / 255.0f);
 	color.b = base_color.b * (illumination.b / 255.0f);
+	color.a = base_color.a;
 	return (color);
 }
 
@@ -116,12 +123,15 @@ static t_color	merge_color(
 					t_object const *object,
 					t_color const *in_color,
 					t_color const *refracted_color,
-					t_color const *reflected_color)
+					t_color const *reflected_color,
+					bool force_transparency)
 {
 	t_color		color;
 	float const	inv_opacity = 1.0f - object->opacity;
 	float const	inv_reflection = 1.0f - object->reflection;
 
+	if (force_transparency)
+		return (*refracted_color);
 	color = *in_color;
 	if (object->opacity < 1.0f)
 	{

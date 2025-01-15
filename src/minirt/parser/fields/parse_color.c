@@ -42,6 +42,7 @@ t_error	parse_color(
 		|| _parse_one_channel(state, &color->b) == FAILURE
 		|| _has_more_channels(state))
 		return (FAILURE);
+	color->a = 255;
 	return (SUCCESS);
 }
 

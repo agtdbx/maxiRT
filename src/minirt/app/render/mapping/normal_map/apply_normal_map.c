@@ -41,7 +41,7 @@ void	apply_normal_map(
 
 	if (!normal_map)
 		return ;
-	space_between_color = normal_map->bytes_per_pixel / 3;
+	space_between_color = normal_map->bytes_per_pixel / 4;
 	ratio = compute_ratio_pos_pixel(normal_map, pixel_pos, x, y);
 	normals[0] = get_pixel_normal(normal_map, x[0], y[0], space_between_color);
 	normals[1] = get_pixel_normal(normal_map, x[1], y[0], space_between_color);

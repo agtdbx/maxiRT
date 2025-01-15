@@ -39,7 +39,7 @@ t_color	apply_texture(
 
 	if (!texture)
 		return (apply_texture_not_found(pixel_pos));
-	space_between_color = texture->bytes_per_pixel / 3;
+	space_between_color = texture->bytes_per_pixel / 4;
 	ratio = compute_ratio_pos_pixel(texture, pixel_pos, x, y);
 	colors[0] = get_pixel_color(texture, x[0], y[0], space_between_color);
 	colors[1] = get_pixel_color(texture, x[1], y[0], space_between_color);
@@ -109,6 +109,10 @@ static t_color	get_pixel_color(
 		+ space_between_color];
 	color.b = texture->pixels[pixel_index * texture->bytes_per_pixel
 		+ (space_between_color * 2)];
+	color.a = texture->pixels[pixel_index * texture->bytes_per_pixel
+		+ (space_between_color * 3)];
+	if (color.a == 0.0)
+		color.a = -1.0f;
 	return (color);
 }
 
@@ -129,5 +133,6 @@ static t_color	merge_color_with_ratio(
 	colors[0].r = colors[0].r * inv_ratio.y + colors[1].r * ratio->y;
 	colors[0].g = colors[0].g * inv_ratio.y + colors[1].g * ratio->y;
 	colors[0].b = colors[0].b * inv_ratio.y + colors[1].b * ratio->y;
+
 	return (colors[0]);
 }

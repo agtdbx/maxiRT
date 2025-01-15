@@ -51,6 +51,7 @@ t_color	check_dynamic_illumination(
 	illumination.r = 0.0f;
 	illumination.g = 0.0f;
 	illumination.b = 0.0f;
+	illumination.a = 1.0f;
 	while (model.spotlight != NULL)
 	{
 		ill_from_spotlight = (t_color){0};
@@ -179,7 +180,7 @@ static t_color	_collect_objects_shades(
 {
 	t_color				illumination;
 
-	illumination = (t_color){1.0f, 1.0f, 1.0f};
+	illumination = (t_color){1.0f, 1.0f, 1.0f, 1.0f};
 	while (objects != NULL)
 	{
 		if (objects != object)

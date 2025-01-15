@@ -22,6 +22,7 @@ typedef struct s_color
 	float	r;
 	float	g;
 	float	b;
+	float	a;
 }	t_color;
 
 int32_t	color_to_int(
