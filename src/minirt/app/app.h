@@ -15,7 +15,6 @@
 
 # include <stdbool.h>
 # include <stdint.h>
-# include <stdlib.h>
 
 # include "MLX42/MLX42.h"
 
@@ -103,7 +102,7 @@ int32_t			render_ray_from_camera(
 t_ray			create_ray_from_pixel_coords(
 					t_camera const *camera,
 					t_canvas const *canvas,
-					double const coords[2]);
+					int32_t const coords[2]);
 
 /// raytracing
 

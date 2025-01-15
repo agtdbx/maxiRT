@@ -25,10 +25,10 @@ static void	_get_top_left_ray(
 
 t_error	render_fast_on_front_canvas(
 			t_app *app,
-			int32_t ppr)
+			const int32_t ppr)
 {
 	t_vec3	ray[2];
-	double	pix[2];
+	int32_t	pix[2];
 	t_ray	casted_ray;
 	t_task	*new_task;
 

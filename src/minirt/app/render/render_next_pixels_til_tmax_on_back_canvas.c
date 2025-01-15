@@ -27,7 +27,7 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 			int32_t pixel_rendered)
 {
 	double			tmax;
-	double			pixel_coords[2];
+	int32_t			pixel_coords[2];
 	int32_t			new_pixel_rendered;
 	t_ray				casted_ray;
 	t_task			*new_task;
@@ -35,7 +35,7 @@ int32_t	render_next_pixels_til_tmax_on_back_canvas(
 
 	new_pixel_rendered = 0;
 	pixel_coords[0] = pixel_rendered % app->canvas.width;
-	pixel_coords[1] = (double)pixel_rendered / app->canvas.width;
+	pixel_coords[1] = pixel_rendered / app->canvas.width;
 	tmax = mlx_get_time() - app->mlx->delta_time + 0.15;
 	sem_getvalue(&app->render.sync.jobs_sem, &value);
 	if (value == 0)

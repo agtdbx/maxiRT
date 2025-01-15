@@ -101,12 +101,12 @@ void	reset_task_queue(t_render *render);
 
 // Task
 
-void	task_cast_ray(t_worker *worker, t_task *task);
+void	task_cast_ray(t_worker const *worker, t_task *task);
 
 t_task	*create_ray_task(
-			t_ray *ray,
+			t_ray const*ray,
 			int32_t ppr,
-			double pix[2],
+			int32_t const pix[2],
 			int back_canvas);
 
 // Mutex, semaphore and condition

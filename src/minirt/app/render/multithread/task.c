@@ -17,11 +17,11 @@
 #define FRONT_CANVAS 0
 #define BACK_CANVAS 1
 
-void	task_cast_ray(t_worker *worker, t_task *task)
+void	task_cast_ray(t_worker const *worker, t_task *task)
 {
 	mlx_image_t		*img;
 	pthread_mutex_t	*img_mutex;
-	uint32_t		pixel_color;
+	int32_t			pixel_color;
 
 	if (task->back_canvas == 1)
 	{
@@ -47,9 +47,9 @@ void	task_cast_ray(t_worker *worker, t_task *task)
 }
 
 t_task	*create_ray_task(
-			t_ray *ray,
+			t_ray const *ray,
 			int32_t ppr,
-			double pix[2],
+			const int32_t pix[2],
 			int back_canvas)
 {
 	t_task	*new_task;

@@ -18,9 +18,6 @@
 #include "libft/libft.h"
 
 #include "minirt/app/app.h"
-#include "minirt/app/scene/scene.h"
-#include "minirt/app/utils/drawings/drawings.h"
-#include "minirt/app/utils/geometry/geometry.h"
 #include "minirt/app/render/multithread/multithread.h"
 
 static void	_print_rendering_progress(
@@ -101,7 +98,7 @@ static void	_print_rendering_progress(
  */
 static inline void	_update_ppr(
 						double delta_time,
-						int32_t *ppr)
+						int32_t *ppr) 
 {
 	if (_is_under_10_fps(delta_time) && *ppr < 25)
 	{
