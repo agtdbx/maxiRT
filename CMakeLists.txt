@@ -35,5 +35,3 @@ target_link_libraries(MaxiRT
     mlx42 dl glfw pthread m
     ffmpeg swresample avcodec avutil swscale
 )
-
-# TODO: remove makefiles (root and lib) if this setup works reliably
