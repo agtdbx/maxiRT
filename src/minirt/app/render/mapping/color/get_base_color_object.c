@@ -73,11 +73,21 @@ static t_color	apply_sinusoide(t_vec2 const *pixel_pos)
 	return (res);
 }
 
+static int test(void)
+{
+	printf("hehe\n");
+	return (1);
+}
+
 static t_color	apply_perlin_noise(t_vec2 const *pixel_pos)
 {
 	t_color	res;
+	static int tkt = -1;
 	int		x;
 	int		y;
+
+	if (tkt == -1)
+		tkt = test();
 
 	x = pixel_pos->x * perlin_noise_size;
 	y = pixel_pos->y * perlin_noise_size;
