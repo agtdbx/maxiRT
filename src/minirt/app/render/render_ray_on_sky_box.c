@@ -41,6 +41,9 @@ t_color	render_ray_on_sky_box(
 
 	color = _apply_face_texture(scene->skybox->value.as_skybox.textures,
 								&intersect_info, &pixel_info.pos);
+	color.r *= scene->ambient_lightning->brightness;
+	color.g *= scene->ambient_lightning->brightness;
+	color.b *= scene->ambient_lightning->brightness;
 	return (color);
 }
 
