@@ -38,4 +38,5 @@ void	object_panel_hide(
 	cylinder_panel_hide(menu);
 	triangle_panel_hide(menu);
 	object_file_panel_hide(menu);
+	paraboloid_panel_hide(menu);
 }

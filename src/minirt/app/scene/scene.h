@@ -189,6 +189,18 @@ typedef struct s_skybox
 	t_cube cube;
 }	t_skybox;
 
+typedef struct s_paraboloid
+{
+	t_vec3	dir;
+	t_vec3	pos;
+	float	k;
+	float	k_mult_2;
+	float	k_mult_4;
+}	t_paraboloid;
+
+void			paraboloid_compute_constants(
+					t_paraboloid *paraboloid);
+
 //---- OBJECT FILE------------------------------------------------------------//
 
 typedef enum e_object_polygon_t
@@ -290,8 +302,6 @@ void			add_object_binary_polygons(
 					t_object_polygon *new_polygon,
 					int polygon_id,
 					int nb_polygons_parent);
-void			free_object_binary_polygons(
-					t_object_binary_polygon *polygons);
 void			create_new_object_binary_tree_part(
 					t_object_binary_part **new,
 					int nb_polygons_parent);
@@ -333,6 +343,7 @@ typedef enum e_object_t
 	OBJ_TRIANGLE,
 	OBJ_OBJECT_FILE,
 	OBJ_SKYBOX,
+	OBJ_PARABOLOID,
 }	t_object_t;
 
 typedef union u_object_v
@@ -345,6 +356,7 @@ typedef union u_object_v
 	t_triangle		as_triangle;
 	t_object_file	as_object_file;
 	t_skybox		as_skybox;
+	t_paraboloid	as_paraboloid;
 }	t_object_v;
 
 typedef struct s_object

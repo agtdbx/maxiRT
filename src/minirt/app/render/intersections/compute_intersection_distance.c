@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_intersection_distance.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 20:30:06 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/19 20:34:25 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/16 23:42:17 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	compute_intersection_distance(
 				float abc[3])
 {
 	float	discriminant;
-	float	denom;
+	float	denom = 0.0f;
 
 	discriminant = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
 	if (discriminant < 0)
@@ -45,5 +45,6 @@ bool	compute_intersection_distance(
 				return (false);
 		}
 	}
+	intersect_info->distance2 = (-abc[1] + discriminant) * denom;
 	return (true);
 }

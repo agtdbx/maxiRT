@@ -127,6 +127,9 @@ static void	_compute_constants(
 		else if (object_iterator->type == OBJ_CYLINDER)
 			cylinder_compute_constants(
 				&object_iterator->value.as_cylinder);
+		else if (object_iterator->type == OBJ_PARABOLOID)
+			paraboloid_compute_constants(
+				&object_iterator->value.as_paraboloid);
 		else if (object_iterator->type == OBJ_CONE)
 			cone_compute_constants(
 				&object_iterator->value.as_cone);

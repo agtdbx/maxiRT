@@ -45,9 +45,11 @@ bool	object_panel_draw(
 		should_redraw |= triangle_panel_draw(mlx, menu);
 	if (menu->object_panel.object_type == OBJ_OBJECT_FILE)
 		should_redraw |= object_file_panel_draw(mlx, menu);
+	if (menu->object_panel.object_type == OBJ_PARABOLOID)
+		should_redraw |= paraboloid_panel_draw(mlx, menu);
 	return (should_redraw);
 }
-#include <stdio.h>
+
 static bool	_draw_common_labels(
 			mlx_t *mlx,
 			t_menu *menu)

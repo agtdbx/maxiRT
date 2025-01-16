@@ -52,5 +52,8 @@ t_vec2	get_object_pixel_pos(
 	else if (object->type == OBJ_OBJECT_FILE)
 		return (get_object_file_pixel_pos(
 				&object->value.as_object_file, normal, intersect_info));
+	else if (object->type == OBJ_PARABOLOID)
+		return (get_paraboloid_pixel_pos(
+				&object->value.as_paraboloid, ray, normal, intersect_info));
 	return ((t_vec2){0});
 }
