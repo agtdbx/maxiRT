@@ -143,6 +143,10 @@ t_error	parse_plane(
 			t_parser_state *state);
 t_error	parse_plane_checkerboard(
 			t_parser_state *state);
+t_error	parse_plane_sinusoide(
+			t_parser_state *state);
+t_error	parse_plane_perlin_noise(
+			t_parser_state *state);
 t_error	parse_plane_texture(
 			t_parser_state *state);
 t_error	parse_plane_texture_and_normal(
@@ -151,6 +155,10 @@ t_error	parse_plane_texture_and_normal(
 t_error	parse_cylinder(
 			t_parser_state *state);
 t_error	parse_cylinder_checkerboard(
+			t_parser_state *state);
+t_error	parse_cylinder_sinusoide(
+			t_parser_state *state);
+t_error	parse_cylinder_perlin_noise(
 			t_parser_state *state);
 t_error	parse_cylinder_texture(
 			t_parser_state *state);
@@ -161,6 +169,10 @@ t_error	parse_cone(
 			t_parser_state *state);
 t_error	parse_cone_checkerboard(
 			t_parser_state *state);
+t_error	parse_cone_sinusoide(
+			t_parser_state *state);
+t_error	parse_cone_perlin_noise(
+			t_parser_state *state);
 t_error	parse_cone_texture(
 			t_parser_state *state);
 t_error	parse_cone_texture_and_normal(
@@ -169,6 +181,10 @@ t_error	parse_cone_texture_and_normal(
 t_error	parse_cube(
 			t_parser_state *state);
 t_error	parse_cube_checkerboard(
+			t_parser_state *state);
+t_error	parse_cube_sinusoide(
+			t_parser_state *state);
+t_error	parse_cube_perlin_noise(
 			t_parser_state *state);
 t_error	parse_cube_texture(
 			t_parser_state *state);
@@ -182,6 +198,10 @@ t_error	parse_triangle(
 			t_parser_state *state);
 t_error	parse_triangle_checkerboard(
 			t_parser_state *state);
+t_error	parse_triangle_sinusoide(
+			t_parser_state *state);
+t_error	parse_triangle_perlin_noise(
+			t_parser_state *state);
 t_error	parse_triangle_texture(
 			t_parser_state *state);
 t_error	parse_triangle_texture_and_normal(
@@ -190,6 +210,10 @@ t_error	parse_triangle_texture_and_normal(
 t_error	parse_object_file(
 			t_parser_state *state);
 t_error	parse_object_file_checkerboard(
+			t_parser_state *state);
+t_error	parse_object_file_sinusoide(
+			t_parser_state *state);
+t_error	parse_object_file_perlin_noise(
 			t_parser_state *state);
 t_error	parse_object_file_texture(
 			t_parser_state *state);

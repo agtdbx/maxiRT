@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cylinder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:38:48 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/05 17:11:36 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/16 04:21:08 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,52 @@ t_error	parse_cylinder_checkerboard(
 	obj.texture = NULL;
 	obj.color = (t_color){0};
 	obj.color_type = C_CHECKBOARD;
+	obj.normal_map = NULL;
+	obj.opacity = g_cylinder_default_opacity;
+	obj.reflection = g_cylinder_default_reflection;
+	obj.density = g_cylinder_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_cylinder_sinusoide(
+			t_parser_state *state)
+{
+	t_object			obj;
+	t_cylinder *const	cylinder = &obj.value.as_cylinder;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &cylinder->pos) == FAILURE
+		|| parse_field(state, &g_direction, &cylinder->axis) == FAILURE
+		|| parse_field(state, &g_diameter, &cylinder->diameter) == FAILURE
+		|| parse_field(state, &g_diameter, &cylinder->height) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_CYLINDER;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_SINUSOIDE;
+	obj.normal_map = NULL;
+	obj.opacity = g_cylinder_default_opacity;
+	obj.reflection = g_cylinder_default_reflection;
+	obj.density = g_cylinder_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_cylinder_perlin_noise(
+			t_parser_state *state)
+{
+	t_object			obj;
+	t_cylinder *const	cylinder = &obj.value.as_cylinder;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &cylinder->pos) == FAILURE
+		|| parse_field(state, &g_direction, &cylinder->axis) == FAILURE
+		|| parse_field(state, &g_diameter, &cylinder->diameter) == FAILURE
+		|| parse_field(state, &g_diameter, &cylinder->height) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_CYLINDER;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_PERLIN_NOISE;
 	obj.normal_map = NULL;
 	obj.opacity = g_cylinder_default_opacity;
 	obj.reflection = g_cylinder_default_reflection;

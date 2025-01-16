@@ -61,6 +61,50 @@ t_error	parse_triangle_checkerboard(
 	return (scene_add_object(state->scene, &obj));
 }
 
+t_error	parse_triangle_sinusoide(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_triangle *const	triangle = &obj.value.as_triangle;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &triangle->point1) == FAILURE
+		|| parse_field(state, &g_position, &triangle->point2) == FAILURE
+		|| parse_field(state, &g_position, &triangle->point3) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_TRIANGLE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_SINUSOIDE;
+	obj.normal_map = NULL;
+	obj.opacity = g_triangle_default_opacity;
+	obj.reflection = g_triangle_default_reflection;
+	obj.density = g_triangle_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_triangle_perlin_noise(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_triangle *const	triangle = &obj.value.as_triangle;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &triangle->point1) == FAILURE
+		|| parse_field(state, &g_position, &triangle->point2) == FAILURE
+		|| parse_field(state, &g_position, &triangle->point3) == FAILURE)
+		return (FAILURE);
+	obj.type = OBJ_TRIANGLE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_PERLIN_NOISE;
+	obj.normal_map = NULL;
+	obj.opacity = g_triangle_default_opacity;
+	obj.reflection = g_triangle_default_reflection;
+	obj.density = g_triangle_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
 t_error	parse_triangle_texture(
 			t_parser_state *state)
 {

@@ -75,6 +75,64 @@ t_error	parse_object_file_checkerboard(
 	return (scene_add_object(state->scene, &obj));
 }
 
+t_error	parse_object_file_sinusoide(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_object_file *const	objf = &obj.value.as_object_file;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &objf->pos) == FAILURE
+		|| parse_field(state, &g_direction, &objf->x_axis) == FAILURE
+		|| parse_field(state, &g_direction, &objf->y_axis) == FAILURE
+		|| parse_field(state, &g_diameter, &objf->size) == FAILURE
+		|| parse_field(state, &g_objf, objf) == FAILURE)
+		return (FAILURE);
+	if (vec3_dot(&objf->x_axis, &objf->y_axis) != 0.0f)
+	{
+		return (FAILURE);
+	}
+	obj.type = OBJ_OBJECT_FILE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_SINUSOIDE;
+	obj.normal_map = NULL;
+	obj.opacity = g_object_file_default_opacity;
+	obj.reflection = g_object_file_default_reflection;
+	obj.density = g_object_file_default_density;
+	objf->pos.y += 0.001f;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_object_file_perlin_noise(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_object_file *const	objf = &obj.value.as_object_file;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &objf->pos) == FAILURE
+		|| parse_field(state, &g_direction, &objf->x_axis) == FAILURE
+		|| parse_field(state, &g_direction, &objf->y_axis) == FAILURE
+		|| parse_field(state, &g_diameter, &objf->size) == FAILURE
+		|| parse_field(state, &g_objf, objf) == FAILURE)
+		return (FAILURE);
+	if (vec3_dot(&objf->x_axis, &objf->y_axis) != 0.0f)
+	{
+		return (FAILURE);
+	}
+	obj.type = OBJ_OBJECT_FILE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_PERLIN_NOISE;
+	obj.normal_map = NULL;
+	obj.opacity = g_object_file_default_opacity;
+	obj.reflection = g_object_file_default_reflection;
+	obj.density = g_object_file_default_density;
+	objf->pos.y += 0.001f;
+	return (scene_add_object(state->scene, &obj));
+}
+
 t_error	parse_object_file_texture(
 			t_parser_state *state)
 {

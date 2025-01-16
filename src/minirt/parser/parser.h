@@ -18,26 +18,31 @@
 //**** PARSER DIRECTIVES *****************************************************//
 
 static const t_directive	g_directives[] = {
+// Sky box
 {
 	.identifier = "S",
 	.usage = "S <texture path>",
 	.callback = parse_skybox,
 },
+// Camera
 {
 	.identifier = "C",
 	.usage = "C <position> <orientation vector> <fov>",
 	.callback = parse_camera,
 },
+// Ambient light
 {
 	.identifier = "A",
 	.usage = "A <brightness> <color>",
 	.callback = parse_ambient_light,
 },
+// Dynamic light
 {
 	.identifier = "li",
 	.usage = "li <position> <brightness> <color>",
 	.callback = parse_spotlight,
 },
+// Sphere
 {
 	.identifier = "sp",
 	.usage = "sp <position> <diameter> <color>",
@@ -68,6 +73,7 @@ static const t_directive	g_directives[] = {
 	.usage = "sp-tn <position> <diameter> <texture path> <normal map path>",
 	.callback = parse_sphere_texture_and_normal,
 },
+// Plane
 {
 	.identifier = "pl",
 	.usage = "pl <position> <orientation vector> <color>",
@@ -77,6 +83,16 @@ static const t_directive	g_directives[] = {
 	.identifier = "pl-ck",
 	.usage = "pl-ck <position> <orientation vector>",
 	.callback = parse_plane_checkerboard,
+},
+{
+	.identifier = "pl-sn",
+	.usage = "pl-sn <position> <orientation vector>",
+	.callback = parse_plane_sinusoide,
+},
+{
+	.identifier = "pl-pn",
+	.usage = "pl-pn <position> <orientation vector>",
+	.callback = parse_plane_perlin_noise,
 },
 {
 	.identifier = "pl-t",
@@ -90,6 +106,7 @@ static const t_directive	g_directives[] = {
 	"<texture path> <normal map path>",
 	.callback = parse_plane_texture_and_normal,
 },
+// Cylinder
 {
 	.identifier = "cy",
 	.usage = "cy <position> <orientation vector> <diameter> <height> <color>",
@@ -99,6 +116,16 @@ static const t_directive	g_directives[] = {
 	.identifier = "cy-ck",
 	.usage = "cy-ck <position> <orientation vector> <diameter> <height>",
 	.callback = parse_cylinder_checkerboard,
+},
+{
+	.identifier = "cy-sn",
+	.usage = "cy-sn <position> <orientation vector> <diameter> <height>",
+	.callback = parse_cylinder_sinusoide,
+},
+{
+	.identifier = "cy-pn",
+	.usage = "cy-pn <position> <orientation vector> <diameter> <height>",
+	.callback = parse_cylinder_perlin_noise,
 },
 {
 	.identifier = "cy-t",
@@ -112,6 +139,7 @@ static const t_directive	g_directives[] = {
 	"<texture path> <normal map path>",
 	.callback = parse_cylinder_texture_and_normal,
 },
+// Cone
 {
 	.identifier = "co",
 	.usage = "co <position> <orientation vector> <diameter> <height> <color>",
@@ -121,6 +149,16 @@ static const t_directive	g_directives[] = {
 	.identifier = "co-ck",
 	.usage = "co-ck <position> <orientation vector> <diameter> <height>",
 	.callback = parse_cone_checkerboard,
+},
+{
+	.identifier = "co-sn",
+	.usage = "co-sn <position> <orientation vector> <diameter> <height>",
+	.callback = parse_cone_sinusoide,
+},
+{
+	.identifier = "co-pn",
+	.usage = "co-pn <position> <orientation vector> <diameter> <height>",
+	.callback = parse_cone_perlin_noise,
 },
 {
 	.identifier = "co-t",
@@ -134,6 +172,7 @@ static const t_directive	g_directives[] = {
 	"<texture path> <normal map path>",
 	.callback = parse_cone_texture_and_normal,
 },
+// Cube
 {
 	.identifier = "cu",
 	.usage = "cu <position> <orientation x vector> <orientation y vector> "
@@ -147,6 +186,18 @@ static const t_directive	g_directives[] = {
 	.callback = parse_cube_checkerboard,
 },
 {
+	.identifier = "cu-sn",
+	.usage = "cu-sn <position> <orientation x vector> <orientation y vector> "
+	"<widht> <height> <depth>",
+	.callback = parse_cube_sinusoide,
+},
+{
+	.identifier = "cu-pn",
+	.usage = "cu-pn <position> <orientation x vector> <orientation y vector> "
+	"<widht> <height> <depth>",
+	.callback = parse_cube_perlin_noise,
+},
+{
 	.identifier = "cu-t",
 	.usage = "cu-t <position> <orientation x vector> <orientation y vector> "
 	"<widht> <height> <depth> <texture path>",
@@ -158,6 +209,7 @@ static const t_directive	g_directives[] = {
 	"<widht> <height> <depth> <texture path> <normal map path>",
 	.callback = parse_cube_texture_and_normal,
 },
+// Triangle
 {
 	.identifier = "tr",
 	.usage = "tr <point> <point> <point> <color>",
@@ -165,19 +217,30 @@ static const t_directive	g_directives[] = {
 },
 {
 	.identifier = "tr-ck",
-	.usage = "tr <point> <point> <point>",
+	.usage = "tr-ck <point> <point> <point>",
 	.callback = parse_triangle_checkerboard,
 },
 {
+	.identifier = "tr-sn",
+	.usage = "tr-sn <point> <point> <point>",
+	.callback = parse_triangle_sinusoide,
+},
+{
+	.identifier = "tr-pn",
+	.usage = "tr-pn <point> <point> <point>",
+	.callback = parse_triangle_perlin_noise,
+},
+{
 	.identifier = "tr-t",
-	.usage = "tr <point> <point> <point> <texture path>",
+	.usage = "tr-t <point> <point> <point> <texture path>",
 	.callback = parse_triangle_texture,
 },
 {
 	.identifier = "tr-tn",
-	.usage = "tr <point> <point> <point> <texture path> <normal map path>",
+	.usage = "tr-tn <point> <point> <point> <texture path> <normal map path>",
 	.callback = parse_triangle_texture_and_normal,
 },
+// Object file
 {
 	.identifier = "ob",
 	.usage = "ob <position> <orientation x vector> <orientation y vector> "
@@ -186,19 +249,31 @@ static const t_directive	g_directives[] = {
 },
 {
 	.identifier = "ob-ck",
-	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	.usage = "ob-ck <position> <orientation x vector> <orientation y vector> "
 	"<size> <obj file path>",
 	.callback = parse_object_file_checkerboard,
 },
 {
+	.identifier = "ob-sn",
+	.usage = "ob-sn <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path>",
+	.callback = parse_object_file_sinusoide,
+},
+{
+	.identifier = "ob-pn",
+	.usage = "ob-pn <position> <orientation x vector> <orientation y vector> "
+	"<size> <obj file path>",
+	.callback = parse_object_file_perlin_noise,
+},
+{
 	.identifier = "ob-t",
-	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	.usage = "ob-t <position> <orientation x vector> <orientation y vector> "
 	"<size> <obj file path> <texture path>",
 	.callback = parse_object_file_texture,
 },
 {
 	.identifier = "ob-tn",
-	.usage = "ob <position> <orientation x vector> <orientation y vector> "
+	.usage = "ob-tn <position> <orientation x vector> <orientation y vector> "
 	"<size> <obj file path> <texture path> <normal map path>",
 	.callback = parse_object_file_texture_and_normal,
 },

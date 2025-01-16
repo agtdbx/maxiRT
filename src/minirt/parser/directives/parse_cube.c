@@ -79,6 +79,64 @@ t_error	parse_cube_checkerboard(
 	return (scene_add_object(state->scene, &obj));
 }
 
+t_error	parse_cube_sinusoide(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_cube *const	cube = &obj.value.as_cube;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &cube->pos) == FAILURE
+		|| parse_field(state, &g_direction, &cube->x_axis) == FAILURE
+		|| parse_field(state, &g_direction, &cube->y_axis) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->witdh) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->height) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->depth) == FAILURE)
+		return (FAILURE);
+	if (vec3_dot(&cube->x_axis, &cube->y_axis) != 0.0f)
+	{
+		return (FAILURE);
+	}
+	obj.type = OBJ_CUBE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_SINUSOIDE;
+	obj.normal_map = NULL;
+	obj.opacity = g_cube_default_opacity;
+	obj.reflection = g_cube_default_reflection;
+	obj.density = g_cube_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
+t_error	parse_cube_perlin_noise(
+			t_parser_state *state)
+{
+	t_object		obj;
+	t_cube *const	cube = &obj.value.as_cube;
+
+	ft_bzero(&obj, sizeof(t_object));
+	if (parse_field(state, &g_position, &cube->pos) == FAILURE
+		|| parse_field(state, &g_direction, &cube->x_axis) == FAILURE
+		|| parse_field(state, &g_direction, &cube->y_axis) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->witdh) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->height) == FAILURE
+		|| parse_field(state, &g_diameter, &cube->depth) == FAILURE)
+		return (FAILURE);
+	if (vec3_dot(&cube->x_axis, &cube->y_axis) != 0.0f)
+	{
+		return (FAILURE);
+	}
+	obj.type = OBJ_CUBE;
+	obj.texture = NULL;
+	obj.color = (t_color){0};
+	obj.color_type = C_PERLIN_NOISE;
+	obj.normal_map = NULL;
+	obj.opacity = g_cube_default_opacity;
+	obj.reflection = g_cube_default_reflection;
+	obj.density = g_cube_default_density;
+	return (scene_add_object(state->scene, &obj));
+}
+
 t_error	parse_cube_texture(
 			t_parser_state *state)
 {
