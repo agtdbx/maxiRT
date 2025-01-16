@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:08:47 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/05 20:49:48 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:35:03 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,25 @@ static t_vec2	compute_ratio_pos_pixel(
 {
 	t_vec2		ratio;
 
+	if (pixel_pos->x < 0.0f)
+		printf("-x\n");
+	if (pixel_pos->x > 1.0f)
+		printf("+x\n");
+	if (pixel_pos->y < 0.0f)
+		printf("-y\n");
+	if (pixel_pos->y > 1.0f)
+		printf("+y\n");
 	ratio.x = texture->width * pixel_pos->x;
 	x[0] = ratio.x;
 	ratio.x -= x[0];
 	x[1] = x[0] + 1;
-	if (x[1] == (int)texture->width)
+	if (x[1] >= (int)texture->width)
 		x[1] = 0;
 	ratio.y = texture->height * pixel_pos->y;
 	y[0] = ratio.y;
 	ratio.y -= y[0];
 	y[1] = y[0] + 1;
-	if (y[1] == (int)texture->height)
+	if (y[1] >= (int)texture->height)
 		y[1] = 0;
 	return (ratio);
 }

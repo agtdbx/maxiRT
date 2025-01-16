@@ -144,6 +144,10 @@ bool			test_intersection_with_obj(
 					t_ray const *ray,
 					t_object const *object,
 					t_intersect_info *intersect_info);
+bool			test_intersection_with_obj_from_inside(
+					t_ray const *ray,
+					t_object const *object,
+					t_intersect_info *intersect_info);
 
 /// sphere intersections
 

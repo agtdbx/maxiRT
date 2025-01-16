@@ -43,3 +43,27 @@ bool	test_intersection_with_obj(
 
 	return (false);
 }
+
+bool	test_intersection_with_obj_from_inside(
+			t_ray const *ray,
+			t_object const *object,
+			t_intersect_info *intersect_info)
+{
+	if (object->type == OBJ_SPHERE)
+		return (test_intersection_with_sphere_from_inside(
+				ray, &object->value.as_sphere, intersect_info));
+	else if (object->type == OBJ_CYLINDER)
+		return (test_intersection_with_cylinder_from_inside(
+				ray, &object->value.as_cylinder, intersect_info));
+	else if (object->type == OBJ_CONE)
+		return (test_intersection_with_cone_from_inside(
+				ray, &object->value.as_cone, intersect_info));
+	else if (object->type == OBJ_CUBE)
+		return (test_intersection_with_cube_from_inside(
+				ray, &object->value.as_cube, intersect_info));
+	else if (object->type == OBJ_OBJECT_FILE)
+		return (test_intersection_with_object_file_from_inside(
+				ray, &object->value.as_object_file, intersect_info));
+
+	return (false);
+}

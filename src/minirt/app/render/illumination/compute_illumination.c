@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_illumination.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2024/12/26 16:35:58 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/16 14:29:35 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,15 @@ static void	_collect_illumination_from_spotlight(
 		return ;
 	ol.pos = model->normal->pos;
 	*ill = _collect_objects_shades(objects, object, dist_to_spotlight, &ol);
-	if (ill->r <= 0.0f && ill->g <= 0.0f && ill->b <= 0.0f)
-		*ill = (t_color){0};
-	if (ill->r == 0.0f && ill->g == 0.0f && ill->b == 0.0f)
+	if (ill->a == -1.0f)
+	{
 		return ;
+	}
+	if (ill->r <= 0.0f && ill->g <= 0.0f && ill->b <= 0.0f && ill->a != -1.0f)
+	{
+		*ill = (t_color){0};
+		return ;
+	}
 	os = (t_vec3){0};
 	vec3_linear_transform(&os, 2.0f * idiffuse, &model->normal->vec);
 	vec3_substract(&os, &ol.vec);
@@ -188,7 +193,8 @@ static t_color	_collect_objects_shades(
 				objects, &illumination, dist_to_spotlight, ray_to_spotlight);
 		if (illumination.r <= 0.0f
 			&& illumination.g <= 0.0f
-			&& illumination.b <= 0.0f)
+			&& illumination.b <= 0.0f
+			&& illumination.a != -1.0f)
 			return (illumination);
 		objects = objects->next;
 	}
@@ -210,20 +216,50 @@ static void	apply_shadow_to_illumination(
 			ray_to_spotlight, objects, &distance_to_object)
 		&& (distance_to_object.distance < dist_to_spotlight))
 	{
-		if (objects->opacity == 1.0f)
-			*illumination = (t_color){0};
-		if (objects->opacity == 1.0f)
-			return ;
 		compute_normal_ray(objects, ray_to_spotlight,
 			&distance_to_object, &normal);
 		pixel_pos = get_object_pixel_pos(objects, ray_to_spotlight,
 				&normal, &distance_to_object);
 		base_color = get_base_color_object(objects, &pixel_pos);
+		if (base_color.a == -1.0f)
+		{
+			if (test_intersection_with_obj_from_inside(
+					ray_to_spotlight, objects, &distance_to_object)
+				&& distance_to_object.distance < dist_to_spotlight)
+			{
+				compute_normal_ray(objects, ray_to_spotlight,
+					&distance_to_object, &normal);
+				vec3_scale(&normal.vec, -1.0f);
+				pixel_pos = get_object_pixel_pos(objects, ray_to_spotlight,
+						&normal, &distance_to_object);
+				base_color = get_base_color_object(objects, &pixel_pos);
+				if (base_color.a == -1.0f)
+				{
+					illumination->r = 1.0f;
+					illumination->g = 1.0f;
+					illumination->b = 1.0f;
+					return ;
+				}
+			}
+			else
+			{
+				illumination->r = 1.0f;
+				illumination->g = 1.0f;
+				illumination->b = 1.0f;
+				return ;
+			}
+		}
+		if (objects->opacity == 1.0f)
+		{
+			*illumination = (t_color){0};
+			return ;
+		}
 		illumination->r -= powf(objects->opacity,
 				1 + base_color.r * g_opacity_color_ratio);
 		illumination->g -= powf(objects->opacity,
 				1 + base_color.g * g_opacity_color_ratio);
 		illumination->b -= powf(objects->opacity,
 				1 + base_color.b * g_opacity_color_ratio);
+		illumination->a = base_color.a;
 	}
 }
