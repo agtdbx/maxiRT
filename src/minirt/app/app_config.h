@@ -87,7 +87,6 @@ static const float		g_pi_div_360 = 0.008726f;
 
 static const float		checkboard_size = 8.0f;
 static const float		sinusoide_size = 10.0f * g_pi * 2.0f;
-static const float		perlin_noise_size = 10.0f;
 
 //---- COLORS ----------------------------------------------------------------//
 

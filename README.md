@@ -9,6 +9,7 @@ cmake -B build; cmake --build build
 ### Usage
 
 ```bash
+export LD_LIBRARY_PATH=lib/ffmpeg
 ./rt <map path>
 ```
 

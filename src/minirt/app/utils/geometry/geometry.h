@@ -37,6 +37,10 @@ typedef struct s_ray
 	uint32_t	depth;
 }	t_ray;
 
+extern float	vec2_dot(
+					t_vec2 const *u,
+					t_vec2 const *v);
+
 extern float	vec3_norm(
 					t_vec3 const *vec);
 extern float	vec3_normalize(

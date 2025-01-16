@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_base_color_object.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 12:52:20 by aderouba          #+#    #+#             */
-/*   Updated: 2024/12/26 16:39:08 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/16 04:06:35 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,16 @@ static t_color	apply_sinusoide(t_vec2 const *pixel_pos)
 	return (res);
 }
 
-static int test(void)
-{
-	printf("hehe\n");
-	return (1);
-}
-
 static t_color	apply_perlin_noise(t_vec2 const *pixel_pos)
 {
 	t_color	res;
-	static int tkt = -1;
-	int		x;
-	int		y;
+	float	ratio;
 
-	if (tkt == -1)
-		tkt = test();
-
-	x = pixel_pos->x * perlin_noise_size;
-	y = pixel_pos->y * perlin_noise_size;
-	res = (t_color){0};
-	if ((x + y) % 2)
-	{
-		res.r = 255;
-		res.g = 255;
-		res.b = 255;
-	}
+	ratio = (get_perlin_noise_value(pixel_pos->x, pixel_pos->y) + 1) / 2;
+	res.r = 255.0 *  ratio;
+	res.g = 255.0 *  ratio;
+	res.b = 255.0 *  ratio;
+	res.a = 255;
 	return (res);
 }
+

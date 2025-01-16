@@ -431,6 +431,9 @@ t_vec2			get_object_file_pixel_pos(
 t_color			get_base_color_object(
 					t_object const *intersected_object,
 					t_vec2 const *pixel_pos);
+float			get_perlin_noise_value(
+					float x,
+					float y);
 
 t_color			apply_texture(
 					mlx_texture_t const *texture,
