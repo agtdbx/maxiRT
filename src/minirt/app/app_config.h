@@ -26,8 +26,8 @@ static const int32_t	g_window_height = 1080;
 static const int32_t	g_menu_width = 400;
 static const int32_t	g_menu_background_color = 0x333333FF;
 static const int32_t	g_menu_dividers_color = 0x666666FF;
-static const int32_t	g_menu_divider_1_y = 160;
-static const int32_t	g_menu_divider_2_y = 300;
+static const int32_t	g_menu_divider_1_y = 250;
+static const int32_t	g_menu_divider_2_y = 390;
 
 //---- REFLECTION_CONSTANTS --------------------------------------------------//
 

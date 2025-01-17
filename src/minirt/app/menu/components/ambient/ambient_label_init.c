@@ -28,7 +28,7 @@ static void	_init_float_label(
 				t_menu *menu,
 				t_scene const *scene);
 
-static const uint32_t	g_pos[2] = {20, 170};
+static const uint32_t	g_pos[2] = {20, 260};
 
 void	ambient_label_init(
 			mlx_t *mlx,

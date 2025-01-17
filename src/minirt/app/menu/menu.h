@@ -288,6 +288,11 @@ typedef struct s_menu
 	t_float_label	camera_fov_label;
 	t_button		camera_fov_button;
 
+	t_vec3_label	color_filter_label;
+	t_button		color_filter_button_r;
+	t_button		color_filter_button_g;
+	t_button		color_filter_button_b;
+
 	mlx_image_t		*ambient_label_title;
 	t_color_label	ambient_color_label;
 	t_button		ambient_color_button_r;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_panel_init.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 14:54:26 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/17 19:39:56 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/17 23:47:31 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include "minirt/app/scene/scene.h"
 
-static const uint32_t	g_pos[2] = {20, 310};
+static const uint32_t	g_pos[2] = {20, 400};
 
 static void	_init_color_label(
 				mlx_t *mlx,

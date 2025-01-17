@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_labels.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 13:11:42 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/23 13:14:43 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/17 23:47:02 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include "minirt/app/scene/scene.h"
 
-static const uint32_t	g_pos[2] = {20, 310};
+static const uint32_t	g_pos[2] = {20, 400};
 
 void	init_color_label(
 				mlx_t *mlx,

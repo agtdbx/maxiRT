@@ -403,12 +403,12 @@ void			camera_compute_constants(
 
 typedef struct s_scene
 {
-	t_object			*objects;
-	t_light				*spotlights;
-	t_light				*ambient_lightning;
-	t_camera			*camera;
-	t_object			**planes;
-	t_object			*skybox;
+	t_object	*objects;
+	t_light		*spotlights;
+	t_light		*ambient_lightning;
+	t_camera	*camera;
+	t_object	*skybox;
+	t_vec3		color_filter;
 }	t_scene;
 
 t_error			scene_add_object(

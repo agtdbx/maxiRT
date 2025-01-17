@@ -71,6 +71,9 @@ int32_t	render_ray_from_camera(
 	}
 	pixel_color = render_ray_on_object(
 					scene, intersected_object, &task->ray, &intersect_info);
+	pixel_color.r *= scene->color_filter.x;
+	pixel_color.g *= scene->color_filter.y;
+	pixel_color.b *= scene->color_filter.z;
 	return (color_to_int(&pixel_color));
 }
 

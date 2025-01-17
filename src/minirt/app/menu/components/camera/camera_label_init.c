@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera_label_init.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:47:13 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/19 20:57:50 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/17 23:08:23 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	camera_label_init(
 		(uint32_t[2]){g_pos[0], g_pos[1] + 120});
 	menu->camera_fov_label.f = &scene->camera->fov;
 	button_init(mlx, &menu->camera_fov_button,
-		(int32_t[2]){g_pos[0] + 130, g_pos[1] + 120});
+		(int32_t[2]){g_pos[0] + 100, g_pos[1] + 120});
 	menu->camera_fov_button.f = &scene->camera->fov;
 	menu->camera_fov_button.min = 0.0f;
 	menu->camera_fov_button.max = 180.0f;

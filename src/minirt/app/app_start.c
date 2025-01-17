@@ -103,6 +103,7 @@ static t_error	_app_init(
 	}
 	_compute_constants(app->mlx, &app->menu, app->scene, &app->canvas,
 		&app->render);
+	scene->color_filter = (t_vec3){1.0f, 1.0f, 1.0f};
 	return (SUCCESS);
 }
 

@@ -13,7 +13,7 @@
 #include "minirt/app/menu/menu.h"
 #include <stdint.h>
 
-static const uint32_t	g_pos[2] = {20, 440};
+static const uint32_t	g_pos[2] = {20, 530};
 
 static void	_init_point1_label(
 				mlx_t *mlx,

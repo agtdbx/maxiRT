@@ -46,11 +46,6 @@ void	scene_del(
 	loc_del_objects(&scene->objects);
 	if (scene->skybox)
 		_del_skybox(scene->skybox);
-	if (scene->planes != NULL)
-	{
-		free(scene->planes);
-		scene->planes = NULL;
-	}
 }
 
 static void	_del_skybox(t_object *skybox)

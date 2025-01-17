@@ -19,7 +19,7 @@
 
 #include "minirt/app/scene/scene.h"
 
-static const uint32_t	g_pos[2] = {20, 310};
+static const uint32_t	g_pos[2] = {20, 400};
 
 static void	object_title_init(
 				mlx_t *mlx,
