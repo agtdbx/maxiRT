@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_paraboloid_pixel_pos.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 12:07:26 by damien            #+#    #+#             */
-/*   Updated: 2025/01/16 23:29:02 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/17 14:30:24 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,20 @@ t_vec2	get_paraboloid_pixel_pos(
 	t_vec3	local;
 	t_vec3	vec;
 	t_vec2	pixel;
-	t_vec3 tmp;
+	t_vec3	tmp;
+
 	vec3_substract(&local, &paraboloid->pos);
 	compute_base_axis(paraboloid, normal, &ref, &proj);
 	t_vec3 p = ray->pos;
 	vec3_linear_transform(&p, intersect_info->distance, &ray->vec);
 	vec3_substract_into(&vec, &p, &paraboloid->pos);
 	float height_on_para = vec3_dot(&vec, &paraboloid->dir);
-	pixel.x = acosf(vec3_dot(&proj, &ref));
+	pixel.x = vec3_dot(&proj, &ref);
+	if (pixel.x < -1.0f)
+		pixel.x = -1.0f;
+	if (pixel.x > 1.0f)
+		pixel.x = 1.0f;
+	pixel.x = acosf(pixel.x);
 	pixel.x /= 2.0f * g_pi;
 	vec3_cross(&paraboloid->dir, &ref, &tmp);
 	vec3_normalize(&tmp);
