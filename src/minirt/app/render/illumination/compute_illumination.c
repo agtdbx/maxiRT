@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_illumination.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/16 14:29:35 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/17 19:07:46 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,21 @@ static void	_collect_illumination_from_spotlight(
 	t_vec3			os;
 	float			idiffuse;
 	float			ispecular;
+	float			parallel_ratio;
 
 	vec3_substract_into(&ol.vec, &model->spotlight->pos, &model->normal->pos);
 	dist_to_spotlight = vec3_normalize(&ol.vec);
 	idiffuse = vec3_dot(&model->normal->vec, &ol.vec);
 	if (idiffuse <= 0.0f)
 		return ;
+
+	if (model->spotlight->parallel)
+	{
+		parallel_ratio = -vec3_dot(&model->spotlight->dir, &ol.vec);
+		if ((parallel_ratio + 1.0f) * 180.0f < model->spotlight->min_angle)
+			return ;
+	}
+
 	ol.pos = model->normal->pos;
 	*ill = _collect_objects_shades(objects, object, dist_to_spotlight, &ol);
 	if (ill->a == -1.0f)

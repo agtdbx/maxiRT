@@ -125,6 +125,8 @@ t_error	parse_ambient_light(
 
 t_error	parse_spotlight(
 			t_parser_state *state);
+t_error	parse_parallel_spotlight(
+			t_parser_state *state);
 
 t_error	parse_sphere(
 			t_parser_state *state);

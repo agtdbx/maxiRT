@@ -42,6 +42,11 @@ static const t_directive	g_directives[] = {
 	.usage = "li <position> <brightness> <color>",
 	.callback = parse_spotlight,
 },
+{
+	.identifier = "pli",
+	.usage = "pli <position> <brightness> <color> <direction> <angle>",
+	.callback = parse_parallel_spotlight,
+},
 // Sphere
 {
 	.identifier = "sp",

@@ -30,6 +30,35 @@ t_error	parse_spotlight(
 		|| parse_field(state, &g_brightness, &light.brightness) == FAILURE
 		|| parse_field(state, &g_color, &light.color) == FAILURE)
 		return (FAILURE);
+	light.parallel = false;
+	light.angle = 0.0f;
+	light.dir = (t_vec3){0};
+	new_light = ft_memdup(&light, sizeof(t_light));
+	if (new_light == NULL)
+	{
+		perror("Error\nFatal");
+		return (FAILURE);
+	}
+	new_light->next = state->scene->spotlights;
+	state->scene->spotlights = new_light;
+	return (SUCCESS);
+}
+
+t_error	parse_parallel_spotlight(
+			t_parser_state *state)
+{
+	t_light	light;
+	t_light	*new_light;
+
+	ft_bzero(&light, sizeof(light));
+	if (parse_field(state, &g_position, &light.pos) == FAILURE
+		|| parse_field(state, &g_brightness, &light.brightness) == FAILURE
+		|| parse_field(state, &g_color, &light.color) == FAILURE
+		|| parse_field(state, &g_direction, &light.dir) == FAILURE
+		|| parse_field(state, &g_fov, &light.angle) == FAILURE
+		)
+		return (FAILURE);
+	light.parallel = true;
 	new_light = ft_memdup(&light, sizeof(t_light));
 	if (new_light == NULL)
 	{

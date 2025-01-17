@@ -371,9 +371,15 @@ typedef struct s_light
 	t_vec3			pos;
 	t_color			color;
 	float			brightness;
+	bool			parallel;
+	t_vec3			dir;
+	float			angle;
 
+	float			min_angle;
 	struct s_light	*next;
 }	t_light;
+void			light_compute_constants(
+					t_light *light);
 
 //---- CAMERA ----------------------------------------------------------------//
 

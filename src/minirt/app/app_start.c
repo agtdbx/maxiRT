@@ -114,6 +114,7 @@ static void	_compute_constants(
 				t_render *render)
 {
 	t_object	*object_iterator;
+	t_light		*light;
 
 	object_iterator = scene->objects;
 	while (object_iterator != NULL)
@@ -145,5 +146,12 @@ static void	_compute_constants(
 	handle_window_resizing(mlx, menu, scene, canvas, &render->sync);
 	if (scene->skybox)
 		cube_compute_constants(&scene->skybox->value.as_skybox.cube, 1);
+
+	light = scene->spotlights;
+	while (light)
+	{
+		light_compute_constants(light);
+		light = light->next;
+	}
 }
 
