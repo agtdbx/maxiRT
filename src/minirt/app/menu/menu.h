@@ -248,9 +248,10 @@ typedef struct s_object_panel
 typedef struct s_light_panel
 {
 	bool			is_enabled;
-	void			*light_ptr;
+	t_light			*light_ptr;
 
 	mlx_image_t		*title;
+	mlx_image_t		*title_parallel;
 
 	t_color_label	color_label;
 	t_button		color_label_button_r;
@@ -264,6 +265,14 @@ typedef struct s_light_panel
 	t_button		position_label_button_x;
 	t_button		position_label_button_y;
 	t_button		position_label_button_z;
+
+	t_vec3_label	direction_label;
+	t_button		direction_label_button_x;
+	t_button		direction_label_button_y;
+	t_button		direction_label_button_z;
+
+	t_float_label	angle_label;
+	t_button		angle_button;
 
 }	t_light_panel;
 

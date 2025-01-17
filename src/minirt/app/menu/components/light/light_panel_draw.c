@@ -6,7 +6,7 @@
 /*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:48:00 by tdubois           #+#    #+#             */
-/*   Updated: 2023/07/23 13:20:22 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/17 19:57:30 by aderouba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ static bool	_light_panel_draw_color(
 				t_menu *menu,
 				bool should_redraw);
 static bool	_light_panel_draw_position(
+				mlx_t *mlx,
+				t_menu *menu,
+				bool should_redraw);
+static bool	_light_panel_draw_direction(
 				mlx_t *mlx,
 				t_menu *menu,
 				bool should_redraw);
@@ -43,7 +47,16 @@ bool	light_panel_draw(
 	float_label_draw(mlx, menu, &menu->light_panel.intensity_label);
 	should_redraw |= button_draw(mlx, menu,
 			&menu->light_panel.intensity_label_button);
-	should_redraw = _light_panel_draw_position(mlx, menu, should_redraw);
+	should_redraw |= _light_panel_draw_position(mlx, menu, should_redraw);
+	if (menu->light_panel.light_ptr->parallel)
+	{
+		should_redraw |= _light_panel_draw_direction(mlx, menu, should_redraw);
+		float_label_draw(mlx, menu, &menu->light_panel.angle_label);
+		should_redraw |= button_draw(mlx, menu,
+				&menu->light_panel.angle_button);
+	}
+	if (should_redraw)
+		light_compute_constants(menu->light_panel.light_ptr);
 	return (should_redraw);
 }
 
@@ -74,5 +87,20 @@ static bool	_light_panel_draw_position(
 			&menu->light_panel.position_label_button_y);
 	should_redraw |= button_draw(mlx, menu,
 			&menu->light_panel.position_label_button_z);
+	return (should_redraw);
+}
+
+static bool	_light_panel_draw_direction(
+				mlx_t *mlx,
+				t_menu *menu,
+				bool should_redraw)
+{
+	vec3_label_draw(mlx, menu, &menu->light_panel.direction_label);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->light_panel.direction_label_button_x);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->light_panel.direction_label_button_y);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->light_panel.direction_label_button_z);
 	return (should_redraw);
 }
