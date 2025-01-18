@@ -371,6 +371,10 @@ t_color			compute_illumination(
 					t_ray const *ray,
 					t_ray const *normal);
 
+t_color			compute_blinded_illumination(
+					t_scene const *scene,
+					t_ray const *ray);
+
 // transparency
 
 t_color			compute_refracted_color(

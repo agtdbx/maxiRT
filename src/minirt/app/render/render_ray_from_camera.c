@@ -26,14 +26,12 @@
 #define X 0
 #define Y 1
 
+static bool	blinded_lights = true;
+
 static int32_t	_render_ray_on_spotlight(
 					t_light const *light,
 					t_ray const *ray,
 					t_intersect_info const *intersect_info);
-
-static inline int32_t	_fetch_intersection_with_skybox(
-			t_scene const *scene,
-			t_ray const *ray);
 
 /**
  * @param[in] scene
@@ -50,6 +48,7 @@ int32_t	render_ray_from_camera(
 	t_object const		*intersected_object;
 	t_light const		*light;
 	t_color				pixel_color;
+	t_color				blinded_color;
 	t_intersect_info	intersect_info;
 
 	pthread_rwlock_rdlock(scene_mut);
@@ -65,15 +64,32 @@ int32_t	render_ray_from_camera(
 	}
 	if (intersected_object == NULL)
 	{
+		pixel_color = (t_color){0};
 		if (scene->skybox)
-			return _fetch_intersection_with_skybox(scene, &task->ray);
-		return (g_color_black);
+			pixel_color = render_ray_on_sky_box(scene, &task->ray);
 	}
-	pixel_color = render_ray_on_object(
-					scene, intersected_object, &task->ray, &intersect_info);
+	else
+		pixel_color = render_ray_on_object(
+						scene, intersected_object, &task->ray, &intersect_info);
+
+	if (!show_spotlights && blinded_lights)
+	{
+		blinded_color = compute_blinded_illumination(scene, &task->ray);
+		pixel_color.r += blinded_color.r;
+		if (pixel_color.r > 255.0f)
+			pixel_color.r = 255.0f;
+		pixel_color.g += blinded_color.g;
+		if (pixel_color.g > 255.0f)
+			pixel_color.g = 255.0f;
+		pixel_color.b += blinded_color.b;
+		if (pixel_color.b > 255.0f)
+			pixel_color.b = 255.0f;
+	}
+
 	pixel_color.r *= scene->color_filter.x;
 	pixel_color.g *= scene->color_filter.y;
 	pixel_color.b *= scene->color_filter.z;
+
 	return (color_to_int(&pixel_color));
 }
 
@@ -99,14 +115,4 @@ static int32_t	_render_ray_on_spotlight(
 	color.g = light->color.g * light->brightness;
 	color.b = light->color.b * light->brightness;
 	return (color_to_int(&color));
-}
-
-static inline int32_t	_fetch_intersection_with_skybox(
-			t_scene const *scene,
-			t_ray const *ray)
-{
-	t_color		pixel_color = {0, 0, 0, 1};
-
-	pixel_color = render_ray_on_sky_box(scene, ray);
-	return (color_to_int(&pixel_color));
 }
