@@ -376,6 +376,10 @@ void			apply_blinded_illumination(
 					t_ray const *ray,
 					t_color *color);
 
+void			apply_cartoon_effet(
+					t_color *ill,
+					float idiffuse);
+
 // transparency
 
 t_color			compute_refracted_color(

@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 13:41:09 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/18 18:35:16 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,17 @@ void	apply_blinded_illumination(
 	t_color	ill_from_spotlight;
 	t_color	blinded_color;
 	t_light	*light;
+	t_ray	new_ray;
 
+	new_ray = *ray;
+	vec3_linear_transform(&new_ray.pos, 0.1f, &new_ray.vec);
 	light = scene->spotlights;
 	blinded_color = (t_color){0};
 	while (light != NULL)
 	{
 		ill_from_spotlight = (t_color){0};
 		_collect_blinded_illumination_from_spotlight(
-			scene, ray, light, &ill_from_spotlight);
+			scene, &new_ray, light, &ill_from_spotlight);
 		blinded_color.r += ill_from_spotlight.r * light->color.r;
 		blinded_color.g += ill_from_spotlight.g * light->color.g;
 		blinded_color.b += ill_from_spotlight.b * light->color.b;
@@ -104,6 +107,11 @@ static void	_collect_blinded_illumination_from_spotlight(
 		*ill = (t_color){0};
 		return ;
 	}
+	if (scene->cartoon_effect)
+	{
+		apply_cartoon_effet(ill, idiffuse);
+		return ;
+	}
 	color_scale(ill, blind_ratio * light->brightness);
 }
 
@@ -133,6 +141,7 @@ float	_compute_blind_ratio(
 	vec3_normalize(&inter_vec);
 
 	blind_ratio = vec3_dot(&inter_vec, &ray->vec);
+
 	return (powf(blind_ratio, 10.0f));
 }
 

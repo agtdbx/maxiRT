@@ -65,7 +65,7 @@ int32_t	render_ray_from_camera(
 		if (scene->skybox)
 			pixel_color = render_ray_on_sky_box(scene, &task->ray);
 
-		if (scene->blinded_lights)
+		if (g_blinded_lights)
 			apply_blinded_illumination(scene, &task->ray, &pixel_color);
 	}
 	else

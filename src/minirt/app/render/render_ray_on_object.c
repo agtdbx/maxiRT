@@ -64,7 +64,7 @@ t_color	render_ray_on_object(
 							&refracted_color, &reflected_color,
 							force_transparency);
 
-	if (scene->blinded_lights)
+	if (g_blinded_lights)
 		apply_blinded_illumination(scene, ray, &color);
 	return (color);
 }

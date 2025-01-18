@@ -14,6 +14,7 @@
 # define APP_CONFIG_H
 
 # include <stdint.h>
+# include <stdbool.h>
 
 //---- WINDOW ----------------------------------------------------------------//
 
@@ -35,6 +36,7 @@ static const float		g_ambient_light_ratio = 0.2f;
 static const float		g_diffuse_light_ratio = 0.5f;
 static const float		g_specular_light_ratio = 0.3f;
 static const float		g_phong_exponent = 42.0f;
+static const bool		g_blinded_lights = true;
 
 static const float		g_opacity_color_ratio = 1.0f / 255.0f;
 

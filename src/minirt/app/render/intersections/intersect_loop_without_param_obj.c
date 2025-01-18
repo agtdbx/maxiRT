@@ -44,7 +44,7 @@ t_color	intersect_loop_without_param_obj(
 			pixel_color = render_ray_on_sky_box(scene, ray);
 		else
 			pixel_color = (t_color){0};
-		if (scene->blinded_lights)
+		if (g_blinded_lights)
 			apply_blinded_illumination(scene, ray, &pixel_color);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 02:43:16 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/18 18:32:56 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ static void		apply_shadow_to_illumination(
 					t_color *illumination,
 					float dist_to_spotlight,
 					t_ray const *ray_to_spotlight);
-static void		apply_cartoon_effet(
-					t_color *ill,
-					float idiffuse);
 
 t_color	check_dynamic_illumination(
 			t_scene const *scene,
@@ -278,35 +275,5 @@ static void	apply_shadow_to_illumination(
 		illumination->b -= powf(objects->opacity,
 				1 + base_color.b * g_opacity_color_ratio);
 		illumination->a = base_color.a;
-	}
-}
-
-static void	apply_cartoon_effet(
-				t_color *ill,
-				float idiffuse)
-{
-	if (idiffuse > 0.98f)
-	{
-		ill->r = 0.8f;
-		ill->g = 0.8f;
-		ill->b = 0.8f;
-	}
-	else if (idiffuse > 0.5f)
-	{
-		ill->r = 0.4f;
-		ill->g = 0.4f;
-		ill->b = 0.8f;
-	}
-	else if (idiffuse > 0.25f)
-	{
-		ill->r = 0.2f;
-		ill->g = 0.2f;
-		ill->b = 0.4f;
-	}
-	else
-	{
-		ill->r = 0.1f;
-		ill->g = 0.1f;
-		ill->b = 0.1f;
 	}
 }
