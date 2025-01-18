@@ -86,6 +86,15 @@ extern void		vec3_cross(
 					t_vec3 const *v2,
 					t_vec3 *vec_res);
 
+extern void		vec3_div_into(
+					t_vec3 *lhs,
+					t_vec3 *rhs,
+					t_vec3 *res);
+
+bool			vec3_equals(
+					t_vec3 *a,
+					t_vec3 *b);
+
 extern t_vec3	vec3(
 					float x,
 					float y,

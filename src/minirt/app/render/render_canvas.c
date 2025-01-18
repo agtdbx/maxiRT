@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/12 19:23:10 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/18 01:07:36 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ t_error	render_canvas(
 		if (app->render.sync.nb_tasks_remain == 0)
 		{
 			canvas_swap(&app->canvas);
+			antialiasing(&app->canvas);
+			ft_swap(&app->canvas.back, &app->canvas.front);
 			is_rendering = false;
 		}
 	}
