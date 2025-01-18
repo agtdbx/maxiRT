@@ -118,3 +118,14 @@ ob-pn <position> <orientation x vector> <orientation y vector> <size> <obj file 
 ob-t <position> <orientation x vector> <orientation y vector> <size> <obj file path> <texture path>
 ob-tn <position> <orientation x vector> <orientation y vector> <size> <obj file path> <texture path> <normal map path>
 ```
+
+#### Scene specials
+add a cartoon effect
+```
+cartoon
+```
+
+comment a line
+```
+# <what ever you want>
+```

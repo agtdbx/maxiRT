@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2024/10/23 20:43:30 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/18 01:53:35 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@
 #include "minirt/parser/parser.h"
 
 static const char	g_argc_error_msg[] = \
-	"Error"								"\n"
-	"Expected one argument"				"\n"
-	"Usage: minirt <path/to/scene.rt>"	"\n";
+	"Error"							"\n"
+	"Expected one argument"			"\n"
+	"Usage: rt <path/to/scene.rt>"	"\n";
 
 int	main(int argc, char *argv[])
 {
 	t_scene	scene;
+
+	scene.cartoon_effect = false;
 
 	if (argc != 2)
 	{

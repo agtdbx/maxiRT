@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_illumination.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/17 19:07:46 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/18 01:44:41 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <minirt/app/scene/scene.h>
 
 static void		_collect_illumination_from_spotlight(
-					t_object const *objects,
+					t_scene const *scene,
 					t_object const *object,
 					t_phong_model const *model,
 					t_color *illumination);
@@ -34,6 +34,9 @@ static void		apply_shadow_to_illumination(
 					t_color *illumination,
 					float dist_to_spotlight,
 					t_ray const *ray_to_spotlight);
+static void		apply_cartoon_effet(
+					t_color *ill,
+					float idiffuse);
 
 t_color	check_dynamic_illumination(
 			t_scene const *scene,
@@ -56,7 +59,7 @@ t_color	check_dynamic_illumination(
 	{
 		ill_from_spotlight = (t_color){0};
 		_collect_illumination_from_spotlight(
-			scene->objects, object, &model, &ill_from_spotlight);
+			scene, object, &model, &ill_from_spotlight);
 		illumination.r += ill_from_spotlight.r * model.spotlight->color.r;
 		illumination.g += ill_from_spotlight.g * model.spotlight->color.g;
 		illumination.b += ill_from_spotlight.b * model.spotlight->color.b;
@@ -99,7 +102,7 @@ t_color	compute_illumination(
 	{
 		ill_from_spotlight = (t_color){0};
 		_collect_illumination_from_spotlight(
-			scene->objects, object, &model, &ill_from_spotlight);
+			scene, object, &model, &ill_from_spotlight);
 		illumination.r += ill_from_spotlight.r * model.spotlight->color.r;
 		illumination.g += ill_from_spotlight.g * model.spotlight->color.g;
 		illumination.b += ill_from_spotlight.b * model.spotlight->color.b;
@@ -140,7 +143,7 @@ t_color	compute_illumination(
  * @returns illumination
  */
 static void	_collect_illumination_from_spotlight(
-				t_object const *objects,
+				t_scene const *scene,
 				t_object const *object,
 				t_phong_model const *model,
 				t_color *ill)
@@ -166,7 +169,7 @@ static void	_collect_illumination_from_spotlight(
 	}
 
 	ol.pos = model->normal->pos;
-	*ill = _collect_objects_shades(objects, object, dist_to_spotlight, &ol);
+	*ill = _collect_objects_shades(scene->objects, object, dist_to_spotlight, &ol);
 	if (ill->a == -1.0f)
 	{
 		return ;
@@ -181,6 +184,11 @@ static void	_collect_illumination_from_spotlight(
 	vec3_substract(&os, &ol.vec);
 	vec3_normalize(&os);
 	idiffuse *= g_diffuse_light_ratio;
+	if (scene->cartoon_effect)
+	{
+		apply_cartoon_effet(ill, idiffuse);
+		return ;
+	}
 	ispecular = fmaxf(0.0f, -vec3_dot(&os, &model->from_camera->vec));
 	ispecular = powf(ispecular, g_phong_exponent) * g_specular_light_ratio;
 	color_scale(ill, (idiffuse + ispecular) * model->spotlight->brightness);
@@ -270,5 +278,35 @@ static void	apply_shadow_to_illumination(
 		illumination->b -= powf(objects->opacity,
 				1 + base_color.b * g_opacity_color_ratio);
 		illumination->a = base_color.a;
+	}
+}
+
+static void	apply_cartoon_effet(
+				t_color *ill,
+				float idiffuse)
+{
+	if (idiffuse > 0.98f)
+	{
+		ill->r = 0.8f;
+		ill->g = 0.8f;
+		ill->b = 0.8f;
+	}
+	else if (idiffuse > 0.5f)
+	{
+		ill->r = 0.4f;
+		ill->g = 0.4f;
+		ill->b = 0.8f;
+	}
+	else if (idiffuse > 0.25f)
+	{
+		ill->r = 0.2f;
+		ill->g = 0.2f;
+		ill->b = 0.4f;
+	}
+	else
+	{
+		ill->r = 0.1f;
+		ill->g = 0.1f;
+		ill->b = 0.1f;
 	}
 }

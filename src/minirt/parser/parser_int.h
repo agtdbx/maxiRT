@@ -221,6 +221,10 @@ t_error	parse_object_file_texture(
 			t_parser_state *state);
 t_error	parse_object_file_texture_and_normal(
 			t_parser_state *state);
+
+t_error	parse_cartoon_effect(
+			t_parser_state *state);
+
 t_error	parse_comment(
 			t_parser_state *state);
 

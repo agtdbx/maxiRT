@@ -282,6 +282,12 @@ static const t_directive	g_directives[] = {
 	"<size> <obj file path> <texture path> <normal map path>",
 	.callback = parse_object_file_texture_and_normal,
 },
+// Specials
+{
+	.identifier = "cartoon",
+	.usage = "apply a cartoon effet",
+	.callback = parse_cartoon_effect,
+},
 {
 	.identifier = "#",
 	.usage = "a comment !",
