@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 22:58:42 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 01:53:35 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/18 13:40:16 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char *argv[])
 	t_scene	scene;
 
 	scene.cartoon_effect = false;
+	scene.blinded_lights = true;
 
 	if (argc != 2)
 	{

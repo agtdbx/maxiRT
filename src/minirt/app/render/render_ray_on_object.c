@@ -17,8 +17,6 @@
 #include "minirt/app/app_config.h"
 #include "minirt/app/utils/color/color.h"
 
-static bool	blinded_lights = true;
-
 static t_pixel_info	get_pixel_info(
 						t_scene const *scene,
 						t_object const *intersected_object,
@@ -48,7 +46,6 @@ t_color	render_ray_on_object(
 	t_color			refracted_color;
 	t_color			reflected_color;
 	t_color			color;
-	t_color			blinded_color;
 	bool			force_transparency;
 
 	if (ray->depth > 16)
@@ -67,19 +64,8 @@ t_color	render_ray_on_object(
 							&refracted_color, &reflected_color,
 							force_transparency);
 
-	if (blinded_lights)
-	{
-		blinded_color = compute_blinded_illumination(scene, ray);
-		color.r += blinded_color.r;
-		if (color.r > 255.0f)
-			color.r = 255.0f;
-		color.g += blinded_color.g;
-		if (color.g > 255.0f)
-			color.g = 255.0f;
-		color.b += blinded_color.b;
-		if (color.b > 255.0f)
-			color.b = 255.0f;
-	}
+	if (scene->blinded_lights)
+		apply_blinded_illumination(scene, ray, &color);
 	return (color);
 }
 

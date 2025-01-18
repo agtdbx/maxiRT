@@ -31,6 +31,7 @@ t_color	intersect_loop_without_param_obj(
 			t_ray const *ray)
 {
 	t_ray				new_ray;
+	t_color				pixel_color;
 	t_object			*obj;
 	t_object			*closest_obj;
 	t_intersect_info	intersect_info;
@@ -40,12 +41,19 @@ t_color	intersect_loop_without_param_obj(
 	if (closest_obj == NULL)
 	{
 		if (scene->skybox)
-			return (render_ray_on_sky_box(scene, ray));
-		return ((t_color){0});
+			pixel_color = render_ray_on_sky_box(scene, ray);
+		else
+			pixel_color = (t_color){0};
+		if (scene->blinded_lights)
+			apply_blinded_illumination(scene, ray, &pixel_color);
 	}
-	new_ray = *ray;
-	new_ray.depth += 1;
-	return (render_ray_on_object(scene, closest_obj, &new_ray, &intersect_info));
+	else
+	{
+		new_ray = *ray;
+		new_ray.depth += 1;
+		pixel_color = render_ray_on_object(scene, closest_obj, &new_ray, &intersect_info);
+	}
+	return (pixel_color);
 }
 
 static t_object	*get_closest_object(

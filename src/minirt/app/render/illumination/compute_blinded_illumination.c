@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 04:37:53 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/18 13:41:09 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,36 @@ static void		apply_shadow_to_illumination(
 					float dist_to_spotlight,
 					t_ray const *ray);
 
-t_color	compute_blinded_illumination(
+void	apply_blinded_illumination(
 			t_scene const *scene,
-			t_ray const *ray)
+			t_ray const *ray,
+			t_color *color)
 {
 	t_color	ill_from_spotlight;
-	t_color	illumination;
+	t_color	blinded_color;
 	t_light	*light;
 
 	light = scene->spotlights;
-	illumination = (t_color){0};
+	blinded_color = (t_color){0};
 	while (light != NULL)
 	{
 		ill_from_spotlight = (t_color){0};
 		_collect_blinded_illumination_from_spotlight(
 			scene, ray, light, &ill_from_spotlight);
-		illumination.r += ill_from_spotlight.r * light->color.r;
-		illumination.g += ill_from_spotlight.g * light->color.g;
-		illumination.b += ill_from_spotlight.b * light->color.b;
+		blinded_color.r += ill_from_spotlight.r * light->color.r;
+		blinded_color.g += ill_from_spotlight.g * light->color.g;
+		blinded_color.b += ill_from_spotlight.b * light->color.b;
 		light = light->next;
 	}
-	return (illumination);
+	color->r += blinded_color.r;
+	if (color->r > 255.0f)
+		color->r = 255.0f;
+	color->g += blinded_color.g;
+	if (color->g > 255.0f)
+		color->g = 255.0f;
+	color->b += blinded_color.b;
+	if (color->b > 255.0f)
+		color->b = 255.0f;
 }
 
 static void	_collect_blinded_illumination_from_spotlight(
@@ -197,17 +206,7 @@ static void	apply_shadow_to_illumination(
 				return ;
 			}
 		}
-		if (objects->opacity == 1.0f)
-		{
-			*illumination = (t_color){0};
-			return ;
-		}
-		illumination->r -= powf(objects->opacity,
-				1 + base_color.r * g_opacity_color_ratio);
-		illumination->g -= powf(objects->opacity,
-				1 + base_color.g * g_opacity_color_ratio);
-		illumination->b -= powf(objects->opacity,
-				1 + base_color.b * g_opacity_color_ratio);
-		illumination->a = base_color.a;
+		*illumination = (t_color){0};
+		return ;
 	}
 }

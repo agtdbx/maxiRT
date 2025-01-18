@@ -410,6 +410,7 @@ typedef struct s_scene
 	t_object	*skybox;
 	t_vec3		color_filter;
 	bool		cartoon_effect;
+	bool		blinded_lights;
 }	t_scene;
 
 t_error			scene_add_object(

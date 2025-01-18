@@ -26,8 +26,6 @@
 #define X 0
 #define Y 1
 
-static bool	blinded_lights = true;
-
 static int32_t	_render_ray_on_spotlight(
 					t_light const *light,
 					t_ray const *ray,
@@ -48,7 +46,6 @@ int32_t	render_ray_from_camera(
 	t_object const		*intersected_object;
 	t_light const		*light;
 	t_color				pixel_color;
-	t_color				blinded_color;
 	t_intersect_info	intersect_info;
 
 	pthread_rwlock_rdlock(scene_mut);
@@ -68,19 +65,8 @@ int32_t	render_ray_from_camera(
 		if (scene->skybox)
 			pixel_color = render_ray_on_sky_box(scene, &task->ray);
 
-		if (!show_spotlights && blinded_lights)
-		{
-			blinded_color = compute_blinded_illumination(scene, &task->ray);
-			pixel_color.r += blinded_color.r;
-			if (pixel_color.r > 255.0f)
-				pixel_color.r = 255.0f;
-			pixel_color.g += blinded_color.g;
-			if (pixel_color.g > 255.0f)
-				pixel_color.g = 255.0f;
-			pixel_color.b += blinded_color.b;
-			if (pixel_color.b > 255.0f)
-				pixel_color.b = 255.0f;
-		}
+		if (scene->blinded_lights)
+			apply_blinded_illumination(scene, &task->ray, &pixel_color);
 	}
 	else
 		pixel_color = render_ray_on_object(
