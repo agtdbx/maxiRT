@@ -30,27 +30,39 @@ t_vec2	get_object_pixel_pos(
 			t_ray const *normal,
 			t_intersect_info const *intersect_info)
 {
+	t_vec2	pixel_pos;
+
 	if (object->type == OBJ_SPHERE)
-		return (get_sphere_pixel_pos(&object->value.as_sphere, normal));
+		pixel_pos = get_sphere_pixel_pos(&object->value.as_sphere, normal);
 	else if (object->type == OBJ_PLANE)
-		return (get_plane_pixel_pos(&object->value.as_plane, normal));
+		pixel_pos = get_plane_pixel_pos(&object->value.as_plane, normal);
 	else if (object->type == OBJ_CYLINDER)
-		return (get_cylinder_pixel_pos(
-				&object->value.as_cylinder, ray, normal, intersect_info));
+		pixel_pos = get_cylinder_pixel_pos(
+				&object->value.as_cylinder, ray, normal, intersect_info);
 	else if (object->type == OBJ_CONE)
-		return (get_cone_pixel_pos(
-				&object->value.as_cone, ray, normal, intersect_info));
+		pixel_pos = get_cone_pixel_pos(
+				&object->value.as_cone, ray, normal, intersect_info);
 	else if (object->type == OBJ_CUBE)
-		return (get_cube_pixel_pos(
-				&object->value.as_cube, normal, intersect_info));
+		pixel_pos = get_cube_pixel_pos(
+				&object->value.as_cube, normal, intersect_info);
 	else if (object->type == OBJ_SKYBOX)
-		return (get_skybox_pixel_pos(
-				&object->value.as_skybox, normal, intersect_info));
+		pixel_pos = get_skybox_pixel_pos(
+				&object->value.as_skybox, normal, intersect_info);
 	else if (object->type == OBJ_TRIANGLE)
-		return (get_triangle_pixel_pos(
-				&object->value.as_triangle, normal));
+		pixel_pos = get_triangle_pixel_pos(
+				&object->value.as_triangle, normal);
 	else if (object->type == OBJ_OBJECT_FILE)
-		return (get_object_file_pixel_pos(
-				&object->value.as_object_file, normal, intersect_info));
-	return ((t_vec2){0});
+		pixel_pos = get_object_file_pixel_pos(
+				&object->value.as_object_file, normal, intersect_info);
+	else
+		pixel_pos = (t_vec2){0};
+
+	pixel_pos.x += object->texture_shift.x;
+	if (pixel_pos.x > 1.0f)
+		pixel_pos.x -= 1.0f;
+	pixel_pos.y += object->texture_shift.y;
+	if (pixel_pos.y > 1.0f)
+		pixel_pos.y -= 1.0f;
+
+	return (pixel_pos);
 }

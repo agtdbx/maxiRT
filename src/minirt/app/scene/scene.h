@@ -360,6 +360,7 @@ typedef struct s_object
 	float			opacity;
 	float			density;
 	float			reflection;
+	t_vec2			texture_shift;
 
 	struct s_object	*next;
 }	t_object;

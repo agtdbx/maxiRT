@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_add_object.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 23:28:29 by tdubois           #+#    #+#             */
-/*   Updated: 2024/12/20 00:02:01 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/18 19:48:39 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_error	scene_add_object(
 		return (FAILURE);
 	}
 	new_object->next = NULL;
+	new_object->texture_shift = (t_vec2){0};
 	if (obj->type == OBJ_SKYBOX)
 		scene->skybox = new_object;
 	else
