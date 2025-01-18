@@ -61,17 +61,17 @@ int32_t	render_ray_from_camera(
 	}
 	if (intersected_object == NULL)
 	{
-		pixel_color = (t_color){0};
 		if (scene->skybox)
 			pixel_color = render_ray_on_sky_box(scene, &task->ray);
-
-		if (g_blinded_lights)
-			apply_blinded_illumination(scene, &task->ray, &pixel_color);
+		else
+			pixel_color = (t_color){0};
 	}
 	else
 		pixel_color = render_ray_on_object(
 						scene, intersected_object, &task->ray, &intersect_info);
 
+	if (g_blinded_lights)
+		apply_blinded_illumination(scene, &task->ray, &pixel_color);
 
 	pixel_color.r *= scene->color_filter.x;
 	pixel_color.g *= scene->color_filter.y;

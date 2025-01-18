@@ -63,9 +63,6 @@ t_color	render_ray_on_object(
 	color = merge_color(intersected_object, &color,
 							&refracted_color, &reflected_color,
 							force_transparency);
-
-	if (g_blinded_lights)
-		apply_blinded_illumination(scene, ray, &color);
 	return (color);
 }
 

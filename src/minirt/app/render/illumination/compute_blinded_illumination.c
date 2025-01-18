@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 02:23:39 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 18:35:16 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/18 19:27:16 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	apply_blinded_illumination(
 
 	new_ray = *ray;
 	vec3_linear_transform(&new_ray.pos, 0.1f, &new_ray.vec);
+
 	light = scene->spotlights;
 	blinded_color = (t_color){0};
 	while (light != NULL)
@@ -61,15 +62,10 @@ void	apply_blinded_illumination(
 		blinded_color.b += ill_from_spotlight.b * light->color.b;
 		light = light->next;
 	}
+
 	color->r += blinded_color.r;
-	if (color->r > 255.0f)
-		color->r = 255.0f;
 	color->g += blinded_color.g;
-	if (color->g > 255.0f)
-		color->g = 255.0f;
 	color->b += blinded_color.b;
-	if (color->b > 255.0f)
-		color->b = 255.0f;
 }
 
 static void	_collect_blinded_illumination_from_spotlight(
@@ -80,15 +76,11 @@ static void	_collect_blinded_illumination_from_spotlight(
 {
 	float			dist_to_spotlight;
 	t_vec3			ol;
-	float			idiffuse;
 	float			blind_ratio;
 	float			parallel_ratio;
 
 	vec3_substract_into(&ol, &light->pos, &ray->pos);
 	dist_to_spotlight = vec3_normalize(&ol);
-	idiffuse = vec3_dot(&ray->vec, &ol);
-	if (idiffuse <= 0.0f)
-		return ;
 
 	if (light->parallel)
 	{
@@ -98,7 +90,7 @@ static void	_collect_blinded_illumination_from_spotlight(
 	}
 
 	blind_ratio = _compute_blind_ratio(ray, light);
-	if (blind_ratio == 0.0f)
+	if (blind_ratio <= 0.0f)
 		return ;
 
 	*ill = _is_light_hidden(scene->objects, dist_to_spotlight, ray);
@@ -109,7 +101,7 @@ static void	_collect_blinded_illumination_from_spotlight(
 	}
 	if (scene->cartoon_effect)
 	{
-		apply_cartoon_effet(ill, idiffuse);
+		apply_cartoon_effet(ill, blind_ratio);
 		return ;
 	}
 	color_scale(ill, blind_ratio * light->brightness);
@@ -141,6 +133,8 @@ float	_compute_blind_ratio(
 	vec3_normalize(&inter_vec);
 
 	blind_ratio = vec3_dot(&inter_vec, &ray->vec);
+	if (blind_ratio < 0.0f)
+		return (0.0f);
 
 	return (powf(blind_ratio, 10.0f));
 }
@@ -178,44 +172,41 @@ static void	apply_shadow_to_illumination(
 	t_ray				normal;
 	t_vec2				pixel_pos;
 
-	if (test_intersection_with_obj(
-			ray, objects, &distance_to_object)
-		&& (distance_to_object.distance < dist_to_spotlight))
+	if (!test_intersection_with_obj(ray, objects, &distance_to_object)
+			|| distance_to_object.distance >= dist_to_spotlight)
 	{
-		compute_normal_ray(objects, ray,
-			&distance_to_object, &normal);
-		pixel_pos = get_object_pixel_pos(objects, ray,
-				&normal, &distance_to_object);
-		base_color = get_base_color_object(objects, &pixel_pos);
-		if (base_color.a == -1.0f)
-		{
-			if (test_intersection_with_obj_from_inside(
-					ray, objects, &distance_to_object)
-				&& distance_to_object.distance < dist_to_spotlight)
-			{
-				compute_normal_ray(objects, ray,
-					&distance_to_object, &normal);
-				vec3_scale(&normal.vec, -1.0f);
-				pixel_pos = get_object_pixel_pos(objects, ray,
-						&normal, &distance_to_object);
-				base_color = get_base_color_object(objects, &pixel_pos);
-				if (base_color.a == -1.0f)
-				{
-					illumination->r = 1.0f;
-					illumination->g = 1.0f;
-					illumination->b = 1.0f;
-					return ;
-				}
-			}
-			else
-			{
-				illumination->r = 1.0f;
-				illumination->g = 1.0f;
-				illumination->b = 1.0f;
-				return ;
-			}
-		}
-		*illumination = (t_color){0};
+		illumination->r = 1.0f;
+		illumination->g = 1.0f;
+		illumination->b = 1.0f;
 		return ;
 	}
+
+	*illumination = (t_color){0};
+	compute_normal_ray(objects, ray, &distance_to_object, &normal);
+	pixel_pos = get_object_pixel_pos(objects, ray, &normal, &distance_to_object);
+	base_color = get_base_color_object(objects, &pixel_pos);
+	if (base_color.a != -1.0f)
+		return ;
+
+	if (!test_intersection_with_obj_from_inside(ray, objects, &distance_to_object)
+			|| distance_to_object.distance >= dist_to_spotlight)
+	{
+		illumination->r = 1.0f;
+		illumination->g = 1.0f;
+		illumination->b = 1.0f;
+		illumination->a = -1.0f;
+		return ;
+	}
+
+	compute_normal_ray(objects, ray, &distance_to_object, &normal);
+	vec3_scale(&normal.vec, -1.0f);
+	pixel_pos = get_object_pixel_pos(objects, ray, &normal, &distance_to_object);
+	base_color = get_base_color_object(objects, &pixel_pos);
+	if (base_color.a == -1.0f)
+		return ;
+
+	illumination->r = 1.0f;
+	illumination->g = 1.0f;
+	illumination->b = 1.0f;
+	illumination->a = -1.0f;
 }
