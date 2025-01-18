@@ -47,7 +47,7 @@ bool	object_panel_draw(
 		should_redraw |= object_file_panel_draw(mlx, menu);
 	return (should_redraw);
 }
-#include <stdio.h>
+
 static bool	_draw_common_labels(
 			mlx_t *mlx,
 			t_menu *menu)
@@ -70,11 +70,28 @@ static bool	_draw_common_labels(
 	float_label_draw(mlx, menu, &menu->object_panel.opacity_label);
 	float_label_draw(mlx, menu, &menu->object_panel.density_label);
 	float_label_draw(mlx, menu, &menu->object_panel.reflection_label);
+	vec2_label_draw(mlx, menu, &menu->object_panel.texture_shift_label);
 	should_redraw |= button_draw(mlx, menu,
 			&menu->object_panel.opacity_label_button);
 	should_redraw |= button_draw(mlx, menu,
 			&menu->object_panel.density_label_button);
 	should_redraw |= button_draw(mlx, menu,
 			&menu->object_panel.reflection_label_button);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.texture_shift_label_button_x);
+	should_redraw |= button_draw(mlx, menu,
+			&menu->object_panel.texture_shift_label_button_y);
+	if (should_redraw)
+	{
+		if (*menu->object_panel.texture_shift_label_button_x.f < 0.0f)
+			*menu->object_panel.texture_shift_label_button_x.f += 1.0f;
+		if (*menu->object_panel.texture_shift_label_button_x.f > 1.0f)
+			*menu->object_panel.texture_shift_label_button_x.f -= 1.0f;
+
+		if (*menu->object_panel.texture_shift_label_button_y.f < 0.0f)
+			*menu->object_panel.texture_shift_label_button_y.f += 1.0f;
+		if (*menu->object_panel.texture_shift_label_button_y.f > 1.0f)
+			*menu->object_panel.texture_shift_label_button_y.f -= 1.0f;
+	}
 	return (should_redraw);
 }

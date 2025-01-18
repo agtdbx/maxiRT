@@ -28,9 +28,12 @@ void	object_panel_hide(
 	float_label_hide(&menu->object_panel.opacity_label);
 	float_label_hide(&menu->object_panel.density_label);
 	float_label_hide(&menu->object_panel.reflection_label);
+	vec2_label_hide(&menu->object_panel.texture_shift_label);
 	button_hide(&menu->object_panel.opacity_label_button);
 	button_hide(&menu->object_panel.density_label_button);
 	button_hide(&menu->object_panel.reflection_label_button);
+	button_hide(&menu->object_panel.texture_shift_label_button_x);
+	button_hide(&menu->object_panel.texture_shift_label_button_y);
 	cone_panel_hide(menu);
 	cube_panel_hide(menu);
 	plane_panel_hide(menu);

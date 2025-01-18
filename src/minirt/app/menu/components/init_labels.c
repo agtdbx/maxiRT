@@ -6,7 +6,7 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 13:11:42 by aderouba          #+#    #+#             */
-/*   Updated: 2025/01/18 20:05:23 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/18 22:31:39 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,18 +104,18 @@ void	init_texture_shift_label(
 {
 	t_object_panel *const	panel = &menu->object_panel;
 
-	vec2_label_init(&panel->reflection_label, "texture shift: ",
-		(uint32_t[2]){g_pos[0] + 180, g_pos[1] + 90});
+	panel->texture_shift_label = vec2_label_init(mlx, menu, "texture shift: ",
+									(uint32_t[2]){g_pos[0], g_pos[1] + 120});
 	button_init(mlx, &panel->texture_shift_label_button_x,
-		(int32_t[2]){g_pos[0] + 335, g_pos[1] + 90});
+		(int32_t[2]){g_pos[0] + 100, g_pos[1] + 140});
 	panel->texture_shift_label_button_x.f = NULL;
-	panel->texture_shift_label_button_x.min = 0.0f;
-	panel->texture_shift_label_button_x.max = 1.0f;
+	panel->texture_shift_label_button_x.min = -0.1f;
+	panel->texture_shift_label_button_x.max = 1.1f;
 	panel->texture_shift_label_button_x.step = 0.01f;
 	button_init(mlx, &panel->texture_shift_label_button_y,
-		(int32_t[2]){g_pos[0] + 335, g_pos[1] + 110});
+		(int32_t[2]){g_pos[0] + 100, g_pos[1] + 160});
 	panel->texture_shift_label_button_y.f = NULL;
-	panel->texture_shift_label_button_y.min = 0.0f;
-	panel->texture_shift_label_button_y.max = 1.0f;
+	panel->texture_shift_label_button_y.min = -0.1f;
+	panel->texture_shift_label_button_y.max = 1.1f;
 	panel->texture_shift_label_button_y.step = 0.01f;
 }

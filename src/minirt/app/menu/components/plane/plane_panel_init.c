@@ -6,14 +6,14 @@
 /*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 11:10:59 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/17 23:47:44 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/18 22:37:40 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/menu/menu.h"
 #include <stdint.h>
 
-static const uint32_t	g_pos[2] = {20, 530};
+static const uint32_t	g_pos[2] = {20, 600};
 
 static void	_init_position_label(
 				mlx_t *mlx,

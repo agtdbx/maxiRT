@@ -38,6 +38,7 @@ void	object_panel_init(
 	init_opacity_label(mlx, menu);
 	init_density_label(mlx, menu);
 	init_reflection_label(mlx, menu);
+	init_texture_shift_label(mlx, menu);
 	cone_panel_init(mlx, menu);
 	cube_panel_init(mlx, menu);
 	plane_panel_init(mlx, menu);

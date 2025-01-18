@@ -409,6 +409,9 @@ void			init_density_label(
 void			init_reflection_label(
 					mlx_t *mlx,
 					t_menu *menu);
+void			init_texture_shift_label(
+					mlx_t *mlx,
+					t_menu *menu);
 void			object_panel_show(
 					t_menu *menu);
 void			object_panel_hide(
@@ -563,6 +566,22 @@ void			float_label_draw(
 					mlx_t *mlx,
 					t_menu *menu,
 					t_float_label *label);
+
+/// vec2_label
+
+t_vec2_label	vec2_label_init(
+					mlx_t *mlx,
+					t_menu *menu,
+					char const *title,
+					uint32_t const pos[2]);
+void			vec2_label_show(
+					t_vec2_label *label);
+void			vec2_label_hide(
+					t_vec2_label *label);
+void			vec2_label_draw(
+					mlx_t *mlx,
+					t_menu *menu,
+					t_vec2_label *label);
 
 /// vec3_label
 

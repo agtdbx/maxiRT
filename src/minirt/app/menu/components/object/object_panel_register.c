@@ -49,9 +49,13 @@ static void	_register_common_labels(
 	menu->object_panel.opacity_label.f = &object->opacity;
 	menu->object_panel.density_label.f = &object->density;
 	menu->object_panel.reflection_label.f = &object->reflection;
+	menu->object_panel.texture_shift_label.label_x.f = &object->texture_shift.x;
+	menu->object_panel.texture_shift_label.label_y.f = &object->texture_shift.y;
 	menu->object_panel.opacity_label_button.f = &object->opacity;
 	menu->object_panel.density_label_button.f = &object->density;
 	menu->object_panel.reflection_label_button.f = &object->reflection;
+	menu->object_panel.texture_shift_label_button_x.f = &object->texture_shift.x;
+	menu->object_panel.texture_shift_label_button_y.f = &object->texture_shift.y;
 }
 
 static void	_register_object(

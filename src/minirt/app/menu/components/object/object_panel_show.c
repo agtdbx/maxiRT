@@ -31,9 +31,12 @@ void	object_panel_show(
 	float_label_show(&menu->object_panel.opacity_label);
 	float_label_show(&menu->object_panel.density_label);
 	float_label_show(&menu->object_panel.reflection_label);
+	vec2_label_show(&menu->object_panel.texture_shift_label);
 	button_show(&menu->object_panel.opacity_label_button);
 	button_show(&menu->object_panel.density_label_button);
 	button_show(&menu->object_panel.reflection_label_button);
+	button_show(&menu->object_panel.texture_shift_label_button_x);
+	button_show(&menu->object_panel.texture_shift_label_button_y);
 	if (menu->object_panel.object_type == OBJ_CONE)
 		cone_panel_show(menu);
 	if (menu->object_panel.object_type == OBJ_CUBE)
