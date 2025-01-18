@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   canvas_swap.c                                      :+:      :+:    :+:   */
+/*   vec2_add.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 13:43:16 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 09:59:58 by damien           ###   ########.fr       */
+/*   Created: 2025/01/18 20:13:07 by damien            #+#    #+#             */
+/*   Updated: 2025/01/18 20:14:18 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/canvas/canvas.h"
+#include "minirt/app/utils/geometry/geometry.h"
 
-#include <stdbool.h>
-
-#include "libft/libft.h"
-
-void	canvas_swap(
-			t_canvas *canvas)
+void	vec2_add(t_vec2 *res, t_vec2 *a)
 {
-	canvas->back->enabled = true;
-	canvas->front->enabled = false;
-	ft_swap(&canvas->front, &canvas->scaled_img);
+	res->x += a->x;
+	res->y += a->y;
 }

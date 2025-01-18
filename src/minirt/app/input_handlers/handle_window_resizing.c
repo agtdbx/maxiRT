@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 22:47:45 by tdubois           #+#    #+#             */
-/*   Updated: 2024/12/26 14:46:06 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/18 09:53:28 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ bool	handle_window_resizing(
 		mlx_resize_image(canvas->back, width, height);
 		pthread_mutex_unlock(&sync->canvas_mut[BACK_CANVAS]);
 		mlx_resize_image(menu->background, menu->background->width, height);
+		mlx_resize_image(canvas->scaled_img, width, height);
 		canvas->width = width;
 		canvas->height = height;
 		canvas->width_div_2 = width / 2.0f;

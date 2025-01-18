@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   canvas_swap.c                                      :+:      :+:    :+:   */
+/*   rgb_to_luma.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 13:43:16 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 09:59:58 by damien           ###   ########.fr       */
+/*   Created: 2025/01/18 20:16:51 by damien            #+#    #+#             */
+/*   Updated: 2025/01/18 20:17:08 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/canvas/canvas.h"
+#include "minirt/app/utils/color/color.h"
 
-#include <stdbool.h>
-
-#include "libft/libft.h"
-
-void	canvas_swap(
-			t_canvas *canvas)
+float	rgb_to_luma(
+			t_vec3 rgb)
 {
-	canvas->back->enabled = true;
-	canvas->front->enabled = false;
-	ft_swap(&canvas->front, &canvas->scaled_img);
+	t_vec3 norm;
+
+	vec3_normalize_into(&norm, &rgb);
+	return vec3_dot(&norm, &(t_vec3) {0.2126, 0.7152, 0.0722});
 }

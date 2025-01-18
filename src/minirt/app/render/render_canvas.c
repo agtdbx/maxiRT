@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:45:57 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 01:07:36 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/18 13:23:19 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_error	render_canvas(
 	static int32_t	task_created = 0;
 	static int32_t	pixel_per_ray = 16;
 	static bool		is_rendering = false;
+	static bool		is_antialiased = false;
 
 	if (should_render_fast)
 	{
@@ -51,6 +52,7 @@ t_error	render_canvas(
 		is_rendering = true;
 		task_created = 0;
 		app->render.sync.pixel_rendered = 0;
+		is_antialiased = false;
 		return SUCCESS;
 	}
 	_print_rendering_progress(app->render.sync.pixel_rendered, app->mlx, is_rendering);
@@ -61,9 +63,17 @@ t_error	render_canvas(
 		{
 			canvas_swap(&app->canvas);
 			antialiasing(&app->canvas);
-			ft_swap(&app->canvas.back, &app->canvas.front);
 			is_rendering = false;
+			is_antialiased = true;
 		}
+	}
+	if (is_antialiased)
+	{
+		app->canvas.back->enabled = false;
+		app->canvas.front->enabled = false;
+		app->canvas.scaled_img->enabled = true;
+		ft_swap(&app->canvas.front, &app->canvas.scaled_img);
+		is_antialiased = false;
 	}
 	return SUCCESS;
 }

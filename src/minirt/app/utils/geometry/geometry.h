@@ -40,6 +40,16 @@ typedef struct s_ray
 extern float	vec2_dot(
 					t_vec2 const *u,
 					t_vec2 const *v);
+extern void		vec2_add(
+					t_vec2 *res,
+					t_vec2 *a);
+extern void		vec2_add_into(
+					t_vec2 *res,
+					t_vec2 *a,
+					t_vec2 *b);
+extern void		vec2_scale(
+					t_vec2 *v,
+					float scale);
 
 extern float	vec3_norm(
 					t_vec3 const *vec);

@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   canvas_swap.c                                      :+:      :+:    :+:   */
+/*   vec2_scale.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 13:43:16 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 09:59:58 by damien           ###   ########.fr       */
+/*   Created: 2025/01/18 20:14:38 by damien            #+#    #+#             */
+/*   Updated: 2025/01/18 20:14:44 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/canvas/canvas.h"
+#include "minirt/app/utils/geometry/geometry.h"
 
-#include <stdbool.h>
-
-#include "libft/libft.h"
-
-void	canvas_swap(
-			t_canvas *canvas)
+void	vec2_scale(t_vec2 *v, float scale)
 {
-	canvas->back->enabled = true;
-	canvas->front->enabled = false;
-	ft_swap(&canvas->front, &canvas->scaled_img);
+	v->x *= scale;
+	v->y *= scale;
 }
