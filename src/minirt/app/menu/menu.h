@@ -33,6 +33,17 @@ typedef struct s_float_label
 	mlx_image_t	*img;
 }	t_float_label;
 
+typedef struct s_vec2_label
+{
+	int32_t			x;
+	int32_t			y;
+	char const		*title;
+
+	mlx_image_t		*img_title;
+	t_float_label	label_x;
+	t_float_label	label_y;
+}	t_vec2_label;
+
 typedef struct s_vec3_label
 {
 	int32_t			x;
@@ -234,6 +245,10 @@ typedef struct s_object_panel
 
 	t_float_label		reflection_label;
 	t_button			reflection_label_button;
+
+	t_vec2_label		texture_shift_label;
+	t_button			texture_shift_label_button_x;
+	t_button			texture_shift_label_button_y;
 
 	t_cone_panel		cone_panel;
 	t_cube_panel		cube_panel;
