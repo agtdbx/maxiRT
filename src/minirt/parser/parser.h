@@ -282,6 +282,38 @@ static const t_directive	g_directives[] = {
 	"<size> <obj file path> <texture path> <normal map path>",
 	.callback = parse_object_file_texture_and_normal,
 },
+// Paraboloid
+{
+	.identifier = "par",
+	.usage = "par <position> <orientation vector> <k> <color>",
+	.callback = parse_paraboloid,
+},
+{
+	.identifier = "par-ck",
+	.usage = "par-ck <position> <orientation vector> <k>",
+	.callback = parse_paraboloid_checkerboard,
+},
+{
+	.identifier = "par-sn",
+	.usage = "par-sn <position> <diameter>",
+	.callback = parse_paraboloid_sinusoide,
+},
+{
+	.identifier = "par-pn",
+	.usage = "par-pn <position> <diameter>",
+	.callback = parse_paraboloid_perlin_noise,
+},
+{
+	.identifier = "par-t",
+	.usage = "par-t <position> <orientation vector> <k> <texture path>",
+	.callback = parse_paraboloid_texture,
+},
+{
+	.identifier = "par-tn",
+	.usage = "par-tn <position> <orientation vector> <k> <texture path> "
+	"<normal map path>",
+	.callback = parse_paraboloid_texture_and_normal,
+},
 // Specials
 {
 	.identifier = "cartoon",

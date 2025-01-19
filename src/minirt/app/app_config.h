@@ -44,6 +44,12 @@ static const float		g_opacity_color_ratio = 1.0f / 255.0f;
 
 static const float		g_scene_radius = 1000.0f;
 
+// paraboloid 
+
+static const float		g_paraboloid_default_reflection = 0.0f;
+static const float		g_paraboloid_default_opacity = 1.0f;
+static const float		g_paraboloid_default_density = 1.0f;
+
 // sphere
 static const float		g_sphere_default_reflection = 0.0f;
 static const float		g_sphere_default_opacity = 1.0f;

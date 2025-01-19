@@ -40,7 +40,9 @@ bool	test_intersection_with_obj(
 	else if (object->type == OBJ_OBJECT_FILE)
 		return (test_intersection_with_object_file(
 				ray, &object->value.as_object_file, intersect_info));
-
+	else if (object->type == OBJ_PARABOLOID)
+		return (test_intersection_with_paraboloid(
+				ray, &object->value.as_paraboloid, intersect_info));
 	return (false);
 }
 

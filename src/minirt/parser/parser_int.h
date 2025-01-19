@@ -222,6 +222,19 @@ t_error	parse_object_file_texture(
 t_error	parse_object_file_texture_and_normal(
 			t_parser_state *state);
 
+t_error	parse_paraboloid(
+			t_parser_state *state);
+t_error	parse_paraboloid_checkerboard(
+			t_parser_state *state);
+t_error	parse_paraboloid_texture(
+			t_parser_state *state);
+t_error	parse_paraboloid_texture_and_normal(
+			t_parser_state *state);
+t_error	parse_paraboloid_perlin_noise(
+			t_parser_state *state);
+t_error	parse_paraboloid_sinusoide(
+			t_parser_state *state);
+
 t_error	parse_cartoon_effect(
 			t_parser_state *state);
 

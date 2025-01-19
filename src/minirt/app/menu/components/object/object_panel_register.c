@@ -97,4 +97,9 @@ static void	_register_object(
 		object_file_panel_register(menu, &object->value.as_object_file);
 		object_file_panel_show(menu);
 	}
+	else if (object->type == OBJ_PARABOLOID)
+	{
+		paraboloid_panel_register(menu, &object->value.as_paraboloid);
+		paraboloid_panel_show(menu);
+	}
 }

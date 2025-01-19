@@ -65,6 +65,9 @@ static void	compute_normal_base(
 	else if (intersected_object->type == OBJ_OBJECT_FILE)
 		compute_normal_base_object_file(normal_base,
 			&intersected_object->value.as_object_file, intersect_info);
+	else if (intersected_object->type == OBJ_PARABOLOID)
+		compute_normal_base_paraboloid(normal_base,
+			&intersected_object->value.as_paraboloid);
 	else
 	{
 		normal_base[0] = (t_vec3){1.0f, 0.0f, 0.0f};

@@ -46,6 +46,7 @@ void	object_panel_init(
 	cylinder_panel_init(mlx, menu);
 	triangle_panel_init(mlx, menu);
 	object_file_panel_init(mlx, menu);
+	paraboloid_panel_init(mlx, menu);
 }
 
 static void	object_title_init(
@@ -75,4 +76,7 @@ static void	object_title_init(
 	panel->object_file_title = mlx_put_string(mlx, "-- Object file --",
 			menu->background->instances->x + g_pos[0], g_pos[1]);
 	panel->object_file_title->enabled = false;
+	panel->paraboloid_title = mlx_put_string(mlx, "-- Paraboloid --",
+			menu->background->instances->x + g_pos[0], g_pos[1]);
+	panel->paraboloid_title->enabled = false;
 }

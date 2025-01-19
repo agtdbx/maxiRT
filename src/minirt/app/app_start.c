@@ -142,6 +142,9 @@ static void	_compute_constants(
 		else if (object_iterator->type == OBJ_OBJECT_FILE)
 			object_file_compute_constants(
 				&object_iterator->value.as_object_file);
+		else if (object_iterator->type == OBJ_PARABOLOID)
+			paraboloid_compute_constants(
+				&object_iterator->value.as_paraboloid);
 		object_iterator = object_iterator->next;
 	}
 	handle_window_resizing(mlx, menu, scene, canvas, &render->sync);

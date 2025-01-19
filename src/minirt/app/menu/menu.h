@@ -216,6 +216,22 @@ typedef struct s_object_file_panel
 
 }	t_object_file_panel;
 
+typedef struct s_paraboloid_panel
+{
+	t_vec3_label	position_label;
+	t_button		position_label_button_x;
+	t_button		position_label_button_y;
+	t_button		position_label_button_z;
+
+	t_vec3_label	direction_label;
+	t_button		direction_label_button_x;
+	t_button		direction_label_button_y;
+	t_button		direction_label_button_z;
+
+	t_float_label	height_label;
+	t_button		height_label_button;
+}	t_paraboloid_panel;
+
 typedef struct s_object_panel
 {
 	bool				is_enabled;
@@ -231,6 +247,7 @@ typedef struct s_object_panel
 	mlx_image_t			*cylinder_title;
 	mlx_image_t			*triangle_title;
 	mlx_image_t			*object_file_title;
+	mlx_image_t			*paraboloid_title;
 
 	t_color_label		color_label;
 	t_button			color_label_button_r;
@@ -257,7 +274,7 @@ typedef struct s_object_panel
 	t_cylinder_panel	cylinder_panel;
 	t_triangle_panel	triangle_panel;
 	t_object_file_panel	object_file_panel;
-
+	t_paraboloid_panel	paraboloid_panel;
 }	t_object_panel;
 
 typedef struct s_light_panel
@@ -518,6 +535,22 @@ bool			triangle_panel_draw(
 void			triangle_panel_register(
 					t_menu *menu,
 					t_triangle *triangle);
+
+// paraboloid_panel
+
+void	paraboloid_panel_register(
+			t_menu *menu,
+			t_paraboloid *paraboloid);
+void	paraboloid_panel_init(
+			mlx_t *mlx,
+			t_menu *menu);
+void	paraboloid_panel_hide(
+			t_menu *menu);
+void	paraboloid_panel_show(
+			t_menu *menu);
+bool	paraboloid_panel_draw(
+			mlx_t *mlx,
+			t_menu *menu);
 
 // object_file_panel
 

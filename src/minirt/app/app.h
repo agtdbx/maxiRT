@@ -45,6 +45,7 @@ typedef struct s_app
 typedef struct s_intersect_info
 {
 	float		distance;
+	float		distance2;
 	int			sub_part_id;
 }	t_intersect_info;
 
@@ -262,12 +263,20 @@ bool			test_intersection_with_triangle(
 					t_intersect_info *intersect_info);
 
 /// bounding box intersections
+
 bool			test_intersection_with_bounding_box(
 					t_ray const *ray,
 					t_bounding_box const *bbox);
 bool			test_intersection_with_bounding_box_dist(
 					t_ray const *ray,
 					t_bounding_box const *bbox,
+					t_intersect_info *intersect_info);
+
+// paraboloid
+
+bool			test_intersection_with_paraboloid(
+					t_ray const *ray,
+					t_paraboloid const *para,
 					t_intersect_info *intersect_info);
 
 /// object_file intersections
@@ -349,7 +358,11 @@ void			compute_normal_ray_on_object_file(
 					t_ray const *ray,
 					t_intersect_info const *intersect_info,
 					t_ray *normal);
-
+void			compute_normal_ray_on_paraboloid(
+					t_object const *paraboloid,
+					t_ray const *ray,
+					t_intersect_info const *intersect_info,
+					t_ray *normal);
 /// illumination
 
 typedef struct s_phong_model
@@ -420,6 +433,11 @@ t_vec2			get_cylinder_pixel_pos(
 					t_ray const *ray,
 					t_ray const *normal,
 					t_intersect_info const *intersect_info);
+t_vec2			get_paraboloid_pixel_pos(
+					t_paraboloid const *paraboloid,
+					t_ray const *ray,
+					t_ray const *normal,
+					t_intersect_info const *intersect_info);
 t_vec2			get_cone_pixel_pos(
 					t_cone const *cone,
 					t_ray const *ray,
@@ -479,6 +497,9 @@ void			compute_normal_base_object_file(
 					t_vec3 normal_base[3],
 					t_object_file const *objf,
 					t_intersect_info const *intersect_info);
+void			compute_normal_base_paraboloid(
+					t_vec3 normal_base[3],
+					t_paraboloid const *paraboloid);
 void			apply_normal_map(
 					mlx_texture_t const *normal_map,
 					t_vec2 const *pixel_pos,

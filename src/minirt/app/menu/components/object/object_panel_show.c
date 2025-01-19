@@ -51,4 +51,6 @@ void	object_panel_show(
 		triangle_panel_show(menu);
 	if (menu->object_panel.object_type == OBJ_OBJECT_FILE)
 		object_file_panel_show(menu);
+	if (menu->object_panel.object_type == OBJ_PARABOLOID)
+		paraboloid_panel_show(menu);
 }
