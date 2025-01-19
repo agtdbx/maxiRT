@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_paraboloid_pixel_pos.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 12:07:26 by damien            #+#    #+#             */
-/*   Updated: 2025/01/17 14:30:24 by dguillau         ###   ########.fr       */
+/*   Updated: 2025/01/19 15:26:24 by gugus            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	compute_base_axis(
 	vec3_substract(&p, &paraboloid->pos);
 	if (paraboloid->dir.x != 0.0f || paraboloid->dir.y != 0.0f)
 		*ref = (t_vec3){-paraboloid->dir.y, paraboloid->dir.x, 0.0f};
-	else 	
+	else
 		*ref = (t_vec3){0.0f, 0.0f, 1.0f};
 	vec3_cross(&paraboloid->dir, &p, &tmp);
 	vec3_cross(&paraboloid->dir, &tmp, proj);

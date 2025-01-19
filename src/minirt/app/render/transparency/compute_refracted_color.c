@@ -67,7 +67,8 @@ t_color	compute_refracted_color(
 	if (object->opacity == 1.0f && !force_transparency)
 		return ((t_color){0});
 
-	if (object->type == OBJ_PLANE || object->type == OBJ_TRIANGLE)
+	if (object->type == OBJ_PLANE || object->type == OBJ_TRIANGLE
+			|| object->type == OBJ_PARABOLOID)
 		return (intersect_loop_without_param_obj(object, scene, ray));
 
 	density = object->density;
