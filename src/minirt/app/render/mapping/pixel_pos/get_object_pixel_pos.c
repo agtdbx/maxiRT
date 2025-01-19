@@ -67,5 +67,5 @@ t_vec2	get_object_pixel_pos(
 	if (pixel_pos.y > 1.0f)
 		pixel_pos.y -= 1.0f;
 
-	return ((t_vec2){0});
+	return (pixel_pos);
 }
