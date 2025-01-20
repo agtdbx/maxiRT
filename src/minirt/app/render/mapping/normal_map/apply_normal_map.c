@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_normal_map.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aderouba <aderouba@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:08:47 by aderouba          #+#    #+#             */
-/*   Updated: 2023/07/05 20:48:25 by aderouba         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:25:01 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	apply_normal_map(
 
 	if (!normal_map)
 		return ;
-	space_between_color = normal_map->bytes_per_pixel / 4;
+	space_between_color = normal_map->bytes_per_pixel / 3;
 	ratio = compute_ratio_pos_pixel(normal_map, pixel_pos, x, y);
 	normals[0] = get_pixel_normal(normal_map, x[0], y[0], space_between_color);
 	normals[1] = get_pixel_normal(normal_map, x[1], y[0], space_between_color);

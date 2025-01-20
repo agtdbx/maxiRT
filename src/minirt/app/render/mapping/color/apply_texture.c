@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gugus <gugus@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 16:08:47 by aderouba          #+#    #+#             */
-/*   Updated: 2025/01/16 14:58:41 by gugus            ###   ########.fr       */
+/*   Updated: 2025/01/20 11:24:59 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_color	apply_texture(
 
 	if (!texture)
 		return (apply_texture_not_found(pixel_pos));
-	space_between_color = texture->bytes_per_pixel / 4;
+	space_between_color = texture->bytes_per_pixel / 3;
 	ratio = compute_ratio_pos_pixel(texture, pixel_pos, x, y);
 	colors[0] = get_pixel_color(texture, x[0], y[0], space_between_color);
 	colors[1] = get_pixel_color(texture, x[1], y[0], space_between_color);
