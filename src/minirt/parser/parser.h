@@ -285,32 +285,32 @@ static const t_directive	g_directives[] = {
 // Paraboloid
 {
 	.identifier = "par",
-	.usage = "par <position> <orientation vector> <k> <color>",
+	.usage = "par <position> <orientation vector> <height> <color>",
 	.callback = parse_paraboloid,
 },
 {
 	.identifier = "par-ck",
-	.usage = "par-ck <position> <orientation vector> <k>",
+	.usage = "par-ck <position> <orientation vector> <height>",
 	.callback = parse_paraboloid_checkerboard,
 },
 {
 	.identifier = "par-sn",
-	.usage = "par-sn <position> <diameter>",
+	.usage = "par-sn <position> <orientation vector> <height>",
 	.callback = parse_paraboloid_sinusoide,
 },
 {
 	.identifier = "par-pn",
-	.usage = "par-pn <position> <diameter>",
+	.usage = "par-pn <position> <orientation vector> <height>",
 	.callback = parse_paraboloid_perlin_noise,
 },
 {
 	.identifier = "par-t",
-	.usage = "par-t <position> <orientation vector> <k> <texture path>",
+	.usage = "par-t <position> <orientation vector> <height> <texture path>",
 	.callback = parse_paraboloid_texture,
 },
 {
 	.identifier = "par-tn",
-	.usage = "par-tn <position> <orientation vector> <k> <texture path> "
+	.usage = "par-tn <position> <orientation vector> <height> <texture path> "
 	"<normal map path>",
 	.callback = parse_paraboloid_texture_and_normal,
 },

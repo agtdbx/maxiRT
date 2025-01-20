@@ -119,6 +119,16 @@ ob-t <position> <orientation x vector> <orientation y vector> <size> <obj file p
 ob-tn <position> <orientation x vector> <orientation y vector> <size> <obj file path> <texture path> <normal map path>
 ```
 
+Paraboloid
+```
+par <position> <orientation vector> <height> <color>
+par-ck <position> <orientation vector> <height>
+par-sn <position> <orientation vector> <height>
+par-pn <position> <orientation vector> <height>
+par-t <position> <orientation vector> <height> <texture path>
+par-tn <position> <orientation vector> <height> <texture path> <normal map path>"
+```
+
 #### Scene specials
 add a cartoon effect
 ```
