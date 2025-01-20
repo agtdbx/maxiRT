@@ -105,6 +105,8 @@ t_ray			create_ray_from_pixel_coords(
 					t_canvas const *canvas,
 					int32_t const coords[2]);
 
+void			antialiasing(
+					t_canvas *canvas);
 /// raytracing
 
 typedef struct s_pixel_info

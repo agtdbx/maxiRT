@@ -6,7 +6,7 @@
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 16:20:42 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/10 14:23:32 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/18 09:59:05 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ t_error	canvas_init(
 			mlx_t *mlx,
 			t_canvas *canvas)
 {
+	canvas->scaled_img = mlx_new_image(mlx, mlx->width, mlx->height);
+	if (canvas->scaled_img == NULL)
+		return (FAILURE);
+	if (mlx_image_to_window(mlx, canvas->scaled_img, 0, 0) == -1)
+		return (FAILURE);
+	mlx_set_instance_depth(&canvas->scaled_img->instances[0], 0);
 	canvas->record_icon = mlx_new_image(mlx, mlx->width, mlx->height);
 	if (mlx_image_to_window(mlx, canvas->record_icon, 0, 0) == -1)
 		return (FAILURE);

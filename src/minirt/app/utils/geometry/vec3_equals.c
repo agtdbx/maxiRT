@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   canvas_swap.c                                      :+:      :+:    :+:   */
+/*   vec3_equals.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 13:43:16 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 09:59:58 by damien           ###   ########.fr       */
+/*   Created: 2025/01/17 22:10:08 by damien            #+#    #+#             */
+/*   Updated: 2025/01/18 01:20:15 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt/app/canvas/canvas.h"
+#include "minirt/app/utils/geometry/geometry.h"
 
 #include <stdbool.h>
 
-#include "libft/libft.h"
-
-void	canvas_swap(
-			t_canvas *canvas)
+bool	vec3_equals(
+			t_vec3 *a,
+			t_vec3 *b)
 {
-	canvas->back->enabled = true;
-	canvas->front->enabled = false;
-	ft_swap(&canvas->front, &canvas->scaled_img);
+	return (a->x == b->x && a->y == b->y && a->z == b->z);
 }

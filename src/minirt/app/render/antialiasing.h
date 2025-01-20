@@ -1,45 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   antialiasing.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 01:27:52 by tdubois           #+#    #+#             */
-/*   Updated: 2025/01/18 20:17:21 by damien           ###   ########.fr       */
+/*   Created: 2025/01/18 20:15:49 by damien            #+#    #+#             */
+/*   Updated: 2025/01/18 20:16:33 by damien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#ifndef ANTIALIASING_H
+# define ANTIALIASING_H
 
-# include <stdint.h>
-
-# include "minirt/app/app_config.h"
 # include "minirt/app/utils/geometry/geometry.h"
 
-typedef struct s_color
+typedef struct s_edge
 {
-	float	r;
-	float	g;
-	float	b;
-	float	a;
-}	t_color;
+	t_vec2	pixel_pos;
+	t_vec2	init_pixel_pos;
+	t_vec2	pixel_step;
+	float	luma;
+	float	other_luma;
+	bool	horizontal;
+}	t_edge;
 
-int32_t	color_to_int(
-			t_color const *color);
 
-void	color_scale(
-			t_color *color,
-			float scaling_factor);
+typedef struct s_luma_neighbour
+{
+	float middle;
+	float up;
+	float down;
+	float left;
+	float right;
+	float left_up;
+	float right_up;
+	float left_down;
+	float right_down;
+}	t_luma_neighbour;
 
-void	mix_color_into(
-			t_vec3 *res,
-			t_vec3 *color_a,
-			t_vec3 *color_b,
-			float a);
 
-float	rgb_to_luma(
-			t_vec3 rgb);
-
-#endif//COLOR_H
+#endif //ANTIALIASING_H
