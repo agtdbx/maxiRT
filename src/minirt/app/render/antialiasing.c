@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   antialiasing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damien <damien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dguillau <dguillau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:47:01 by damien            #+#    #+#             */
-/*   Updated: 2025/01/19 12:03:29 by damien           ###   ########.fr       */
+/*   Updated: 2025/01/20 10:26:54 by dguillau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt/app/app.h"
 #include "minirt/app/utils/color/color.h"
+#include "minirt/app/utils/geometry/geometry.h"
 #include "minirt/app/render/antialiasing.h"
+
+#include <stdbool.h>
 
 static t_vec3	_get_pixel_color(mlx_image_t *img, t_vec2 pos);
 static void		_sample_pixel(t_vec2 pixel, t_canvas *canvas);
@@ -29,7 +32,6 @@ static void		_sample_pixel(t_vec2 pixel, t_canvas *canvas);
 
 #define SUBPIXEL_QUALITY 0.75
 
-
 /**
  * @brief Source: https://catlikecoding.com/unity/tutorials/custom-srp/fxaa/
  * 
@@ -39,13 +41,16 @@ void antialiasing(t_canvas *canvas)
 {
 	int	i, j;
 
-	for (i = 1; i < canvas->width - 1; i++)
-		for (j = 1; j < canvas->height - 1; j++)
+	for (i = 2; i < canvas->width - 2; i++)
+		for (j = 2; j < canvas->height - 2; j++)
 			_sample_pixel((t_vec2) {i, j}, canvas);
 }
 
 
-void	find_luma_neighbours(t_luma_neighbour *neighbours, t_vec2 pix, mlx_image_t *img)
+void	find_luma_neighbours(
+				t_luma_neighbour *neighbours,
+				t_vec2 pix,
+				mlx_image_t *img)
 {
 	neighbours->middle = rgb_to_luma(_get_pixel_color(img, pix));
 	neighbours->left = rgb_to_luma(_get_pixel_color(img, (t_vec2) {pix.x - 1, pix.y}));
@@ -70,19 +75,18 @@ void	find_luma_min_max(float luma[2], t_luma_neighbour *neighbours)
 	luma[1] = fmax(neighbours->up, fmax(neighbours->down, fmax(neighbours->left, fmax(neighbours->right, fmax(neighbours->left_up, fmax(neighbours->right_up, fmax(neighbours->left_down, neighbours->right_down)))))));
 }
 
-float saturate(float x)
+float	saturate(float x)
 {
 	return fmax(0, fmin(1, x));
 }
 
-float smoothstep(float a, float b, float x)
+float	smoothstep(float a, float b, float x)
 {
 	float	t;
 
 	t = saturate((x - a)/(b - a));
 	return t * t * (3.0 - (2.0 * t));
 }
-
 
 float	get_blend_factor(t_luma_neighbour *luma, float luma_range)
 {
@@ -98,7 +102,7 @@ float	get_blend_factor(t_luma_neighbour *luma, float luma_range)
 	return  filter * filter * SUBPIXEL_QUALITY;
 }
 
-bool is_horizontal_edge(t_luma_neighbour *luma)
+bool	is_horizontal_edge(t_luma_neighbour *luma)
 {
 	float horizontal =
 		2.0 * fabs(luma->up + luma->down - 2.0 * luma->middle) +
@@ -112,10 +116,13 @@ bool is_horizontal_edge(t_luma_neighbour *luma)
 }
 
 
-void	get_fxaa_edge(t_edge *edge, t_luma_neighbour *luma, t_vec2 *pix_pos)
+void	get_fxaa_edge(
+				t_edge *edge,
+				t_luma_neighbour *luma,
+				t_vec2 *pix_pos)
 {
-	float lumaP, lumaN;
-	float gradient_n, gradient_p;
+	float	lumaP, lumaN;
+	float	gradient_n, gradient_p;
 
 	if (is_horizontal_edge(luma))
 	{
@@ -130,7 +137,6 @@ void	get_fxaa_edge(t_edge *edge, t_luma_neighbour *luma, t_vec2 *pix_pos)
 		lumaP = luma->left;
 		lumaN = luma->right;
 	}
-
 	gradient_p = fabs(lumaP - luma->middle);
 	gradient_n = fabs(lumaN - luma->middle);
 	if (gradient_p < gradient_n)
@@ -150,25 +156,81 @@ void	get_fxaa_edge(t_edge *edge, t_luma_neighbour *luma, t_vec2 *pix_pos)
 
 bool	out_of_bounds(t_edge *edge, int width, int height)
 {
-	return edge->pixel_pos.x <= 0 || edge->pixel_pos.y <= 0
-		|| edge->pixel_pos.x >= width || edge->pixel_pos.y >= height
-		|| edge->init_pixel_pos.x <= 0 || edge->init_pixel_pos.y <= 0
-		|| edge->init_pixel_pos.x >= width || edge->init_pixel_pos.y >= height;
+	t_vec2	new_edge_pos;
+
+	vec2_add_into(&new_edge_pos, &edge->pixel_pos, &edge->pixel_step);
+	if ( new_edge_pos.x <= 0 || new_edge_pos.y <= 0
+		|| new_edge_pos.x >= width || new_edge_pos.y >= height)
+		return true;
+	vec2_add_into(&new_edge_pos, &edge->init_pixel_pos, &edge->pixel_step);
+	if ( new_edge_pos.x <= 0 || new_edge_pos.y <= 0
+		|| new_edge_pos.x >= width || new_edge_pos.y >= height)
+		return true;
+	return false;
 }
 
-float	get_edge_blend_factor(
-				t_luma_neighbour *luma,
-				t_edge *initial_edge,
-				t_canvas *canvas)
+void	iterate_to_both_ends(
+				t_edge *edges,
+				t_canvas *canvas,
+				float luma_gradients[2],
+				float gradient_threshold,
+				float edge_luma)
 {
 	int		i;
-	t_edge	edges[2];
+	bool	at_end_n = false;
+	bool	at_end_p = false;
+	bool	edge_reached = false;
 
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < 99 && !edge_reached; i++)
 	{
-		edges[i] = *initial_edge;
-		vec2_add_into(&edges[i].pixel_pos, &initial_edge[i].pixel_step, &initial_edge->pixel_pos);
+		at_end_p = out_of_bounds(&edges[POS], canvas->width, canvas->height);
+		at_end_n = out_of_bounds(&edges[NEG], canvas->width, canvas->height);
+		if (!at_end_n)
+		{
+			vec2_add(&edges[NEG].init_pixel_pos, &edges[NEG].pixel_step);
+			vec2_add(&edges[NEG].pixel_pos, &edges[NEG].pixel_step);
+			float luma_outside = rgb_to_luma(_get_pixel_color(canvas->back, edges[NEG].pixel_pos));
+			float luma_inside = rgb_to_luma(_get_pixel_color(canvas->back, edges[NEG].init_pixel_pos));
+			float luma_average = luma_outside = 0.5 * (luma_outside + luma_inside);
+			luma_gradients[NEG] = luma_average - edge_luma;
+			at_end_n = fabs(luma_gradients[NEG] ) >= gradient_threshold;
+		}
+		if (!at_end_p)
+		{
+			vec2_add(&edges[POS].init_pixel_pos, &edges[POS].pixel_step);
+			vec2_add(&edges[POS].pixel_pos, &edges[POS].pixel_step);
+			float luma_outside = rgb_to_luma(_get_pixel_color(canvas->back, edges[POS].pixel_pos));
+			float luma_inside = rgb_to_luma(_get_pixel_color(canvas->back, edges[POS].init_pixel_pos));
+			float luma_average = 0.5 * (luma_outside + luma_inside);
+			luma_gradients[POS] = luma_average - edge_luma;
+			at_end_p = fabs(luma_gradients[POS]) >= gradient_threshold;
+		}
+		edge_reached = at_end_p && at_end_n;
 	}
+}
+
+void	calculate_distances_to_ends(
+				float distances_to_ends[2],
+				t_edge *edges,
+				t_edge *initial_edge)
+{
+
+	if (initial_edge->horizontal)
+	{
+		distances_to_ends[POS] = fabs(edges[POS].pixel_pos.y - initial_edge->pixel_pos.y);
+		distances_to_ends[NEG] = fabs(edges[NEG].pixel_pos.y - initial_edge->pixel_pos.y);
+	}
+	else
+	{
+		distances_to_ends[POS]  = fabs(edges[POS].pixel_pos.x - initial_edge->pixel_pos.x);
+		distances_to_ends[NEG] = fabs(edges[NEG].pixel_pos.x - initial_edge->pixel_pos.x);
+	}
+}
+
+void	set_edges_pixel_steps(
+				t_edge *edges,
+				t_edge *initial_edge)
+{
 
 	if (initial_edge->horizontal)
 	{
@@ -180,87 +242,78 @@ float	get_edge_blend_factor(
 		edges[POS].pixel_step = (t_vec2) {1, 0};
 		edges[NEG].pixel_step = (t_vec2) {-1, 0};
 	}
-
-
-	// Original luma value of the edge
-	float edge_luma = 0.5 * (luma->middle + initial_edge->other_luma);
-	float gradient_threshold = 0.25 * initial_edge->luma;
-
-
-	// Keep iterating until one or both of the edges are reached
-	float luma_gradient_p, luma_gradient_n;
-
-	bool at_end_n = false;
-	bool at_end_p = false;
-	bool edge_reached = false;
-
-	for (i = 0; i < 99 && !edge_reached; i++)
-	{
-		at_end_p = out_of_bounds(&edges[POS], canvas->width, canvas->height);
-		at_end_n = out_of_bounds(&edges[NEG], canvas->width, canvas->height);
-
-		if (!at_end_n)
-		{
-			vec2_add(&edges[NEG].init_pixel_pos, &edges[NEG].pixel_step);
-			vec2_add(&edges[NEG].pixel_pos, &edges[NEG].pixel_step);
-			float luma_outside = rgb_to_luma(_get_pixel_color(canvas->back, edges[NEG].pixel_pos));
-			float luma_inside = rgb_to_luma(_get_pixel_color(canvas->back, edges[NEG].init_pixel_pos));
-			float luma_average = luma_outside = 0.5 * (luma_outside + luma_inside);
-			luma_gradient_n = luma_average - edge_luma;
-			at_end_n = fabs(luma_gradient_n) >= gradient_threshold;
-		}
-		
-		if (!at_end_p)
-		{
-			vec2_add(&edges[POS].init_pixel_pos, &edges[POS].pixel_step);
-			vec2_add(&edges[POS].pixel_pos, &edges[POS].pixel_step);
-			float luma_outside = rgb_to_luma(_get_pixel_color(canvas->back, edges[POS].pixel_pos));
-			float luma_inside = rgb_to_luma(_get_pixel_color(canvas->back, edges[POS].init_pixel_pos));
-			float luma_average = 0.5 * (luma_outside + luma_inside);
-			luma_gradient_p = luma_average - edge_luma;
-			at_end_p = fabs(luma_gradient_p) >= gradient_threshold;
-
-		}
-		edge_reached = at_end_p && at_end_n;
-	}
-	float distance_to_end_p, distance_to_end_n;
-
-	if (initial_edge->horizontal)
-	{
-		distance_to_end_p = fabs(edges[POS].pixel_pos.y - initial_edge->pixel_pos.y);
-		distance_to_end_n = fabs(edges[NEG].pixel_pos.y - initial_edge->pixel_pos.y);
-	}
-	else
-	{
-		distance_to_end_p = fabs(edges[POS].pixel_pos.x - initial_edge->pixel_pos.x);
-		distance_to_end_n = fabs(edges[NEG].pixel_pos.x - initial_edge->pixel_pos.x);
-	}
-	bool delta_sign;
-	float distance_to_nearest_end;
-	if (distance_to_end_p <= distance_to_end_n)
-	{
-		distance_to_nearest_end = distance_to_end_p;
-		delta_sign = luma_gradient_p >= 0;
-	}
-	else
-	{
-		distance_to_nearest_end = distance_to_end_n;
-		delta_sign = luma_gradient_n >= 0;
-	}
-	if (delta_sign == (luma->middle - edge_luma >= 0))
-		return 0.0f;
-	return 0.5 - distance_to_nearest_end / (distance_to_end_n + distance_to_end_p);
 }
 
-static void	_sample_pixel(t_vec2 pix, t_canvas *canvas)
+void	find_distance_to_nearest_end(
+				float *distance_to_nearest_end,
+				bool *delta_sign,
+				float distances_to_ends[2],
+				float luma_gradients[2])
 {
-	t_vec3				pixel_color_vec;
+	if (distances_to_ends[POS] <= distances_to_ends[NEG])
+	{
+		*distance_to_nearest_end = distances_to_ends[POS];
+		*delta_sign = luma_gradients[POS] >= 0;
+	}
+	else
+	{
+		*distance_to_nearest_end = distances_to_ends[NEG];
+		*delta_sign = luma_gradients[NEG] >= 0;
+	}
+}
+
+float	get_edge_blend_factor(
+				t_luma_neighbour *luma,
+				t_edge *initial_edge,
+				t_canvas *canvas)
+{
+	int		i;
+	t_edge	edges[2];
+	float	distances_to_ends[2], luma_gradients[2];
+	float	gradient_threshold, edge_luma, distance_to_nearest_end;
+	bool	delta_sign;
+
+
+	edge_luma = 0.5 * (luma->middle + initial_edge->other_luma);
+	gradient_threshold = 0.25 * initial_edge->luma;
+	for (i = 0; i < 2; i++)
+	{
+		edges[i] = *initial_edge;
+		vec2_add_into(&edges[i].pixel_pos, &initial_edge[i].pixel_step, &initial_edge->pixel_pos);
+	}
+	set_edges_pixel_steps(edges, initial_edge);
+	iterate_to_both_ends(
+		edges,
+		canvas,
+		luma_gradients,
+		gradient_threshold,
+		edge_luma);
+	calculate_distances_to_ends(
+		distances_to_ends,
+		edges,
+		initial_edge);
+	find_distance_to_nearest_end(
+		&distance_to_nearest_end,
+		&delta_sign,
+		distances_to_ends,
+		luma_gradients);
+	if (delta_sign == (luma->middle - edge_luma >= 0))
+		return 0.0f;
+	return 0.5 - distance_to_nearest_end / (distances_to_ends[NEG] + distances_to_ends[POS]);
+}
+
+static void	_sample_pixel(
+				t_vec2 pix,
+				t_canvas *canvas)
+{
+	t_vec3				pixel_color_vec, color_to_blend_with;
 	t_luma_neighbour	luma;
 	float				luma_min_max[2] = {0};
-	float				luma_range;
+	float				luma_range, subpixel_blend_factor, edge_blend_factor;
 	t_color				new_color= (t_color) {0};
 	t_vec3				new_color_vec = (t_vec3) {0};
 	t_edge				initial_edge = {0};
+	t_vec2 				pix_to_blend_with_pos;
 
 	pixel_color_vec = _get_pixel_color(canvas->back, pix);
 	find_luma_neighbours(&luma, pix, canvas->back);
@@ -274,23 +327,24 @@ static void	_sample_pixel(t_vec2 pix, t_canvas *canvas)
 	}
 	else
 	{
-		float sub_pixel_blending = get_blend_factor(&luma, luma_range);
+		subpixel_blend_factor = get_blend_factor(&luma, luma_range);
 		get_fxaa_edge(&initial_edge, &luma, &pix);
-		float edge_blend_factor = get_edge_blend_factor(&luma, &initial_edge, canvas);
-		t_vec2 pixel_color_blend_pos;
-		vec2_add_into(&pixel_color_blend_pos, &pix, &initial_edge.pixel_step);
-		t_vec3 color_to_blend_with = _get_pixel_color(canvas->back, pixel_color_blend_pos);
+		edge_blend_factor = get_edge_blend_factor(&luma, &initial_edge, canvas);
+		vec2_add_into(&pix_to_blend_with_pos, &pix, &initial_edge.pixel_step);
+		color_to_blend_with = _get_pixel_color(canvas->back, pix_to_blend_with_pos);
 		mix_color_into(
 			&new_color_vec,
 			&pixel_color_vec,
 			&color_to_blend_with,
-			fmax(sub_pixel_blending, edge_blend_factor));
+			fmax(subpixel_blend_factor, edge_blend_factor));
 		new_color = (t_color) {new_color_vec.x, new_color_vec.y, new_color_vec.z, 0};
 		mlx_put_pixel(canvas->scaled_img, pix.x, pix.y, color_to_int(&new_color));
 	}
 }
 
-static t_vec3	_get_pixel_color(mlx_image_t *img, t_vec2 pos)
+static t_vec3	_get_pixel_color(
+				mlx_image_t *img,
+				t_vec2 pos)
 {
 	t_vec3	color;
 	int		index;
@@ -298,7 +352,7 @@ static t_vec3	_get_pixel_color(mlx_image_t *img, t_vec2 pos)
 
 	coords[0] = pos.x;
 	coords[1] = pos.y;
-	index = (coords[1] * img->width + coords[0]) * sizeof(uint32_t);
+	index = (coords[1] * img->width + coords[0]) * sizeof(int32_t);
 	color.x = (float)img->pixels[index];
 	color.y = (float)img->pixels[index + 1];
 	color.z = (float)img->pixels[index + 2];
